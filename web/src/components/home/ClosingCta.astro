@@ -1,0 +1,38 @@
+---
+/*
+  Cierre de la portada: unos anillos que se dibujan, una frase caligráfica, el titular y la invitación a escribir
+  (botón a la página de contacto y, debajo, WhatsApp directo).
+*/
+import Button from '../Button.astro';
+import SectionEdge from '../SectionEdge.astro';
+import WeddingRings from '../deco/WeddingRings.astro';
+import WatercolorBlob from '../deco/WatercolorBlob.astro';
+import { path, emphasize, type Lang } from '../../i18n/routes';
+import { ui, contact } from '../../i18n/ui';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['closing'] }
+const { lang, c } = Astro.props;
+const q = ui[lang].quickContact;
+const whatsapp = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(q.whatsappText)}`;
+---
+
+<section class="section-y relative isolate overflow-x-clip bg-porcelana-50">
+  <!-- Entra desde el Blog con una onda, como Servicios y el Blog. -->
+  <SectionEdge class="text-porcelana-50" shape={2} />
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <WatercolorBlob data-toggle="acuarela-cierre" seed={4} class="absolute left-1/2 top-1/2 w-[min(640px,120%)] -translate-x-1/2 -translate-y-1/2 text-malva-500 opacity-[0.14]" />
+  </div>
+  <div class="container-brand flex flex-col items-center gap-6 text-center" data-reveal>
+    <WeddingRings class="w-20 text-malva-500 md:w-24" />
+    <p class="font-script text-[clamp(2rem,1.5rem+2vw,2.75rem)] leading-none text-ciruela-700">{c.script}</p>
+    <h2 class="display-l no-stroke max-w-[18ch] text-pino-800" set:html={emphasize(c.title)} />
+    <p class="lead max-w-[36rem]">{c.text}</p>
+    <div class="mt-2 flex flex-col items-center gap-4">
+      <Button href={path(c.cta.to, lang)} variant="primary">{c.cta.label}</Button>
+      <a href={whatsapp} target="_blank" rel="noopener" class="link-draw text-[0.9375rem] text-suave hover:text-pino-800">
+        {lang === 'es' ? 'o escribidnos por WhatsApp' : 'or message us on WhatsApp'} →
+      </a>
+    </div>
+  </div>
+</section>

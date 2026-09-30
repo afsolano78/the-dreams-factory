@@ -1,0 +1,79 @@
+---
+/*
+  Servicios en portada: cuatro fotos a sangre con el título y una frase encima; toda la foto es el enlace
+  a su apartado de la página de Servicios (#ancla).
+  Cada tarjeta ocupa dos filas de una rejilla compartida (subgrid): zona libre de foto / título + texto.
+  Así los títulos de una misma fila de tarjetas empiezan a la misma altura y el texto va justo debajo.
+*/
+import { Picture } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import BotanicalDivider from '../deco/BotanicalDivider.astro';
+import WeddingRings from '../deco/WeddingRings.astro';
+import HeartGarland from '../deco/HeartGarland.astro';
+import WatercolorBlob from '../deco/WatercolorBlob.astro';
+import SectionEdge from '../SectionEdge.astro';
+import { path, type Lang } from '../../i18n/routes';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['services'] }
+const { lang, c } = Astro.props;
+const base = path('services', lang);
+---
+
+<section class="section-y relative isolate bg-white">
+  <SectionEdge class="text-white" shape={1} />
+  <BotanicalDivider class="on-wave text-eucalipto-500"><WeddingRings class="w-16 text-malva-500 sm:w-20" /></BotanicalDivider>
+
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <!-- Acuarelas alternas por secciones: Filosofía rosa · Servicios verde · Bodas rosa · Formación verde · Blog rosa · Cierre rosa (a propósito, fuera de la secuencia). -->
+    <WatercolorBlob data-toggle="acuarela-servicios" seed={41} class="absolute -left-24 -top-10 w-[380px] text-[#6f9486] opacity-30 md:w-[480px]" />
+    <HeartGarland data-toggle="guirnalda" class="absolute right-2 top-10 w-[150px] -rotate-2 text-malva-500 opacity-60 md:right-[5%] md:top-16 md:w-[280px]" />
+  </div>
+  <div class="container-brand flex flex-col gap-14">
+    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <SectionHeading eyebrow={c.eyebrow} title={c.title} />
+      <Button href={path(c.cta.to, lang)} variant="secondary" class="self-start md:self-auto">{c.cta.label}</Button>
+    </div>
+
+    <ul class="photo-tiles grid gap-x-4 sm:grid-cols-2 lg:grid-cols-4">
+      {c.items.map((s, i) => (
+        <li class="row-span-2 grid grid-rows-subgrid" data-reveal style={`--reveal-delay:${i * 100}ms`}>
+          <a href={`${base}#${s.anchor}`} data-frame class="photo-tile group relative isolate row-span-2 grid grid-rows-subgrid overflow-hidden text-white">
+            <!-- Foto y degradado fuera de la rejilla (el <picture> ocuparía una fila si no). -->
+            <div class="absolute inset-0 -z-10">
+              <Picture
+                src={s.photo.src}
+                alt={s.photo.alt}
+                widths={[360, 560, 720]}
+                sizes="(min-width: 1024px) 24vw, (min-width: 640px) 48vw, 100vw"
+                formats={['avif', 'webp']}
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05] motion-reduce:transition-none"
+              />
+              <span class="tile-shade absolute inset-0" aria-hidden="true"></span>
+            </div>
+            <span aria-hidden="true"></span>
+            <div class="self-start px-6 pb-7">
+              <h3 class="display-s">{s.title}</h3>
+              <p class="mt-3 text-[0.9375rem] text-white/90">{s.text}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Filas repetidas por tarjeta: zona libre de foto y bloque de título + texto. */
+  .photo-tiles {
+    grid-auto-rows: clamp(12rem, 8rem + 12vw, 15rem) auto;
+    row-gap: 0;
+  }
+  .photo-tiles > li { margin-bottom: 1rem; }
+  @media (min-width: 1024px) { .photo-tiles > li { margin-bottom: 0; } }
+  .tile-shade {
+    background: linear-gradient(180deg, rgb(11 40 40 / 0.05) 0%, rgb(11 40 40 / 0.1) 35%, rgb(11 40 40 / 0.62) 62%, rgb(11 40 40 / 0.92) 100%);
+  }
+  .photo-tile { text-shadow: 0 1px 14px rgb(11 40 40 / 0.45); }
+</style>

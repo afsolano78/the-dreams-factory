@@ -1,0 +1,76 @@
+---
+/*
+  Blog en portada, en mosaico: fotos a sangre con el título encima.
+  La primera entrada va grande (con su resumen) y las otras cuatro, pequeñas a su alrededor.
+*/
+import { Picture } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import BotanicalDivider from '../deco/BotanicalDivider.astro';
+import WeddingToast from '../deco/WeddingToast.astro';
+import WatercolorBlob from '../deco/WatercolorBlob.astro';
+import SectionEdge from '../SectionEdge.astro';
+import { path, type Lang } from '../../i18n/routes';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['blog'] }
+const { lang, c } = Astro.props;
+const href = path('blog', lang);
+const reading = (n: number) => c.readingTime.replace('{n}', String(n));
+---
+
+<section class="section-y relative isolate bg-white">
+  <SectionEdge class="text-white" shape={0} />
+  <BotanicalDivider class="on-wave text-eucalipto-500"><WeddingToast class="w-14 sm:w-16" /></BotanicalDivider>
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <WatercolorBlob data-toggle="acuarela-blog" seed={27} class="absolute -left-24 -top-10 w-[380px] text-malva-500 opacity-20 md:w-[480px]" />
+  </div>
+  <div class="container-brand flex flex-col gap-14">
+    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <SectionHeading eyebrow={c.eyebrow} title={c.title} />
+      <Button href={path(c.cta.to, lang)} variant="secondary" class="self-start md:self-auto">{c.cta.label}</Button>
+    </div>
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
+      {c.posts.map((p, i) => {
+        const featured = i === 0;
+        return (
+          <li class:list={['mosaic-tile', { 'sm:col-span-2 lg:row-span-2': featured }]} data-reveal style={`--reveal-delay:${i * 90}ms`}>
+            <a href={href} class="group relative isolate flex h-full flex-col justify-end overflow-hidden p-6 text-white md:p-8">
+              <Picture
+                src={p.photo.src}
+                alt={p.photo.alt}
+                widths={featured ? [640, 960, 1280] : [400, 640]}
+                sizes={featured ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw'}
+                formats={['avif', 'webp']}
+                class="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05] motion-reduce:transition-none"
+                data-parallax={featured ? '6' : undefined}
+              />
+              <span class="mosaic-shade absolute inset-0 -z-10" aria-hidden="true"></span>
+              <p class:list={['eyebrow text-[0.6875rem] text-white/85', { '!tracking-[0.14em]': !featured }]}>
+                {p.category} · {reading(p.minutes)}
+              </p>
+              <h3 class:list={['mt-2', featured ? 'display-m' : 'display-s text-[1.25rem]']}>{p.title}</h3>
+              {featured && <p class="mt-3 max-w-[30rem] text-white/85">{p.excerpt}</p>}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .mosaic-tile { min-height: 18rem; }
+  @media (min-width: 1024px) { .mosaic-tile { min-height: 17rem; } }
+  /* Mismo tratamiento que los paneles de Formación: degradado intenso abajo y sombra suave en el texto. */
+  .mosaic-shade {
+    background: linear-gradient(
+      180deg,
+      rgb(11 40 40 / 0.05) 0%,
+      rgb(11 40 40 / 0.1) 30%,
+      rgb(11 40 40 / 0.6) 60%,
+      rgb(11 40 40 / 0.92) 100%
+    );
+  }
+  .mosaic-tile a { text-shadow: 0 1px 14px rgb(11 40 40 / 0.45); }
+</style>

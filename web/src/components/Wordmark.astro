@@ -1,0 +1,30 @@
+---
+/* Logotipo tipográfico: el rótulo del logo de 2019 en Bodoni y «Wedding Planner» en caligrafía. */
+interface Props {
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+const { size = 'md', class: className = '' } = Astro.props;
+const sizes = {
+  sm: { main: 'text-[0.9rem]', script: 'text-[1.05rem] mt-0.5' },
+  md: { main: 'text-[1.1875rem]', script: 'text-[1.375rem] mt-1' },
+  lg: { main: 'text-[1.4rem]', script: 'text-[1.6rem] mt-1' },
+};
+---
+
+<span class={`inline-flex flex-col items-center leading-none ${className}`}>
+  <span class={`wordmark-main ${sizes[size].main}`}>THE DREAMS FACTORY</span>
+  <span class={`whitespace-nowrap font-script ${sizes[size].script}`}>Wedding Planner</span>
+</span>
+
+<style>
+  .wordmark-main {
+    font-family: var(--font-display);
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 18;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    /* Siempre en una línea: si se parte, «Wedding Planner» deja de quedar centrado bajo el nombre. */
+    white-space: nowrap;
+  }
+</style>

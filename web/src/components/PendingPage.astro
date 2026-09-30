@@ -1,0 +1,26 @@
+---
+/* Página provisional para las secciones que el prototipo aún no ha construido. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from './Button.astro';
+import { path, type Lang, type RouteKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+interface Props { lang: Lang; routeKey: RouteKey }
+const { lang, routeKey } = Astro.props;
+const t = ui[lang];
+const label =
+  t.nav.find(([k]) => k === routeKey)?.[1] ??
+  [...t.footer.educationLinks, ...t.footer.legalLinks].find(([k]) => k === routeKey)?.[1] ??
+  (routeKey === 'contact' ? t.contactButton : routeKey);
+---
+
+<BaseLayout lang={lang} routeKey={routeKey} title={`${label} · The Dreams Factory`}>
+  <section class="section-y bg-porcelana-50">
+    <div class="container-brand flex min-h-[45vh] flex-col items-start justify-center gap-6">
+      <p class="eyebrow text-malva-500">{t.pending.eyebrow} · {label}</p>
+      <h1 class="display-l max-w-[40rem]">{t.pending.title}</h1>
+      <p class="lead max-w-[36rem] text-suave">{t.pending.text}</p>
+      <Button href={path('home', lang)} variant="secondary">{t.pending.back}</Button>
+    </div>
+  </section>
+</BaseLayout>

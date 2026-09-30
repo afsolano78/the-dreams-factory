@@ -1,0 +1,105 @@
+---
+import '@fontsource-variable/bodoni-moda/opsz.css';
+import '@fontsource-variable/bodoni-moda/opsz-italic.css';
+import '@fontsource-variable/jost';
+import '@fontsource/pinyon-script';
+import '../styles/global.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import IntroLogo from '../components/IntroLogo.astro';
+import QuickContactBar from '../components/QuickContactBar.astro';
+import { routes, langs, type Lang, type RouteKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  routeKey: RouteKey;
+  title: string;
+  description?: string;
+  /** Cabecera transparente sobre una foto a sangre (portada). */
+  overlayHeader?: boolean;
+}
+const { lang, routeKey, title, description, overlayHeader = false } = Astro.props;
+const site = Astro.site ?? new URL('https://www.thedreamsfactory.es');
+const canonical = new URL(routes[routeKey][lang], site);
+const ogImage = new URL('/og-image.jpg', site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      // Presentación del logo (ver IntroLogo.astro). PROTOTIPO: de momento se muestra en cada carga;
+      // al lanzar, volver a limitarla a la primera visita con: !localStorage.getItem('tdf-intro-seen') && …
+      try {
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('intro');
+        }
+      } catch {}
+    </script>
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    {langs.map((l) => <link rel="alternate" hreflang={l} href={new URL(routes[routeKey][l], site)} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(routes[routeKey].es, site)} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="The Dreams Factory" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0F3534" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Prototipo: no indexar mientras se publica en una dirección de pruebas. Quitar al lanzar. -->
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body class="min-h-dvh">
+    <IntroLogo />
+    <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-white focus:px-4 focus:py-2">
+      {ui[lang].skipLink}
+    </a>
+    <Header lang={lang} routeKey={routeKey} overlay={overlayHeader} />
+    <main id="contenido" class={overlayHeader ? '' : 'pt-[4.5rem] min-[1180px]:pt-[5.75rem]'}>
+      <slot />
+    </main>
+    <Footer lang={lang} routeKey={routeKey} />
+    <QuickContactBar lang={lang} />
+    <script>
+      import { initFadeCarousel } from '../scripts/fade-carousel';
+      import { initParallax } from '../scripts/parallax';
+      import { initDraw } from '../scripts/draw';
+      import { whenIntroOpen } from '../scripts/intro';
+      document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(initFadeCarousel);
+      initParallax();
+      initDraw();
+
+      // Revela los elementos [data-reveal] cuando entran en pantalla (tras abrirse el telón de la presentación).
+      const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add('is-revealed');
+              io.unobserve(e.target);
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        );
+        whenIntroOpen(() => items.forEach((el) => io.observe(el)));
+      } else {
+        items.forEach((el) => el.classList.add('is-revealed'));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+---
+/*
+  SOLO PROTOTIPO: tarjeta plegable con opciones para comparar variantes por separado.
+  - Casilla (sin `options`): marca <html data-proto-{group}="si|no">; los elementos [data-toggle="{group}"] se
+    muestran u ocultan según eso (reglas en global.css). Por defecto, activada salvo `off: true`.
+  - Desplegable (con `options`): marca <html data-proto-{group}="{valor}">; por defecto, la primera opción.
+  La elección se guarda en la URL (?{group}=valor) y en el navegador. Se quita en cuanto se decide.
+  `hidden`: oculta la tarjeta pero sigue aplicando los valores (por defecto, de la URL o guardados).
+*/
+interface Item { group: string; label: string; off?: boolean; options?: { value: string; label: string }[] }
+interface Props { title: string; items: Item[]; hidden?: boolean }
+const { title, items, hidden = false } = Astro.props;
+---
+
+<details class:list={['proto-toggles fixed bottom-3 left-3 z-[55] bg-white/95 text-pino-800 shadow-[0_8px_30px_rgb(11_40_40/0.18)] backdrop-blur md:bottom-4 md:left-4', { hidden }]}>
+  <summary class="cursor-pointer select-none px-3 py-2 text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-malva-500">{title}</summary>
+  <ul class="flex flex-col gap-1.5 px-3 pb-3">
+    {items.map((it) => (
+      <li>
+        {it.options ? (
+          <label class="flex items-center justify-between gap-3 text-[0.8125rem]">
+            {it.label}
+            <select class="border border-linea bg-white px-1.5 py-0.5 text-[0.8125rem]" data-group={it.group}>
+              {it.options.map((o) => <option value={o.value}>{o.label}</option>)}
+            </select>
+          </label>
+        ) : (
+          <label class="flex cursor-pointer items-center gap-2 text-[0.8125rem]">
+            <input type="checkbox" class="accent-pino-800" data-group={it.group} data-default={it.off ? 'no' : 'si'} checked={!it.off} />
+            {it.label}
+          </label>
+        )}
+      </li>
+    ))}
+  </ul>
+</details>
+
+<!-- En línea: se aplica al leer la página, antes de pintar el resto. -->
+<script is:inline>
+  (() => {
+    const params = new URLSearchParams(location.search);
+    const html = document.documentElement;
+    const save = (group, value) => {
+      try { localStorage.setItem('tdf-toggle-' + group, value); } catch {}
+      const url = new URL(location.href);
+      url.searchParams.set(group, value);
+      history.replaceState(null, '', url);
+    };
+    const initial = (group) => {
+      let v = params.get(group);
+      if (!v) { try { v = localStorage.getItem('tdf-toggle-' + group); } catch {} }
+      return v;
+    };
+    document.querySelectorAll('.proto-toggles [data-group]').forEach((el) => {
+      const group = el.dataset.group;
+      if (el.tagName === 'SELECT') {
+        const values = [...el.options].map((o) => o.value);
+        const v = initial(group);
+        el.value = values.includes(v) ? v : values[0];
+        html.setAttribute('data-proto-' + group, el.value);
+        el.addEventListener('change', () => { html.setAttribute('data-proto-' + group, el.value); save(group, el.value); });
+      } else {
+        const apply = (on) => { el.checked = on; html.setAttribute('data-proto-' + group, on ? 'si' : 'no'); };
+        apply((initial(group) ?? el.dataset.default) !== 'no');
+        el.addEventListener('change', () => { apply(el.checked); save(group, el.checked ? 'si' : 'no'); });
+      }
+    });
+  })();
+</script>

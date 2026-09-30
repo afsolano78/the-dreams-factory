@@ -1,0 +1,23 @@
+---
+/*
+  Borde ondulado dibujado a mano que prolonga el color de la sección sobre la anterior (o, con `flip`, sobre
+  la siguiente). Se pinta con currentColor: pasar el color de fondo de la sección como clase de texto.
+*/
+interface Props { class?: string; shape?: 0 | 1 | 2; flip?: boolean }
+const { class: className = '', shape = 0, flip = false } = Astro.props;
+const waves = [
+  'M0 40 L0 24 C 150 10, 300 30, 470 22 S 780 6, 980 16 S 1300 32, 1440 14 L1440 40 Z',
+  'M0 40 L0 12 C 200 26, 380 30, 600 18 S 950 4, 1160 14 S 1380 26, 1440 22 L1440 40 Z',
+  'M0 40 L0 20 C 120 30, 330 8, 540 14 S 860 34, 1080 24 S 1340 6, 1440 16 L1440 40 Z',
+];
+---
+
+<svg
+  class={`pointer-events-none absolute inset-x-0 z-[1] h-[clamp(22px,3.4vw,52px)] w-full ${flip ? 'top-full -mt-px -scale-y-100' : 'bottom-full -mb-px'} ${className}`}
+  viewBox="0 0 1440 40"
+  preserveAspectRatio="none"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path d={waves[shape]} />
+</svg>

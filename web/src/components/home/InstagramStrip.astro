@@ -1,0 +1,58 @@
+---
+/*
+  Franja de Instagram antes del pie: rótulo con el usuario y seis fotos cuadradas a sangre que enlazan al perfil.
+  PROTOTIPO: las fotos son de bodas del propio sitio. En la web definitiva serán las últimas publicaciones, leídas
+  de la cuenta de Instagram (requiere cuenta de empresa o creador y un permiso de acceso de Meta).
+*/
+import { Picture } from 'astro:assets';
+import SocialIcon from '../SocialIcon.astro';
+import { type Lang } from '../../i18n/routes';
+import { ui, contact } from '../../i18n/ui';
+import p1 from '../../assets/photos/opiniones/marta-omar.jpg';
+import p2 from '../../assets/photos/blog-encuentro-dreams.jpg';
+import p3 from '../../assets/photos/opiniones/sonia-alberto.jpg';
+import p4 from '../../assets/photos/opiniones/maria-gaspar.jpg';
+import p5 from '../../assets/photos/servicio-diseno-decoracion.jpg';
+import p6 from '../../assets/photos/opiniones/aida-adrian.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang].instagram;
+const ig = contact.social.find((s) => s.name === 'Instagram')!;
+const posts = [p1, p2, p3, p4, p5, p6];
+---
+
+<section class="bg-porcelana-50" aria-labelledby="instagram-title">
+  <div class="container-brand flex flex-col items-center gap-3 pb-8 pt-4 text-center sm:flex-row sm:justify-between sm:text-left" data-reveal>
+    <h2 id="instagram-title" class="eyebrow text-malva-500">{t.title}</h2>
+    <a href={ig.url} target="_blank" rel="noopener" class="group flex items-center gap-2.5 text-pino-800">
+      <SocialIcon name="Instagram" size={20} class="text-malva-500" />
+      <span class="display-s link-draw">{ig.handle}</span>
+    </a>
+  </div>
+  <ul class="grid grid-cols-3 md:grid-cols-6">
+    {posts.map((src, i) => (
+      <li>
+        <a href={ig.url} target="_blank" rel="noopener" class="ig-post group relative block aspect-square overflow-hidden" aria-label={`${t.post} ${i + 1}`}>
+          <Picture
+            src={src}
+            alt=""
+            widths={[240, 360, 480]}
+            sizes="(min-width: 768px) 17vw, 34vw"
+            formats={['avif', 'webp']}
+            loading="lazy"
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06] motion-reduce:transition-none"
+          />
+          <span class="ig-hover absolute inset-0 grid place-items-center bg-pino-900/45 text-white" aria-hidden="true">
+            <SocialIcon name="Instagram" size={26} />
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .ig-hover { opacity: 0; transition: opacity 0.35s ease; }
+  .ig-post:is(:hover, :focus-visible) .ig-hover { opacity: 1; }
+</style>

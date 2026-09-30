@@ -1,0 +1,67 @@
+---
+/*
+  Fila de logos de publicaciones y asociaciones. Cada logo es una silueta (PNG blanco con transparencia)
+  usada como máscara CSS y pintada con el color del texto: así todos comparten el mismo tono de marca.
+*/
+import type { PressLogo } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+interface Props {
+  items: PressLogo[];
+  lang: Lang;
+  /** Altura de los sellos redondos; los logotipos alargados se ajustan para pesar visualmente lo mismo. */
+  sealSize?: 'md' | 'sm' | 'xs';
+  class?: string;
+}
+const { items, lang, sealSize = 'md', class: className = '' } = Astro.props;
+const seal = { md: 'clamp(4.25rem, 3.5rem + 2vw, 5.5rem)', sm: 'clamp(3.5rem, 3rem + 1.2vw, 4.25rem)', xs: '2.75rem' }[sealSize];
+---
+
+<ul class={`logo-row ${className}`} style={`--seal:${seal}`}>
+  {
+    items.map((l) => {
+      const inner = (
+        <>
+          <span
+            class="logo-mask"
+            aria-hidden="true"
+            style={`--logo:url(${l.logo}); aspect-ratio:${l.ratio}; height:${l.kind === 'seal' ? 'var(--seal)' : 'calc(var(--seal) * 0.5)'}`}
+          />
+          <span class="sr-only">{l.detail[lang]}</span>
+        </>
+      );
+      return (
+        <li>
+          {l.href ? (
+            <a href={l.href} target="_blank" rel="noopener" class="logo-item" title={l.name}>{inner}</a>
+          ) : (
+            <span class="logo-item" title={l.name}>{inner}</span>
+          )}
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .logo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem clamp(2rem, 1rem + 4vw, 4.5rem);
+  }
+  .logo-item {
+    display: grid;
+    place-items: center;
+    opacity: 0.85;
+    transition: opacity 0.25s ease;
+  }
+  .logo-item:hover { opacity: 1; }
+  .logo-mask {
+    display: block;
+    background-color: currentColor;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+  }
+</style>

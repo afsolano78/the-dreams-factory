@@ -1,0 +1,12 @@
+# Cabeceras para Cloudflare Pages.
+# PROTOTIPO: prohíbe indexar cualquier archivo (páginas, imágenes, PDF…), además de la etiqueta <meta name="robots">
+# de cada página y del robots.txt. Quitar la línea X-Robots-Tag al publicar la web definitiva.
+/*
+  X-Robots-Tag: noindex, nofollow, noarchive, noimageindex
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# Recursos con nombre versionado (Astro añade un código al nombre): se pueden guardar en caché mucho tiempo.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

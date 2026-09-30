@@ -1,0 +1,60 @@
+---
+/*
+  «Nuestra filosofía»: la filosofía y la presentación de Bea y Vane en una sola sección.
+  Formato manifiesto: titular centrado a gran tamaño y, al final, la firma con su retrato redondo.
+*/
+import Button from '../Button.astro';
+import ZoomPhoto from '../ZoomPhoto.astro';
+import WeddingBouquet from '../deco/WeddingBouquet.astro';
+import WeddingCake from '../deco/WeddingCake.astro';
+import WatercolorBlob from '../deco/WatercolorBlob.astro';
+import { path, emphasize, type Lang } from '../../i18n/routes';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['story'] }
+const { lang, c } = Astro.props;
+---
+
+<section class="section-y relative isolate overflow-x-clip bg-porcelana-50">
+  <WeddingBouquet data-toggle="ramo" class="absolute left-2 top-16 -z-10 w-[100px] -rotate-12 text-eucalipto-500 opacity-60 md:left-[6%] md:top-14 md:w-[170px]" />
+  <WeddingCake data-toggle="tarta" class="absolute right-2 top-16 -z-10 w-[90px] rotate-6 text-eucalipto-500 opacity-60 md:right-[6%] md:top-14 md:w-[150px]" />
+  <WatercolorBlob data-toggle="acuarela-filosofia" seed={4} class="absolute left-1/2 top-[6%] -z-10 w-[min(680px,120%)] -translate-x-1/2 text-malva-500 opacity-[0.16]" />
+
+  <div class="container-brand flex flex-col items-center gap-10 text-center">
+    <div class="flex flex-col items-center gap-6" data-reveal>
+      <p class="eyebrow eyebrow-line eyebrow-line-both text-malva-500">{c.eyebrow}</p>
+      <h2 class="display-xl no-stroke max-w-[16ch] text-pino-800" set:html={emphasize(c.title)} />
+    </div>
+
+    <!-- Texto alineado a la izquierda (en un bloque centrado) para que la letra capital asiente bien. -->
+    <div class="flex max-w-[42rem] flex-col gap-5 text-left" data-reveal style="--reveal-delay:120ms">
+      <p class="lead drop-cap">{c.lead}</p>
+      <p class="text-suave">{c.body}</p>
+    </div>
+
+    <div
+      class="flex w-full max-w-[48rem] flex-col items-center gap-6 border-t border-linea pt-10 sm:flex-row sm:justify-center sm:gap-8 sm:text-left"
+      data-reveal
+      style="--reveal-delay:220ms"
+    >
+      <!-- El envoltorio no debe encogerse en la fila, o el retrato redondo se vuelve ovalado. -->
+      <div class="shrink-0">
+        <ZoomPhoto
+          src={c.team.src}
+          alt={c.team.alt}
+          label={lang === 'es' ? 'Ampliar la foto de Bea y Vane' : 'Enlarge the photo of Bea and Vane'}
+          closeLabel={lang === 'es' ? 'Cerrar' : 'Close'}
+          thumbClass="size-36 rounded-full object-cover object-[55%_45%] sm:size-40"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="signature flex items-center justify-center gap-2 text-ciruela-700 sm:justify-start">
+          {c.signature}
+          
+        </p>
+        <p class="max-w-[24rem] text-[0.8125rem] text-suave">{c.credentials}</p>
+      </div>
+      <Button href={path(c.cta.to, lang)} variant="secondary" class="shrink-0">{c.cta.label}</Button>
+    </div>
+  </div>
+</section>

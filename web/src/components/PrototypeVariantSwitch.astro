@@ -1,0 +1,70 @@
+---
+/*
+  SOLO PROTOTIPO: selector flotante para comparar variantes de una sección.
+  Muestra los elementos [data-variant-group={group}] cuyo data-variant coincide con la opción elegida
+  (el resto deben renderizarse con `hidden`). Para variantes que solo cambian el estilo, también marca
+  <html data-proto-{group}="valor">, al que puede engancharse el CSS.
+  La elección se guarda en la URL (?{group}=valor) y en el navegador.
+  Se quita en cuanto se elige una variante.
+  Va siempre dentro de <PrototypeSwitches>, que los apila en una esquina fija.
+*/
+interface Props {
+  group: string;
+  label: string;
+  options: { value: string; label: string }[];
+}
+const { group, label, options } = Astro.props;
+---
+
+<div
+  class="variant-switch flex flex-col gap-2 bg-white/95 p-2 text-pino-800 shadow-[0_8px_30px_rgb(11_40_40/0.18)] backdrop-blur sm:p-3"
+  role="group"
+  aria-label={label}
+  data-group={group}
+>
+  <span class="hidden text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-malva-500 sm:block">{label}</span>
+  <div class="flex flex-wrap gap-1.5">
+    {options.map((o, i) => <button type="button" data-value={o.value} aria-pressed={i === 0 ? 'true' : 'false'}>{o.label}</button>)}
+  </div>
+</div>
+
+<style>
+  .variant-switch button {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+    border: 1px solid var(--color-linea);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .variant-switch button[aria-pressed='true'] {
+    background: var(--color-pino-800);
+    border-color: var(--color-pino-800);
+    color: #fff;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.variant-switch').forEach((sw) => {
+    const group = sw.dataset.group!;
+    const key = `tdf-variant-${group}`;
+    const buttons = [...sw.querySelectorAll<HTMLButtonElement>('button[data-value]')];
+    const values = buttons.map((b) => b.dataset.value!);
+
+    const apply = (value: string, persist: boolean) => {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === value)));
+      document.documentElement.setAttribute(`data-proto-${group}`, value);
+      document.querySelectorAll<HTMLElement>(`[data-variant-group="${group}"]`).forEach((el) => {
+        el.hidden = el.dataset.variant !== value;
+      });
+      if (!persist) return;
+      try { localStorage.setItem(key, value); } catch {}
+      const url = new URL(location.href);
+      url.searchParams.set(group, value);
+      history.replaceState(null, '', url);
+    };
+
+    let initial = new URL(location.href).searchParams.get(group);
+    if (!initial) { try { initial = localStorage.getItem(key); } catch {} }
+    apply(values.includes(initial ?? '') ? initial! : values[0], false);
+    buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.value!, true)));
+  });
+</script>

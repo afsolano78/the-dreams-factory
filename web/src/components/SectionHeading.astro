@@ -1,0 +1,20 @@
+---
+import { emphasize } from '../i18n/routes';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  tone?: 'light' | 'dark';
+  size?: 'l' | 'm';
+  as?: 'h1' | 'h2';
+  class?: string;
+}
+const { eyebrow, title, tone = 'light', size = 'l', as: Tag = 'h2', class: className = '' } = Astro.props;
+const eyebrowColor = tone === 'dark' ? 'text-eucalipto-500' : 'text-malva-500';
+const titleColor = tone === 'dark' ? 'text-white' : 'text-pino-800';
+---
+
+<div class={`flex flex-col gap-4 ${className}`} data-reveal>
+  <p class={`eyebrow eyebrow-line ${eyebrowColor}`}>{eyebrow}</p>
+  <Tag class={`${size === 'l' ? 'display-l' : 'display-m'} ${titleColor}`} set:html={emphasize(title)} />
+</div>

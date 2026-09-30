@@ -1,0 +1,29 @@
+---
+/*
+  Página de error 404: unos anillos que se dibujan y una frase con humor. Es una sola página para los dos idiomas,
+  así que el texto principal va en español y debajo, más pequeño, en inglés.
+*/
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import WeddingRings from '../components/deco/WeddingRings.astro';
+import WatercolorBlob from '../components/deco/WatercolorBlob.astro';
+import { path } from '../i18n/routes';
+---
+
+<BaseLayout lang="es" routeKey="home" title="Página no encontrada · The Dreams Factory">
+  <section class="section-y relative isolate overflow-hidden bg-porcelana-50">
+    <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+      <WatercolorBlob seed={4} class="absolute left-1/2 top-1/2 w-[min(620px,120%)] -translate-x-1/2 -translate-y-1/2 text-malva-500 opacity-[0.14]" />
+    </div>
+    <div class="container-brand flex min-h-[60svh] flex-col items-center justify-center gap-6 text-center">
+      <WeddingRings class="w-28 text-malva-500 md:w-36" />
+      <p class="eyebrow text-malva-500">Error 404</p>
+      <h1 class="display-l max-w-[20ch] text-pino-800">Esta página se ha ido <em>de luna de miel</em></h1>
+      <p class="lead max-w-[34rem]">No la encontramos por ninguna parte. Volved a la portada y seguimos con los preparativos.</p>
+      <Button href={path('home', 'es')} variant="primary">Volver a la portada</Button>
+      <p class="mt-4 text-[0.9375rem] text-suave">
+        This page has gone on honeymoon. <a href={path('home', 'en')} class="link-draw text-pino-800">Back to the home page →</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

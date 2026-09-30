@@ -1,0 +1,26 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'light';
+  type?: 'button' | 'submit';
+  class?: string;
+}
+
+const { href, variant = 'primary', type = 'button', class: className = '' } = Astro.props;
+
+/* El relleno del hover entra deslizando de izquierda a derecha (.btn en global.css; color en --btn-fill). */
+const styles = {
+  primary: 'btn bg-ciruela-700 text-white border border-ciruela-700 hover:border-pino-800 focus-visible:border-pino-800 [--btn-fill:var(--color-pino-800)]',
+  secondary: 'btn border border-pino-800 text-pino-800 hover:text-white focus-visible:text-white [--btn-fill:var(--color-pino-800)]',
+  light: 'btn border border-white/80 text-white hover:text-pino-800 focus-visible:text-pino-800 [--btn-fill:#fff]',
+};
+const classes = `inline-flex items-center justify-center gap-2 px-7 py-4 text-[0.8125rem] font-medium uppercase tracking-[0.12em] leading-none ${styles[variant]} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={classes}><slot /></a>
+  ) : (
+    <button type={type} class={classes}><slot /></button>
+  )
+}

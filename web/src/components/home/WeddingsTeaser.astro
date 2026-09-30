@@ -1,0 +1,62 @@
+---
+import { Picture } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import WatercolorBlob from '../deco/WatercolorBlob.astro';
+import { path, type Lang } from '../../i18n/routes';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['weddings'] }
+const { lang, c } = Astro.props;
+const href = path('weddings', lang);
+---
+
+<section class="sheet-over section-y relative isolate bg-porcelana-50">
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-[inherit]" aria-hidden="true">
+    <WatercolorBlob data-toggle="acuarela-bodas" seed={33} class="absolute -left-24 -top-6 w-[380px] text-malva-500 opacity-20 md:w-[500px]" />
+  </div>
+  <div class="container-brand flex flex-col gap-14">
+    <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <SectionHeading eyebrow={c.eyebrow} title={c.title}  />
+      <Button href={path(c.cta.to, lang)} variant="secondary" class="self-start md:self-auto">{c.cta.label}</Button>
+    </div>
+    <!-- Móvil: fila deslizable (con la siguiente tarjeta asomando). Desde md: rejilla de 3 columnas. -->
+    <ul class="weddings-row -mx-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-14 md:overflow-visible md:px-0 md:pb-0">
+      {
+        c.items.map((w, i) => (
+          <li class="w-[78%] shrink-0 snap-start md:w-auto" data-reveal style={`--reveal-delay:${(i % 3) * 140}ms`}>
+            <a href={href} class="group flex flex-col gap-4">
+              <div class="wedding-photo relative overflow-hidden">
+                <Picture
+                  src={w.photo.src}
+                  alt={w.photo.alt}
+                  widths={[480, 720, 960]}
+                  sizes="(min-width: 768px) 30vw, 78vw"
+                  formats={['avif', 'webp']}
+                  class="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+                  style={w.focus ? `object-position:${w.focus}` : undefined}
+                />
+                <!-- «Ver la boda» sobre la foto al pasar el ratón (solo con ratón, ver global.css). -->
+                <span class="wedding-view pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-pino-900/70 to-transparent pb-6 pt-16 text-white" aria-hidden="true">
+                  <span class="eyebrow">{c.viewLabel} →</span>
+                </span>
+              </div>
+              <p class="eyebrow text-malva-500">{w.place}</p>
+              <h3 class="display-s text-pino-800">{w.couple}</h3>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .weddings-row { scrollbar-width: none; }
+  /* Móvil: la fila solo se desliza en horizontal (sin esto, la animación de entrada deja margen para moverla
+     hacia arriba y se corta). */
+  @media (max-width: 767px) {
+    .weddings-row { overflow-y: hidden; overscroll-behavior-x: contain; }
+  }
+  .weddings-row::-webkit-scrollbar { display: none; }
+</style>

@@ -1,0 +1,81 @@
+---
+import { Picture } from 'astro:assets';
+import Button from '../Button.astro';
+import CarouselControls from '../CarouselControls.astro';
+import { path, type Lang } from '../../i18n/routes';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['reviews'] }
+const { lang, c } = Astro.props;
+
+/** Más tiempo que en la portada: aquí hay que leer. */
+const INTERVAL = 8000;
+const photoLabel = lang === 'es' ? 'Foto' : 'Photo';
+---
+
+<section
+  class="relative isolate overflow-hidden bg-pino-900 text-white"
+  data-carousel="reviews"
+  data-paused="false"
+  style={`--interval:${INTERVAL}ms`}
+  aria-roledescription={lang === 'es' ? 'carrusel' : 'carousel'}
+  aria-label={c.controls.region}
+>
+  <div class="absolute inset-0 -z-10" aria-hidden="true" data-parallax="10">
+    {
+      c.items.map((r, i) => (
+        <div class:list={['fade-img', { 'is-active is-initial': i === 0 }]} data-slide={i}>
+          <Picture
+            src={r.photo}
+            alt=""
+            widths={[800, 1440, 2000]}
+            sizes="100vw"
+            formats={['avif', 'webp']}
+            loading="lazy"
+            style={`object-position:${r.focus ?? '50% 50%'}`}
+          />
+        </div>
+      ))
+    }
+    <div class="absolute inset-0 z-10 bg-pino-900/60"></div>
+  </div>
+
+  <div class="container-brand flex flex-col items-center gap-8 py-[clamp(5.5rem,4rem+6vw,9.5rem)] text-center" data-reveal>
+    <p class="eyebrow">{c.eyebrow}</p>
+
+    <div class="relative grid w-full max-w-[56rem]" data-carousel-live aria-live="off">
+      <!-- Comillas decorativas grandes detrás del testimonio. -->
+      <span class="quote-mark" aria-hidden="true">“</span>
+      {
+        c.items.map((r, i) => (
+          <figure
+            class:list={['fade-text flex flex-col items-center justify-center gap-6', { 'is-active is-initial': i === 0 }]}
+            data-slide={i}
+            aria-hidden={i === 0 ? 'false' : 'true'}
+          >
+            <blockquote class="quote">{r.quote}</blockquote>
+            <figcaption class="flex flex-col items-center gap-1">
+              <span class="eyebrow !tracking-[0.14em] text-[0.8125rem]">{r.author}</span>
+              {(c.note || r.credit) && (
+                <span class="text-[0.8125rem] opacity-75">
+                  {[c.note, r.credit && `${photoLabel}: ${r.credit}`].filter(Boolean).join(' · ')}
+                </span>
+              )}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <CarouselControls
+      class="max-w-[26rem]"
+      labels={c.items.map((r) => c.controls.goTo.replace('{author}', r.author))}
+      thumbs={c.items.map((r) => r.photo)}
+      thumbFocus={c.items.map((r) => r.focus)}
+      pauseLabel={c.controls.pause}
+      playLabel={c.controls.play}
+    />
+
+    <Button href={path(c.cta.to, lang)} variant="light">{c.cta.label}</Button>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+# Saltos de línea: siempre LF en el repositorio y en la copia de trabajo (igual en Windows, Mac y Linux).
+* text=auto eol=lf
+
+# Binarios: no tocar.
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.pdf binary

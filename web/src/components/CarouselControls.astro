@@ -1,0 +1,71 @@
+---
+/*
+  Barras de progreso (que también sirven para saltar a una diapositiva) y botón de pausa.
+  Con `thumbs`, cada botón muestra además una miniatura redonda (opiniones: la foto de cada pareja).
+*/
+import { Image } from 'astro:assets';
+interface Props {
+  /** Etiqueta accesible de cada barra, en orden. */
+  labels: string[];
+  /** Miniaturas, en el mismo orden que `labels`. */
+  thumbs?: ImageMetadata[];
+  /** Encuadre (object-position) de cada miniatura. */
+  thumbFocus?: (string | undefined)[];
+  pauseLabel: string;
+  playLabel: string;
+  class?: string;
+}
+const { labels, thumbs, thumbFocus, pauseLabel, playLabel, class: className = '' } = Astro.props;
+---
+
+<div class={`flex w-full items-center gap-4 ${className}`}>
+  <ol class:list={['flex flex-1', thumbs ? 'justify-center gap-2 sm:gap-3' : 'gap-2']}>
+    {
+      labels.map((label, i) => (
+        <li class:list={[thumbs ? 'flex-none' : 'flex-1']}>
+          <button
+            type="button"
+            class:list={['group block w-full', thumbs ? 'carousel-thumb flex flex-col items-center gap-2 py-1' : 'py-3']}
+            data-carousel-dot={i}
+            aria-label={label}
+            aria-current={i === 0 ? 'true' : undefined}
+          >
+            {thumbs && (
+              <Image src={thumbs[i]} alt="" width={96} height={96} class="thumb-img size-10 rounded-full object-cover sm:size-12" style={thumbFocus?.[i] ? `object-position:${thumbFocus[i]}` : undefined} />
+            )}
+            <span class="block h-[2px] w-full overflow-hidden bg-white/30 group-hover:bg-white/50">
+              <span class="carousel-bar block h-full w-full bg-white" />
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+  <button
+    type="button"
+    class="grid size-9 shrink-0 place-items-center rounded-full border border-white/50 hover:bg-white/15"
+    data-carousel-pause
+    data-pause-label={pauseLabel}
+    data-play-label={playLabel}
+    aria-label={pauseLabel}
+  >
+    <svg class="icon-pause" width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M1.5 0v12M8.5 0v12" stroke="currentColor" stroke-width="2"></path></svg>
+    <svg class="icon-play" width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M1 0.5v11l8.5-5.5z" fill="currentColor"></path></svg>
+  </button>
+</div>
+
+<style>
+  /* Miniaturas: la activa, nítida y con aro blanco; el resto, apagadas. */
+  .thumb-img {
+    opacity: 0.55;
+    filter: grayscale(0.4);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35);
+    transition: opacity 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
+  }
+  .carousel-thumb:hover .thumb-img { opacity: 0.85; }
+  .carousel-thumb[aria-current='true'] .thumb-img {
+    opacity: 1;
+    filter: none;
+    box-shadow: 0 0 0 2px #fff;
+  }
+</style>

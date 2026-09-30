@@ -1,0 +1,90 @@
+---
+import Wordmark from './Wordmark.astro';
+import SocialLinks from './SocialLinks.astro';
+import LogoRow from './LogoRow.astro';
+import LangSwitch from './LangSwitch.astro';
+import ContactIcon from './ContactIcon.astro';
+import WeddingToast from './deco/WeddingToast.astro';
+import { path, type Lang, type RouteKey } from '../i18n/routes';
+import { ui, press, contact } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  routeKey: RouteKey;
+}
+const { lang, routeKey } = Astro.props;
+const t = ui[lang];
+const year = new Date().getFullYear();
+const [emailUser, emailDomain] = contact.email.split('@');
+---
+
+<footer class="relative isolate overflow-hidden bg-pino-900 text-white">
+  <!-- Copas: en tableta (md) se quitan, porque la franja de marca ocupa toda la parte de arriba. -->
+  <WeddingToast class="pointer-events-none absolute right-4 top-12 -z-10 w-[120px] -rotate-6 text-white opacity-[0.12] md:hidden lg:right-[3%] lg:top-10 lg:block lg:w-[160px]" aria-hidden="true" />
+  <div class="container-brand pb-10 pt-20">
+    <!--
+      Móvil: todo en una columna. Tableta (md): la marca en una franja arriba (nombre a la izquierda, redes a la
+      derecha) y debajo tres columnas. Ordenador (lg): cuatro columnas, con las redes centradas bajo el nombre.
+    -->
+    <div class="grid gap-12 md:grid-cols-[0.85fr_1fr_1.4fr] md:gap-x-10 lg:grid-cols-[auto_0.8fr_1fr_1.3fr] lg:gap-12">
+      <div class="flex w-fit flex-col items-center gap-6 md:col-span-3 md:w-full md:flex-row md:justify-between md:border-b md:border-white/10 md:pb-10 lg:col-span-1 lg:w-fit lg:flex-col lg:justify-start lg:border-0 lg:pb-0">
+        <Wordmark size="md" />
+        <SocialLinks />
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-4 text-eucalipto-500">{t.footer.explore}</h2>
+        <ul class="flex flex-col gap-2">
+          {t.footer.exploreLinks.map(([key, label]) => <li><a href={path(key, lang)} class="link-draw hover:text-eucalipto-500">{label}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-4 text-eucalipto-500">{t.footer.education}</h2>
+        <ul class="flex flex-col gap-2">
+          {t.footer.educationLinks.map(([key, label]) => <li><a href={path(key, lang)} class="link-draw hover:text-eucalipto-500">{label}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-4 text-eucalipto-500">{t.footer.contact}</h2>
+        <ul class="flex flex-col gap-2.5">
+          {contact.phones.map((p) => (
+            <li>
+              <a href={`tel:${p.replace(/\s/g, '')}`} class="flex items-center gap-3 hover:text-eucalipto-500">
+                <ContactIcon name="phone" size={16} class="shrink-0 text-eucalipto-500" /><span class="link-draw">{p}</span>
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href={`mailto:${contact.email}`} class="flex items-start gap-3 text-[0.9375rem] hover:text-eucalipto-500">
+              <ContactIcon name="mail" size={16} class="mt-1 shrink-0 text-eucalipto-500" /><span class="link-draw min-w-0 [overflow-wrap:break-word]">{emailUser}<wbr />@{emailDomain}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-4 border-t border-white/15 pt-6 text-[0.8125rem] text-eucalipto-500 sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        © {year} The Dreams Factory
+        {t.footer.legalLinks.map(([key, label]) => <>{' · '}<a href={path(key, lang)} class="link-draw hover:text-white">{label}</a></>)}
+      </p>
+      <LangSwitch lang={lang} routeKey={routeKey} up class="text-white" />
+    </div>
+  </div>
+
+  <!-- «Nos encontrarás en»: barra fina más oscura al final, rótulo a la izquierda y logos pequeños en línea. -->
+  <div class="bg-black/25">
+    <!-- En móvil, hueco abajo para la barra fija de contacto rápido. -->
+    <div class="container-brand flex flex-col items-center gap-5 pb-20 pt-6 sm:flex-row sm:justify-between md:pb-6">
+      <h2 class="eyebrow text-eucalipto-500">{t.footer.findUs}</h2>
+      <LogoRow items={press} lang={lang} sealSize="xs" class="footer-logos-small text-white" />
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Logos más juntos en la barra final. */
+  :global(.logo-row.footer-logos-small) { gap: 1rem 2rem; }
+</style>

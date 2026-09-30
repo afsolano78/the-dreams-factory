@@ -1,0 +1,15 @@
+---
+import PendingPage from '../components/PendingPage.astro';
+import { routes, pendingPages, type RouteKey } from '../i18n/routes';
+
+export function getStaticPaths() {
+  return pendingPages.map((key) => ({
+    params: { page: routes[key].es.slice(1) },
+    props: { routeKey: key },
+  }));
+}
+
+const { routeKey } = Astro.props as { routeKey: RouteKey };
+---
+
+<PendingPage lang="es" routeKey={routeKey} />

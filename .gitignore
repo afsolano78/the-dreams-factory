@@ -1,0 +1,31 @@
+# ---------------------------------------------------------------------------------------------
+# NUNCA subir: copia de la web antigua (Plesk/Drupal 7). Contiene la clave privada del
+# certificado SSL, el volcado de la base de datos con datos personales y archivos muy pesados.
+# ---------------------------------------------------------------------------------------------
+/legacy/
+
+# Paquetes para desplegar (zip): se generan desde web/dist cuando hace falta.
+/despliegue/
+
+# Dependencias y resultados de compilación (también excluidos en web/.gitignore).
+node_modules/
+dist/
+.astro/
+
+# Variables de entorno y secretos.
+.env
+.env.*
+*.pem
+*.key
+privatekey
+
+# Ajustes personales de Claude Code (los compartidos, como .claude/launch.json, sí se suben).
+.claude/settings.local.json
+
+# Sistema operativo y editores.
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.log

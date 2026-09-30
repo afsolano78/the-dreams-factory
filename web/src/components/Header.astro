@@ -1,0 +1,188 @@
+---
+import Wordmark from './Wordmark.astro';
+import Button from './Button.astro';
+import LangSwitch from './LangSwitch.astro';
+import { path, type Lang, type RouteKey } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  routeKey: RouteKey;
+  /** Transparente sobre la foto de la portada; se vuelve sólida al hacer scroll. */
+  overlay?: boolean;
+}
+const { lang, routeKey, overlay = false } = Astro.props;
+const t = ui[lang];
+---
+
+<header class="site-header" data-overlay={overlay ? 'true' : 'false'} data-scrolled="false" data-menu="closed">
+  <div class="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 py-4 min-[1180px]:px-16 min-[1180px]:py-5">
+    <a href={path('home', lang)} class="header-fg shrink-0" aria-label="The Dreams Factory, inicio">
+      <span class="hidden sm:block"><Wordmark size="md" /></span>
+      <span class="block sm:hidden"><Wordmark size="sm" /></span>
+    </a>
+
+    <nav class="hidden min-[1180px]:block" aria-label={lang === 'es' ? 'Principal' : 'Main'}>
+      <ul class="flex items-center gap-9">
+        {
+          t.nav.map(([key, label]) => (
+            <li>
+              <a
+                href={path(key, lang)}
+                class="nav-link header-fg eyebrow !tracking-[0.12em] text-[0.8125rem]"
+                aria-current={key === routeKey ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-5">
+      <LangSwitch lang={lang} routeKey={routeKey} class="header-fg" />
+      <div class="hidden min-[1180px]:block">
+        <Button href={path('contact', lang)} variant={overlay ? 'light' : 'secondary'} class="header-button">{t.contactButton}</Button>
+      </div>
+      <button
+        type="button"
+        class="menu-toggle header-fg min-[1180px]:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-open-label={t.menuOpen}
+        data-close-label={t.menuClose}
+        aria-label={t.menuOpen}
+      >
+        <svg width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true">
+          <path class="bar-top" d="M0 1h26" stroke="currentColor" stroke-width="1.5"></path>
+          <path class="bar-mid" d="M0 9h26" stroke="currentColor" stroke-width="1.5"></path>
+          <path class="bar-bot" d="M8 17h18" stroke="currentColor" stroke-width="1.5"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu min-[1180px]:hidden" hidden>
+    <nav aria-label={lang === 'es' ? 'Menú' : 'Menu'} class="flex flex-col gap-8 px-5 pb-10 pt-6">
+      <ul class="flex flex-col gap-4">
+        {
+          t.nav.map(([key, label]) => (
+            <li>
+              <a href={path(key, lang)} class="display-m text-white" aria-current={key === routeKey ? 'page' : undefined}>
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div>
+        <Button href={path('contact', lang)} variant="primary">{t.contactButton}</Button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    color: var(--color-pino-800);
+    background: var(--color-porcelana-50);
+    border-bottom: 1px solid var(--color-linea);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+  /* Sobre la foto: transparente y en blanco, hasta que se hace scroll o se abre el menú. */
+  .site-header[data-overlay='true'][data-scrolled='false'][data-menu='closed'] {
+    color: #fff;
+    background: transparent;
+    border-color: transparent;
+  }
+  .site-header[data-menu='open'] {
+    color: #fff;
+    background: var(--color-pino-800);
+    border-color: transparent;
+  }
+  .header-fg { color: inherit; }
+  .nav-link {
+    position: relative;
+    padding-block: 0.25rem;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .nav-link:hover::after,
+  .nav-link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+  /* El botón de contacto sigue el color de la cabecera cuando deja de estar sobre la foto. */
+  .site-header:not([data-scrolled='false'][data-overlay='true']) :global(.header-button) {
+    border-color: var(--color-pino-800);
+    color: var(--color-pino-800);
+    --btn-fill: var(--color-pino-800);
+  }
+  .site-header:not([data-scrolled='false'][data-overlay='true']) :global(.header-button:focus-visible) {
+    color: #fff;
+  }
+  /* Solo con ratón, igual que el relleno del botón (ver .btn en global.css). */
+  @media (hover: hover) {
+    .site-header:not([data-scrolled='false'][data-overlay='true']) :global(.header-button:hover) {
+      color: #fff;
+    }
+  }
+  .mobile-menu {
+    background: var(--color-pino-800);
+    min-height: calc(100dvh - 4.5rem);
+  }
+  .menu-toggle svg path {
+    transition: transform 0.25s ease, opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .site-header[data-menu='open'] .bar-top { transform: translateY(8px) rotate(45deg); }
+  .site-header[data-menu='open'] .bar-mid { opacity: 0; }
+  .site-header[data-menu='open'] .bar-bot { transform: translate(-4px, -8px) rotate(-45deg) scaleX(1.44); }
+  @media (prefers-reduced-motion: reduce) {
+    .site-header, .menu-toggle svg path, .nav-link::after { transition: none; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = header?.querySelector<HTMLElement>('#mobile-menu');
+
+  if (header) {
+    const onScroll = () => {
+      header.dataset.scrolled = window.scrollY > 40 ? 'true' : 'false';
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  if (header && toggle && menu) {
+    const setOpen = (open: boolean) => {
+      header.dataset.menu = open ? 'open' : 'closed';
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? '');
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    toggle.addEventListener('click', () => setOpen(header.dataset.menu !== 'open'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && header.dataset.menu === 'open') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

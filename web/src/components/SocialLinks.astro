@@ -1,0 +1,27 @@
+---
+/* Fila de iconos de redes sociales (pie y sección de contacto). Pensada para fondos verde pino. */
+import SocialIcon from './SocialIcon.astro';
+import { contact } from '../i18n/ui';
+
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+
+<ul class={`flex gap-3 ${className}`}>
+  {
+    contact.social.map((s) => (
+      <li>
+        <a
+          href={s.url}
+          class="grid size-10 place-items-center rounded-full border border-white/30 text-white transition-colors duration-200 hover:border-eucalipto-500 hover:bg-eucalipto-500 hover:text-pino-900"
+          rel="noopener"
+          target="_blank"
+          aria-label={`${s.name} ${s.handle}`}
+          title={`${s.name} ${s.handle}`}
+        >
+          <SocialIcon name={s.name} />
+        </a>
+      </li>
+    ))
+  }
+</ul>

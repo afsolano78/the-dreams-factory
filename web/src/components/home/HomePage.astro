@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from './Hero.astro';
+import Story from './Story.astro';
+import ServicesTeaser from './ServicesTeaser.astro';
+import WeddingsTeaser from './WeddingsTeaser.astro';
+import ReviewsCarousel from './ReviewsCarousel.astro';
+import Education from './Education.astro';
+import BlogTeaser from './BlogTeaser.astro';
+import ClosingCta from './ClosingCta.astro';
+import InstagramStrip from './InstagramStrip.astro';
+import PrototypeToggles from '../PrototypeToggles.astro';
+import { home } from '../../content/home';
+import type { Lang } from '../../i18n/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = home[lang];
+---
+
+<BaseLayout lang={lang} routeKey="home" title={c.meta.title} description={c.meta.description} overlayHeader>
+  <Hero lang={lang} c={c.hero} />
+  <Story lang={lang} c={c.story} />
+  <ServicesTeaser lang={lang} c={c.services} />
+  <WeddingsTeaser lang={lang} c={c.weddings} />
+  <ReviewsCarousel lang={lang} c={c.reviews} />
+  <Education lang={lang} c={c.education} />
+  <BlogTeaser lang={lang} c={c.blog} />
+  <ClosingCta lang={lang} c={c.closing} />
+  <InstagramStrip lang={lang} />
+
+  <!--
+    PROTOTIPO: opciones para comparar variantes. De momento la tarjeta está oculta (`hidden`), pero se siguen
+    aplicando los valores por defecto (o los de la URL, p. ej. ?formacion=zigzag). Quitar `hidden` para volver a verla.
+  -->
+  <PrototypeToggles
+    hidden
+    title={lang === 'es' ? 'Prototipo · Opciones' : 'Prototype · Options'}
+    items={[
+      { group: 'ramo', off: true, label: lang === 'es' ? 'Ramo (Filosofía)' : 'Bouquet (Philosophy)' },
+      { group: 'tarta', off: true, label: lang === 'es' ? 'Tarta (Filosofía)' : 'Cake (Philosophy)' },
+      { group: 'guirnalda', off: true, label: lang === 'es' ? 'Guirnalda de corazones (Servicios)' : 'Heart garland (Services)' },
+      { group: 'libreta', off: true, label: lang === 'es' ? 'Libreta (Formación)' : 'Notebook (Education)' },
+      { group: 'lineas', off: true, label: lang === 'es' ? 'Líneas junto a anillos y copas' : 'Lines beside rings and glasses' },
+      { group: 'acuarela-filosofia', label: lang === 'es' ? 'Acuarela · Filosofía' : 'Watercolour · Philosophy' },
+      { group: 'acuarela-servicios', off: true, label: lang === 'es' ? 'Acuarela · Servicios' : 'Watercolour · Services' },
+      { group: 'acuarela-bodas', off: true, label: lang === 'es' ? 'Acuarela · Bodas' : 'Watercolour · Weddings' },
+      { group: 'acuarela-formacion', off: true, label: lang === 'es' ? 'Acuarela · Formación' : 'Watercolour · Education' },
+      { group: 'acuarela-blog', off: true, label: lang === 'es' ? 'Acuarela · Blog' : 'Watercolour · Blog' },
+      { group: 'acuarela-cierre', label: lang === 'es' ? 'Acuarela · Cierre' : 'Watercolour · Closing' },
+      { group: 'subrayado', label: lang === 'es' ? 'Subrayado dibujado en titulares' : 'Hand-drawn underline in headings' },
+      {
+        group: 'formacion',
+        label: lang === 'es' ? 'Formación' : 'Education',
+        options: [
+          { value: 'lista', label: lang === 'es' ? 'C · Foto y lista' : 'C · Photo & list' },
+          { value: 'paneles', label: lang === 'es' ? 'Original' : 'Original' },
+          { value: 'zigzag', label: 'A · Zigzag' },
+          { value: 'tarjetas', label: lang === 'es' ? 'B · Tarjetas' : 'B · Cards' },
+        ],
+      },
+      {
+        group: 'enlace-formacion',
+        label: lang === 'es' ? 'Enlaces de Formación' : 'Education links',
+        options: [
+          { value: 'circulo', label: lang === 'es' ? '3 · Círculo' : '3 · Circle' },
+          { value: 'texto', label: lang === 'es' ? 'Texto' : 'Text' },
+          { value: 'boton', label: lang === 'es' ? '1 · Botón' : '1 · Button' },
+          { value: 'fila', label: lang === 'es' ? '4 · Fila entera' : '4 · Whole row' },
+        ],
+      },
+      {
+        group: 'rotulo',
+        label: lang === 'es' ? 'Adorno del rótulo' : 'Label ornament',
+        options: [
+          { value: 'linea', label: lang === 'es' ? 'Línea' : 'Line' },
+          { value: 'anillo', label: lang === 'es' ? 'Anillito' : 'Little ring' },
+          { value: 'hoja', label: lang === 'es' ? 'Ramita' : 'Sprig' },
+          { value: 'ninguno', label: lang === 'es' ? 'Nada' : 'None' },
+        ],
+      },
+    ]}
+  />
+</BaseLayout>

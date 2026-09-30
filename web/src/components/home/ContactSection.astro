@@ -1,0 +1,130 @@
+---
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import SocialLinks from '../SocialLinks.astro';
+import ContactIcon from '../ContactIcon.astro';
+import { path, type Lang } from '../../i18n/routes';
+import { contact } from '../../i18n/ui';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['contact'] }
+const { lang, c } = Astro.props;
+const f = c.form;
+const fields = [
+  { id: 'nombres', type: 'text', autocomplete: 'name', required: true, label: f.names },
+  { id: 'email', type: 'email', autocomplete: 'email', required: true, label: f.email },
+  { id: 'fecha', type: 'text', autocomplete: 'off', required: false, label: f.date },
+  { id: 'lugar', type: 'text', autocomplete: 'off', required: false, label: f.place },
+  { id: 'telefono', type: 'tel', autocomplete: 'tel', required: false, label: f.phone },
+] as const;
+
+const phoneLinks = contact.phones.map((p) => ({ label: p, href: `tel:${p.replace(/\s/g, '')}` }));
+const [emailUser, emailDomain] = contact.email.split('@');
+---
+
+<section id="contacto" class="section-y relative isolate bg-pino-800 text-white">
+  <!-- Aquí no hay acuarela: sobre fondo oscuro parece una mancha sucia. -->
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <!-- Fuera de la portada por ahora: las copas pasaron al pie. -->
+  </div>
+  <div class="container-brand grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-[7.5rem]">
+    <div class="flex flex-col gap-7">
+      <SectionHeading eyebrow={c.eyebrow} title={c.title} tone="dark" />
+      <p class="lead max-w-[28rem]">{c.lead}</p>
+      <!-- Teléfono y email con un icono delante, separados del texto por una línea fina. -->
+      <ul class="flex flex-col gap-3 border-t border-white/15 pt-6">
+        <li class="flex items-center gap-3">
+          <ContactIcon name="phone" class="shrink-0 text-eucalipto-500" />
+          <span>
+            {phoneLinks.map((p, i) => <>{i > 0 && <span class="px-2 text-white/40">·</span>}<a href={p.href} class="hover:text-eucalipto-500">{p.label}</a></>)}
+          </span>
+        </li>
+        <li class="flex items-center gap-3">
+          <ContactIcon name="mail" class="shrink-0 text-eucalipto-500" />
+          <a href={`mailto:${contact.email}`} class="[overflow-wrap:anywhere] hover:text-eucalipto-500">{emailUser}<wbr />@{emailDomain}</a>
+        </li>
+      </ul>
+
+      <SocialLinks />
+    </div>
+
+    <form class="contact-form grid gap-x-10 gap-y-9 sm:grid-cols-2" novalidate data-reveal style="--reveal-delay:150ms">
+      {
+        fields.map((fd) => (
+          <div class="field">
+            <label for={`contact-${fd.id}`} class="eyebrow text-eucalipto-500">{fd.label[0]}</label>
+            <input
+              id={`contact-${fd.id}`}
+              name={fd.id}
+              type={fd.type}
+              autocomplete={fd.autocomplete}
+              placeholder={fd.label[1]}
+              required={fd.required}
+            />
+          </div>
+        ))
+      }
+      <div class="field">
+        <label for="contact-necesidad" class="eyebrow text-eucalipto-500">{f.need}</label>
+        <select id="contact-necesidad" name="necesidad">
+          {f.needOptions.map((o) => <option>{o}</option>)}
+        </select>
+      </div>
+      <div class="field sm:col-span-2">
+        <label for="contact-idea" class="eyebrow text-eucalipto-500">{f.idea[0]}</label>
+        <textarea id="contact-idea" name="idea" rows="3" placeholder={f.idea[1]}></textarea>
+      </div>
+      <div class="flex items-start gap-3 text-[0.9375rem] text-eucalipto-500 sm:col-span-2">
+        <input id="contact-privacidad" name="privacidad" type="checkbox" required class="mt-1 size-4 accent-ciruela-700" />
+        <label for="contact-privacidad">{f.privacy} <a href={path('privacy', lang)} class="underline underline-offset-4 hover:text-white">{f.privacyLink}</a>.</label>
+      </div>
+      <div class="flex flex-col items-start gap-4 sm:col-span-2">
+        <Button type="submit" variant="primary">{f.submit}</Button>
+        <p class="form-status text-[0.9375rem] text-eucalipto-500" role="status" hidden>{f.prototypeNotice}</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    background: transparent;
+    color: #fff;
+    border: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.35);
+    padding: 0.25rem 0 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 300;
+    border-radius: 0;
+    transition: border-color 0.2s ease;
+  }
+  .field textarea { resize: vertical; }
+  .field input::placeholder,
+  .field textarea::placeholder { color: rgb(255 255 255 / 0.45); }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--color-eucalipto-500);
+  }
+  .field select option { color: var(--color-pino-800); }
+</style>
+
+<script>
+  // Prototipo: el envío real (función serverless + Resend + Turnstile) llega en la fase de desarrollo.
+  document.querySelectorAll<HTMLFormElement>('.contact-form').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const status = form.querySelector<HTMLElement>('.form-status');
+      if (status) status.hidden = false;
+    });
+  });
+</script>

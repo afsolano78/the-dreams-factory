@@ -1,0 +1,134 @@
+---
+import { Picture } from 'astro:assets';
+import Button from '../Button.astro';
+import CarouselControls from '../CarouselControls.astro';
+import { emphasize, path, type Lang } from '../../i18n/routes';
+import type { HomeContent } from '../../content/home';
+
+interface Props { lang: Lang; c: HomeContent['hero'] }
+const { lang, c } = Astro.props;
+
+/** Tiempo que permanece cada foto, en milisegundos. */
+const INTERVAL = 7000;
+const total = c.slides.length;
+const fill = (tpl: string, vars: Record<string, string | number>) =>
+  tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''));
+const captions = c.slides.map((s) => `${s.couple} · ${s.place}`);
+const titleLines = c.title.split('\n');
+/** Titular y frase de cada foto: la primera usa los generales de la portada. */
+const slideTexts = c.slides.map((s, i) => ({
+  title: i === 0 ? c.title : s.title ?? c.title,
+  intro: i === 0 ? c.intro : s.intro ?? c.intro,
+}));
+---
+
+<section
+  class="relative isolate flex h-[92svh] max-h-[960px] min-h-[620px] items-end overflow-hidden bg-pino-900 text-white"
+  data-carousel="hero"
+  data-paused="false"
+  style={`--interval:${INTERVAL}ms`}
+  aria-roledescription={lang === 'es' ? 'carrusel' : 'carousel'}
+  aria-label={c.controls.region}
+>
+  <div class="absolute inset-0 -z-10" data-parallax="10">
+    {
+      c.slides.map((s, i) => (
+        <div
+          class:list={['fade-img', { 'is-active is-initial': i === 0 }]}
+          data-slide={i}
+          role="group"
+          aria-roledescription={lang === 'es' ? 'diapositiva' : 'slide'}
+          aria-label={fill(c.controls.slide, { n: i + 1, total })}
+          aria-hidden={i === 0 ? 'false' : 'true'}
+        >
+          <Picture
+            src={s.photo.src}
+            alt={s.photo.alt}
+            widths={[640, 960, 1440, 2000, 2400]}
+            sizes="100vw"
+            formats={['avif', 'webp']}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'low'}
+            style={`object-position:${s.focus ?? '50% 50%'}`}
+          />
+        </div>
+      ))
+    }
+    <div class="hero-shade absolute inset-0 z-10" aria-hidden="true"></div>
+  </div>
+
+  <div class="container-brand flex w-full flex-col gap-10 pb-12 md:flex-row md:items-end md:justify-between md:pb-[7.5rem]">
+    <div class="flex max-w-[52rem] flex-col gap-7">
+      <!-- En móvil se oculta: ahí el titular y la frase ya ocupan casi toda la foto. -->
+      <p class="eyebrow intro-item max-sm:hidden" style="--d:100ms">{c.eyebrow}</p>
+      <!--
+        Titular y frase de cada foto van juntos en una capa; las capas se apilan con fundido (como el pie de foto)
+        y se alinean por abajo: si un titular tiene menos líneas, el hueco sobrante queda encima, sobre la foto,
+        y el titular siempre queda pegado a su frase. Solo el de la primera foto es el <h1> de la página.
+      -->
+      <div class="grid items-end">
+        {
+          slideTexts.map((t, s) => (
+            <div class:list={['fade-text flex flex-col gap-7', { 'is-active is-initial': s === 0 }]} data-slide={s} aria-hidden={s === 0 ? 'false' : 'true'}>
+              {s === 0 ? (
+                <h1 class="display-xl">
+                  {titleLines.map((line, i) => (
+                    <span class="title-line">
+                      <span class="title-line-inner" style={`--d:${250 + i * 140}ms`} set:html={emphasize(line)} />
+                    </span>
+                  ))}
+                </h1>
+              ) : (
+                <p class="display-xl" set:html={emphasize(t.title)} />
+              )}
+              <p class:list={['lead max-w-[35rem]', { 'intro-item': s === 0 }]} style={s === 0 ? '--d:650ms' : undefined}>{t.intro}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="intro-item flex flex-wrap gap-4" style="--d:800ms">
+        <Button href={path(c.primary.to, lang)} variant="primary">{c.primary.label}</Button>
+        <Button href={path(c.secondary.to, lang)} variant="light" class="max-sm:hidden">{c.secondary.label}</Button>
+      </div>
+    </div>
+
+    <div class="intro-item flex w-full max-w-[20rem] flex-col gap-4 md:items-end" style="--d:950ms">
+      <a href={path('weddings', lang)} class="eyebrow grid !tracking-[0.16em] hover:underline hover:underline-offset-4 md:text-right" data-carousel-live aria-live="off">
+        {captions.map((cap, i) => <span class:list={['fade-text', { 'is-active is-initial': i === 0 }]} data-slide={i}>{cap}</span>)}
+      </a>
+      <CarouselControls
+        labels={captions.map((cap, i) => fill(c.controls.goTo, { n: i + 1, caption: cap }))}
+        pauseLabel={c.controls.pause}
+        playLabel={c.controls.play}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-shade {
+    background: linear-gradient(
+      180deg,
+      rgb(11 40 40 / 0.5) 0%,
+      rgb(11 40 40 / 0.08) 30%,
+      rgb(11 40 40 / 0.22) 56%,
+      rgb(11 40 40 / 0.85) 100%
+    );
+  }
+
+  /* Entrada del texto al cargar: el titular sube línea a línea y el resto aparece escalonado. */
+  .title-line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+  .title-line-inner { display: block; animation: line-up 1.1s cubic-bezier(0.2, 0.7, 0.1, 1) var(--d) both; }
+  .intro-item { animation: fade-up 1s cubic-bezier(0.2, 0.7, 0.1, 1) var(--d) both; }
+  @keyframes line-up {
+    from { transform: translateY(105%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .title-line-inner, .intro-item { animation: none; }
+  }
+</style>

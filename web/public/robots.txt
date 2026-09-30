@@ -1,0 +1,4 @@
+# PROTOTIPO: no rastrear nada. Al publicar la web definitiva, sustituir por un robots.txt que permita el rastreo
+# e indique el sitemap.
+User-agent: *
+Disallow: /

@@ -1,0 +1,15 @@
+// Configuración de Cloudflare Workers (recursos estáticos) para el prototipo.
+// Workers Builds ejecuta `npm run build` en esta carpeta (web/) y después `npx wrangler deploy`, que publica
+// el contenido de dist/ en el Worker «dreams-factory-prototipo» (el nombre debe coincidir con el del panel).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dreams-factory-prototipo",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist",
+    // Rutas sin archivo: se muestra la página 404 propia (dist/404.html).
+    "not_found_handling": "404-page",
+    // /servicios → /servicios/ (las páginas se generan como carpeta/index.html).
+    "html_handling": "auto-trailing-slash"
+  }
+}

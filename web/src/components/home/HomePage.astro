@@ -30,11 +30,10 @@ const c = home[lang];
   <InstagramStrip lang={lang} />
 
   <!--
-    PROTOTIPO: opciones para comparar variantes. De momento la tarjeta está oculta (`hidden`), pero se siguen
-    aplicando los valores por defecto (o los de la URL, p. ej. ?formacion=zigzag). Quitar `hidden` para volver a verla.
+    PROTOTIPO: opciones para comparar variantes (valores por defecto o de la URL, p. ej. ?formacion=zigzag).
+    Para ocultar la tarjeta sin perder los valores, añadir `hidden`.
   -->
   <PrototypeToggles
-    hidden
     title={lang === 'es' ? 'Prototipo · Opciones' : 'Prototype · Options'}
     items={[
       { group: 'ramo', off: true, label: lang === 'es' ? 'Ramo (Filosofía)' : 'Bouquet (Philosophy)' },

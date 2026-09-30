@@ -12,7 +12,8 @@ interface Props { title: string; items: Item[]; hidden?: boolean }
 const { title, items, hidden = false } = Astro.props;
 ---
 
-<details class:list={['proto-toggles fixed bottom-3 left-3 z-[55] bg-white/95 text-pino-800 shadow-[0_8px_30px_rgb(11_40_40/0.18)] backdrop-blur md:bottom-4 md:left-4', { hidden }]}>
+<!-- En móvil va por encima de la barra fija «Llamar · WhatsApp» (3,5 rem + zona segura del teléfono). -->
+<details class:list={['proto-toggles fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom))] left-3 z-[55] bg-white/95 text-pino-800 shadow-[0_8px_30px_rgb(11_40_40/0.18)] backdrop-blur md:bottom-4 md:left-4', { hidden }]}>
   <summary class="cursor-pointer select-none px-3 py-2 text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-malva-500">{title}</summary>
   <ul class="flex flex-col gap-1.5 px-3 pb-3">
     {items.map((it) => (

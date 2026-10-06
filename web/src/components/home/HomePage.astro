@@ -62,6 +62,17 @@ const c = home[lang];
       { group: 'acuarela-cierre', off: true, label: lang === 'es' ? 'Acuarela · Cierre' : 'Watercolour · Closing' },
       { group: 'subrayado', label: lang === 'es' ? 'Subrayado dibujado en titulares' : 'Hand-drawn underline in headings' },
       {
+        group: 'bodas',
+        label: lang === 'es' ? 'Bodas' : 'Weddings',
+        options: [
+          { value: 'arcos', label: lang === 'es' ? 'Actual (arcos)' : 'Current (arches)' },
+          { value: 'collage', label: 'A · Collage' },
+          { value: 'mosaico', label: lang === 'es' ? 'B · Mosaico' : 'B · Mosaic' },
+          { value: 'album', label: lang === 'es' ? 'C · Álbum' : 'C · Album' },
+          { value: 'destacada', label: lang === 'es' ? 'D · Destacada' : 'D · Featured' },
+        ],
+      },
+      {
         group: 'servicios',
         label: lang === 'es' ? 'Servicios' : 'Services',
         options: [

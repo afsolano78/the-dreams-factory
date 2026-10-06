@@ -357,7 +357,7 @@ body::after {
   Sin velos oscuros, sin el tono cálido ni el blanco y negro de Bodas y sin la textura de papel (que cubre toda la
   página, fotos incluidas). Para que los textos sobre foto se sigan leyendo, llevan una sombra suave en las letras.
 */
-html:not([data-proto-sombreado='si']) :is(.hero-shade, .tile-shade, .panel-shade, .mosaic-shade, .photo-shade) { display: none; }
+html:not([data-proto-sombreado='si']) :is(.hero-shade, .tile-shade, .panel-shade, .mosaic-shade, .photo-shade, .collage-shade) { display: none; }
 html:not([data-proto-sombreado='si']) .wedding-photo img { filter: none !important; }
 html:not([data-proto-sombreado='si']) .wedding-view { background-image: none; }
 html:not([data-proto-sombreado='si']) body::after { display: none; }
@@ -568,6 +568,13 @@ html[data-proto-enlace-formacion='boton'] [data-edu-link='boton'] { display: blo
 html[data-proto-enlace-formacion='fila'] [data-edu-link='fila'] { display: block; }
 /* En «fila», un poco de aire a los lados para que el tinte rosa no quede pegado al texto. */
 html[data-proto-enlace-formacion='fila'] .edu-row { padding-inline: 1.25rem; margin-inline: -1.25rem; }
+/* PROTOTIPO: variantes de Bodas en portada (desplegable «bodas»). Sin elegir, la original («arcos»). */
+/* Cada variante define su propio display en el componente; aquí solo se ocultan las no elegidas. */
+html[data-proto-bodas]:not([data-proto-bodas='arcos']) [data-bodas='arcos'],
+html:not([data-proto-bodas='collage']) [data-bodas='collage'],
+html:not([data-proto-bodas='mosaico']) [data-bodas='mosaico'],
+html:not([data-proto-bodas='album']) [data-bodas='album'],
+html:not([data-proto-bodas='destacada']) [data-bodas='destacada'] { display: none; }
 /* PROTOTIPO: variantes de Servicios en portada (desplegable «servicios»). Sin elegir, la original («fotos»). */
 [data-servicios]:not([data-servicios='fotos']) { display: none; }
 html[data-proto-servicios]:not([data-proto-servicios='fotos']) [data-servicios='fotos'] { display: none; }

@@ -50,8 +50,7 @@ const slideTexts = c.slides.map((s, i) => ({
         >
           {s.video && (
             <video class="hero-video" data-hero-video muted playsinline loop preload="auto" poster={posters[i]} aria-hidden="true">
-              <source src={s.video.webm} type="video/webm" />
-              <source src={s.video.mp4} type="video/mp4" />
+              {s.video.map((v) => <source src={v.src} type={v.type} />)}
             </video>
           )}
           <Picture

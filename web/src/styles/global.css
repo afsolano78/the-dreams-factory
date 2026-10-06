@@ -78,6 +78,20 @@ html[data-proto-paleta='oliva'] {
   --color-suave: #545a48;
   --color-linea: #e1dccb;
 }
+html[data-proto-paleta='terracota-negro'] {
+  --color-pino-900: #161616;
+  --color-pino-800: #222222;
+  --color-pino-600: #4a4a4a;
+  --color-ciruela-700: #9a4a2e;
+  --color-ciruela-800: #7d3b24;
+  --color-malva-500: #a35a3e;
+  --color-eucalipto-500: #b3a796;
+  --color-eucalipto-100: #ece8e1;
+  --color-rosa-100: #f5e6dc;
+  --color-porcelana-50: #fbf8f5;
+  --color-suave: #575757;
+  --color-linea: #e2d5cc;
+}
 html[data-proto-paleta='champan'] {
   --color-pino-900: #161616;
   --color-pino-800: #222222;
@@ -338,6 +352,19 @@ body::after {
 /* La boda del centro de cada fila, siempre en blanco y negro (ritmo color · b/n · color). */
 .weddings-row > li:nth-child(3n + 2) .wedding-photo img { filter: grayscale(1) contrast(1.02); }
 
+/*
+  PROTOTIPO: fotos tal cual el original (casilla «Velos y filtros en las fotos», desmarcada por defecto).
+  Sin velos oscuros, sin el tono cálido ni el blanco y negro de Bodas y sin la textura de papel (que cubre toda la
+  página, fotos incluidas). Para que los textos sobre foto se sigan leyendo, llevan una sombra suave en las letras.
+*/
+html:not([data-proto-sombreado='si']) :is(.hero-shade, .tile-shade, .panel-shade, .mosaic-shade, .photo-shade) { display: none; }
+html:not([data-proto-sombreado='si']) .wedding-photo img { filter: none !important; }
+html:not([data-proto-sombreado='si']) .wedding-view { background-image: none; }
+html:not([data-proto-sombreado='si']) body::after { display: none; }
+html:not([data-proto-sombreado='si']) :is(.photo-text, .site-header[data-overlay='true'][data-scrolled='false'][data-menu='closed'], .photo-tile, .panel-body, .mosaic-tile a, .wedding-view) {
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 2px 18px rgb(0 0 0 / 0.55);
+}
+
 /* Dibujos que se trazan solos al entrar en pantalla (medidas y visibilidad en src/scripts/draw.ts). */
 /* Oculto hasta que el script lo mide y lo deja listo (evita que se vea completo un instante antes de trazarse). */
 html.js svg[data-draw]:not([data-ready]) { visibility: hidden; }
@@ -467,7 +494,7 @@ html:not(.js) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em { ba
 }
 
 /* PROTOTIPO: el subrayado es una imagen con el color escrito; una copia por paleta (color de malva-500). */
-html[data-proto-paleta='terracota']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+html:is([data-proto-paleta='terracota'], [data-proto-paleta='terracota-negro']):not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%23a35a3e' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%23a35a3e' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
 }
 html[data-proto-paleta='azul']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {

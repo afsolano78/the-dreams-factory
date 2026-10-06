@@ -40,10 +40,13 @@ const ogImage = new URL('/og-image.jpg', site);
           document.documentElement.classList.add('intro');
         }
       } catch {}
-      // PROTOTIPO: paleta elegida en la tarjeta de opciones de la portada (?paleta=… o la guardada), en todas las páginas.
+      // PROTOTIPO: opciones de la tarjeta de la portada que afectan a todo el sitio (?paleta=… o la guardada), en todas las páginas.
       try {
-        const paleta = new URLSearchParams(location.search).get('paleta') || localStorage.getItem('tdf-toggle-paleta');
-        if (paleta) document.documentElement.setAttribute('data-proto-paleta', paleta);
+        const params = new URLSearchParams(location.search);
+        ['paleta', 'sombreado'].forEach((group) => {
+          const v = params.get(group) || localStorage.getItem('tdf-toggle-' + group);
+          if (v) document.documentElement.setAttribute('data-proto-' + group, v);
+        });
       } catch {}
     </script>
     <title>{title}</title>

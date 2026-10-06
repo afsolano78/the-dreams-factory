@@ -4,7 +4,7 @@ import type { Lang, RouteKey } from '../i18n/routes';
 import hero1 from '../assets/photos/hero/1-nyt-beso.jpg';
 import hero2 from '../assets/photos/hero/2-byd-banquete.jpg';
 import hero3 from '../assets/photos/hero/3-aym-confeti.jpg';
-import hero4 from '../assets/photos/hero/4-sya-jardin.jpg';
+import hero4 from '../assets/photos/hero/4-coche-clasico.jpg';
 import hero5 from '../assets/photos/hero/5-aym-fiesta.jpg';
 import srvIntegral from '../assets/photos/servicio-organizacion-integral.jpg';
 import srvDiseno from '../assets/photos/servicio-diseno-decoracion.jpg';
@@ -125,7 +125,7 @@ export const home: Record<Lang, HomeContent> = {
         { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', photo: { src: hero1, alt: 'N y T se abrazan bajo una carpa decorada con guirnaldas de luces y ramas verdes.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Cada detalle,\n*pensado para vosotros*', intro: 'Diseño, decoración y ambientación con carácter propio: flores, luz y mesas que cuentan vuestra historia.', photo: { src: hero2, alt: 'Mesa imperial del banquete con hortensias, velas y ramas de eucalipto colgando del techo.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'Toda la emoción,\n*ninguna preocupación*', intro: 'Nos ocupamos de proveedores, tiempos y planes B para que vosotros solo tengáis que mirar hacia delante.', photo: { src: hero3, alt: 'A y M salen de la iglesia bajo una lluvia de pétalos lanzados por sus invitados.' } },
-        { couple: 'S & A', place: 'Castillo Bosque de la Zoreda', focus: '45% 35%', title: 'Vuestra historia,\n*a vuestra manera*', intro: 'Sin tradiciones obligatorias ni bodas «raras»: escuchamos cómo sois y lo convertimos en vuestra boda.', photo: { src: hero4, alt: 'S y A ríen sentados en un sofá antiguo rodeados de flores en el jardín.' } },
+        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Vuestra historia,\n*a vuestra manera*', intro: 'Sin tradiciones obligatorias ni bodas «raras»: escuchamos cómo sois y lo convertimos en vuestra boda.', photo: { src: hero4, alt: 'A y S, apoyados en un coche clásico negro; ella, con velo largo, sostiene una sombrilla blanca y al fondo se ven las montañas.' } },
         { couple: 'A & M', place: 'La fiesta', focus: '48% 35%', title: 'Y vosotros,\n*a disfrutar*', intro: 'El día B coordinamos todo entre bastidores para que lo viváis de principio a fin con vuestra gente.', photo: { src: hero5, alt: 'A y M, sentados juntos y sonriendo, bajo un neón que dice «Fly me to the moon» rodeado de hiedra.' } },
       ],
       controls: { region: 'Bodas destacadas', slide: 'Foto {n} de {total}', goTo: 'Ver foto {n}: {caption}', pause: 'Pausar el pase de fotos', play: 'Reanudar el pase de fotos' },
@@ -255,7 +255,7 @@ export const home: Record<Lang, HomeContent> = {
         { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', photo: { src: hero1, alt: 'N and T embrace under a marquee decorated with string lights and greenery.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Every detail,\n*made for you*', intro: 'Design, styling and décor with a character of their own: flowers, light and tables that tell your story.', photo: { src: hero2, alt: 'A long banquet table with hydrangeas, candles and eucalyptus hanging from the ceiling.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'All the emotion,\n*none of the worry*', intro: 'We handle suppliers, timings and back-up plans so all you have to do is look ahead.', photo: { src: hero3, alt: 'A and M leave the church under a shower of petals thrown by their guests.' } },
-        { couple: 'S & A', place: 'Castillo Bosque de la Zoreda', focus: '45% 35%', title: 'Your story,\n*your way*', intro: 'No compulsory traditions, no “odd” weddings: we listen to who you are and turn it into your wedding.', photo: { src: hero4, alt: 'S and A laugh on an antique sofa surrounded by flowers in the garden.' } },
+        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Your story,\n*your way*', intro: 'No compulsory traditions, no “odd” weddings: we listen to who you are and turn it into your wedding.', photo: { src: hero4, alt: 'A and S lean against a black vintage car; she holds a white parasol, her long veil in the breeze, with mountains behind them.' } },
         { couple: 'A & M', place: 'The party', focus: '48% 35%', title: 'And you,\n*just enjoy it*', intro: 'On the day we coordinate everything behind the scenes so you can live it from start to finish with your people.', photo: { src: hero5, alt: 'A and M sit close together, smiling, beneath an ivy-framed neon sign reading “Fly me to the moon”.' } },
       ],
       controls: { region: 'Featured weddings', slide: 'Photo {n} of {total}', goTo: 'Show photo {n}: {caption}', pause: 'Pause the slideshow', play: 'Play the slideshow' },

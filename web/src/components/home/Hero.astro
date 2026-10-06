@@ -13,7 +13,10 @@ const INTERVAL = 7000;
 const total = c.slides.length;
 const fill = (tpl: string, vars: Record<string, string | number>) =>
   tpl.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''));
-const captions = c.slides.map((s) => `${s.couple} · ${s.place}`);
+/** Pie de cada foto («pareja · lugar»); si falta alguno de los dos, solo el otro, y si faltan ambos, vacío. */
+const captions = c.slides.map((s) => [s.couple, s.place].filter(Boolean).join(' · '));
+/** Etiqueta accesible de cada botón: sin pie, solo «Ver foto N» (sin «: » colgando). */
+const dotLabels = captions.map((cap, i) => fill(c.controls.goTo, { n: i + 1, caption: cap }).replace(/[:\s]+$/, ''));
 const titleLines = c.title.split('\n');
 /** Titular y frase de cada foto: la primera usa los generales de la portada. */
 const slideTexts = c.slides.map((s, i) => ({
@@ -97,7 +100,7 @@ const slideTexts = c.slides.map((s, i) => ({
         {captions.map((cap, i) => <span class:list={['fade-text', { 'is-active is-initial': i === 0 }]} data-slide={i}>{cap}</span>)}
       </a>
       <CarouselControls
-        labels={captions.map((cap, i) => fill(c.controls.goTo, { n: i + 1, caption: cap }))}
+        labels={dotLabels}
         pauseLabel={c.controls.pause}
         playLabel={c.controls.play}
       />

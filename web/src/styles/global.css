@@ -430,13 +430,13 @@ html[data-proto-rotulo='hoja'] .eyebrow-line-both::after {
 }
 html[data-proto-rotulo='hoja'] .eyebrow-line-both::after { transform: scaleX(-1); }
 /* PROTOTIPO: acuarelas de cada sección, ocultables desde la tarjeta «Prototipo · Opciones». */
-/* Activadas por defecto (Filosofía, Cierre): ocultas solo con «no». Las demás, ocultas salvo «si». */
-html[data-proto-acuarela-filosofia='no'] [data-toggle='acuarela-filosofia'],
+/* Todas desactivadas por defecto: ocultas salvo que se active su casilla («si»). */
+html:not([data-proto-acuarela-filosofia='si']) [data-toggle='acuarela-filosofia'],
 html:not([data-proto-acuarela-servicios='si']) [data-toggle='acuarela-servicios'],
 html:not([data-proto-acuarela-bodas='si']) [data-toggle='acuarela-bodas'],
 html:not([data-proto-acuarela-formacion='si']) [data-toggle='acuarela-formacion'],
 html:not([data-proto-acuarela-blog='si']) [data-toggle='acuarela-blog'],
-html[data-proto-acuarela-cierre='no'] [data-toggle='acuarela-cierre'] { display: none; }
+html:not([data-proto-acuarela-cierre='si']) [data-toggle='acuarela-cierre'] { display: none; }
 /* PROTOTIPO: variantes de Formación (desplegable «formacion»). Sin elegir, se ve «lista» (foto y lista). */
 [data-formacion]:not([data-formacion='lista']) { display: none; }
 html[data-proto-formacion]:not([data-proto-formacion='lista']) [data-formacion='lista'] { display: none; }

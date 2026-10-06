@@ -568,10 +568,10 @@ html[data-proto-enlace-formacion='boton'] [data-edu-link='boton'] { display: blo
 html[data-proto-enlace-formacion='fila'] [data-edu-link='fila'] { display: block; }
 /* En «fila», un poco de aire a los lados para que el tinte rosa no quede pegado al texto. */
 html[data-proto-enlace-formacion='fila'] .edu-row { padding-inline: 1.25rem; margin-inline: -1.25rem; }
-/* PROTOTIPO: variantes de Bodas en portada (desplegable «bodas»). Sin elegir, la original («arcos»). */
+/* PROTOTIPO: variantes de Bodas en portada (desplegable «bodas»). Sin elegir, el collage. */
 /* Cada variante define su propio display en el componente; aquí solo se ocultan las no elegidas. */
-html[data-proto-bodas]:not([data-proto-bodas='arcos']) [data-bodas='arcos'],
-html:not([data-proto-bodas='collage']) [data-bodas='collage'],
+html:not([data-proto-bodas='arcos']) [data-bodas='arcos'],
+html[data-proto-bodas]:not([data-proto-bodas='collage']) [data-bodas='collage'],
 html:not([data-proto-bodas='mosaico']) [data-bodas='mosaico'],
 html:not([data-proto-bodas='album']) [data-bodas='album'],
 html:not([data-proto-bodas='destacada']) [data-bodas='destacada'] { display: none; }

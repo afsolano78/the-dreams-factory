@@ -165,6 +165,8 @@ const slideTexts = c.slides.map((s, i) => ({
     height: 100%;
     object-fit: cover;
   }
+  /* La foto de debajo no se ve mientras está el vídeo: sin zoom, para no gastar en animarla. */
+  .fade-img:has(.hero-video) :global(img) { animation: none; }
   @media (prefers-reduced-motion: reduce) {
     .hero-video { display: none; }
   }

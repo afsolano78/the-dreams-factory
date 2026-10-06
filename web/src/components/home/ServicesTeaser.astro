@@ -8,8 +8,6 @@
 import { Picture } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
-import BotanicalDivider from '../deco/BotanicalDivider.astro';
-import WeddingRings from '../deco/WeddingRings.astro';
 import HeartGarland from '../deco/HeartGarland.astro';
 import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import SectionEdge from '../SectionEdge.astro';
@@ -23,7 +21,6 @@ const base = path('services', lang);
 
 <section class="section-y relative isolate bg-white">
   <SectionEdge class="text-white" shape={1} />
-  <BotanicalDivider class="on-wave text-eucalipto-500"><WeddingRings class="w-16 text-malva-500 sm:w-20" /></BotanicalDivider>
 
   <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
     <!-- Acuarelas alternas por secciones: Filosofía rosa · Servicios verde · Bodas rosa · Formación verde · Blog rosa · Cierre rosa (a propósito, fuera de la secuencia). -->

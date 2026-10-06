@@ -4,7 +4,6 @@ import SocialLinks from './SocialLinks.astro';
 import LogoRow from './LogoRow.astro';
 import LangSwitch from './LangSwitch.astro';
 import ContactIcon from './ContactIcon.astro';
-import WeddingToast from './deco/WeddingToast.astro';
 import { path, type Lang, type RouteKey } from '../i18n/routes';
 import { ui, press, contact } from '../i18n/ui';
 
@@ -19,8 +18,6 @@ const [emailUser, emailDomain] = contact.email.split('@');
 ---
 
 <footer class="relative isolate overflow-hidden bg-pino-900 text-white">
-  <!-- Copas: en tableta (md) se quitan, porque la franja de marca ocupa toda la parte de arriba. -->
-  <WeddingToast class="pointer-events-none absolute right-4 top-12 -z-10 w-[120px] -rotate-6 text-white opacity-[0.12] md:hidden lg:right-[3%] lg:top-10 lg:block lg:w-[160px]" aria-hidden="true" />
   <div class="container-brand pb-10 pt-20">
     <!--
       Móvil: todo en una columna. Tableta (md): la marca en una franja arriba (nombre a la izquierda, redes a la

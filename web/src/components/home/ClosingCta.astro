@@ -1,11 +1,10 @@
 ---
 /*
-  Cierre de la portada: unos anillos que se dibujan, una frase caligráfica, el titular y la invitación a escribir
+  Cierre de la portada: una frase caligráfica, el titular y la invitación a escribir
   (botón a la página de contacto y, debajo, WhatsApp directo).
 */
 import Button from '../Button.astro';
 import SectionEdge from '../SectionEdge.astro';
-import WeddingRings from '../deco/WeddingRings.astro';
 import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import { path, emphasize, type Lang } from '../../i18n/routes';
 import { ui, contact } from '../../i18n/ui';
@@ -24,7 +23,6 @@ const whatsapp = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(q.
     <WatercolorBlob data-toggle="acuarela-cierre" seed={4} class="absolute left-1/2 top-1/2 w-[min(640px,120%)] -translate-x-1/2 -translate-y-1/2 text-malva-500 opacity-[0.14]" />
   </div>
   <div class="container-brand flex flex-col items-center gap-6 text-center" data-reveal>
-    <WeddingRings class="w-20 text-malva-500 md:w-24" />
     <p class="font-script text-[clamp(2rem,1.5rem+2vw,2.75rem)] leading-none text-ciruela-700">{c.script}</p>
     <h2 class="display-l no-stroke max-w-[18ch] text-pino-800" set:html={emphasize(c.title)} />
     <p class="lead max-w-[36rem]">{c.text}</p>

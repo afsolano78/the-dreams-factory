@@ -185,8 +185,6 @@ html.intro:not(.intro-open) [data-carousel] :is(.carousel-bar, .fade-img img),
   Transiciones entre secciones de la portada: la mayoría son cortes rectos; Servicios y Blog entran con una onda
   dibujada (SectionEdge) y Bodas se monta sobre Servicios como una hoja de papel (.sheet-over).
 */
-/* Separador sobre una onda: sube hasta la mitad de la onda, que es donde se ve el cambio de color. */
-.on-wave { margin-top: calc(clamp(22px, 3.4vw, 52px) * -0.55); }
 .sheet-over {
   --sheet-r: clamp(1.5rem, 1rem + 2.5vw, 3rem);
   margin-top: calc(-1 * var(--sheet-r));
@@ -344,8 +342,6 @@ html:not([data-proto-ramo='si']) [data-toggle='ramo'],
 html:not([data-proto-tarta='si']) [data-toggle='tarta'],
 html:not([data-proto-guirnalda='si']) [data-toggle='guirnalda'],
 html:not([data-proto-libreta='si']) [data-toggle='libreta'] { display: none; }
-/* Líneas a los lados del motivo en los separadores: se ocultan sin mover el motivo, que sigue centrado. */
-html:not([data-proto-lineas='si']) [data-toggle-line] { visibility: hidden; }
 
 /* Letra capital: primera letra grande en Bodoni, como en las revistas (Nuestra filosofía). */
 .drop-cap::first-letter {

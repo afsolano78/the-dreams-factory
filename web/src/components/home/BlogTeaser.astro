@@ -6,8 +6,6 @@
 import { Picture } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
-import BotanicalDivider from '../deco/BotanicalDivider.astro';
-import WeddingToast from '../deco/WeddingToast.astro';
 import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import SectionEdge from '../SectionEdge.astro';
 import { path, type Lang } from '../../i18n/routes';
@@ -21,7 +19,6 @@ const reading = (n: number) => c.readingTime.replace('{n}', String(n));
 
 <section class="section-y relative isolate bg-white">
   <SectionEdge class="text-white" shape={0} />
-  <BotanicalDivider class="on-wave text-eucalipto-500"><WeddingToast class="w-14 sm:w-16" /></BotanicalDivider>
   <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
     <WatercolorBlob data-toggle="acuarela-blog" seed={27} class="absolute -left-24 -top-10 w-[380px] text-malva-500 opacity-20 md:w-[480px]" />
   </div>

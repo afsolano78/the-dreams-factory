@@ -1,6 +1,7 @@
 import type { ImageMetadata } from 'astro';
 import type { Lang, RouteKey } from '../i18n/routes';
 
+import heroVideoPoster from '../assets/photos/hero/0-video-mesa.jpg';
 import hero1 from '../assets/photos/hero/1-nyt-beso.jpg';
 import hero2 from '../assets/photos/hero/2-byd-banquete.jpg';
 import hero3 from '../assets/photos/hero/3-aym-confeti.jpg';
@@ -39,7 +40,16 @@ type Photo = { src: ImageMetadata; alt: string };
  * Foto del carrusel de portada con su propio titular y frase (`title`, `intro`). La primera diapositiva usa el
  * titular general de la portada (`hero.title` / `hero.intro`), así que no los necesita.
  */
-export type HeroSlide = { photo: Photo; couple: string; place: string; focus?: string; title?: string; intro?: string };
+export type HeroSlide = {
+  photo: Photo; couple: string; place: string; focus?: string; title?: string; intro?: string;
+  /**
+   * Vídeo de fondo (sin sonido, en bucle). `photo` hace de imagen de carga y de alternativa cuando el vídeo no se
+   * reproduce (reducir movimiento, ahorro de datos). Rutas a /public (p. ej. /videos/portada.webm).
+   */
+  video?: { webm: string; mp4: string };
+  /** Tiempo que permanece la diapositiva, en ms (por defecto, el de la portada). */
+  duration?: number;
+};
 
 export interface HomeContent {
   meta: { title: string; description: string };
@@ -130,7 +140,8 @@ export const home: Record<Lang, HomeContent> = {
       primary: { label: 'Contadnos vuestra idea', to: 'contact' },
       secondary: { label: 'Ver bodas', to: 'weddings' },
       slides: [
-        { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', photo: { src: hero1, alt: 'N y T se abrazan bajo una carpa decorada con guirnaldas de luces y ramas verdes.' } },
+        { couple: '', place: '', duration: 18000, video: { webm: '/videos/portada-mesa.webm', mp4: '/videos/portada-mesa.mp4' }, photo: { src: heroVideoPoster, alt: 'Vista aérea de una mesa imperial preparada en un patio rodeado de jardín.' } },
+        { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Momentos que\n*se quedan con vosotros*', intro: 'Cuidamos cada detalle para que los momentos importantes lleguen solos, sin prisas ni sobresaltos.', photo: { src: hero1, alt: 'N y T se abrazan bajo una carpa decorada con guirnaldas de luces y ramas verdes.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Cada detalle,\n*pensado para vosotros*', intro: 'Diseño, decoración y ambientación con carácter propio: flores, luz y mesas que cuentan vuestra historia.', photo: { src: hero2, alt: 'Mesa imperial del banquete con hortensias, velas y ramas de eucalipto colgando del techo.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'Toda la emoción,\n*ninguna preocupación*', intro: 'Nos ocupamos de proveedores, tiempos y planes B para que vosotros solo tengáis que mirar hacia delante.', photo: { src: hero3, alt: 'A y M salen de la iglesia bajo una lluvia de pétalos lanzados por sus invitados.' } },
         { couple: 'A & S', place: '', focus: '45% 50%', title: 'Vuestra historia,\n*a vuestra manera*', intro: 'Sin tradiciones obligatorias ni bodas «raras»: escuchamos cómo sois y lo convertimos en vuestra boda.', photo: { src: hero4, alt: 'A y S, apoyados en un coche clásico negro; ella, con velo largo, sostiene una sombrilla blanca y al fondo se ven las montañas.' } },
@@ -262,7 +273,8 @@ export const home: Record<Lang, HomeContent> = {
       primary: { label: 'Tell us your idea', to: 'contact' },
       secondary: { label: 'See our weddings', to: 'weddings' },
       slides: [
-        { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', photo: { src: hero1, alt: 'N and T embrace under a marquee decorated with string lights and greenery.' } },
+        { couple: '', place: '', duration: 18000, video: { webm: '/videos/portada-mesa.webm', mp4: '/videos/portada-mesa.mp4' }, photo: { src: heroVideoPoster, alt: 'Aerial view of a long banquet table set in a courtyard surrounded by gardens.' } },
+        { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Moments that\n*stay with you*', intro: 'We look after every detail so the moments that matter arrive on their own, unhurried and worry-free.', photo: { src: hero1, alt: 'N and T embrace under a marquee decorated with string lights and greenery.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Every detail,\n*made for you*', intro: 'Design, styling and décor with a character of their own: flowers, light and tables that tell your story.', photo: { src: hero2, alt: 'A long banquet table with hydrangeas, candles and eucalyptus hanging from the ceiling.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'All the emotion,\n*none of the worry*', intro: 'We handle suppliers, timings and back-up plans so all you have to do is look ahead.', photo: { src: hero3, alt: 'A and M leave the church under a shower of petals thrown by their guests.' } },
         { couple: 'A & S', place: '', focus: '45% 50%', title: 'Your story,\n*your way*', intro: 'No compulsory traditions, no “odd” weddings: we listen to who you are and turn it into your wedding.', photo: { src: hero4, alt: 'A and S lean against a black vintage car; she holds a white parasol, her long veil in the breeze, with mountains behind them.' } },

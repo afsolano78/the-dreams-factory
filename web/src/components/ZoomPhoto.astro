@@ -59,7 +59,7 @@ const { src, alt, label, closeLabel, thumbClass = '', thumbWidths = [320, 480], 
     cursor: zoom-out;
   }
   .zoom-dialog[open] { display: grid; }
-  .zoom-dialog::backdrop { background: rgb(11 40 40 / 0.88); backdrop-filter: blur(4px); }
+  .zoom-dialog::backdrop { background: color-mix(in srgb, var(--color-pino-900) 88%, transparent); backdrop-filter: blur(4px); }
   /*
     La foto la pinta el componente <Picture>, al que no llegan los estilos acotados de este componente: por eso
     :global. El <picture> no ocupa caja propia, así que la foto se ajusta al hueco del diálogo.

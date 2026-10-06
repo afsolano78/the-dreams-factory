@@ -164,9 +164,9 @@ const apart = c.items.filter((s) => s.apart);
   .photo-tiles > li { margin-bottom: 1rem; }
   @media (min-width: 1024px) { .photo-tiles > li { margin-bottom: 0; } }
   .tile-shade {
-    background: linear-gradient(180deg, rgb(11 40 40 / 0.05) 0%, rgb(11 40 40 / 0.1) 35%, rgb(11 40 40 / 0.62) 62%, rgb(11 40 40 / 0.92) 100%);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--color-pino-900) 5%, transparent) 0%, color-mix(in srgb, var(--color-pino-900) 10%, transparent) 35%, color-mix(in srgb, var(--color-pino-900) 62%, transparent) 62%, color-mix(in srgb, var(--color-pino-900) 92%, transparent) 100%);
   }
-  .photo-tile { text-shadow: 0 1px 14px rgb(11 40 40 / 0.45); }
+  .photo-tile { text-shadow: 0 1px 14px color-mix(in srgb, var(--color-pino-900) 45%, transparent); }
 
   /* Variante «lista»: el servicio activo se marca en granate y su flecha avanza; las fotos se funden. */
   .svc-title, .svc-arrow { transition: color 0.3s ease, transform 0.35s ease, opacity 0.3s ease; }

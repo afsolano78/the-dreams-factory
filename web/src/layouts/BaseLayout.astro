@@ -40,6 +40,11 @@ const ogImage = new URL('/og-image.jpg', site);
           document.documentElement.classList.add('intro');
         }
       } catch {}
+      // PROTOTIPO: paleta elegida en la tarjeta de opciones de la portada (?paleta=… o la guardada), en todas las páginas.
+      try {
+        const paleta = new URLSearchParams(location.search).get('paleta') || localStorage.getItem('tdf-toggle-paleta');
+        if (paleta) document.documentElement.setAttribute('data-proto-paleta', paleta);
+      } catch {}
     </script>
     <title>{title}</title>
     {description && <meta name="description" content={description} />}

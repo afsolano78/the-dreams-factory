@@ -20,6 +20,79 @@
   --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
 }
 
+/*
+  PROTOTIPO: paletas alternativas al granate (selector «Paleta» de la tarjeta de opciones).
+  Cada una redefine los mismos colores de marca; los nombres de las variables (pino, ciruela…) se mantienen para
+  no tocar el resto del código, aunque el color cambie. Contraste comprobado (texto ≥ 4,5:1 sobre el fondo).
+  - pino-*: base oscura (textos, fondos oscuros, velos sobre fotos)
+  - ciruela-*: acento (botones, cursivas de los titulares)
+  - malva-500: rótulos pequeños · eucalipto-*: segundo acento suave · rosa-100: tinte claro
+*/
+html[data-proto-paleta='terracota'] {
+  --color-ciruela-700: #9a4a2e;
+  --color-ciruela-800: #7d3b24;
+  --color-malva-500: #a35a3e;
+  --color-rosa-100: #f5e6dc;
+  --color-porcelana-50: #fbf8f5;
+  --color-linea: #e2d5cc;
+}
+html[data-proto-paleta='azul'] {
+  --color-pino-900: #131f2e;
+  --color-pino-800: #1b2b3f;
+  --color-pino-600: #3a4d63;
+  --color-ciruela-700: #3e5c7c;
+  --color-ciruela-800: #2f4864;
+  --color-malva-500: #56728f;
+  --color-eucalipto-500: #9fb0a4;
+  --color-eucalipto-100: #e4ebe6;
+  --color-rosa-100: #e6edf3;
+  --color-porcelana-50: #f8f9fa;
+  --color-suave: #4f5966;
+  --color-linea: #d6dce2;
+}
+html[data-proto-paleta='mocha'] {
+  --color-pino-900: #241b17;
+  --color-pino-800: #33261f;
+  --color-pino-600: #5a463b;
+  --color-ciruela-700: #8a5a40;
+  --color-ciruela-800: #704732;
+  --color-malva-500: #8f654e;
+  --color-eucalipto-500: #a3a58e;
+  --color-eucalipto-100: #e8e8de;
+  --color-rosa-100: #f2e6dc;
+  --color-porcelana-50: #fbf7f3;
+  --color-suave: #5f5148;
+  --color-linea: #e3d6cb;
+}
+html[data-proto-paleta='oliva'] {
+  --color-pino-900: #1f2417;
+  --color-pino-800: #2b3220;
+  --color-pino-600: #525b41;
+  --color-ciruela-700: #86682a;
+  --color-ciruela-800: #6b5221;
+  --color-malva-500: #8a6f35;
+  --color-eucalipto-500: #a7ad8c;
+  --color-eucalipto-100: #e9ebdf;
+  --color-rosa-100: #f3ecd9;
+  --color-porcelana-50: #fbf9f3;
+  --color-suave: #545a48;
+  --color-linea: #e1dccb;
+}
+html[data-proto-paleta='champan'] {
+  --color-pino-900: #161616;
+  --color-pino-800: #222222;
+  --color-pino-600: #4a4a4a;
+  --color-ciruela-700: #7a6650;
+  --color-ciruela-800: #614f3d;
+  --color-malva-500: #806b55;
+  --color-eucalipto-500: #b3a796;
+  --color-eucalipto-100: #ece8e1;
+  --color-rosa-100: #efe8df;
+  --color-porcelana-50: #faf8f5;
+  --color-suave: #575757;
+  --color-linea: #ded8cf;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -189,7 +262,7 @@ html.intro:not(.intro-open) [data-carousel] :is(.carousel-bar, .fade-img img),
   --sheet-r: clamp(1.5rem, 1rem + 2.5vw, 3rem);
   margin-top: calc(-1 * var(--sheet-r));
   border-radius: var(--sheet-r) var(--sheet-r) 0 0;
-  box-shadow: 0 -16px 32px -24px rgb(11 40 40 / 0.45);
+  box-shadow: 0 -16px 32px -24px color-mix(in srgb, var(--color-pino-900) 45%, transparent);
 }
 
 /*
@@ -370,7 +443,7 @@ html:not([data-proto-libreta='si']) [data-toggle='libreta'] { display: none; }
   font-weight: 500;
   font-size: clamp(14rem, 9rem + 14vw, 24rem);
   line-height: 1;
-  color: rgb(243 230 227 / 0.24);
+  color: color-mix(in srgb, var(--color-rosa-100) 24%, transparent);
   pointer-events: none;
   user-select: none;
 }
@@ -391,6 +464,23 @@ html:not([data-proto-subrayado='no']) [data-reveal].is-revealed :is(.display-xl,
 html:not(.js) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em { background-size: 100% 0.24em; }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em { transition: none; background-size: 100% 0.24em; }
+}
+
+/* PROTOTIPO: el subrayado es una imagen con el color escrito; una copia por paleta (color de malva-500). */
+html[data-proto-paleta='terracota']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%23a35a3e' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%23a35a3e' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
+}
+html[data-proto-paleta='azul']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%2356728f' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%2356728f' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
+}
+html[data-proto-paleta='mocha']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%238f654e' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%238f654e' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
+}
+html[data-proto-paleta='oliva']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%238a6f35' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%238a6f35' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
+}
+html[data-proto-paleta='champan']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%23806b55' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%23806b55' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
 }
 
 /*

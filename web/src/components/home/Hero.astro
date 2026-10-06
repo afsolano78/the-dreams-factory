@@ -172,10 +172,10 @@ const slideTexts = c.slides.map((s, i) => ({
   .hero-shade {
     background: linear-gradient(
       180deg,
-      rgb(11 40 40 / 0.5) 0%,
-      rgb(11 40 40 / 0.08) 30%,
-      rgb(11 40 40 / 0.22) 56%,
-      rgb(11 40 40 / 0.85) 100%
+      color-mix(in srgb, var(--color-pino-900) 50%, transparent) 0%,
+      color-mix(in srgb, var(--color-pino-900) 8%, transparent) 30%,
+      color-mix(in srgb, var(--color-pino-900) 22%, transparent) 56%,
+      color-mix(in srgb, var(--color-pino-900) 85%, transparent) 100%
     );
   }
 

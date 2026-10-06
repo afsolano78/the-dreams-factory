@@ -175,13 +175,13 @@ const panels = [
   .panel-shade {
     background: linear-gradient(
       180deg,
-      rgb(11 40 40 / 0.1) 0%,
-      rgb(11 40 40 / 0.1) 22%,
-      rgb(11 40 40 / 0.62) 52%,
-      rgb(11 40 40 / 0.93) 100%
+      color-mix(in srgb, var(--color-pino-900) 10%, transparent) 0%,
+      color-mix(in srgb, var(--color-pino-900) 10%, transparent) 22%,
+      color-mix(in srgb, var(--color-pino-900) 62%, transparent) 52%,
+      color-mix(in srgb, var(--color-pino-900) 93%, transparent) 100%
     );
   }
-  .panel-body { text-shadow: 0 1px 14px rgb(11 40 40 / 0.45); }
+  .panel-body { text-shadow: 0 1px 14px color-mix(in srgb, var(--color-pino-900) 45%, transparent); }
 
   /* Enlace «círculo»: el círculo se rellena y la flecha avanza al pasar el ratón. */
   .cta-circle-icon { transition: background-color 0.3s ease, color 0.3s ease; }
@@ -191,7 +191,7 @@ const panels = [
 
   /* Enlace «fila»: toda la fila es clicable; al pasar el ratón se tiñe de rosa y la flecha avanza. */
   .edu-row { transition: background-color 0.35s ease; }
-  .edu-row:has(.edu-row-link:is(:hover, :focus-visible)) { background: rgb(243 230 227 / 0.55); }
+  .edu-row:has(.edu-row-link:is(:hover, :focus-visible)) { background: color-mix(in srgb, var(--color-rosa-100) 55%, transparent); }
   .edu-row-arrow { transition: transform 0.35s ease; }
   .edu-row-link:is(:hover, :focus-visible) .edu-row-arrow { transform: translateX(6px); }
 

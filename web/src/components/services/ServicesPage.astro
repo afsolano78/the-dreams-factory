@@ -1,0 +1,192 @@
+---
+/*
+  Página de Servicios: una sola página con los cuatro servicios.
+  1. Introducción con accesos directos a cada servicio (los de boda, de más a menos acompañamiento).
+  2. Un bloque por servicio, con su #ancla (la portada enlaza aquí): foto, texto, para quién es, qué incluye.
+     Los bloques alternan la foto a izquierda y derecha; Celebraciones va aparte, tras un rótulo propio.
+  3. Tabla comparativa de los tres servicios de boda.
+  4. Cómo trabajamos (cuatro pasos) y preguntas frecuentes.
+  5. El mismo cierre que la portada («¿Os imagináis el día?»).
+*/
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import ClosingCta from '../home/ClosingCta.astro';
+import { servicesContent } from '../../content/services';
+import { home } from '../../content/home';
+import { path, emphasize, type Lang } from '../../i18n/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = servicesContent[lang];
+const wedding = c.services.filter((s) => !s.apart);
+const apart = c.services.filter((s) => s.apart);
+---
+
+<BaseLayout lang={lang} routeKey="services" title={c.meta.title} description={c.meta.description}>
+  <!-- 1. Introducción -->
+  <section class="relative isolate bg-porcelana-50 pb-16 pt-14 md:pb-20 md:pt-20">
+    <div class="container-brand flex flex-col gap-12">
+      <div class="flex max-w-[48rem] flex-col gap-6" data-reveal>
+        <p class="eyebrow eyebrow-line text-malva-500">{c.intro.eyebrow}</p>
+        <h1 class="display-xl text-pino-800" set:html={emphasize(c.intro.title)} />
+        <p class="lead max-w-[38rem]">{c.intro.lead}</p>
+      </div>
+      <nav aria-label={c.intro.eyebrow} data-reveal style="--reveal-delay:120ms">
+        <ul class="grid gap-px overflow-hidden border border-linea bg-linea sm:grid-cols-2 lg:grid-cols-4">
+          {c.services.map((s) => (
+            <li class="bg-porcelana-50">
+              <a href={`#${s.anchor}`} class="jump group flex h-full flex-col gap-2 p-6 transition-colors hover:bg-white">
+                <span class="eyebrow text-malva-500">{s.level ?? c.labels.apart}</span>
+                <span class="display-s text-pino-800 group-hover:text-ciruela-700">{s.title}</span>
+                <span class="text-[0.9375rem] text-suave">{s.short}</span>
+                <span class="eyebrow mt-auto pt-3 !tracking-[0.12em] text-[0.75rem] text-pino-800" aria-hidden="true">{c.intro.jumpLabel} ↓</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- 2. Un bloque por servicio -->
+  <section class="section-y bg-white">
+    <div class="container-brand flex flex-col gap-20 md:gap-28">
+      {[...wedding, ...apart].map((s, i) => (
+        <>
+          {s.apart && <p class="eyebrow eyebrow-line -mb-10 text-malva-500 md:-mb-16">{c.labels.apart}</p>}
+          <article id={s.anchor} class="service-block grid items-center gap-10 md:grid-cols-2 md:gap-14 lg:gap-20" data-reveal>
+            <div class:list={['overflow-hidden', { 'md:order-2': i % 2 === 1 }]}>
+              <Picture
+                src={s.photo.src}
+                alt={s.photo.alt}
+                widths={[560, 800, 1120]}
+                sizes="(min-width: 768px) 45vw, 100vw"
+                formats={['avif', 'webp']}
+                class="aspect-[4/5] w-full object-cover"
+                style={s.focus ? `object-position:${s.focus}` : undefined}
+              />
+            </div>
+            <div class="flex flex-col gap-6">
+              {s.level && <p class="eyebrow text-ciruela-700">{s.level}</p>}
+              <h2 class="display-l text-pino-800">{s.title}</h2>
+              <div class="flex flex-col gap-4 text-suave">
+                {s.paragraphs.map((p) => <p>{p}</p>)}
+              </div>
+              <div class="border-l-2 border-malva-500/50 pl-5">
+                <p class="eyebrow mb-2 text-malva-500">{c.labels.forWhom}</p>
+                <p class="text-pino-800">{s.forWhom}</p>
+              </div>
+              <div>
+                <p class="eyebrow mb-4 text-malva-500">{c.labels.includes}</p>
+                <ul class="grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+                  {s.includes.map((item) => (
+                    <li class="flex items-start gap-3 text-[0.9375rem] text-pino-800">
+                      <svg class="mt-1 shrink-0 text-eucalipto-500" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11" /></svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div class="pt-2"><Button href={path('contact', lang)} variant="primary">{c.labels.cta}</Button></div>
+            </div>
+          </article>
+        </>
+      ))}
+    </div>
+  </section>
+
+  <!-- 3. Tabla comparativa (servicios de boda) -->
+  <section class="section-y bg-porcelana-50">
+    <div class="container-brand flex flex-col gap-12">
+      <SectionHeading eyebrow={c.compare.eyebrow} title={c.compare.title} />
+      <div class="overflow-x-auto" data-reveal>
+        <table class="compare w-full min-w-[36rem] border-collapse text-left">
+          <thead>
+            <tr>
+              <th scope="col" class="w-[40%] pb-5"><span class="sr-only">{c.compare.eyebrow}</span></th>
+              {wedding.map((s) => (
+                <th scope="col" class="px-3 pb-5 text-center align-bottom">
+                  <a href={`#${s.anchor}`} class="link-draw display-s text-pino-800">{s.title}</a>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {c.compare.rows.map((row) => (
+              <tr class="border-t border-linea">
+                <th scope="row" class="py-4 pr-4 text-[0.9375rem] font-normal text-pino-800">{row.label}</th>
+                {row.has.map((ok) => (
+                  <td class="px-3 py-4 text-center">
+                    {ok ? (
+                      <svg class="inline-block text-ciruela-700" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label={c.compare.yes}><path d="M4.5 12.5l5 5 10-11" /></svg>
+                    ) : (
+                      <span class="text-linea" role="img" aria-label={c.compare.no}>—</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-[0.9375rem] text-suave">{c.compare.note}</p>
+    </div>
+  </section>
+
+  <!-- 4. Cómo trabajamos -->
+  <section class="section-y bg-white">
+    <div class="container-brand flex flex-col gap-12">
+      <SectionHeading eyebrow={c.process.eyebrow} title={c.process.title} />
+      <ol class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        {c.process.steps.map((step, i) => (
+          <li class="flex flex-col gap-3 border-t border-linea pt-6" data-reveal style={`--reveal-delay:${i * 100}ms`}>
+            <span class="step-num text-ciruela-700" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display-s text-pino-800">{step.title}</h3>
+            <p class="text-[0.9375rem] text-suave">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5. Preguntas frecuentes -->
+  <section class="section-y bg-porcelana-50">
+    <div class="container-brand grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
+      <SectionHeading eyebrow={c.faq.eyebrow} title={c.faq.title} />
+      <div class="divide-y divide-linea border-y border-linea" data-reveal>
+        {c.faq.items.map((item) => (
+          <details class="faq group">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5">
+              <span class="display-s text-pino-800">{item.q}</span>
+              <span class="faq-icon grid size-8 shrink-0 place-items-center rounded-full border border-linea text-ciruela-700" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 1v10M1 6h10" /></svg>
+              </span>
+            </summary>
+            <p class="pb-6 pr-12 text-suave">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Cierre, el mismo que en la portada -->
+  <ClosingCta lang={lang} c={home[lang].closing} />
+</BaseLayout>
+
+<style>
+  /* Que la cabecera fija no tape el título al saltar a un servicio. */
+  .service-block { scroll-margin-top: 7rem; }
+  .step-num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 18;
+    font-size: 1.25rem;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-icon svg { transition: transform 0.3s ease; }
+  .faq[open] .faq-icon svg { transform: rotate(45deg); }
+</style>

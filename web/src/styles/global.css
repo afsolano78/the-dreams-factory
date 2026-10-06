@@ -451,3 +451,8 @@ html[data-proto-enlace-formacion='boton'] [data-edu-link='boton'] { display: blo
 html[data-proto-enlace-formacion='fila'] [data-edu-link='fila'] { display: block; }
 /* En «fila», un poco de aire a los lados para que el tinte rosa no quede pegado al texto. */
 html[data-proto-enlace-formacion='fila'] .edu-row { padding-inline: 1.25rem; margin-inline: -1.25rem; }
+/* PROTOTIPO: variantes de Servicios en portada (desplegable «servicios»). Sin elegir, la original («fotos»). */
+[data-servicios]:not([data-servicios='fotos']) { display: none; }
+html[data-proto-servicios]:not([data-proto-servicios='fotos']) [data-servicios='fotos'] { display: none; }
+html[data-proto-servicios='lista'] [data-servicios='lista'] { display: grid; }
+html[data-proto-servicios='escala'] [data-servicios='escala'] { display: flex; }

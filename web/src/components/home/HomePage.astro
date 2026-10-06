@@ -48,6 +48,15 @@ const c = home[lang];
       { group: 'acuarela-cierre', off: true, label: lang === 'es' ? 'Acuarela · Cierre' : 'Watercolour · Closing' },
       { group: 'subrayado', label: lang === 'es' ? 'Subrayado dibujado en titulares' : 'Hand-drawn underline in headings' },
       {
+        group: 'servicios',
+        label: lang === 'es' ? 'Servicios' : 'Services',
+        options: [
+          { value: 'fotos', label: lang === 'es' ? 'Actual (fotos)' : 'Current (photos)' },
+          { value: 'lista', label: lang === 'es' ? '1 · Lista con foto' : '1 · List & photo' },
+          { value: 'escala', label: lang === 'es' ? '2 · Escala' : '2 · Scale' },
+        ],
+      },
+      {
         group: 'formacion',
         label: lang === 'es' ? 'Formación' : 'Education',
         options: [

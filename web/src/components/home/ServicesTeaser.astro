@@ -1,9 +1,13 @@
 ---
 /*
-  Servicios en portada: cuatro fotos a sangre con el título y una frase encima; toda la foto es el enlace
-  a su apartado de la página de Servicios (#ancla).
-  Cada tarjeta ocupa dos filas de una rejilla compartida (subgrid): zona libre de foto / título + texto.
-  Así los títulos de una misma fila de tarjetas empiezan a la misma altura y el texto va justo debajo.
+  Servicios en portada. Cada servicio enlaza a su apartado de la página de Servicios (#ancla).
+  PROTOTIPO: tres maquetaciones para comparar desde «Prototipo · Opciones» (desplegable «servicios»):
+  - fotos (original): cuatro fotos a sangre con el título y una frase encima. Cada tarjeta ocupa dos filas de
+    una rejilla compartida (subgrid), así los títulos de una misma fila empiezan a la misma altura.
+  - lista: lista de servicios y, en ordenador, una foto grande al lado que cambia con un fundido al pasar el
+    ratón (o el foco) por cada uno. En móvil, cada servicio con su foto pequeña.
+  - escala: los tres servicios de boda en una escala de «más» a «menos acompañamiento» y Celebraciones aparte.
+  Al elegir, dejar solo la variante elegida y quitar el resto (y su regla en global.css).
 */
 import { Picture } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
@@ -17,6 +21,8 @@ import type { HomeContent } from '../../content/home';
 interface Props { lang: Lang; c: HomeContent['services'] }
 const { lang, c } = Astro.props;
 const base = path('services', lang);
+const levels = c.items.filter((s) => !s.apart);
+const apart = c.items.filter((s) => s.apart);
 ---
 
 <section class="section-y relative isolate bg-white">
@@ -33,7 +39,8 @@ const base = path('services', lang);
       <Button href={path(c.cta.to, lang)} variant="secondary" class="self-start md:self-auto">{c.cta.label}</Button>
     </div>
 
-    <ul class="photo-tiles grid gap-x-4 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Variante «fotos» (original). -->
+    <ul data-servicios="fotos" class="photo-tiles grid gap-x-4 sm:grid-cols-2 lg:grid-cols-4">
       {c.items.map((s, i) => (
         <li class="row-span-2 grid grid-rows-subgrid" data-reveal style={`--reveal-delay:${i * 100}ms`}>
           <a href={`${base}#${s.anchor}`} data-frame class="photo-tile group relative isolate row-span-2 grid grid-rows-subgrid overflow-hidden text-white">
@@ -58,11 +65,98 @@ const base = path('services', lang);
         </li>
       ))}
     </ul>
+
+    <!-- Variante «lista»: lista de servicios y foto grande que cambia (en ordenador). -->
+    <div data-servicios="lista" class="svc-list grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:gap-14 lg:gap-20" data-reveal>
+      <ul class="flex flex-col divide-y divide-linea border-y border-linea">
+        {c.items.map((s, i) => (
+          <li>
+            <a href={`${base}#${s.anchor}`} class:list={['svc-row group flex items-center gap-5 py-6 md:py-7', { 'is-active': i === 0 }]} data-svc={i}>
+              <Picture
+                src={s.photo.src}
+                alt=""
+                widths={[160, 240]}
+                sizes="80px"
+                formats={['avif', 'webp']}
+                class="size-20 shrink-0 object-cover md:hidden"
+              />
+              <div class="min-w-0 flex-1">
+                <h3 class="svc-title display-m text-pino-800">{s.title}</h3>
+                <p class="mt-2 max-w-[32rem] text-[0.9375rem] text-suave">{s.text}</p>
+              </div>
+              <span class="svc-arrow hidden text-ciruela-700 md:block" aria-hidden="true">
+                <svg width="40" height="18" viewBox="0 0 44 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1 10h41M33 2l9 8-9 8" /></svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="svc-photos relative hidden min-h-[28rem] overflow-hidden md:block" aria-hidden="true">
+        {c.items.map((s, i) => (
+          <Picture
+            src={s.photo.src}
+            alt=""
+            widths={[560, 800, 1120]}
+            sizes="(min-width: 768px) 45vw, 100vw"
+            formats={['avif', 'webp']}
+            loading="lazy"
+            class:list={['svc-photo absolute inset-0 h-full w-full object-cover', { 'is-active': i === 0 }]}
+            data-svc-photo={i}
+          />
+        ))}
+      </div>
+    </div>
+
+    <!-- Variante «escala»: niveles de acompañamiento y Celebraciones aparte. -->
+    <div data-servicios="escala" class="flex flex-col gap-12" data-reveal>
+      <div>
+        <!-- Eje: horizontal en ordenador; en móvil la escala es vertical y los extremos van arriba y abajo. -->
+        <div class="eyebrow mb-8 hidden items-center gap-4 text-malva-500 md:flex" aria-hidden="true">
+          <span>{c.scale.more}</span>
+          <span class="scale-axis relative h-px flex-1 bg-malva-500/40"></span>
+          <span>{c.scale.less}</span>
+        </div>
+        <p class="eyebrow mb-6 text-malva-500 md:hidden" aria-hidden="true">↑ {c.scale.more}</p>
+        <ol class="svc-scale grid gap-10 md:grid-cols-3 md:gap-8">
+          {levels.map((s) => (
+            <li class="relative flex flex-col gap-3 pl-8 md:pl-0 md:pt-8">
+              <span class="scale-dot absolute left-0 top-1.5 size-3 rounded-full border border-malva-500 bg-white md:top-0" aria-hidden="true"></span>
+              <p class="eyebrow text-ciruela-700">{s.level}</p>
+              <h3 class="display-s text-pino-800">{s.title}</h3>
+              <p class="text-[0.9375rem] text-suave">{s.text}</p>
+              <a href={`${base}#${s.anchor}`} class="link-draw eyebrow mt-1 self-start !tracking-[0.12em] text-[0.8125rem] text-pino-800">{c.viewLabel} →</a>
+            </li>
+          ))}
+        </ol>
+        <p class="eyebrow mt-6 text-malva-500 md:hidden" aria-hidden="true">↓ {c.scale.less}</p>
+      </div>
+      {apart.map((s) => (
+        <a href={`${base}#${s.anchor}`} class="group grid items-center gap-6 border border-linea bg-porcelana-50 p-5 sm:grid-cols-[10rem_minmax(0,1fr)_auto] sm:p-6">
+          <Picture
+            src={s.photo.src}
+            alt=""
+            widths={[240, 320]}
+            sizes="160px"
+            formats={['avif', 'webp']}
+            class="aspect-[4/3] w-full object-cover sm:w-40"
+          />
+          <div class="flex flex-col gap-2">
+            <p class="eyebrow text-malva-500">{c.scale.apart}</p>
+            <h3 class="display-s text-pino-800">{s.title}</h3>
+            <p class="text-[0.9375rem] text-suave">{s.text}</p>
+          </div>
+          <span class="eyebrow inline-flex items-center gap-2 !tracking-[0.12em] text-[0.8125rem] text-pino-800">
+            {c.viewLabel}
+            <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </span>
+        </a>
+      ))}
+    </div>
   </div>
 </section>
 
 <style>
-  /* Filas repetidas por tarjeta: zona libre de foto y bloque de título + texto. */
+  /* Variante «fotos»: filas repetidas por tarjeta (zona libre de foto y bloque de título + texto). */
   .photo-tiles {
     grid-auto-rows: clamp(12rem, 8rem + 12vw, 15rem) auto;
     row-gap: 0;
@@ -73,4 +167,60 @@ const base = path('services', lang);
     background: linear-gradient(180deg, rgb(11 40 40 / 0.05) 0%, rgb(11 40 40 / 0.1) 35%, rgb(11 40 40 / 0.62) 62%, rgb(11 40 40 / 0.92) 100%);
   }
   .photo-tile { text-shadow: 0 1px 14px rgb(11 40 40 / 0.45); }
+
+  /* Variante «lista»: el servicio activo se marca en granate y su flecha avanza; las fotos se funden. */
+  .svc-title, .svc-arrow { transition: color 0.3s ease, transform 0.35s ease, opacity 0.3s ease; }
+  .svc-arrow { opacity: 0.35; }
+  @media (min-width: 768px) {
+    .svc-row.is-active .svc-title { color: var(--color-ciruela-700); }
+    .svc-row.is-active .svc-arrow { opacity: 1; transform: translateX(6px); }
+  }
+  .svc-photos :global(.svc-photo) { opacity: 0; transition: opacity 0.7s ease, transform 1.2s ease; transform: scale(1.03); }
+  .svc-photos :global(.svc-photo.is-active) { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-photos :global(.svc-photo) { transition: none; transform: none; }
+  }
+
+  /* Variante «escala»: punta de flecha en el eje y línea que une los puntos (horizontal en ordenador, vertical en móvil). */
+  .scale-axis::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+    opacity: 0.6;
+  }
+  .svc-scale { position: relative; }
+  .svc-scale::before {
+    content: '';
+    position: absolute;
+    left: 5.5px;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: var(--color-linea);
+  }
+  @media (min-width: 768px) {
+    .svc-scale::before { left: 0; right: 0; top: 5.5px; bottom: auto; width: auto; height: 1px; }
+  }
 </style>
+
+<script>
+  // Variante «lista»: al pasar el ratón (o el foco del teclado) por un servicio, se muestra su foto.
+  document.querySelectorAll<HTMLElement>('.svc-list').forEach((list) => {
+    const rows = [...list.querySelectorAll<HTMLElement>('[data-svc]')];
+    const photos = [...list.querySelectorAll<HTMLElement>('[data-svc-photo]')];
+    const show = (i: string) => {
+      rows.forEach((r) => r.classList.toggle('is-active', r.dataset.svc === i));
+      photos.forEach((p) => p.classList.toggle('is-active', p.dataset.svcPhoto === i));
+    };
+    rows.forEach((r) => {
+      r.addEventListener('mouseenter', () => show(r.dataset.svc!));
+      r.addEventListener('focus', () => show(r.dataset.svc!));
+    });
+  });
+</script>

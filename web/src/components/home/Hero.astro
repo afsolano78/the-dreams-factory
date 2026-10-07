@@ -1,5 +1,5 @@
 ---
-import { Picture, getImage } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import Button from '../Button.astro';
 import CarouselControls from '../CarouselControls.astro';
 import { emphasize, path, type Lang } from '../../i18n/routes';
@@ -18,10 +18,6 @@ const captions = c.slides.map((s) => [s.couple, s.place].filter(Boolean).join(' 
 /** Etiqueta accesible de cada botón: sin pie, solo «Ver foto N» (sin «: » colgando). */
 const dotLabels = captions.map((cap, i) => fill(c.controls.goTo, { n: i + 1, caption: cap }).replace(/[:\s]+$/, ''));
 const titleLines = c.title.split('\n');
-/** Imagen de carga de los vídeos (la misma foto que hace de alternativa). */
-const posters = await Promise.all(
-  c.slides.map((s) => (s.video ? getImage({ src: s.photo.src, width: 1920, format: 'webp' }).then((r) => r.src) : undefined)),
-);
 /** Titular y frase de cada foto: la primera usa los generales de la portada. */
 const slideTexts = c.slides.map((s, i) => ({
   title: i === 0 ? c.title : s.title ?? c.title,
@@ -48,10 +44,9 @@ const slideTexts = c.slides.map((s, i) => ({
           aria-label={fill(c.controls.slide, { n: i + 1, total })}
           aria-hidden={i === 0 ? 'false' : 'true'}
         >
+          {/* Sin fuentes en el HTML: el script las añade cuando la página ya ha cargado (la foto de debajo se ve mientras). */}
           {s.video && (
-            <video class="hero-video" data-hero-video muted playsinline loop preload="auto" poster={posters[i]} aria-hidden="true">
-              {s.video.map((v) => <source src={v.src} type={v.type} />)}
-            </video>
+            <video class="hero-video" data-hero-video data-sources={JSON.stringify(s.video)} muted playsinline loop preload="none" aria-hidden="true"></video>
           )}
           <Picture
             src={s.photo.src}
@@ -123,12 +118,26 @@ const slideTexts = c.slides.map((s, i) => ({
     Vídeo de la portada: suena solo cuando su diapositiva está a la vista y el carrusel avanza (no en pausa, ni con
     la pestaña oculta, ni fuera de pantalla, ni tapado por la presentación del logo). Al volver a su diapositiva
     empieza desde el principio, para que vaya a la par con la barra de progreso.
-    Con ahorro de datos o movimiento reducido no se carga: se queda la foto.
+
+    Carga: el vídeo no está en el HTML. Primero se ve la foto (es lo que mide la velocidad de carga) y, cuando la
+    página ya ha cargado, se añade la versión que toca: recorte vertical si la portada es más alta que ancha (móviles
+    en vertical) o la apaisada en el resto. El vídeo aparece con un fundido en cuanto empieza a reproducirse.
+    Con ahorro de datos, conexión muy lenta o movimiento reducido no se carga: se queda la foto.
   */
   import { whenIntroOpen } from '../../scripts/intro';
 
-  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-  const skip = conn?.saveData || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  type Source = { src: string; type: string };
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+  const skip =
+    conn?.saveData ||
+    /(^|-)2g$/.test(conn?.effectiveType ?? '') ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const afterLoad = (run: () => void) => {
+    const go = () => setTimeout(run, 150);
+    if (document.readyState === 'complete') go();
+    else window.addEventListener('load', go, { once: true });
+  };
 
   document.querySelectorAll<HTMLVideoElement>('[data-hero-video]').forEach((video) => {
     const slide = video.closest<HTMLElement>('[data-slide]');
@@ -137,20 +146,38 @@ const slideTexts = c.slides.map((s, i) => ({
       video.remove();
       return;
     }
+    let ready = false;
     let introOpen = false;
     let wasActive = false;
     const sync = () => {
       const active = slide.classList.contains('is-active');
-      if (active && !wasActive) video.currentTime = 0;
+      if (ready && active && !wasActive) video.currentTime = 0;
       wasActive = active;
       const { paused, hidden, offscreen } = root.dataset;
-      const run = introOpen && active && paused !== 'true' && hidden !== 'true' && offscreen !== 'true';
+      const run = ready && introOpen && active && paused !== 'true' && hidden !== 'true' && offscreen !== 'true';
       if (run) video.play().catch(() => {});
       else video.pause();
     };
+    video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
     new MutationObserver(sync).observe(slide, { attributes: true, attributeFilter: ['class'] });
     new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-paused', 'data-hidden', 'data-offscreen'] });
     whenIntroOpen(() => { introOpen = true; sync(); });
+
+    afterLoad(() => {
+      const sets = JSON.parse(video.dataset.sources ?? '{}') as { wide?: Source[]; tall?: Source[] };
+      const tall = root.clientWidth / Math.max(root.clientHeight, 1) < 0.75;
+      const list = (tall ? sets.tall : sets.wide) ?? sets.wide ?? [];
+      for (const s of list) {
+        const el = document.createElement('source');
+        el.src = s.src;
+        el.type = s.type;
+        video.append(el);
+      }
+      video.preload = 'auto';
+      video.load();
+      ready = true;
+      sync();
+    });
   });
 </script>
 
@@ -163,7 +190,10 @@ const slideTexts = c.slides.map((s, i) => ({
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease;
   }
+  .hero-video.is-playing { opacity: 1; }
   /* La foto de debajo no se ve mientras está el vídeo: sin zoom, para no gastar en animarla. */
   .fade-img:has(.hero-video) :global(img) { animation: none; }
   @media (prefers-reduced-motion: reduce) {

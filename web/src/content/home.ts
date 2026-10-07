@@ -44,24 +44,34 @@ export type HeroSlide = {
   photo: Photo; couple: string; place: string; focus?: string; title?: string; intro?: string;
   /**
    * Vídeo de fondo (sin sonido, en bucle). `photo` hace de imagen de carga y de alternativa cuando el vídeo no se
-   * reproduce (reducir movimiento, ahorro de datos). Versiones de mejor a peor compresión: el navegador se queda
-   * con la primera que sabe reproducir y solo descarga esa. Rutas a /public.
+   * reproduce (reducir movimiento, ahorro de datos). Se carga cuando la página ya está lista, para no retrasarla.
+   * `wide` para pantallas apaisadas y `tall` (recorte vertical) para móviles en vertical. En cada una, versiones de
+   * mejor a peor compresión: el navegador se queda con la primera que sabe reproducir y solo descarga esa.
    */
-  video?: VideoSource[];
+  video?: { wide: VideoSource[]; tall: VideoSource[] };
   /** Tiempo que permanece la diapositiva, en ms (por defecto, el de la portada). */
   duration?: number;
 };
 export type VideoSource = { src: string; type: string };
 
 /**
- * Vídeo de la mesa (dron), 18 s a 1080p y 24 fps, sin sonido, color BT.709 como el original.
+ * Vídeo de la mesa (dron), 9 s a 24 fps, sin sonido, color BT.709 como el original (4K de «Raquel y Javier»).
+ * - wide: 1920×1080 (calidad VMAF ≈ 95, indistinguible del original).
+ * - tall: recorte vertical del centro, 720×1280, para móviles (lo que se ve en vertical; VMAF móvil > 99).
  * AV1 para Chrome, Edge, Firefox y Safari moderno; HEVC para el resto de Safari; H.264 para navegadores antiguos.
  */
-const tableVideo: VideoSource[] = [
-  { src: '/videos/portada-mesa-av1.webm', type: 'video/webm; codecs="av01.0.08M.08"' },
-  { src: '/videos/portada-mesa-hevc.mp4', type: 'video/mp4; codecs="hvc1.1.6.L120.90"' },
-  { src: '/videos/portada-mesa-h264.mp4', type: 'video/mp4; codecs="avc1.640032"' },
-];
+const tableVideo: HeroSlide['video'] = {
+  wide: [
+    { src: '/videos/portada-mesa-av1.webm', type: 'video/webm; codecs="av01.0.08M.08"' },
+    { src: '/videos/portada-mesa-hevc.mp4', type: 'video/mp4; codecs="hvc1.1.6.L120.90"' },
+    { src: '/videos/portada-mesa-h264.mp4', type: 'video/mp4; codecs="avc1.640032"' },
+  ],
+  tall: [
+    { src: '/videos/portada-mesa-movil-av1.webm', type: 'video/webm; codecs="av01.0.05M.08"' },
+    { src: '/videos/portada-mesa-movil-hevc.mp4', type: 'video/mp4; codecs="hvc1.1.6.L93.90"' },
+    { src: '/videos/portada-mesa-movil-h264.mp4', type: 'video/mp4; codecs="avc1.64001f"' },
+  ],
+};
 
 export interface HomeContent {
   meta: { title: string; description: string };
@@ -152,7 +162,7 @@ export const home: Record<Lang, HomeContent> = {
       primary: { label: 'Contadnos vuestra idea', to: 'contact' },
       secondary: { label: 'Ver bodas', to: 'weddings' },
       slides: [
-        { couple: '', place: '', duration: 18000, video: tableVideo, photo: { src: heroVideoPoster, alt: 'Vista aérea de una mesa imperial preparada en un patio rodeado de jardín.' } },
+        { couple: '', place: '', duration: 9000, video: tableVideo, photo: { src: heroVideoPoster, alt: 'Vista aérea de una mesa imperial preparada en un patio rodeado de jardín.' } },
         { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Momentos que\n*se quedan con vosotros*', intro: 'Cuidamos cada detalle para que los momentos importantes lleguen solos, sin prisas ni sobresaltos.', photo: { src: hero1, alt: 'N y T se abrazan bajo una carpa decorada con guirnaldas de luces y ramas verdes.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Cada detalle,\n*pensado para vosotros*', intro: 'Diseño, decoración y ambientación con carácter propio: flores, luz y mesas que cuentan vuestra historia.', photo: { src: hero2, alt: 'Mesa imperial del banquete con hortensias, velas y ramas de eucalipto colgando del techo.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'Toda la emoción,\n*ninguna preocupación*', intro: 'Nos ocupamos de proveedores, tiempos y planes B para que vosotros solo tengáis que mirar hacia delante.', photo: { src: hero3, alt: 'A y M salen de la iglesia bajo una lluvia de pétalos lanzados por sus invitados.' } },
@@ -285,7 +295,7 @@ export const home: Record<Lang, HomeContent> = {
       primary: { label: 'Tell us your idea', to: 'contact' },
       secondary: { label: 'See our weddings', to: 'weddings' },
       slides: [
-        { couple: '', place: '', duration: 18000, video: tableVideo, photo: { src: heroVideoPoster, alt: 'Aerial view of a long banquet table set in a courtyard surrounded by gardens.' } },
+        { couple: '', place: '', duration: 9000, video: tableVideo, photo: { src: heroVideoPoster, alt: 'Aerial view of a long banquet table set in a courtyard surrounded by gardens.' } },
         { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Moments that\n*stay with you*', intro: 'We look after every detail so the moments that matter arrive on their own, unhurried and worry-free.', photo: { src: hero1, alt: 'N and T embrace under a marquee decorated with string lights and greenery.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Every detail,\n*made for you*', intro: 'Design, styling and décor with a character of their own: flowers, light and tables that tell your story.', photo: { src: hero2, alt: 'A long banquet table with hydrangeas, candles and eucalyptus hanging from the ceiling.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'All the emotion,\n*none of the worry*', intro: 'We handle suppliers, timings and back-up plans so all you have to do is look ahead.', photo: { src: hero3, alt: 'A and M leave the church under a shower of petals thrown by their guests.' } },

@@ -48,6 +48,17 @@ const ogImage = new URL('/og-image.jpg', site);
           if (v) document.documentElement.setAttribute('data-proto-' + group, v);
         });
       } catch {}
+      // Color de la barra del navegador en móviles: el oscuro de la paleta (también al cambiarla en la tarjeta).
+      try {
+        const html = document.documentElement;
+        const sync = () => {
+          const c = getComputedStyle(html).getPropertyValue('--color-pino-800').trim();
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (c && meta) meta.setAttribute('content', c);
+        };
+        document.addEventListener('DOMContentLoaded', sync);
+        new MutationObserver(sync).observe(html, { attributes: true, attributeFilter: ['data-proto-paleta'] });
+      } catch {}
     </script>
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
@@ -64,7 +75,8 @@ const ogImage = new URL('/og-image.jpg', site);
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#0F3534" />
+    <!-- Oscuro de la paleta por defecto (terracota y negro); el script de arriba lo ajusta a la paleta elegida. -->
+    <meta name="theme-color" content="#222222" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

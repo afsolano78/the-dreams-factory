@@ -102,11 +102,13 @@ export type SocialName = 'Instagram' | 'Facebook' | 'TikTok';
  * Publicaciones y asociaciones («Nos encontrarás en», en el pie). Logos en /public/logos: siluetas blancas que se
  * tiñen por CSS. `detail` no se ve: lo leen los lectores de pantalla y los buscadores. `ratio` = ancho / alto.
  */
-export type PressLogo = { name: string; detail: Record<Lang, string>; logo: string; ratio: number; kind: 'seal' | 'wordmark'; href?: string };
+/** `size`: altura del logo respecto a la de los sellos redondos (por defecto 1 en sellos y 0,5 en logotipos alargados). */
+export type PressLogo = { name: string; detail: Record<Lang, string>; logo: string; ratio: number; kind: 'seal' | 'wordmark'; size?: number; href?: string };
 export const press: PressLogo[] = [
   { name: 'Telva Novias', detail: { es: 'Nuestro trabajo publicado en Telva Novias', en: 'Our work featured in Telva Novias' }, logo: '/logos/telva-novias.png', ratio: 340 / 161, kind: 'wordmark' },
-  { name: 'Zankyou', detail: { es: 'Wedding planners recomendadas por Zankyou', en: 'Wedding planners recommended by Zankyou' }, logo: '/logos/zankyou.png', ratio: 1, kind: 'seal' },
-  { name: 'APBE', detail: { es: 'Socias de la Asociación Profesional de Bodas de España', en: 'Members of the Spanish Wedding Professionals Association (APBE)' }, logo: '/logos/apbe.png', ratio: 1, kind: 'seal' },
+  { name: '¡HOLA!', detail: { es: 'Una de nuestras bodas publicada en ¡HOLA! Novias', en: 'One of our weddings featured in ¡HOLA! Brides' }, logo: '/logos/hola.png', ratio: 800 / 295, kind: 'wordmark', size: 0.42, href: 'https://www.hola.com/novias/20250408825048/vestido-de-novia-sencillo-transformable-boda-en-asturias/' },
+  { name: 'Vanitatis', detail: { es: 'Una de nuestras bodas publicada en Vanitatis (El Confidencial)', en: 'One of our weddings featured in Vanitatis (El Confidencial)' }, logo: '/logos/vanitatis.png', ratio: 639 / 227, kind: 'wordmark', size: 0.48, href: 'https://www.vanitatis.elconfidencial.com/novias/2025-12-04/album-boda-palacio-siglo-xvi-vestido-capa_4259310/' },
+  { name: 'Theodore', detail: { es: 'Una de nuestras bodas publicada en Theodore Magazine', en: 'One of our weddings featured in Theodore Magazine' }, logo: '/logos/theodore.png', ratio: 1395 / 126, kind: 'wordmark', size: 0.22, href: 'https://theodoremagazine.com/real-weddings/marcos-and-dom' },
   { name: 'All Lovely Party', detail: { es: 'All Lovely Party', en: 'All Lovely Party' }, logo: '/logos/all-lovely-party.png', ratio: 248 / 240, kind: 'seal' },
 ];
 

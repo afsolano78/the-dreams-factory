@@ -25,7 +25,7 @@ const seal = { md: 'clamp(4.25rem, 3.5rem + 2vw, 5.5rem)', sm: 'clamp(3.5rem, 3r
           <span
             class="logo-mask"
             aria-hidden="true"
-            style={`--logo:url(${l.logo}); aspect-ratio:${l.ratio}; height:${l.kind === 'seal' ? 'var(--seal)' : 'calc(var(--seal) * 0.5)'}`}
+            style={`--logo:url(${l.logo}); aspect-ratio:${l.ratio}; height:calc(var(--seal) * ${l.size ?? (l.kind === 'seal' ? 1 : 0.5)})`}
           />
           <span class="sr-only">{l.detail[lang]}</span>
         </>

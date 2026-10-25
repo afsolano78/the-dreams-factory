@@ -147,10 +147,10 @@ const pos = (focus?: string) => (focus ? `object-position:${focus}` : undefined)
 
   <!-- 5. En cifras -->
   <section class="bg-pino-800 py-14 text-white md:py-16">
-    <dl class="container-brand grid grid-cols-2 gap-x-6 gap-y-10 text-center lg:grid-cols-4">
+    <dl class="figures container-brand grid grid-cols-2 gap-x-6 gap-y-10 text-center lg:grid-cols-5">
       {
         c.figures.map((f) => (
-          <div class="flex flex-col-reverse gap-2" data-reveal>
+          <div class="flex flex-col-reverse justify-end gap-2" data-reveal>
             <dt class="text-[0.8125rem] text-white/75">{f.label}</dt>
             <dd class="figure-value">{f.value}</dd>
           </div>
@@ -256,4 +256,6 @@ const pos = (focus?: string) => (focus ? `object-position:${focus}` : undefined)
   .timeline-year { font-size: 1.75rem; color: var(--color-ciruela-700); }
   .timeline-year.is-tag { font-size: 1.25rem; font-style: italic; }
   .figure-value { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); }
+  /* En móvil (2 columnas), la última cifra ocupa toda la fila si queda sola. */
+  @media (max-width: 1023px) { .figures > div:last-child:nth-child(odd) { grid-column: 1 / -1; } }
 </style>

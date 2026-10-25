@@ -7,7 +7,6 @@
  *
  * PENDIENTE DE CONFIRMAR con Bea y Vane:
  * - La historia («Cómo empezó todo»): borrador a partir de su presentación antigua.
- * - El número de bodas (cifras).
  * - Los retratos individuales: de momento, recortes de la foto del jardín.
  * - Que se pueden nombrar los proveedores con los que más trabajan.
  */
@@ -102,6 +101,7 @@ export const about: Record<Lang, AboutContent> = {
     },
     figures: [
       { value: '2015', label: 'Organizando bodas desde' },
+      { value: '+100', label: 'Bodas organizadas' },
       { value: '3', label: 'Ediciones de nuestro curso' },
       { value: '4', label: 'Revistas han publicado nuestras bodas' },
       { value: 'Asturias', label: 'Y también León y alrededores' },
@@ -190,6 +190,7 @@ export const about: Record<Lang, AboutContent> = {
     },
     figures: [
       { value: '2015', label: 'Planning weddings since' },
+      { value: '100+', label: 'Weddings planned' },
       { value: '3', label: 'Editions of our course' },
       { value: '4', label: 'Magazines have featured our weddings' },
       { value: 'Asturias', label: 'And also León and nearby' },

@@ -1,13 +1,13 @@
 ---
 /*
   Página del curso «The Wedding Planner Experience» (/curso-wedding-planner, /en/wedding-planner-course).
-  1. Foto a sangre con el nombre, el sello de ediciones, el aviso de que no hay convocatoria y el botón «Avísame».
+  1. Foto a sangre con el nombre, el sello de la nueva edición, su estado y el botón «Quiero inscribirme».
   2. Para quién es y lo que lo hace distinto.
   3. Los tres días.
   4. El palacio como aula, con galería de las ediciones.
   5. Temario y ponencias.
   6. Quién enseña y la tutoría de después.
-  7. Preguntas frecuentes y cierre con el aviso de la próxima edición.
+  7. Preguntas frecuentes y cierre con la inscripción en la nueva edición.
 */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -183,7 +183,7 @@ const notify = `${path('contact', lang)}?motivo=curso`;
     </div>
   </section>
 
-  <!-- 8. Cierre: aviso de la próxima edición -->
+  <!-- 8. Cierre: inscripción en la nueva edición -->
   <section class="bg-pino-800 py-20 text-white md:py-24">
     <div class="container-brand flex flex-col items-center gap-6 text-center" data-reveal>
       <h2 class="display-l max-w-[20ch]" set:html={emphasize(c.closing.title)} />

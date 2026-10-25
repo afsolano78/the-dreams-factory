@@ -222,7 +222,7 @@ export const home: Record<Lang, HomeContent> = {
       title: 'Aprende *con nosotras*',
       course: {
         audience: 'Para futuras wedding planners',
-        badge: '3 ediciones celebradas',
+        badge: 'Nueva edición · Inscripciones abiertas',
         title: 'The Wedding Planner Experience',
         text: 'Un curso intensivo de tres días para quienes quieren dedicarse a organizar bodas. Compartimos nuestro método, nuestros proveedores y una boda recorrida de principio a fin en un escenario real.',
         meta: 'Grupos reducidos · 3 días inmersivos',
@@ -337,7 +337,7 @@ export const home: Record<Lang, HomeContent> = {
       title: 'Learn *with us*',
       course: {
         audience: 'For future wedding planners',
-        badge: '3 editions so far',
+        badge: 'New edition · Registration open',
         title: 'The Wedding Planner Experience',
         text: 'A three-day intensive course for anyone who wants to plan weddings for a living. We share our method, our supplier network and a complete wedding walked through from start to finish at a real venue.',
         meta: 'Small groups · 3 immersive days',

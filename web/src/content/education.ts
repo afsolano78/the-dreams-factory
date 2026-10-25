@@ -4,8 +4,9 @@
  * tutorías de vosotros (parejas).
  *
  * Origen: los textos de la web antigua (formato, aula, temario y docentes del curso; la página de las tutorías),
- * actualizados con los datos confirmados: 3 ediciones (la primera en 2023) en el NH Collection Palacio de Avilés,
- * sin fechas ni precio del curso hasta que haya nueva edición; tutorías a 49 € y 90 minutos.
+ * actualizados con los datos confirmados: 3 ediciones (la primera en 2023) en el NH Collection Palacio de Avilés y
+ * una nueva edición en preparación con inscripciones abiertas (octubre de 2026), aún sin fechas ni precio publicados;
+ * tutorías a 49 € y 90 minutos. Cuando haya fechas, se añaden en `hero.status` y en la pregunta de la próxima edición.
  *
  * PENDIENTE DE CONFIRMAR con Bea y Vane: si siguen vigentes los dos extras de las tutorías (15 % y descuento al
  * contratar un servicio), cómo se reserva y se paga una tutoría y por qué plataforma, si el curso da certificado,
@@ -87,15 +88,15 @@ export const course: Record<Lang, CourseContent> = {
   es: {
     meta: {
       title: 'The Wedding Planner Experience · Curso de wedding planner en Asturias · The Dreams Factory',
-      description: 'Curso intensivo de tres días para futuras wedding planners, impartido por Bea y Vane en el NH Collection Palacio de Avilés. Avísame de la próxima edición.',
+      description: 'Curso intensivo de tres días para futuras wedding planners, impartido por Bea y Vane en el NH Collection Palacio de Avilés. Inscripciones abiertas para la nueva edición.',
     },
     hero: {
       eyebrow: 'Formación · Para futuras wedding planners',
       title: 'The Wedding Planner\n*Experience*',
       lead: 'Un curso intensivo de tres días para quienes sueñan con dedicarse a organizar bodas, impartido por nosotras en un palacio de verdad.',
-      badge: '3 ediciones · NH Collection Palacio de Avilés',
-      status: 'Ahora mismo no hay ninguna edición convocada.',
-      cta: 'Avísame de la próxima edición',
+      badge: 'Nueva edición · Inscripciones abiertas',
+      status: 'Estamos preparando la cuarta edición y ya puedes inscribirte. Las fechas, muy pronto.',
+      cta: 'Quiero inscribirme',
       secondary: 'Ver el temario',
       photo: { src: fotoPortada, alt: 'Clase del curso en uno de los salones del palacio: las alumnas, sentadas a una mesa larga con flores, siguen la explicación.' },
     },
@@ -161,31 +162,32 @@ export const course: Record<Lang, CourseContent> = {
       eyebrow: 'Preguntas frecuentes',
       title: 'Lo que más *nos preguntáis*',
       items: [
-        { q: '¿Cuándo es la próxima edición?', a: 'Ahora mismo no hay ninguna convocada. Déjanos tus datos y te avisaremos en cuanto haya fechas.' },
+        { q: '¿Cuándo es la próxima edición?', a: 'Estamos preparando la cuarta edición y anunciaremos las fechas muy pronto. Ya estamos recibiendo inscripciones: escríbenos y te contamos todos los detalles en cuanto estén cerrados.' },
+        { q: '¿Cómo me inscribo?', a: 'Rellena el formulario de contacto eligiendo «El curso» (o pulsa «Quiero inscribirme») y nos pondremos en contacto contigo.' },
         { q: '¿Dónde se imparte?', a: 'En el NH Collection Palacio de Avilés (Asturias). Las clases son en el salón Galiana y recorremos el resto del palacio.' },
         { q: '¿Cuántas plazas hay?', a: 'Pocas: trabajamos con grupos muy reducidos para que la atención sea cercana y personalizada.' },
         { q: '¿Qué pasa cuando termina?', a: 'Tienes una tutoría individual con nosotras para resolver las dudas que te surjan después.' },
       ],
     },
     closing: {
-      title: '¿Te avisamos de la *próxima edición*?',
-      text: 'Déjanos tus datos y serás de las primeras en saberlo cuando haya fechas.',
-      cta: 'Avísame',
+      title: '¿Te apuntas a la *nueva edición*?',
+      text: 'Estamos recibiendo inscripciones. Escríbenos y te contamos fechas, plazas y todos los detalles en cuanto estén cerrados.',
+      cta: 'Quiero inscribirme',
     },
     gallery: { title: 'El aula', enlarge: 'Ampliar la foto', close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', of: 'de' },
   },
   en: {
     meta: {
       title: 'The Wedding Planner Experience · Wedding planner course in Asturias, Spain · The Dreams Factory',
-      description: 'An intensive three-day course for future wedding planners, taught by Bea and Vane at NH Collection Palacio de Avilés. Get notified about the next edition.',
+      description: 'An intensive three-day course for future wedding planners, taught by Bea and Vane at NH Collection Palacio de Avilés. Registration is open for the new edition.',
     },
     hero: {
       eyebrow: 'Education · For future wedding planners',
       title: 'The Wedding Planner\n*Experience*',
       lead: 'An intensive three-day course for anyone who dreams of planning weddings for a living, taught by us in a real palace.',
-      badge: '3 editions · NH Collection Palacio de Avilés',
-      status: 'There is no edition scheduled right now.',
-      cta: 'Notify me of the next edition',
+      badge: 'New edition · Registration open',
+      status: 'We’re preparing the fourth edition and you can already sign up. Dates coming very soon.',
+      cta: 'I want to sign up',
       secondary: 'See the syllabus',
       photo: { src: fotoPortada, alt: 'A class in one of the palace’s rooms: the students, seated at a long table with flowers, follow the lesson.' },
     },
@@ -251,16 +253,17 @@ export const course: Record<Lang, CourseContent> = {
       eyebrow: 'FAQ',
       title: 'What you *ask us most*',
       items: [
-        { q: 'When is the next edition?', a: 'There is none scheduled right now. Leave us your details and we’ll let you know as soon as there are dates.' },
+        { q: 'When is the next edition?', a: 'We’re preparing the fourth edition and will announce the dates very soon. Registration is already open: write to us and we’ll give you all the details as soon as they’re confirmed.' },
+        { q: 'How do I sign up?', a: 'Fill in the contact form choosing “The course” (or press “I want to sign up”) and we’ll get in touch with you.' },
         { q: 'Where does it take place?', a: 'At NH Collection Palacio de Avilés (Asturias, Spain). Classes are held in the Galiana room and we explore the rest of the palace.' },
         { q: 'How many places are there?', a: 'Few: we work with very small groups so the attention is close and personal.' },
         { q: 'What happens when it ends?', a: 'You have a one-to-one consultation with us to sort out any questions that come up afterwards.' },
       ],
     },
     closing: {
-      title: 'Shall we let you know about *the next edition*?',
-      text: 'Leave us your details and you’ll be among the first to know when there are dates.',
-      cta: 'Notify me',
+      title: 'Will you join *the new edition*?',
+      text: 'Registration is open. Write to us and we’ll tell you about dates, places and every detail as soon as they’re confirmed.',
+      cta: 'I want to sign up',
     },
     gallery: { title: 'The classroom', enlarge: 'Enlarge photo', close: 'Close', prev: 'Previous photo', next: 'Next photo', of: 'of' },
   },

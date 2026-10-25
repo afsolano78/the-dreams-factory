@@ -92,7 +92,7 @@ export const contactContent: Record<Lang, ContactContent> = {
         { value: 'boda', label: 'Nuestra boda', text: 'Organización, diseño o coordinación del día B.' },
         { value: 'celebracion', label: 'Otra celebración', text: 'Una pedida, un aniversario, una fiesta…' },
         { value: 'tutoria', label: 'Una tutoría online', text: 'Lo organizamos nosotros, pero queremos consejo.' },
-        { value: 'curso', label: 'El curso', text: 'Quiero formarme como wedding planner.' },
+        { value: 'curso', label: 'El curso', text: 'Quiero inscribirme en la nueva edición.' },
       ],
     },
     wedding: {
@@ -142,7 +142,7 @@ export const contactContent: Record<Lang, ContactContent> = {
     },
     course: {
       legend: 'El curso',
-      text: 'Ahora mismo no hay una edición convocada. Dejadnos vuestros datos y os avisaremos en cuanto haya fechas.',
+      text: 'Estamos preparando una nueva edición y ya recibimos inscripciones. Déjanos tus datos y te contamos fechas, plazas y todos los detalles en cuanto estén cerrados.',
       experience: {
         label: '¿Tienes experiencia en eventos?',
         options: [
@@ -232,7 +232,7 @@ export const contactContent: Record<Lang, ContactContent> = {
         { value: 'boda', label: 'Our wedding', text: 'Planning, design or wedding-day coordination.' },
         { value: 'celebracion', label: 'Another celebration', text: 'A proposal, an anniversary, a party…' },
         { value: 'tutoria', label: 'An online consultation', text: 'We’re planning it ourselves but want advice.' },
-        { value: 'curso', label: 'The course', text: 'I want to train as a wedding planner.' },
+        { value: 'curso', label: 'The course', text: 'I want to sign up for the new edition.' },
       ],
     },
     wedding: {
@@ -282,7 +282,7 @@ export const contactContent: Record<Lang, ContactContent> = {
     },
     course: {
       legend: 'The course',
-      text: 'There is no edition scheduled right now. Leave us your details and we’ll let you know as soon as there are dates.',
+      text: 'We’re preparing a new edition and registration is open. Leave us your details and we’ll tell you about dates, places and every detail as soon as they’re confirmed.',
       experience: {
         label: 'Do you have experience in events?',
         options: [

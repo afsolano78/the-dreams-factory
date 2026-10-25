@@ -7,7 +7,7 @@
  *
  * PENDIENTE DE CONFIRMAR con Bea y Vane:
  * - La historia («Cómo empezó todo»): borrador a partir de su presentación antigua.
- * - El año de la primera edición del curso y el número de bodas (cifras).
+ * - El número de bodas (cifras).
  * - Los retratos individuales: de momento, recortes de la foto del jardín.
  * - Que se pueden nombrar los proveedores con los que más trabajan.
  */
@@ -67,7 +67,7 @@ export const about: Record<Lang, AboutContent> = {
       items: [
         { year: '2015', text: 'Nace The Dreams Factory.' },
         { year: '2017', text: 'Telva Novias publica nuestra sesión editorial en el NH Collection Palacio de Avilés, en el reportaje «Casarse en un palacio asturiano».' },
-        { tag: 'Formación', text: 'Primera edición de «The Wedding Planner Experience», nuestro curso para futuras wedding planners.' },
+        { year: '2023', text: 'Primera edición de «The Wedding Planner Experience», nuestro curso para futuras wedding planners.' },
         { year: '2025', text: '¡HOLA! y Vanitatis publican dos de nuestras bodas.' },
       ],
     },
@@ -155,7 +155,7 @@ export const about: Record<Lang, AboutContent> = {
       items: [
         { year: '2015', text: 'The Dreams Factory is born.' },
         { year: '2017', text: 'Telva Novias features our editorial shoot at NH Collection Palacio de Avilés in its story “Casarse en un palacio asturiano” (Getting married in an Asturian palace).' },
-        { tag: 'Teaching', text: 'First edition of “The Wedding Planner Experience”, our course for future wedding planners.' },
+        { year: '2023', text: 'First edition of “The Wedding Planner Experience”, our course for future wedding planners.' },
         { year: '2025', text: '¡HOLA! and Vanitatis feature two of our weddings.' },
       ],
     },

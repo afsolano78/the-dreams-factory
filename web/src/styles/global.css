@@ -21,7 +21,7 @@
 }
 
 /*
-  PROTOTIPO: paletas alternativas al granate (selector «Paleta» de la tarjeta de opciones). Por defecto, terracota y negro;
+  PROTOTIPO: paletas alternativas al granate (selector «Paleta» de la tarjeta de opciones). Por defecto, negro y champán;
   el granate original («actual») son los valores de @theme.
   Cada una redefine los mismos colores de marca; los nombres de las variables (pino, ciruela…) se mantienen para
   no tocar el resto del código, aunque el color cambie. Contraste comprobado (texto ≥ 4,5:1 sobre el fondo).
@@ -79,7 +79,7 @@ html[data-proto-paleta='oliva'] {
   --color-suave: #545a48;
   --color-linea: #e1dccb;
 }
-:root:not([data-proto-paleta]), html[data-proto-paleta='terracota-negro'] {
+html[data-proto-paleta='terracota-negro'] {
   --color-pino-900: #161616;
   --color-pino-800: #222222;
   --color-pino-600: #4a4a4a;
@@ -93,7 +93,7 @@ html[data-proto-paleta='oliva'] {
   --color-suave: #575757;
   --color-linea: #e2d5cc;
 }
-html[data-proto-paleta='champan'] {
+:root:not([data-proto-paleta]), html[data-proto-paleta='champan'] {
   --color-pino-900: #161616;
   --color-pino-800: #222222;
   --color-pino-600: #4a4a4a;
@@ -495,7 +495,7 @@ html:not(.js) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em { ba
 }
 
 /* PROTOTIPO: el subrayado es una imagen con el color escrito; una copia por paleta (color de malva-500). */
-html:is(:not([data-proto-paleta]), [data-proto-paleta='terracota'], [data-proto-paleta='terracota-negro']):not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+html:is([data-proto-paleta='terracota'], [data-proto-paleta='terracota-negro']):not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%23a35a3e' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%23a35a3e' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
 }
 html[data-proto-paleta='azul']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
@@ -507,7 +507,7 @@ html[data-proto-paleta='mocha']:not([data-proto-subrayado='no']) [data-reveal] :
 html[data-proto-paleta='oliva']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%238a6f35' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%238a6f35' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
 }
-html[data-proto-paleta='champan']:not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
+html:is(:not([data-proto-paleta]), [data-proto-paleta='champan']):not([data-proto-subrayado='no']) [data-reveal] :is(.display-xl, .display-l):not(.no-stroke) em {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'><path d='M3 9.5C38 5.5 70 10.5 104 7.2S168 4.6 197 7.8' fill='none' stroke='%23806b55' stroke-width='2.6' stroke-linecap='round' opacity='.85'/><path d='M12 11.6C52 8.4 96 11.8 140 9.4S182 8 193 9.6' fill='none' stroke='%23806b55' stroke-width='1.3' stroke-linecap='round' opacity='.55'/></svg>");
 }
 

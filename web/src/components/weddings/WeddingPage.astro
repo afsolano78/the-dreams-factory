@@ -94,6 +94,10 @@ const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]);
           </figure>
         )
       }
+      <!-- Abre el formulario con esta boda ya mencionada («Nos encantó la boda de…»). -->
+      <a href={`${path('contact', lang)}?boda=${encodeURIComponent(w.couple)}`} class="link-draw eyebrow mt-2 self-center text-pino-800">
+        {lang === 'es' ? '¿Os imagináis algo así? Contádnoslo' : 'Picturing something like this? Tell us'} →
+      </a>
     </div>
   </section>
 

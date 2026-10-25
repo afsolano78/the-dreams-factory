@@ -1,0 +1,82 @@
+---
+/*
+  Formulario corto del cierre (portada y resto de páginas): nombres, email o teléfono, fecha y la idea.
+  Envía al mismo sitio que el completo (/api/contacto) e incluye la página desde la que se escribe.
+*/
+import { contactContent } from '../../content/contact';
+import { path, type Lang } from '../../i18n/routes';
+import Button from '../Button.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = contactContent[lang];
+const s = c.short;
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+---
+
+<div class="contact-box" data-contact>
+  <form
+    class="contact-form flex flex-col gap-7 text-left"
+    action="/api/contacto"
+    method="post"
+    novalidate
+    data-contact-form="short"
+    data-errors={JSON.stringify(c.errors)}
+    data-sending={c.sending}
+  >
+    <input type="hidden" name="idioma" value={lang} />
+    <input type="hidden" name="formulario" value="corto" />
+    <input type="hidden" name="t" value="" />
+    <div class="hp" aria-hidden="true">
+      <label>Web <input type="text" name="web" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <p class="eyebrow text-malva-500">{s.title}</p>
+    <div class="grid gap-x-6 gap-y-7 sm:grid-cols-2">
+      <div class="field">
+        <label for="sf-nombres" class="eyebrow text-malva-500">{s.names}</label>
+        <input id="sf-nombres" name="nombres" type="text" autocomplete="name" required maxlength="120" />
+        <p class="field-error" data-error-for="nombres" hidden></p>
+      </div>
+      <div class="field">
+        <label for="sf-contacto" class="eyebrow text-malva-500">{s.contact}</label>
+        <input id="sf-contacto" name="contacto" type="text" inputmode="email" autocomplete="email" required maxlength="160" placeholder={c.you.email[1]} />
+        <p class="field-error" data-error-for="contacto" hidden></p>
+      </div>
+      <div class="field sm:col-span-2">
+        <label for="sf-fecha" class="eyebrow text-malva-500">{s.date}</label>
+        <input id="sf-fecha" name="fecha" type="text" autocomplete="off" placeholder={c.wedding.date[1]} />
+      </div>
+      <div class="field sm:col-span-2">
+        <label for="sf-idea" class="eyebrow text-malva-500">{s.idea}</label>
+        <textarea id="sf-idea" name="idea" rows="3" maxlength="5000" placeholder={c.you.idea[1]}></textarea>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label class="flex items-start gap-3 text-[0.875rem] text-pino-800">
+        <input name="privacidad" type="checkbox" value="si" required class="mt-0.5 size-4 shrink-0 accent-ciruela-700" />
+        <span>{c.privacy.accept} <a href={path('privacy', lang)} target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-ciruela-700">{c.privacy.link}</a>.</span>
+      </label>
+      <p class="field-error" data-error-for="privacidad" hidden></p>
+    </div>
+    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-size="flexible"></div>}
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+      <Button type="submit" variant="primary" data-submit>{s.submit}</Button>
+      <a href={path('contact', lang)} class="link-draw text-[0.875rem] text-suave hover:text-pino-800">{s.more} →</a>
+    </div>
+    <p class="form-message" role="alert" data-form-message hidden></p>
+  </form>
+
+  <div class="form-done flex flex-col items-start gap-4 text-left" data-form-done hidden tabindex="-1">
+    <h3 class="display-s text-pino-800">{c.done.title}</h3>
+    <p class="text-suave">{c.done.text}</p>
+    <button type="button" class="link-draw eyebrow text-pino-800" data-form-again>{c.done.again}</button>
+  </div>
+</div>
+
+{turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  import { initContactForms } from '../../scripts/contact-form';
+  initContactForms();
+</script>

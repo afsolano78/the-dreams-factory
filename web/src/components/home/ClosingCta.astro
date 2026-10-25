@@ -1,12 +1,14 @@
 ---
 /*
-  Cierre de la portada: una frase caligráfica, el titular y la invitación a escribir
-  (botón a la página de contacto y, debajo, WhatsApp directo).
+  Cierre (portada y resto de páginas): a la izquierda, la frase caligráfica, el titular y las formas directas de
+  hablar con ellas (teléfono y WhatsApp); a la derecha, el formulario corto. Quien quiere contar más tiene el
+  enlace al formulario completo de la página de contacto.
 */
-import Button from '../Button.astro';
 import SectionEdge from '../SectionEdge.astro';
 import WatercolorBlob from '../deco/WatercolorBlob.astro';
-import { path, emphasize, type Lang } from '../../i18n/routes';
+import ContactIcon from '../ContactIcon.astro';
+import ShortContactForm from '../contact/ShortContactForm.astro';
+import { emphasize, type Lang } from '../../i18n/routes';
 import { ui, contact } from '../../i18n/ui';
 import type { HomeContent } from '../../content/home';
 
@@ -20,17 +22,30 @@ const whatsapp = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(q.
   <!-- Entra desde el Blog con una onda, como Servicios y el Blog. -->
   <SectionEdge class="text-porcelana-50" shape={2} />
   <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-    <WatercolorBlob data-toggle="acuarela-cierre" seed={4} class="absolute left-1/2 top-1/2 w-[min(640px,120%)] -translate-x-1/2 -translate-y-1/2 text-malva-500 opacity-[0.14]" />
+    <WatercolorBlob data-toggle="acuarela-cierre" seed={4} class="absolute left-1/4 top-1/2 w-[min(640px,120%)] -translate-x-1/2 -translate-y-1/2 text-malva-500 opacity-[0.14]" />
   </div>
-  <div class="container-brand flex flex-col items-center gap-6 text-center" data-reveal>
-    <p class="font-script text-[clamp(2rem,1.5rem+2vw,2.75rem)] leading-none text-ciruela-700">{c.script}</p>
-    <h2 class="display-l no-stroke max-w-[18ch] text-pino-800" set:html={emphasize(c.title)} />
-    <p class="lead max-w-[36rem]">{c.text}</p>
-    <div class="mt-2 flex flex-col items-center gap-4">
-      <Button href={path(c.cta.to, lang)} variant="primary">{c.cta.label}</Button>
-      <a href={whatsapp} target="_blank" rel="noopener" class="link-draw text-[0.9375rem] text-suave hover:text-pino-800">
-        {lang === 'es' ? 'o escribidnos por WhatsApp' : 'or message us on WhatsApp'} →
-      </a>
+  <div class="container-brand grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-20">
+    <div class="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left" data-reveal>
+      <p class="font-script text-[clamp(2rem,1.5rem+2vw,2.75rem)] leading-none text-ciruela-700">{c.script}</p>
+      <h2 class="display-l no-stroke max-w-[18ch] text-pino-800" set:html={emphasize(c.title)} />
+      <p class="lead max-w-[30rem]">{c.text}</p>
+      <ul class="mt-2 flex flex-col items-center gap-3 lg:items-start">
+        <li class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 lg:justify-start">
+          {contact.phones.map((p) => (
+            <a href={`tel:${p.replace(/\s/g, '')}`} class="link-draw inline-flex items-center gap-2 text-[0.9375rem] text-pino-800">
+              <ContactIcon name="phone" size={16} class="text-malva-500" />{p}
+            </a>
+          ))}
+        </li>
+        <li>
+          <a href={whatsapp} target="_blank" rel="noopener" class="link-draw text-[0.9375rem] text-suave hover:text-pino-800">
+            {lang === 'es' ? 'o escribidnos por WhatsApp' : 'or message us on WhatsApp'} →
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="border border-linea bg-white p-6 sm:p-8" data-reveal style="--reveal-delay:150ms">
+      <ShortContactForm lang={lang} />
     </div>
   </div>
 </section>

@@ -22,6 +22,14 @@ const { lang } = Astro.props;
 const c = servicesContent[lang];
 const wedding = c.services.filter((s) => !s.apart);
 const apart = c.services.filter((s) => s.apart);
+/** El botón de cada servicio abre el formulario con ese servicio ya marcado (o «otra celebración»). */
+const serviceKey: Record<string, string> = {
+  'organizacion-integral': 'servicio=integral', 'full-planning': 'servicio=integral',
+  'diseno-y-decoracion': 'servicio=diseno', 'design-and-styling': 'servicio=diseno',
+  'coordinacion-dia-b': 'servicio=coordinacion', 'wedding-day-coordination': 'servicio=coordinacion',
+  celebraciones: 'motivo=celebracion', celebrations: 'motivo=celebracion',
+};
+const contactHref = (anchor: string) => `${path('contact', lang)}${serviceKey[anchor] ? `?${serviceKey[anchor]}` : ''}`;
 ---
 
 <BaseLayout lang={lang} routeKey="services" title={c.meta.title} description={c.meta.description}>
@@ -89,7 +97,7 @@ const apart = c.services.filter((s) => s.apart);
                   ))}
                 </ul>
               </div>
-              <div class="pt-2"><Button href={path('contact', lang)} variant="primary">{c.labels.cta}</Button></div>
+              <div class="pt-2"><Button href={contactHref(s.anchor)} variant="primary">{c.labels.cta}</Button></div>
             </div>
           </article>
         </>

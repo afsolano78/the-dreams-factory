@@ -1,0 +1,90 @@
+---
+/*
+  Página de contacto (/contacto, /en/contact): a la izquierda, el titular y las formas de hablar con ellas
+  (teléfonos, WhatsApp, email, zona de trabajo, redes); a la derecha, el formulario completo en tres pasos.
+*/
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from './ContactForm.astro';
+import ContactIcon from '../ContactIcon.astro';
+import SocialIcon from '../SocialIcon.astro';
+import { contactContent } from '../../content/contact';
+import { ui, contact } from '../../i18n/ui';
+import { emphasize, type Lang } from '../../i18n/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = contactContent[lang];
+const whatsapp = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(ui[lang].quickContact.whatsappText)}`;
+const [emailUser, emailDomain] = contact.email.split('@');
+---
+
+<BaseLayout lang={lang} routeKey="contact" title={c.meta.title} description={c.meta.description}>
+  <section class="bg-porcelana-50 pb-20 pt-14 md:pb-28 md:pt-20">
+    <!-- En móvil: titular → formulario → datos. En escritorio: titular y datos a la izquierda, formulario a la derecha. -->
+    <div class="container-brand grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:grid-rows-[auto_1fr] lg:gap-x-20 lg:gap-y-10">
+        <div class="flex flex-col gap-6" data-reveal>
+          <p class="eyebrow eyebrow-line text-malva-500">{c.eyebrow}</p>
+          <h1 class="display-xl text-pino-800" set:html={emphasize(c.title)} />
+          <p class="lead max-w-[30rem]">{c.lead}</p>
+        </div>
+
+      <!-- Formulario -->
+      <div class="border border-linea bg-white p-6 sm:p-10 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start" data-reveal style="--reveal-delay:180ms">
+        <ContactForm lang={lang} />
+      </div>
+
+      <!-- Datos -->
+        <div class="flex flex-col gap-6 border-t border-linea pt-8 lg:self-start" data-reveal style="--reveal-delay:120ms">
+          <p class="display-s text-pino-800">{c.info.title}</p>
+          <dl class="flex flex-col gap-5">
+            <div class="flex flex-col gap-1.5">
+              <dt class="eyebrow text-malva-500">{c.info.phones}</dt>
+              <dd class="flex flex-wrap items-center gap-x-4 gap-y-1">
+                {contact.phones.map((p) => (
+                  <a href={`tel:${p.replace(/\s/g, '')}`} class="link-draw inline-flex items-center gap-2 text-pino-800">
+                    <ContactIcon name="phone" size={16} class="text-malva-500" />{p}
+                  </a>
+                ))}
+              </dd>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <dt class="eyebrow text-malva-500">WhatsApp</dt>
+              <dd><a href={whatsapp} target="_blank" rel="noopener" class="link-draw text-pino-800">{c.info.whatsapp} →</a></dd>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <dt class="eyebrow text-malva-500">{c.info.email}</dt>
+              <dd>
+                <a href={`mailto:${contact.email}`} class="link-draw inline-flex items-center gap-2 text-pino-800 [overflow-wrap:anywhere]">
+                  <ContactIcon name="mail" size={16} class="shrink-0 text-malva-500" />{emailUser}<wbr />@{emailDomain}
+                </a>
+              </dd>
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <dt class="eyebrow text-malva-500">{c.info.zone}</dt>
+              <dd class="max-w-[26rem] text-[0.9375rem] text-suave">{c.info.zoneText}</dd>
+            </div>
+          </dl>
+          <p class="font-script text-[1.75rem] leading-tight text-ciruela-700">{c.info.reply}</p>
+          <div class="flex items-center gap-4">
+            <span class="eyebrow text-malva-500">{c.info.social}</span>
+            <ul class="flex gap-2">
+              {contact.social.map((s) => (
+                <li>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener"
+                    class="grid size-9 place-items-center rounded-full border border-linea text-pino-800 transition-colors hover:border-pino-800 hover:bg-pino-800 hover:text-white"
+                    aria-label={`${s.name} ${s.handle}`}
+                    title={`${s.name} ${s.handle}`}
+                  >
+                    <SocialIcon name={s.name} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+    </div>
+  </section>
+</BaseLayout>

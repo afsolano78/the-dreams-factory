@@ -143,14 +143,6 @@ export interface HomeContent {
      */
     posts: { category: string; title: string; excerpt: string; minutes: number; photo: Photo }[];
   };
-  contact: {
-    eyebrow: string; title: string; lead: string;
-    form: {
-      names: [string, string]; email: [string, string]; phone: [string, string];
-      date: [string, string]; place: [string, string]; need: string; needOptions: string[];
-      idea: [string, string]; privacy: string; privacyLink: string; submit: string; prototypeNotice: string;
-    };
-  };
 }
 
 export const home: Record<Lang, HomeContent> = {
@@ -266,25 +258,6 @@ export const home: Record<Lang, HomeContent> = {
         { category: 'Proveedores', title: 'Encuentros Dreams: el peinado de tu boda', excerpt: 'Una mañana de domingo con futuras novias, tendencias en peinados y tocados, y una mesa dulce irresistible.', minutes: 2, photo: { src: blogEncuentro, alt: 'Mesa preparada para el encuentro con futuras novias.' } },
       ],
     },
-    contact: {
-      eyebrow: 'Contacto',
-      title: '¿Empezamos?',
-      lead: 'Contadnos quiénes sois, cuándo y dónde os imagináis celebrándolo. Os responderemos personalmente.',
-      form: {
-        names: ['Vuestros nombres', 'Olaya y David'],
-        email: ['Email', 'hola@ejemplo.com'],
-        phone: ['Teléfono (opcional)', '+34 600 000 000'],
-        date: ['Fecha aproximada', 'Septiembre de 2027'],
-        place: ['Lugar o zona', 'Llanes, Asturias'],
-        need: '¿Qué necesitáis?',
-        needOptions: ['Organización integral', 'Diseño y coordinación del día B', 'Coordinación del día B', 'Una celebración', 'Tutoría online', 'Información del curso'],
-        idea: ['Vuestra idea', 'Nos imaginamos una boda al aire libre, cerca del mar, con unos 120 invitados…'],
-        privacy: 'He leído y acepto la',
-        privacyLink: 'política de privacidad',
-        submit: 'Enviar mensaje',
-        prototypeNotice: 'Esto es un prototipo: el formulario todavía no envía mensajes. Se activará en la fase de desarrollo.',
-      },
-    },
   },
 
   en: {
@@ -399,25 +372,6 @@ export const home: Record<Lang, HomeContent> = {
         { category: 'Inspiration', title: 'Hand lettering at your wedding', excerpt: 'We learned hand lettering with Naranjas Chinas, and here’s why handwritten stationery makes all the difference.', minutes: 2, photo: { src: blogLettering, alt: 'Hand-drawn letters spelling “Hand lettering”.' } },
         { category: 'Suppliers', title: 'Dreams Meet-up: your wedding hairstyle', excerpt: 'A Sunday morning with brides-to-be, the latest hairstyles and headpieces, and an irresistible sweet table.', minutes: 2, photo: { src: blogEncuentro, alt: 'A table set for a meet-up with brides-to-be.' } },
       ],
-    },
-    contact: {
-      eyebrow: 'Contact',
-      title: 'Shall we begin?',
-      lead: 'Tell us who you are, and when and where you picture your celebration. We’ll reply to you personally.',
-      form: {
-        names: ['Your names', 'Olivia and James'],
-        email: ['Email', 'hello@example.com'],
-        phone: ['Phone (optional)', '+44 7700 900000'],
-        date: ['Approximate date', 'September 2027'],
-        place: ['Venue or area', 'Llanes, Asturias'],
-        need: 'What do you need?',
-        needOptions: ['Full planning', 'Design & wedding-day coordination', 'Wedding-day coordination', 'A celebration', 'Online consultation', 'Course information'],
-        idea: ['Your idea', 'We picture an outdoor wedding near the sea, with around 120 guests…'],
-        privacy: 'I have read and accept the',
-        privacyLink: 'privacy policy',
-        submit: 'Send message',
-        prototypeNotice: 'This is a prototype: the form doesn’t send messages yet. It will be enabled during development.',
-      },
     },
   },
 };

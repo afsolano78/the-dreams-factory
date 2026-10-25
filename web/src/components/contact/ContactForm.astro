@@ -1,0 +1,225 @@
+---
+/*
+  Formulario de contacto completo, en tres pasos: qué celebráis → los detalles → vosotros.
+  El paso 2 muestra solo el bloque que corresponde a lo elegido en el paso 1 (boda, otra celebración, tutoría o
+  curso); los campos de los demás bloques se desactivan para que no se validen ni se envíen.
+  Se puede llegar con datos ya puestos por la dirección: ?motivo=boda|celebracion|tutoria|curso, ?servicio=integral|
+  diseno|coordinacion y ?boda=I%20%26%20A (empieza el mensaje con «Nos encantó la boda de…»).
+  Envío, validación y pasos: src/scripts/contact-form.ts. Sin JavaScript, el formulario se envía igualmente.
+*/
+import { contactContent } from '../../content/contact';
+import { path, type Lang } from '../../i18n/routes';
+import Button from '../Button.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = contactContent[lang];
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+---
+
+<div class="contact-box" data-contact>
+<form
+  class="contact-form flex flex-col gap-10"
+  action="/api/contacto"
+  method="post"
+  novalidate
+  data-contact-form="full"
+  data-errors={JSON.stringify(c.errors)}
+  data-sending={c.sending}
+  data-from-wedding={c.fromWedding}
+>
+  <input type="hidden" name="idioma" value={lang} />
+  <input type="hidden" name="formulario" value="completo" />
+  <input type="hidden" name="t" value="" />
+  <!-- Trampa para robots: oculto para las personas, los robots suelen rellenarlo. -->
+  <div class="hp" aria-hidden="true">
+    <label>Web <input type="text" name="web" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <!-- Progreso -->
+  <ol class="form-steps flex gap-2" aria-hidden="true">
+    {c.steps.map((s, i) => (
+      <li class="flex-1" data-step-dot={i + 1} data-current={i === 0 ? 'true' : undefined}>
+        <span class="block h-[2px] bg-linea"><span class="step-bar block h-full bg-ciruela-700"></span></span>
+        <span class="eyebrow mt-3 hidden text-[0.6875rem] !tracking-[0.14em] sm:block">{s}</span>
+      </li>
+    ))}
+  </ol>
+  <p class="sr-only" aria-live="polite" data-step-label data-template={c.stepOf}>{c.stepOf.replace('{n}', '1')}</p>
+
+  <!-- Paso 1: qué celebráis -->
+  <fieldset data-step="1" class="flex flex-col gap-6">
+    <legend class="display-m mb-6 text-pino-800">{c.motive.legend}</legend>
+    <div class="grid gap-3 sm:grid-cols-2">
+      {c.motive.options.map((o) => (
+        <label class="choice">
+          <input type="radio" name="motivo" value={o.value} required class="sr-only" />
+          <span class="display-s text-pino-800">{o.label}</span>
+          <span class="text-[0.875rem] text-suave">{o.text}</span>
+        </label>
+      ))}
+    </div>
+    <p class="field-error" data-error-for="motivo" hidden></p>
+  </fieldset>
+
+  <!-- Paso 2: los detalles (un bloque por motivo) -->
+  <fieldset data-step="2" class="flex flex-col gap-8" hidden>
+    <legend class="sr-only">{c.steps[1]}</legend>
+    <div data-for="boda" class="flex flex-col gap-8">
+      <h2 class="display-m text-pino-800">{c.wedding.legend}</h2>
+      <div class="grid gap-x-8 gap-y-8 sm:grid-cols-2">
+        <div class="field">
+          <label for="cf-fecha" class="eyebrow text-malva-500">{c.wedding.date[0]}</label>
+          <input id="cf-fecha" name="fecha" type="text" placeholder={c.wedding.date[1]} autocomplete="off" />
+          <label class="mt-1 flex items-center gap-2 text-[0.875rem] text-suave">
+            <input type="checkbox" name="sin_fecha" value="si" class="size-4 accent-ciruela-700" /> {c.wedding.dateUnknown}
+          </label>
+        </div>
+        <div class="field">
+          <label for="cf-lugar" class="eyebrow text-malva-500">{c.wedding.place[0]}</label>
+          <input id="cf-lugar" name="lugar" type="text" placeholder={c.wedding.place[1]} autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="cf-invitados" class="eyebrow text-malva-500">{c.wedding.guests.label}</label>
+          <select id="cf-invitados" name="invitados">
+            {c.wedding.guests.options.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="cf-presupuesto" class="eyebrow text-malva-500">{c.wedding.budget.label}</label>
+          <select id="cf-presupuesto" name="presupuesto">
+            {c.wedding.budget.options.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="flex flex-col gap-3">
+        <p class="eyebrow text-malva-500" id="cf-servicio-label">{c.wedding.service.label}</p>
+        <div class="flex flex-wrap gap-2" role="radiogroup" aria-labelledby="cf-servicio-label">
+          {c.wedding.service.options.map((o) => (
+            <label class="chip">
+              <input type="radio" name="servicio" value={o.value} class="sr-only" />
+              {o.label}
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div data-for="celebracion" class="flex flex-col gap-8" hidden>
+      <h2 class="display-m text-pino-800">{c.celebration.legend}</h2>
+      <div class="field">
+        <label for="cf-celebracion" class="eyebrow text-malva-500">{c.celebration.kind[0]}</label>
+        <input id="cf-celebracion" name="celebracion" type="text" placeholder={c.celebration.kind[1]} required />
+        <p class="field-error" data-error-for="celebracion" hidden></p>
+      </div>
+      <div class="grid gap-x-8 gap-y-8 sm:grid-cols-2">
+        <div class="field">
+          <label for="cf-c-fecha" class="eyebrow text-malva-500">{c.celebration.date[0]}</label>
+          <input id="cf-c-fecha" name="fecha" type="text" placeholder={c.celebration.date[1]} />
+        </div>
+        <div class="field">
+          <label for="cf-c-lugar" class="eyebrow text-malva-500">{c.celebration.place[0]}</label>
+          <input id="cf-c-lugar" name="lugar" type="text" placeholder={c.celebration.place[1]} />
+        </div>
+      </div>
+    </div>
+
+    <div data-for="tutoria" class="flex flex-col gap-8" hidden>
+      <h2 class="display-m text-pino-800">{c.consultation.legend}</h2>
+      <div class="flex flex-col gap-3">
+        <p class="eyebrow text-malva-500" id="cf-franja-label">{c.consultation.slot.label}</p>
+        <div class="flex flex-wrap gap-2" role="radiogroup" aria-labelledby="cf-franja-label">
+          {c.consultation.slot.options.map((o) => (
+            <label class="chip">
+              <input type="radio" name="franja" value={o.value} class="sr-only" />
+              {o.label}
+            </label>
+          ))}
+        </div>
+      </div>
+      <div class="field">
+        <label for="cf-tema" class="eyebrow text-malva-500">{c.consultation.topic[0]}</label>
+        <input id="cf-tema" name="tema" type="text" placeholder={c.consultation.topic[1]} />
+      </div>
+    </div>
+
+    <div data-for="curso" class="flex flex-col gap-8" hidden>
+      <h2 class="display-m text-pino-800">{c.course.legend}</h2>
+      <p class="max-w-[34rem] text-suave">{c.course.text}</p>
+      <div class="field max-w-[24rem]">
+        <label for="cf-experiencia" class="eyebrow text-malva-500">{c.course.experience.label}</label>
+        <select id="cf-experiencia" name="experiencia">
+          {c.course.experience.options.map((o) => <option value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- Paso 3: vosotros -->
+  <fieldset data-step="3" class="flex flex-col gap-8" hidden>
+    <legend class="display-m mb-2 text-pino-800">{c.you.legend}</legend>
+    <div class="grid gap-x-8 gap-y-8 sm:grid-cols-2">
+      <div class="field sm:col-span-2">
+        <label for="cf-nombres" class="eyebrow text-malva-500">{c.you.names[0]}</label>
+        <input id="cf-nombres" name="nombres" type="text" placeholder={c.you.names[1]} autocomplete="name" required maxlength="120" />
+        <p class="field-error" data-error-for="nombres" hidden></p>
+      </div>
+      <div class="field">
+        <label for="cf-email" class="eyebrow text-malva-500">{c.you.email[0]}</label>
+        <input id="cf-email" name="email" type="email" placeholder={c.you.email[1]} autocomplete="email" required maxlength="160" />
+        <p class="field-error" data-error-for="email" hidden></p>
+      </div>
+      <div class="field">
+        <label for="cf-telefono" class="eyebrow text-malva-500">{c.you.phone[0]}</label>
+        <input id="cf-telefono" name="telefono" type="tel" placeholder={c.you.phone[1]} autocomplete="tel" maxlength="40" />
+      </div>
+      <div class="field sm:col-span-2">
+        <label for="cf-idea" class="eyebrow text-malva-500">{c.you.idea[0]}</label>
+        <textarea id="cf-idea" name="idea" rows="5" placeholder={c.you.idea[1]} maxlength="5000"></textarea>
+      </div>
+      <div class="field sm:col-span-2 sm:max-w-[22rem]">
+        <label for="cf-origen" class="eyebrow text-malva-500">{c.you.source.label}</label>
+        <select id="cf-origen" name="como_nos_conocisteis">
+          {c.you.source.options.map((o) => <option value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label class="flex items-start gap-3 text-[0.9375rem] text-pino-800">
+        <input name="privacidad" type="checkbox" value="si" required class="mt-1 size-4 shrink-0 accent-ciruela-700" />
+        <span>{c.privacy.accept} <a href={path('privacy', lang)} target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-ciruela-700">{c.privacy.link}</a>.</span>
+      </label>
+      <p class="field-error" data-error-for="privacidad" hidden></p>
+      <p class="text-[0.8125rem] text-suave">{c.privacy.basic}</p>
+    </div>
+    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-size="flexible"></div>}
+  </fieldset>
+
+  <!-- Botones -->
+  <div class="flex flex-wrap items-center gap-4 border-t border-linea pt-8" data-form-nav>
+    <button type="button" class="link-draw eyebrow text-pino-800" data-back hidden>← {c.back}</button>
+    <Button type="button" variant="primary" class="ml-auto" data-next>{c.next}</Button>
+    <Button type="submit" variant="primary" class="ml-auto" data-submit hidden>{c.submit}</Button>
+  </div>
+  <p class="form-message" role="alert" data-form-message hidden></p>
+</form>
+
+<!-- Gracias (sustituye al formulario al enviarlo) -->
+<div class="form-done flex flex-col items-start gap-5" data-form-done hidden tabindex="-1">
+  <p class="font-script text-[2.5rem] leading-none text-ciruela-700">Bea & Vane</p>
+  <h2 class="display-m text-pino-800">{c.done.title}</h2>
+  <p class="max-w-[32rem] text-suave">{c.done.text}</p>
+  <div class="flex flex-wrap gap-4">
+    <Button href={path('weddings', lang)} variant="secondary">{lang === 'es' ? 'Ver bodas' : 'See weddings'}</Button>
+    <button type="button" class="link-draw eyebrow text-pino-800" data-form-again>{c.done.again}</button>
+  </div>
+</div>
+
+</div>
+
+{turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  import { initContactForms } from '../../scripts/contact-form';
+  initContactForms();
+</script>

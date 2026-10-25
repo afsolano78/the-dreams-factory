@@ -1,5 +1,4 @@
 ---
-import Wordmark from './Wordmark.astro';
 import SocialLinks from './SocialLinks.astro';
 import LogoRow from './LogoRow.astro';
 import LangSwitch from './LangSwitch.astro';
@@ -26,7 +25,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
     -->
     <div class="grid gap-12 md:grid-cols-[0.85fr_1fr_1.4fr] md:gap-x-10 lg:grid-cols-[auto_0.8fr_1fr_1.3fr] lg:gap-12">
       <div class="flex w-fit flex-col items-center gap-6 md:col-span-3 md:w-full md:flex-row md:justify-between md:border-b md:border-white/10 md:pb-10 lg:col-span-1 lg:w-fit lg:flex-col lg:justify-start lg:border-0 lg:pb-0">
-        <Wordmark size="md" />
+        <span class="brand-logo brand-logo-sm w-44 text-white md:w-36 lg:w-44" role="img" aria-label="The Dreams Factory · Wedding Planner"></span>
         <SocialLinks />
       </div>
 

@@ -648,3 +648,17 @@ html[data-proto-servicios='escala'] [data-servicios='escala'] { display: flex; }
 .form-steps [data-current='true'] .eyebrow { color: var(--color-pino-800); }
 .form-steps .eyebrow { color: var(--color-suave); }
 @media (prefers-reduced-motion: reduce) { .form-steps .step-bar { transition: none; } }
+
+/* Logo con flores (public/brand): una máscara que se pinta con el color del texto, para que siga la paleta
+   (oscuro sobre claro, blanco en el pie). */
+.brand-logo {
+  display: block;
+  aspect-ratio: 960 / 930;
+  background-color: currentColor;
+  -webkit-mask: url('/brand/logo-960.webp') center / contain no-repeat;
+  mask: url('/brand/logo-960.webp') center / contain no-repeat;
+}
+.brand-logo-sm {
+  -webkit-mask-image: url('/brand/logo-480.webp');
+  mask-image: url('/brand/logo-480.webp');
+}

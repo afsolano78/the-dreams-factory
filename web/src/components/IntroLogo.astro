@@ -1,6 +1,6 @@
 ---
 /*
-  Presentación del logo: el nombre se dibuja trazo a trazo (como los motivos) y se rellena; luego el logo se
+  Presentación del logo: el logo (public/brand, con las flores) aparece de arriba abajo; luego se
   desvanece y la cortina se abre como un telón, en dos mitades que se retiran hacia arriba y hacia abajo.
   Al empezar a abrirse avisa a la página (html.intro-open + evento «tdf:intro-open», ver src/scripts/intro.ts)
   para que sus efectos arranquen en ese momento y no ocurran tapados.
@@ -11,10 +11,7 @@
 <div class="intro-overlay" aria-hidden="true">
   <span class="intro-half intro-top"></span>
   <span class="intro-half intro-bottom"></span>
-  <svg viewBox="0 0 900 230" class="intro-logo w-[min(88vw,640px)]">
-    <text class="intro-main" x="450" y="112" text-anchor="middle">THE DREAMS FACTORY</text>
-    <text class="intro-script" x="450" y="186" text-anchor="middle">Wedding Planner</text>
-  </svg>
+  <span class="intro-logo brand-logo w-[min(72vw,26rem)]"></span>
 </div>
 
 <style>
@@ -43,37 +40,17 @@
   .intro-top { box-shadow: 0 1px 0 color-mix(in srgb, var(--color-pino-800) 6%, transparent); }
   .intro-logo { position: relative; animation: intro-logo-out 0.4s ease 3.3s forwards; }
 
-  text {
-    fill: transparent;
-    stroke-width: 0.9;
-    stroke-dasharray: 700;
-    stroke-dashoffset: 700;
-  }
-  .intro-main {
-    font-family: var(--font-display);
-    font-optical-sizing: none;
-    font-variation-settings: 'opsz' 28;
-    font-weight: 400;
-    font-size: 54px;
-    letter-spacing: 0.14em;
-    stroke: var(--color-pino-800);
-  }
-  .intro-script {
-    font-family: var(--font-script);
-    font-size: 64px;
-    stroke: var(--color-ciruela-700);
-  }
+  /* Oculto hasta que empieza la secuencia. */
+  .intro-logo { color: var(--color-pino-800); clip-path: inset(0 0 100% 0); opacity: 0; }
 
-  /* Secuencia normal: empieza cuando las fuentes están listas (html.intro-go, lo pone el script de abajo). */
-  :global(html.intro-go) .intro-main { animation: intro-draw 1.6s ease-in-out forwards, intro-fill-main 0.6s ease 1.3s forwards; }
-  :global(html.intro-go) .intro-script { animation: intro-draw 1.4s ease-in-out 0.5s forwards, intro-fill-script 0.6s ease 1.6s forwards; }
-  :global(html.intro-go) .intro-logo { animation: intro-logo-out 0.35s ease 2.2s forwards; }
-  :global(html.intro-go) .intro-top { animation: intro-up 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.4s forwards; }
-  :global(html.intro-go) .intro-bottom { animation: intro-down 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.4s forwards; }
+  /* Secuencia normal: empieza cuando el logo ha cargado (html.intro-go, lo pone el script de abajo). */
+  :global(html.intro-go) .intro-logo {
+    animation: intro-reveal 1.5s cubic-bezier(0.45, 0, 0.2, 1) forwards, intro-logo-out 0.35s ease 2.3s forwards;
+  }
+  :global(html.intro-go) .intro-top { animation: intro-up 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.55s forwards; }
+  :global(html.intro-go) .intro-bottom { animation: intro-down 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.55s forwards; }
 
-  @keyframes intro-draw { to { stroke-dashoffset: 0; } }
-  @keyframes intro-fill-main { to { fill: var(--color-pino-800); stroke-width: 0; } }
-  @keyframes intro-fill-script { to { fill: var(--color-ciruela-700); stroke-width: 0; } }
+  @keyframes intro-reveal { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 1; clip-path: inset(0); } }
   @keyframes intro-logo-out { to { opacity: 0; transform: scale(0.97); } }
   @keyframes intro-up { to { transform: translateY(-100%); } }
   @keyframes intro-down { to { transform: translateY(100%); } }
@@ -86,10 +63,11 @@
     const top = document.querySelector('.intro-top');
     const bottom = document.querySelector('.intro-bottom');
     const go = () => html.classList.add('intro-go');
-    const fonts = document.fonts
-      ? Promise.all([document.fonts.load('54px "Bodoni Moda Variable"'), document.fonts.load('64px "Pinyon Script"')])
-      : Promise.resolve();
-    Promise.race([fonts, new Promise((r) => setTimeout(r, 1200))]).then(go, go);
+    // Espera a que el logo esté descargado (como mucho 1,2 s; si no, sigue igual).
+    const img = new Image();
+    const loaded = new Promise((r) => { img.onload = img.onerror = r; });
+    img.src = '/brand/logo-960.webp';
+    Promise.race([loaded, new Promise((r) => setTimeout(r, 1200))]).then(go, go);
 
     // El telón empieza a abrirse: la página arranca sus efectos.
     top?.addEventListener('animationstart', (e) => {

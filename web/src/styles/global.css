@@ -271,14 +271,8 @@ html.intro:not(.intro-open) [data-carousel] :is(.carousel-bar, .fade-img img),
 
 /*
   Transiciones entre secciones de la portada: la mayoría son cortes rectos; Servicios y Blog entran con una onda
-  dibujada (SectionEdge) y Bodas se monta sobre Servicios como una hoja de papel (.sheet-over).
+  dibujada (SectionEdge).
 */
-.sheet-over {
-  --sheet-r: clamp(1.5rem, 1rem + 2.5vw, 3rem);
-  margin-top: calc(-1 * var(--sheet-r));
-  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
-  box-shadow: 0 -16px 32px -24px color-mix(in srgb, var(--color-pino-900) 45%, transparent);
-}
 
 /*
   Parallax suave (ver src/scripts/parallax.ts): la capa se agranda por arriba y por abajo tanto como

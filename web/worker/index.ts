@@ -1,5 +1,6 @@
 /**
- * Worker de Cloudflare de la web: sirve las páginas (dist/) y atiende el formulario de contacto en /api/contacto.
+ * Worker de Cloudflare de la web: sirve las páginas (dist/), atiende el formulario de contacto en /api/contacto y
+ * da las últimas publicaciones de Instagram para la portada en /api/instagram.
  *
  * Formulario (POST /api/contacto, JSON o formulario normal):
  * 1. Antispam: campo trampa «web» vacío, al menos 3 s entre que se abre el formulario («t») y se envía, y
@@ -10,9 +11,13 @@
  *    AUTOREPLY = "si" y hay email, un acuse de recibo a la pareja. Sin RESEND_API_KEY el envío se simula (prototipo).
  *
  * Configuración en wrangler.jsonc (vars) y en el panel de Cloudflare (secretos). Ver web/CONTACTO.md.
+ *
+ * Instagram (GET /api/instagram y su cron diario): ver worker/instagram.ts y web/INSTAGRAM.md.
  */
 
-interface Env {
+import { instagramFeed, instagramImage, updateInstagram, type IgEnv } from './instagram';
+
+interface Env extends IgEnv {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
   CONTACT_TO?: string;
   CONTACT_FROM?: string;
@@ -58,11 +63,19 @@ const SERVICES: Data = {
   nose: 'Aún no lo saben',
 };
 
+type Ctx = { waitUntil(p: Promise<unknown>): void };
+
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    if (url.pathname.replace(/\/$/, '') === '/api/contacto') return contact(request, env);
+  async fetch(request: Request, env: Env, ctx: Ctx): Promise<Response> {
+    const route = new URL(request.url).pathname.replace(/\/$/, '');
+    if (route === '/api/contacto') return contact(request, env);
+    if (route === '/api/instagram') return instagramFeed(env, ctx);
+    if (route.startsWith('/api/instagram/img/')) return instagramImage(route.slice('/api/instagram/img/'.length), env);
     return env.ASSETS.fetch(request);
+  },
+  // Cron diario (wrangler.jsonc): últimas publicaciones de Instagram.
+  async scheduled(_event: unknown, env: Env, ctx: Ctx): Promise<void> {
+    ctx.waitUntil(updateInstagram(env));
   },
 };
 

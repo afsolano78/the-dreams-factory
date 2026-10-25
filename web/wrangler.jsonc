@@ -1,7 +1,7 @@
 // Configuración de Cloudflare Workers.
 // Workers Builds ejecuta `npm run build` en esta carpeta (web/) y después `npx wrangler deploy`, que publica
 // el contenido de dist/ en el Worker «dreams-factory-prototipo» (el nombre debe coincidir con el del panel).
-// El Worker (worker/index.ts) solo atiende /api/* (formulario de contacto); el resto son las páginas de dist/.
+// El Worker (worker/index.ts) solo atiende /api/* (formulario de contacto e Instagram); el resto son las páginas de dist/.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "dreams-factory-prototipo",
@@ -24,5 +24,7 @@
     // "si" para enviar un acuse de recibo a la pareja (requiere el dominio verificado en Resend).
     "AUTOREPLY": "no"
   },
+  // Instagram (worker/instagram.ts): últimas publicaciones una vez al día, a las 5:17 UTC. Ver INSTAGRAM.md.
+  "triggers": { "crons": ["17 5 * * *"] },
   "observability": { "enabled": true }
 }

@@ -22,7 +22,6 @@
 /hola-mundo /blog/ 301
 /nuestro-paso-por-detiqueta-2015 /blog/ 301
 /visita-mi-boda-rocks-experience-madrid /blog/ 301
-/blogs/* /blog/ 301
 
 # Bodas
 /i-y /bodas/i-y-a-palacio-de-la-riega/ 301
@@ -76,3 +75,6 @@
 /contact-form /contacto/ 301
 /pol%C3%ADtica-de-privacidad /privacidad/ 301
 /pol%C3%ADtica-de-cookies /cookies/ 301
+
+# Al final: las reglas con * van detrás de las exactas (más rápido en Cloudflare).
+/blogs/* /blog/ 301

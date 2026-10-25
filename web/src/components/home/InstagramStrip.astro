@@ -1,8 +1,9 @@
 ---
 /*
-  Franja de Instagram antes del pie: rótulo con el usuario y seis fotos cuadradas a sangre que enlazan al perfil.
-  PROTOTIPO: las fotos son de bodas del propio sitio. En la web definitiva serán las últimas publicaciones, leídas
-  de la cuenta de Instagram (requiere cuenta de empresa o creador y un permiso de acceso de Meta).
+  Franja de Instagram antes del pie: rótulo con el usuario y seis fotos cuadradas a sangre.
+  Las fotos son las últimas publicaciones de la cuenta, que da el Worker en /api/instagram (worker/instagram.ts):
+  la página se genera con seis fotos de bodas del propio sitio y, al acercarse a la franja, las cambia por las
+  publicaciones (cada una enlaza a su post). Si Instagram no está configurado o falla, se quedan las de siempre.
 */
 import { Picture } from 'astro:assets';
 import SocialIcon from '../SocialIcon.astro';
@@ -30,7 +31,7 @@ const posts = [p1, p2, p3, p4, p5, p6];
       <span class="display-s link-draw">{ig.handle}</span>
     </a>
   </div>
-  <ul class="grid grid-cols-3 md:grid-cols-6">
+  <ul class="grid grid-cols-3 md:grid-cols-6" data-ig-list data-label={t.post}>
     {posts.map((src, i) => (
       <li>
         <a href={ig.url} target="_blank" rel="noopener" class="ig-post group relative block aspect-square overflow-hidden" aria-label={`${t.post} ${i + 1}`}>
@@ -51,6 +52,56 @@ const posts = [p1, p2, p3, p4, p5, p6];
     ))}
   </ul>
 </section>
+
+<script>
+  // Publicaciones reales: se piden al acercarse a la franja y se cambian todas a la vez cuando sus fotos han cargado.
+  type Post = { url: string; img: string; alt: string };
+  const list = document.querySelector<HTMLElement>('[data-ig-list]');
+  const links = list ? [...list.querySelectorAll<HTMLAnchorElement>('.ig-post')] : [];
+
+  const load = (src: string) =>
+    new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+
+  async function swap() {
+    try {
+      const res = await fetch('/api/instagram', { headers: { Accept: 'application/json' } });
+      if (!res.ok) return;
+      const { posts } = (await res.json()) as { posts: Post[] };
+      if (!posts || posts.length < links.length) return;
+      const imgs = await Promise.all(posts.slice(0, links.length).map((p) => load(p.img)));
+      links.forEach((a, i) => {
+        const p = posts[i];
+        const old = a.querySelector('picture') ?? a.querySelector('img');
+        const img = imgs[i];
+        img.className = a.querySelector('img')?.className ?? '';
+        img.alt = p.alt;
+        img.decoding = 'async';
+        old?.replaceWith(img);
+        a.href = p.url;
+        a.setAttribute('aria-label', `${list!.dataset.label} ${i + 1}${p.alt ? `: ${p.alt}` : ''}`);
+      });
+    } catch {
+      // Sin publicaciones: se quedan las fotos de siempre.
+    }
+  }
+
+  if (list && links.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        swap();
+      },
+      { rootMargin: '600px 0px' },
+    );
+    io.observe(list);
+  }
+</script>
 
 <style>
   .ig-hover { opacity: 0; transition: opacity 0.35s ease; }

@@ -25,6 +25,7 @@ import opAidaAdrian from '../assets/photos/opiniones/aida-adrian.jpg';
 import opSoniaAlberto from '../assets/photos/opiniones/sonia-alberto.jpg';
 import opMariaGaspar from '../assets/photos/opiniones/maria-gaspar.jpg';
 import nosotras from '../assets/photos/nosotras-bea-vane.jpg';
+import nosotrasRetrato from '../assets/photos/nosotras-bea-vane-retrato.jpg';
 import cursoEdicion from '../assets/photos/curso-edicion.jpg';
 import tutorias from '../assets/photos/tutorias.jpg';
 import blogCeremonia from '../assets/photos/blog-ceremonia-civil.jpg';
@@ -84,8 +85,11 @@ export interface HomeContent {
   story: {
     eyebrow: string; title: string; lead: string; body: string;
     signature: string; credentials: string; cta: Link;
-    /** Retrato de Bea y Vane (se muestra pequeño y redondo junto a la firma). */
-    team: Photo;
+    /**
+     * Retrato de Bea y Vane (se muestra pequeño y redondo junto a la firma). `thumb`: recorte cuadrado para ese
+     * círculo; al ampliar se ve `src` completa.
+     */
+    team: Photo & { thumb?: ImageMetadata };
   };
   /**
    * Servicios. Cada uno enlaza a su apartado en la página de Servicios (`anchor`).
@@ -179,7 +183,7 @@ export const home: Record<Lang, HomeContent> = {
       signature: 'Bea & Vane',
       credentials: 'Wedding planners en Asturias desde 2015, con formación universitaria en protocolo y organización de eventos.',
       cta: { label: 'Conócenos', to: 'about' },
-      team: { src: nosotras, alt: 'Beatriz y Vanessa, de The Dreams Factory, sentadas en una furgoneta decorada con flores secas.' },
+      team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Beatriz y Vanessa, de The Dreams Factory, sonríen sentadas a una mesa decorada con velas, frutas de otoño y flores en un jardín.' },
     },
     services: {
       eyebrow: 'Servicios',
@@ -312,7 +316,7 @@ export const home: Record<Lang, HomeContent> = {
       signature: 'Bea & Vane',
       credentials: 'Wedding planners in Asturias since 2015, with university training in protocol and event management.',
       cta: { label: 'Get to know us', to: 'about' },
-      team: { src: nosotras, alt: 'Beatriz and Vanessa of The Dreams Factory, sitting in a camper van decorated with dried flowers.' },
+      team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Beatriz and Vanessa of The Dreams Factory smile, seated at a table dressed with candles, autumn fruit and flowers in a garden.' },
     },
     services: {
       eyebrow: 'Services',

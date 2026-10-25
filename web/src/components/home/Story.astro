@@ -41,10 +41,11 @@ const { lang, c } = Astro.props;
       <div class="shrink-0">
         <ZoomPhoto
           src={c.team.src}
+          thumbSrc={c.team.thumb}
           alt={c.team.alt}
           label={lang === 'es' ? 'Ampliar la foto de Bea y Vane' : 'Enlarge the photo of Bea and Vane'}
           closeLabel={lang === 'es' ? 'Cerrar' : 'Close'}
-          thumbClass="size-36 rounded-full object-cover object-[55%_45%] sm:size-40"
+          thumbClass="size-36 rounded-full object-cover sm:size-40"
         />
       </div>
       <div class="flex flex-col gap-1">

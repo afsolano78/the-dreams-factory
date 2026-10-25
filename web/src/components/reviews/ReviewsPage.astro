@@ -1,0 +1,264 @@
+---
+/*
+  Página «Opiniones» (/opiniones, /en/reviews).
+  1. Cabecera con una frase grande que lo resume todo.
+  2. Lo que más repiten: tres temas con una cita corta cada uno.
+  3. Una opinión destacada, entera, con su foto.
+  4. Todas las opiniones en mosaico: la frase destacada, la pareja, su foto y el texto completo desplegable.
+  5. Perfiles de reseñas (cuando los haya) y el mismo cierre que la portada.
+*/
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import ClosingCta from '../home/ClosingCta.astro';
+import { reviews, reviewsPage, featuredReview } from '../../content/reviews';
+import { weddingByCouple, weddingHref } from '../../content/weddings';
+import { home } from '../../content/home';
+import { emphasize, type Lang } from '../../i18n/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = reviewsPage[lang];
+const f = featuredReview;
+const rest = reviews.filter((r) => r !== f);
+/** Enlace a la página de su boda, solo si ya la tiene. */
+const weddingLink = (initials?: string) => {
+  const w = initials ? weddingByCouple(initials) : undefined;
+  return w?.page ? weddingHref(w, lang) : undefined;
+};
+const fLink = weddingLink(f.wedding);
+---
+
+<BaseLayout lang={lang} routeKey="reviews" title={c.meta.title} description={c.meta.description}>
+  <!-- 1. Cabecera -->
+  <section class="bg-porcelana-50 pb-16 pt-14 md:pb-24 md:pt-20">
+    <div class="container-brand grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-20">
+      <div class="flex flex-col gap-6" data-reveal>
+        <p class="eyebrow eyebrow-line text-malva-500">{c.eyebrow}</p>
+        <h1 class="display-xl text-pino-800" set:html={emphasize(c.title)} />
+        <p class="lead max-w-[30rem]">{c.lead}</p>
+        {c.note && <p class="text-[0.8125rem] italic text-suave">{c.note}</p>}
+      </div>
+      <figure class="relative isolate flex flex-col gap-5 lg:pb-2" data-reveal style="--reveal-delay:150ms">
+        <span class="hero-mark" aria-hidden="true">“</span>
+        <blockquote class="hero-quote text-ciruela-700">{c.hero.quote}</blockquote>
+        <figcaption class="eyebrow text-malva-500">{c.hero.author}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2. Lo que más repiten -->
+  <section class="section-y bg-white">
+    <div class="container-brand flex flex-col gap-12">
+      <SectionHeading eyebrow={c.themes.eyebrow} title={c.themes.title} />
+      <ul class="grid gap-10 md:grid-cols-3 md:gap-8 lg:gap-12">
+        {
+          c.themes.items.map((t, i) => (
+            <li class="flex flex-col gap-4 border-t border-linea pt-6" data-reveal style={`--reveal-delay:${i * 120}ms`}>
+              <h3 class="display-s text-pino-800">{t.title}</h3>
+              <blockquote class="text-[1.0625rem] italic leading-relaxed text-suave">{t.quote}</blockquote>
+              <p class="eyebrow text-malva-500">{t.author}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. Opinión destacada -->
+  <section class="section-y bg-porcelana-50">
+    <div class="container-brand grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+      {
+        f.photo && (
+          <div class="lg:sticky lg:top-28 lg:self-start" data-reveal>
+            <div class="overflow-hidden">
+              <Picture
+                src={f.photo.src}
+                alt=""
+                widths={[560, 800, 1120]}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                formats={['avif', 'webp']}
+                class="aspect-[4/5] w-full object-cover"
+                style={f.photo.focus ? `object-position:${f.photo.focus}` : undefined}
+              />
+            </div>
+            {f.credit && <p class="mt-2 text-[0.75rem] text-suave">{c.photoBy} © {f.credit}</p>}
+          </div>
+        )
+      }
+      <article class="flex flex-col gap-6" data-reveal>
+        <p class="eyebrow eyebrow-line text-malva-500">{c.featured.eyebrow}</p>
+        <p class="display-m text-pino-800">{f.highlight[lang]}</p>
+        <div class="flex flex-col gap-4 text-pino-800">
+          {f.text[lang].map((p) => <p>{p}</p>)}
+        </div>
+        <p class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <span class="signature text-ciruela-700">{f.couple[lang]}</span>
+          {f.place && <span class="eyebrow text-malva-500">{f.place}</span>}
+        </p>
+        {fLink && <a href={fLink} class="link-draw eyebrow self-start text-pino-800">{c.seeWedding} →</a>}
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. Todas las opiniones -->
+  <section class="section-y bg-white">
+    <div class="container-brand flex flex-col gap-12">
+      <SectionHeading eyebrow={c.all.eyebrow} title={c.all.title} />
+      <ul class="review-masonry">
+        {
+          rest.map((r, i) => {
+            const link = weddingLink(r.wedding);
+            return (
+              <li data-reveal>
+                <article class="flex flex-col gap-4 border border-linea bg-porcelana-50/60 p-5 md:p-6">
+                  {r.photo && (
+                    <div class="-mx-5 -mt-5 mb-1 overflow-hidden md:-mx-6 md:-mt-6">
+                      <Picture
+                        src={r.photo.src}
+                        alt=""
+                        widths={[400, 640, 800]}
+                        sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 100vw"
+                        formats={['avif', 'webp']}
+                        class="aspect-[3/2] w-full object-cover"
+                        style={r.photo.focus ? `object-position:${r.photo.focus}` : undefined}
+                      />
+                    </div>
+                  )}
+                  <blockquote class="review-highlight text-pino-800">{r.highlight[lang]}</blockquote>
+                  <p class="flex flex-col gap-1">
+                    <span class="display-s text-ciruela-700">{r.couple[lang]}</span>
+                    {r.place && <span class="eyebrow text-malva-500">{r.place}</span>}
+                  </p>
+                  <button type="button" class="eyebrow inline-flex items-center gap-2 self-start !tracking-[0.14em] text-[0.6875rem] text-pino-800 hover:text-ciruela-700" data-review-open={i}>
+                    {c.readMore} <span aria-hidden="true">+</span>
+                  </button>
+                  <dialog class="review-dialog" id={`opinion-${i}`} aria-label={r.couple[lang]}>
+                    <div class="flex flex-col gap-5 p-6 md:p-10">
+                      <p class="review-highlight text-ciruela-700">{r.highlight[lang]}</p>
+                      <div class="flex flex-col gap-4 text-pino-800">
+                        {r.text[lang].map((p) => <p>{p}</p>)}
+                      </div>
+                      <p class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-linea pt-4">
+                        <span class="signature text-ciruela-700">{r.couple[lang]}</span>
+                        {r.place && <span class="eyebrow text-malva-500">{r.place}</span>}
+                      </p>
+                    </div>
+                    <button type="button" class="review-close" aria-label={c.readLess} data-review-close>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+                    </button>
+                  </dialog>
+                  {(r.credit || link) && (
+                    <p class="flex flex-wrap items-center justify-between gap-2 border-t border-linea pt-3 text-[0.75rem] text-suave">
+                      {r.credit && <span>{c.photoBy} © {r.credit}</span>}
+                      {link && <a href={link} class="link-draw eyebrow text-pino-800">{c.seeWedding} →</a>}
+                    </p>
+                  )}
+                </article>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. Perfiles de reseñas (cuando los haya) -->
+  {
+    c.profiles.items.length > 0 && (
+      <section class="border-t border-linea bg-porcelana-50 py-14">
+        <div class="container-brand flex flex-col items-center gap-6 text-center">
+          <SectionHeading eyebrow={c.profiles.eyebrow} title={c.profiles.title} size="m" />
+          <ul class="flex flex-wrap justify-center gap-4">
+            {c.profiles.items.map((p) => (
+              <li>
+                <a href={p.href} target="_blank" rel="noopener" class="inline-flex items-center gap-2 border border-linea px-5 py-3 text-pino-800 hover:border-pino-800">
+                  {p.name}
+                  {p.rating && <span class="text-ciruela-700">★ {p.rating}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <ClosingCta lang={lang} c={home[lang].closing} />
+</BaseLayout>
+
+<script>
+  // Opinión completa en una ventana: se abre con su botón y se cierra con ×, Escape o un clic fuera.
+  document.querySelectorAll<HTMLButtonElement>('[data-review-open]').forEach((btn) => {
+    const dialog = document.getElementById(`opinion-${btn.dataset.reviewOpen}`) as HTMLDialogElement | null;
+    if (!dialog) return;
+    btn.addEventListener('click', () => dialog.showModal());
+    dialog.querySelector('[data-review-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  });
+</script>
+
+<style>
+  .hero-quote {
+    font-family: var(--font-display);
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 12;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 1.3rem + 2.8vw, 3.5rem);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .hero-mark {
+    position: absolute;
+    top: -0.45em;
+    left: -0.08em;
+    z-index: -1;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(9rem, 6rem + 9vw, 14rem);
+    line-height: 1;
+    color: var(--color-rosa-100);
+    pointer-events: none;
+  }
+  .review-highlight {
+    font-family: var(--font-display);
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 12;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.3125rem;
+    line-height: 1.35;
+  }
+
+  /* Mosaico de opiniones: columnas, cada tarjeta con su altura. */
+  .review-masonry { columns: 1; column-gap: 1.5rem; }
+  @media (min-width: 640px) { .review-masonry { columns: 2; } }
+  @media (min-width: 1024px) { .review-masonry { columns: 3; column-gap: 1.75rem; } }
+  .review-masonry > li { break-inside: avoid; margin-bottom: 1.5rem; }
+
+  /* Opinión completa: ventana sobre la página (el mosaico no se mueve al abrirla). */
+  .review-dialog {
+    width: min(42rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 3rem);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: var(--color-porcelana-50);
+    color: inherit;
+    overflow-y: auto;
+  }
+  .review-dialog::backdrop { background: color-mix(in srgb, var(--color-pino-900) 70%, transparent); }
+  .review-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    color: var(--color-pino-800);
+  }
+  .review-close:hover { background: var(--color-rosa-100); }
+</style>

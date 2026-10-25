@@ -12,6 +12,11 @@
  * - El plazo de conservación de las consultas que no acaban en contrato (aquí, un año).
  * - Los proveedores técnicos (Cloudflare, Resend y Google) cuando la web esté en producción.
  *
+ * Cookies: la web no instala cookies propias ni usa analítica o publicidad. Solo guarda en el navegador un aviso
+ * técnico («tdf-intro-seen») y, si se activan, Cloudflare puede usar cookies de seguridad y Turnstile. Si en el futuro
+ * se añade analítica con cookies, hay que actualizar esta política y pedir consentimiento antes de instalarlas.
+ * Las opciones del prototipo («tdf-toggle-*») desaparecen al publicar la web y no se citan.
+ *
  * Formato de los textos: **negrita** y [texto](https://…) para enlaces. En inglés prevalece la versión española.
  */
 import type { Lang } from '../i18n/routes';
@@ -40,7 +45,7 @@ const EMAIL = 'thedreamsfactoryweddingplanner@gmail.com';
 const PHONE = '+34 659 251 373';
 const AEPD = 'https://www.aepd.es';
 
-export const legal: Record<'notice' | 'privacy', Record<Lang, LegalDoc>> = {
+export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalDoc>> = {
   notice: {
     es: {
       meta: { title: 'Aviso legal · The Dreams Factory', description: 'Datos identificativos de la titular y condiciones de uso de la web de The Dreams Factory.' },
@@ -451,6 +456,170 @@ export const legal: Record<'notice' | 'privacy', Record<Lang, LegalDoc>> = {
           title: 'Changes to this policy',
           blocks: [
             { p: 'We may update this policy to reflect legal changes or changes to our services. The date of the last update appears at the top of the page.' },
+          ],
+        },
+      ],
+    },
+  },
+
+  cookies: {
+    es: {
+      meta: { title: 'Política de cookies · The Dreams Factory', description: 'Qué cookies y tecnologías similares usa la web de The Dreams Factory: ninguna de análisis ni de publicidad.' },
+      eyebrow: 'Legal',
+      title: 'Política de cookies',
+      updated: 'Última actualización: 25 de octubre de 2026',
+      toc: 'En esta página',
+      summary: {
+        title: 'En pocas palabras',
+        items: [
+          ['Análisis y publicidad', 'No usamos cookies de análisis, de publicidad ni de redes sociales. No os seguimos por internet.'],
+          ['Lo que sí', 'Solo un aviso técnico en vuestro navegador y, en algunos casos, cookies de seguridad de nuestro proveedor de alojamiento.'],
+          ['Consentimiento', 'Como todo es técnico y necesario, no hace falta pediros permiso: por eso no veréis el típico aviso de cookies.'],
+        ],
+      },
+      sections: [
+        {
+          id: 'que-son',
+          title: 'Qué son las cookies',
+          blocks: [
+            { p: 'Las cookies son pequeños archivos que una web guarda en vuestro navegador para recordar información entre una visita y otra. Hay tecnologías parecidas, como el almacenamiento local del navegador, que funcionan de forma similar y a las que se aplica la misma normativa (artículo 22.2 de la Ley 34/2002, LSSI).' },
+          ],
+        },
+        {
+          id: 'cuales',
+          title: 'Qué usamos en esta web',
+          blocks: [
+            { table: {
+              head: ['Nombre', 'De quién', 'Para qué', 'Duración'],
+              rows: [
+                ['tdf-intro-seen (almacenamiento local)', 'The Dreams Factory', 'Recordar que ya habéis visto la presentación del logo, para no repetirla en cada página. No se envía a ningún sitio.', 'Hasta que borréis los datos del navegador'],
+                ['__cf_bm y similares (cookie)', 'Cloudflare, nuestro proveedor de alojamiento', 'Seguridad: distinguir las visitas de personas de las de robots y proteger la web frente a ataques. Solo se usa si la protección está activa.', '30 minutos'],
+                ['Cloudflare Turnstile', 'Cloudflare', 'Comprobar que el formulario de contacto lo envía una persona. Solo al usar el formulario y sin fines publicitarios.', 'La visita'],
+              ],
+            } },
+          ],
+        },
+        {
+          id: 'no-usamos',
+          title: 'Lo que no usamos',
+          blocks: [
+            { ul: [
+              'Cookies de **análisis** o estadísticas (como Google Analytics).',
+              'Cookies de **publicidad** o de seguimiento entre webs.',
+              'Botones o contenidos incrustados de **redes sociales** que instalen sus propias cookies.',
+              'Servicios externos para las **fuentes tipográficas** o los **vídeos**: se sirven desde la propia web.',
+            ] },
+          ],
+        },
+        {
+          id: 'consentimiento',
+          title: '¿Necesitamos vuestro consentimiento?',
+          blocks: [
+            { p: 'No. La ley permite usar sin consentimiento las cookies técnicas y las estrictamente necesarias para que la web funcione con seguridad o para prestar un servicio que habéis pedido, como enviar el formulario de contacto. Si algún día añadimos cookies de otro tipo, os lo explicaremos aquí y os pediremos permiso antes de instalarlas.' },
+          ],
+        },
+        {
+          id: 'otras-webs',
+          title: 'Enlaces a otras webs',
+          blocks: [
+            { p: 'Si seguís un enlace a otra web —Instagram, Facebook, TikTok, WhatsApp o las revistas que han publicado nuestras bodas—, esa web puede instalar sus propias cookies. Os recomendamos consultar su política.' },
+          ],
+        },
+        {
+          id: 'gestionar',
+          title: 'Cómo ver o borrar las cookies',
+          blocks: [
+            { p: 'Podéis consultar, bloquear o borrar las cookies y los datos de las webs desde la configuración de vuestro navegador:' },
+            { ul: ["[Google Chrome](https://support.google.com/chrome/answer/95647?hl=es)","[Mozilla Firefox](https://support.mozilla.org/es/kb/borrar-cookies-y-datos-del-sitio-en-firefox)","[Safari](https://support.apple.com/es-es/guide/safari/sfri11471/mac) y [Safari en iPhone](https://support.apple.com/es-es/105082)","[Microsoft Edge](https://support.microsoft.com/es-es/microsoft-edge/eliminar-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09)"] },
+            { p: 'Si las bloqueáis todas, alguna parte de la web podría no funcionar del todo bien (por ejemplo, la comprobación antispam del formulario).' },
+          ],
+        },
+        {
+          id: 'mas',
+          title: 'Más información',
+          blocks: [
+            { p: `Para cualquier duda, escribidnos a [${EMAIL}](mailto:${EMAIL}). El resto del tratamiento de vuestros datos se explica en la [política de privacidad](/privacidad/).` },
+          ],
+        },
+      ],
+    },
+    en: {
+      meta: { title: 'Cookie policy · The Dreams Factory', description: 'Which cookies and similar technologies The Dreams Factory website uses: none for analytics or advertising.' },
+      eyebrow: 'Legal',
+      title: 'Cookie policy',
+      updated: 'Last updated: 25 October 2026',
+      note: 'This is a translation for information purposes. In case of discrepancy, the Spanish version prevails.',
+      toc: 'On this page',
+      summary: {
+        title: 'In a nutshell',
+        items: [
+          ['Analytics and ads', 'We don’t use analytics, advertising or social media cookies. We don’t track you around the internet.'],
+          ['What we do use', 'Only a technical note in your browser and, in some cases, security cookies from our hosting provider.'],
+          ['Consent', 'As it’s all technical and necessary, we don’t need to ask for your permission: that’s why you won’t see the usual cookie banner.'],
+        ],
+      },
+      sections: [
+        {
+          id: 'what',
+          title: 'What cookies are',
+          blocks: [
+            { p: 'Cookies are small files that a website stores in your browser to remember information between visits. Similar technologies, such as the browser’s local storage, work in a similar way and are covered by the same rules (article 22.2 of Spanish Law 34/2002, LSSI).' },
+          ],
+        },
+        {
+          id: 'which',
+          title: 'What this website uses',
+          blocks: [
+            { table: {
+              head: ['Name', 'Set by', 'Purpose', 'Duration'],
+              rows: [
+                ['tdf-intro-seen (local storage)', 'The Dreams Factory', 'Remembering that you have already seen the logo intro, so it isn’t repeated on every page. It is never sent anywhere.', 'Until you clear your browser data'],
+                ['__cf_bm and similar (cookie)', 'Cloudflare, our hosting provider', 'Security: telling human visitors from bots and protecting the website from attacks. Only used if that protection is active.', '30 minutes'],
+                ['Cloudflare Turnstile', 'Cloudflare', 'Checking that the contact form is sent by a person. Only when you use the form, and never for advertising.', 'The visit'],
+              ],
+            } },
+          ],
+        },
+        {
+          id: 'not-used',
+          title: 'What we don’t use',
+          blocks: [
+            { ul: [
+              '**Analytics** or statistics cookies (such as Google Analytics).',
+              '**Advertising** or cross-site tracking cookies.',
+              'Embedded **social media** buttons or content that set their own cookies.',
+              'External services for **fonts** or **videos**: they are served from the website itself.',
+            ] },
+          ],
+        },
+        {
+          id: 'consent',
+          title: 'Do we need your consent?',
+          blocks: [
+            { p: 'No. The law allows technical cookies, and those strictly necessary for the website to work securely or to provide a service you have asked for (such as sending the contact form), to be used without consent. If we ever add other kinds of cookies, we will explain them here and ask for your permission before setting them.' },
+          ],
+        },
+        {
+          id: 'other-sites',
+          title: 'Links to other websites',
+          blocks: [
+            { p: 'If you follow a link to another website —Instagram, Facebook, TikTok, WhatsApp or the magazines that have featured our weddings— that website may set its own cookies. We recommend you read its policy.' },
+          ],
+        },
+        {
+          id: 'manage',
+          title: 'How to view or delete cookies',
+          blocks: [
+            { p: 'You can view, block or delete cookies and site data in your browser settings:' },
+            { ul: ["[Google Chrome](https://support.google.com/chrome/answer/95647?hl=en)","[Mozilla Firefox](https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox)","[Safari](https://support.apple.com/en-gb/guide/safari/sfri11471/mac) and [Safari on iPhone](https://support.apple.com/en-gb/105082)","[Microsoft Edge](https://support.microsoft.com/en-gb/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09)"] },
+            { p: 'If you block them all, some parts of the website may not work properly (for example, the form’s spam check).' },
+          ],
+        },
+        {
+          id: 'more',
+          title: 'More information',
+          blocks: [
+            { p: `If you have any questions, write to us at [${EMAIL}](mailto:${EMAIL}). How we otherwise process your data is explained in the [privacy policy](/en/privacy/).` },
           ],
         },
       ],

@@ -23,7 +23,7 @@ export const path = (key: RouteKey, lang: Lang) => routes[key][lang];
 
 /** Páginas que aún no están construidas en el prototipo (se sirven con una página provisional). */
 export const pendingPages: RouteKey[] = [
-  'about', 'reviews', 'course', 'consultations', 'blog', 'contact', 'legal', 'privacy', 'cookies',
+  'reviews', 'course', 'consultations', 'blog', 'contact', 'legal', 'privacy', 'cookies',
 ];
 
 /** Convierte "texto con *énfasis*" en HTML seguro con <em>. */

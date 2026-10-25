@@ -183,7 +183,7 @@ export const home: Record<Lang, HomeContent> = {
       signature: 'Bea & Vane',
       credentials: 'Wedding planners en Asturias desde 2015, con formación universitaria en protocolo y organización de eventos.',
       cta: { label: 'Conócenos', to: 'about' },
-      team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Beatriz y Vanessa, de The Dreams Factory, sonríen sentadas a una mesa decorada con velas, frutas de otoño y flores en un jardín.' },
+      team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Vanessa, a la izquierda, y Beatriz, de The Dreams Factory, sonríen sentadas a una mesa decorada con velas, frutas de otoño y flores en un jardín.' },
     },
     services: {
       eyebrow: 'Servicios',
@@ -219,7 +219,7 @@ export const home: Record<Lang, HomeContent> = {
       items: [
         { quote: '«La mejor decisión que hemos tomado en nuestra boda ha sido contratarlas a ellas. Con ellas, es imposible que una boda no salga bien.»', author: 'Marta y Omar', credit: 'David Fernández', photo: opMartaOmar, focus: '50% 40%' },
         { quote: '«Todos los invitados coinciden en que ha sido el evento más emotivo y cuidado en el que han estado.»', author: 'David y Germán', photo: opDavidGerman },
-        { quote: '«Nuestra boda fue perfecta, 100 % perfecta, y todo gracias a ellas.»', author: 'Nadia y Tomás', credit: 'David Fernández', photo: opNadiaTomas, focus: '50% 35%' },
+        { quote: '«Nuestra boda fue perfecta, 100 % perfecta, y todo gracias a ellas.»', author: 'Nadia y Tomás', credit: 'David Fernández', photo: opNadiaTomas, focus: '50% 35%' },
         { quote: '«¡El día de la boda estuve súper tranquila, y fue sobre todo porque sabía que ellas estaban allí!»', author: 'María y Gaspar', credit: 'La Cabina Roja', photo: opMariaGaspar },
         { quote: '«No podemos estar más contentos de haberos escogido. Si me volviera a casar, sin duda os volvería a contratar.»', author: 'Aida y Adrián', credit: 'M2 Visual Studio', photo: opAidaAdrian, focus: '50% 35%' },
         { quote: '«Las recomendaremos una y mil veces, las que hagan falta.»', author: 'Sonia y Alberto', credit: 'M2 Visual Studio', photo: opSoniaAlberto, focus: '50% 30%' },
@@ -316,7 +316,7 @@ export const home: Record<Lang, HomeContent> = {
       signature: 'Bea & Vane',
       credentials: 'Wedding planners in Asturias since 2015, with university training in protocol and event management.',
       cta: { label: 'Get to know us', to: 'about' },
-      team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Beatriz and Vanessa of The Dreams Factory smile, seated at a table dressed with candles, autumn fruit and flowers in a garden.' },
+      team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Vanessa, on the left, and Beatriz of The Dreams Factory smile, seated at a table dressed with candles, autumn fruit and flowers in a garden.' },
     },
     services: {
       eyebrow: 'Services',

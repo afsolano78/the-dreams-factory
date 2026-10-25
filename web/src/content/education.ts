@@ -43,6 +43,8 @@ export type CourseContent = {
   syllabus: { eyebrow: string; title: string; items: string[]; talks: { title: string; text: string } };
   teachers: { eyebrow: string; title: string; text: string; cta: string; photo: Photo };
   after: { title: string; text: string };
+  /** Palabras de alumnas tras el curso. */
+  voices: { eyebrow: string; title: string; items: { quote: string; name: string }[] };
   faq: { eyebrow: string; title: string; items: Qa[] };
   closing: { title: string; text: string; cta: string };
   gallery: { title: string; enlarge: string; close: string; prev: string; next: string; of: string };
@@ -158,6 +160,15 @@ export const course: Record<Lang, CourseContent> = {
       title: 'No tenemos por qué despedirnos aquí',
       text: 'Tras el curso tendrás muchas dudas e incertidumbres. Una tutoría solo para ti servirá para compartirlas y charlar de todo lo que se te haya quedado en el tintero. ¡Queremos verte crecer!',
     },
+    voices: {
+      eyebrow: 'Las alumnas',
+      title: 'Lo que nos dijeron *al terminar*',
+      items: [
+        { quote: 'Agradeceros mucho la transparencia y la cercanía que habéis tenido desde el principio a la hora de dar detalles de vuestras herramientas de trabajo, y de explicarnos todo de manera sencilla y clara.', name: 'Lidia' },
+        { quote: 'Agradeceros de corazón todo el cariño que le pusisteis a la planificación y al desarrollo del curso, porque os aseguro que se nota.', name: 'Lucía' },
+        { quote: 'Mis expectativas eran muy altas porque soy muy exigente, y de verdad que no os puedo poner un pero.', name: 'María' },
+      ],
+    },
     faq: {
       eyebrow: 'Preguntas frecuentes',
       title: 'Lo que más *nos preguntáis*',
@@ -248,6 +259,15 @@ export const course: Record<Lang, CourseContent> = {
     after: {
       title: 'This doesn’t have to be goodbye',
       text: 'After the course you’ll have lots of questions and doubts. A consultation just for you will help you share them and talk through anything left unsaid. We want to see you grow!',
+    },
+    voices: {
+      eyebrow: 'Our students',
+      title: 'What they told us *afterwards*',
+      items: [
+        { quote: 'Thank you for the transparency and warmth you showed from the very beginning when sharing the details of your working tools, and for explaining everything so simply and clearly.', name: 'Lidia' },
+        { quote: 'Thank you from the bottom of my heart for all the care you put into planning and running the course, because I promise it shows.', name: 'Lucía' },
+        { quote: 'My expectations were very high because I’m very demanding, and I honestly can’t find a single fault.', name: 'María' },
+      ],
     },
     faq: {
       eyebrow: 'FAQ',

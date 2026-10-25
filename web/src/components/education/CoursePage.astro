@@ -7,7 +7,8 @@
   4. El palacio como aula, con galería de las ediciones.
   5. Temario y ponencias.
   6. Quién enseña y la tutoría de después.
-  7. Preguntas frecuentes y cierre con la inscripción en la nueva edición.
+  7. Lo que dijeron las alumnas.
+  8. Preguntas frecuentes y cierre con la inscripción en la nueva edición.
 */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -163,8 +164,25 @@ const notify = `${path('contact', lang)}?motivo=curso`;
     </div>
   </section>
 
-  <!-- 7. Preguntas frecuentes -->
+  <!-- 7. Las alumnas -->
   <section class="section-y bg-white">
+    <div class="container-brand flex flex-col gap-12">
+      <SectionHeading eyebrow={c.voices.eyebrow} title={c.voices.title} />
+      <ul class="grid gap-10 md:grid-cols-3 md:gap-8">
+        {c.voices.items.map((v, i) => (
+          <li data-reveal style={`--reveal-delay:${i * 120}ms`}>
+            <figure class="flex h-full flex-col gap-5 border-l-2 border-malva-500/50 pl-5">
+              <blockquote class="course-quote text-pino-800">{lang === 'es' ? `«${v.quote}»` : `“${v.quote}”`}</blockquote>
+              <figcaption class="eyebrow mt-auto text-malva-500">{v.name}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8. Preguntas frecuentes -->
+  <section class="section-y bg-porcelana-50">
     <div class="container-brand grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
       <SectionHeading eyebrow={c.faq.eyebrow} title={c.faq.title} />
       <div class="divide-y divide-linea border-y border-linea" data-reveal>
@@ -183,7 +201,7 @@ const notify = `${path('contact', lang)}?motivo=curso`;
     </div>
   </section>
 
-  <!-- 8. Cierre: inscripción en la nueva edición -->
+  <!-- 9. Cierre: inscripción en la nueva edición -->
   <section class="bg-pino-800 py-20 text-white md:py-24">
     <div class="container-brand flex flex-col items-center gap-6 text-center" data-reveal>
       <h2 class="display-l max-w-[20ch]" set:html={emphasize(c.closing.title)} />
@@ -212,6 +230,15 @@ const notify = `${path('contact', lang)}?motivo=curso`;
     font-weight: 500;
     font-size: 1.375rem;
     min-width: 2rem;
+  }
+  .course-quote {
+    font-family: var(--font-display);
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 12;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.45;
   }
   .faq summary::-webkit-details-marker { display: none; }
   .faq-icon svg { transition: transform 0.3s ease; }

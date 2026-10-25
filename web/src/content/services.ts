@@ -156,7 +156,6 @@ export const servicesContent: Record<Lang, ServicesContent> = {
         { label: 'Búsqueda del lugar y de proveedores', has: [true, false, false] },
         { label: 'Diseño y decoración', has: [true, true, false] },
         { label: 'Coordinación del día B', has: [true, true, true] },
-        { label: 'Plan B y kit de emergencia', has: [true, false, true] },
       ],
     },
     process: {
@@ -166,7 +165,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
         { title: 'Un café para conocernos', text: 'En persona o por videollamada. Nos contáis vuestra historia, vuestras ideas y lo que os preocupa.' },
         { title: 'Una propuesta a medida', text: 'Con el servicio que mejor encaja con vosotros y un presupuesto claro.' },
         { title: 'Diseño y planificación', text: 'Calendario, proveedores, bocetos y decisiones, siempre juntos y sin prisas.' },
-        { title: 'El gran día', text: 'Coordinamos cada momento, con plan B y kit de emergencia, para que solo tengáis que disfrutar.' },
+        { title: 'El gran día', text: 'Coordinamos cada momento para que solo tengáis que disfrutar.' },
       ],
     },
     faq: {
@@ -293,7 +292,6 @@ export const servicesContent: Record<Lang, ServicesContent> = {
         { label: 'Venue and supplier search', has: [true, false, false] },
         { label: 'Design and styling', has: [true, true, false] },
         { label: 'Wedding-day coordination', has: [true, true, true] },
-        { label: 'Plan B and emergency kit', has: [true, false, true] },
       ],
     },
     process: {
@@ -303,7 +301,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
         { title: 'A coffee to get to know each other', text: 'In person or on a video call. Tell us your story, your ideas and anything that worries you.' },
         { title: 'A tailored proposal', text: 'With the service that suits you best and a clear quote.' },
         { title: 'Design and planning', text: 'Timeline, suppliers, sketches and decisions, always together and never rushed.' },
-        { title: 'The big day', text: 'We coordinate every moment, plan B and emergency kit included, so all you have to do is enjoy it.' },
+        { title: 'The big day', text: 'We coordinate every moment so all you have to do is enjoy it.' },
       ],
     },
     faq: {

@@ -10,8 +10,9 @@ import { ui, press, contact } from '../i18n/ui';
 interface Props {
   lang: Lang;
   routeKey: RouteKey;
+  alternates?: Record<Lang, string>;
 }
-const { lang, routeKey } = Astro.props;
+const { lang, routeKey, alternates } = Astro.props;
 const t = ui[lang];
 const year = new Date().getFullYear();
 const [emailUser, emailDomain] = contact.email.split('@');
@@ -67,7 +68,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
         © {year} The Dreams Factory
         {t.footer.legalLinks.map(([key, label]) => <>{' · '}<a href={path(key, lang)} class="link-draw hover:text-white">{label}</a></>)}
       </p>
-      <LangSwitch lang={lang} routeKey={routeKey} up class="text-white" />
+      <LangSwitch lang={lang} routeKey={routeKey} alternates={alternates} up class="text-white" />
     </div>
   </div>
 

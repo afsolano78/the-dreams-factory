@@ -1,0 +1,299 @@
+---
+/*
+  Página de una boda (/bodas/{slug}, /en/weddings/{slug}).
+  1. Foto a sangre con la pareja y el lugar (cabecera transparente encima).
+  2. Ficha: lugar, época, servicio, fotografía y vídeo.
+  3. Su historia (y su opinión, si la dejó).
+  4. Galería en mosaico (cada foto con su proporción); al pulsar una se abre el visor con anterior/siguiente.
+  5. Proveedores.
+  6. Más bodas y el mismo cierre que la portada.
+*/
+import { Picture, getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
+import ClosingCta from '../home/ClosingCta.astro';
+import { weddings, weddingsPage, weddingHref, type Wedding } from '../../content/weddings';
+import { home } from '../../content/home';
+import { path, type Lang } from '../../i18n/routes';
+
+interface Props { lang: Lang; wedding: Wedding }
+const { lang, wedding: w } = Astro.props;
+const page = w.page!;
+const c = weddingsPage[lang];
+const d = c.detail;
+const alternates = { es: weddingHref(w, 'es'), en: weddingHref(w, 'en') };
+const title = lang === 'es' ? `Boda de ${w.couple} en ${w.place.split(' · ')[0]} · The Dreams Factory` : `${w.couple}’s wedding at ${w.place.split(' · ')[0]} · The Dreams Factory`;
+const description = page.story[lang].join(' ');
+
+/** Foto grande para el visor (se descarga solo al abrirlo), sin ampliar nunca el original. */
+const large = await Promise.all(
+  page.gallery.map((g) => getImage({ src: g.src, width: Math.min(g.src.width, 1600), format: 'webp' })),
+);
+
+const facts = [
+  { label: d.facts.place, value: w.place },
+  { label: d.facts.season, value: page.season[lang] },
+  ...(w.service ? [{ label: d.facts.service, value: c.services[w.service] }] : []),
+  { label: d.facts.photo, value: w.photographer },
+  ...(page.video ? [{ label: d.facts.video, value: page.video }] : []),
+];
+
+/** Más bodas: las tres siguientes del listado (vuelve al principio al llegar al final). */
+const i = weddings.indexOf(w);
+const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]);
+---
+
+<BaseLayout lang={lang} routeKey="weddings" alternates={alternates} title={title} description={description} overlayHeader>
+  <!-- 1. Foto a sangre -->
+  <section class="relative isolate flex h-[86svh] max-h-[900px] min-h-[560px] items-end overflow-hidden bg-pino-900 text-white">
+    <Picture
+      src={page.hero.src}
+      alt={page.hero.alt[lang]}
+      widths={[640, 960, 1440, 1600]}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 -z-10 h-full w-full object-cover"
+      style={page.hero.focus ? `object-position:${page.hero.focus}` : undefined}
+    />
+    <div class="wedding-hero-shade absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="photo-text container-brand flex w-full flex-col gap-5 pb-12 md:pb-20">
+      <a href={path('weddings', lang)} class="eyebrow inline-flex items-center gap-2 self-start !tracking-[0.16em] text-white/90 hover:text-white">
+        <span aria-hidden="true">←</span> {d.back}
+      </a>
+      <p class="eyebrow">{w.place}</p>
+      <h1 class="display-xl">{w.couple}</h1>
+    </div>
+  </section>
+
+  <!-- 2. Ficha -->
+  <section class="border-b border-linea bg-porcelana-50">
+    <dl class="container-brand grid grid-cols-2 gap-x-6 gap-y-6 py-8 md:flex md:justify-between md:gap-10 md:py-10">
+      {
+        facts.map((f) => (
+          <div class="flex flex-col gap-1.5">
+            <dt class="eyebrow text-malva-500">{f.label}</dt>
+            <dd class="text-pino-800">{f.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- 3. Su historia -->
+  <section class="bg-porcelana-50 py-16 md:py-24">
+    <div class="container-brand flex max-w-[44rem] flex-col gap-6 text-center" data-reveal>
+      {page.story[lang].map((para, k) => <p class:list={k === 0 ? 'display-m text-pino-800' : 'lead'}>{para}</p>)}
+      {
+        page.review && (
+          <figure class="mt-6 flex flex-col gap-4 border-t border-linea pt-10">
+            <blockquote class="quote text-pino-800">{page.review.quote[lang]}</blockquote>
+            <figcaption class="eyebrow text-malva-500">{page.review.author}</figcaption>
+          </figure>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- 4. Galería -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="container-brand flex flex-col gap-10">
+      <SectionHeading eyebrow={w.couple} title={d.gallery} />
+      <ul class="wed-gallery" data-gallery>
+        {
+          page.gallery.map((g, k) => (
+            <li>
+              <a href={large[k].src} class="group block overflow-hidden" data-gallery-item={k} data-alt={g.alt[lang]} aria-label={`${d.enlarge}: ${g.alt[lang]}`}>
+                <Picture
+                  src={g.src}
+                  alt={g.alt[lang]}
+                  widths={[400, 640, 960]}
+                  sizes="(min-width: 1024px) 30vw, 50vw"
+                  formats={['avif', 'webp']}
+                  class="w-full transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Visor: foto grande con anterior/siguiente (flechas del teclado, Escape o clic fuera para cerrar). -->
+    <dialog class="gallery-viewer" aria-label={d.gallery} data-viewer>
+      <figure class="flex h-full flex-col items-center justify-center gap-4 px-14 py-16 md:px-24">
+        <img class="viewer-img" alt="" data-viewer-img />
+        <figcaption class="max-w-[40rem] text-center text-[0.875rem] text-white/80">
+          <span data-viewer-caption></span>
+          <span class="ml-2 text-white/50" data-viewer-count></span>
+        </figcaption>
+      </figure>
+      <button type="button" class="viewer-btn right-4 top-4" aria-label={d.close} data-viewer-close>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+      </button>
+      <button type="button" class="viewer-btn left-3 top-1/2 -translate-y-1/2 md:left-6" aria-label={d.prev} data-viewer-prev>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+      </button>
+      <button type="button" class="viewer-btn right-3 top-1/2 -translate-y-1/2 md:right-6" aria-label={d.next} data-viewer-next>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+      </button>
+    </dialog>
+  </section>
+
+  <!-- 5. Proveedores -->
+  <section class="bg-porcelana-50 py-16 md:py-20">
+    <div class="container-brand grid gap-10 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-16">
+      <h2 class="display-l text-pino-800" data-reveal>{d.credits}</h2>
+      <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+        {
+          page.credits.map((cr) => (
+            <div class="flex flex-col gap-1 border-t border-linea pt-4">
+              <dt class="eyebrow text-malva-500">{cr.role[lang]}</dt>
+              <dd class="text-pino-800">{cr.name}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- 6. Más bodas -->
+  <section class="section-y bg-white">
+    <div class="container-brand flex flex-col gap-12">
+      <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <SectionHeading eyebrow={c.eyebrow} title={d.more} />
+        <Button href={path('weddings', lang)} variant="secondary" class="self-start md:self-auto">{d.all}</Button>
+      </div>
+      <ul class="grid gap-8 sm:grid-cols-3">
+        {
+          more.map((m, k) => (
+            <li data-reveal style={`--reveal-delay:${k * 120}ms`}>
+              <a href={weddingHref(m, lang)} class="group flex flex-col gap-3">
+                <div class="overflow-hidden">
+                  <Picture
+                    src={m.cover.src}
+                    alt={m.cover.alt[lang]}
+                    widths={[400, 640, 800]}
+                    sizes="(min-width: 640px) 30vw, 100vw"
+                    formats={['avif', 'webp']}
+                    class="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+                    style={m.cover.focus ? `object-position:${m.cover.focus}` : undefined}
+                  />
+                </div>
+                <span class="eyebrow text-malva-500">{m.place}</span>
+                <span class="display-s -mt-1 text-pino-800 group-hover:text-ciruela-700">{m.couple}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <ClosingCta lang={lang} c={home[lang].closing} />
+</BaseLayout>
+
+<script>
+  // Visor de la galería: se abre al pulsar una foto (sin JavaScript, el enlace abre la foto grande).
+  const viewer = document.querySelector<HTMLDialogElement>('[data-viewer]');
+  const items = [...document.querySelectorAll<HTMLAnchorElement>('[data-gallery-item]')];
+  if (viewer && items.length) {
+    const img = viewer.querySelector<HTMLImageElement>('[data-viewer-img]')!;
+    const caption = viewer.querySelector<HTMLElement>('[data-viewer-caption]')!;
+    const count = viewer.querySelector<HTMLElement>('[data-viewer-count]')!;
+    const of = document.documentElement.lang === 'es' ? 'de' : 'of';
+    let current = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (n: number) => {
+      current = (n + items.length) % items.length;
+      const a = items[current];
+      img.src = a.href;
+      img.alt = a.dataset.alt ?? '';
+      caption.textContent = a.dataset.alt ?? '';
+      count.textContent = `${current + 1} ${of} ${items.length}`;
+      // Precarga la siguiente para que el paso sea inmediato.
+      new Image().src = items[(current + 1) % items.length].href;
+    };
+
+    items.forEach((a, n) =>
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        opener = a;
+        show(n);
+        viewer.showModal();
+      }),
+    );
+    viewer.querySelector('[data-viewer-prev]')!.addEventListener('click', () => show(current - 1));
+    viewer.querySelector('[data-viewer-next]')!.addEventListener('click', () => show(current + 1));
+    viewer.querySelector('[data-viewer-close]')!.addEventListener('click', () => viewer.close());
+    viewer.addEventListener('click', (e) => {
+      if (e.target === viewer || (e.target as HTMLElement).tagName === 'FIGURE') viewer.close();
+    });
+    viewer.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+    // Deslizar en móvil.
+    let x0: number | null = null;
+    viewer.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    viewer.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+    viewer.addEventListener('close', () => opener?.focus());
+  }
+</script>
+
+<style>
+  .wedding-hero-shade {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-pino-900) 45%, transparent) 0%,
+      transparent 30%,
+      transparent 50%,
+      color-mix(in srgb, var(--color-pino-900) 80%, transparent) 100%
+    );
+  }
+
+  /* Galería en mosaico: cada foto con su proporción original. */
+  .wed-gallery { columns: 2; column-gap: 0.75rem; }
+  @media (min-width: 1024px) { .wed-gallery { columns: 3; column-gap: 1rem; } }
+  .wed-gallery > li { break-inside: avoid; margin-bottom: 0.75rem; }
+  @media (min-width: 1024px) { .wed-gallery > li { margin-bottom: 1rem; } }
+  .wed-gallery :global(picture) { display: block; }
+
+  .gallery-viewer {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+  }
+  .gallery-viewer::backdrop { background: color-mix(in srgb, var(--color-pino-900) 94%, transparent); }
+  .viewer-img {
+    max-width: 100%;
+    max-height: calc(100dvh - 9rem);
+    object-fit: contain;
+  }
+  .viewer-btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+  .viewer-btn:hover { background: rgb(255 255 255 / 0.2); }
+</style>

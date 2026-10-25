@@ -14,15 +14,19 @@ import { ui } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  /** Sección a la que pertenece la página (menú y, si no hay `alternates`, dirección en cada idioma). */
   routeKey: RouteKey;
+  /** Dirección de esta página en cada idioma, para páginas fuera del mapa de rutas (p. ej. cada boda). */
+  alternates?: Record<Lang, string>;
   title: string;
   description?: string;
   /** Cabecera transparente sobre una foto a sangre (portada). */
   overlayHeader?: boolean;
 }
-const { lang, routeKey, title, description, overlayHeader = false } = Astro.props;
+const { lang, routeKey, alternates, title, description, overlayHeader = false } = Astro.props;
+const paths = alternates ?? routes[routeKey];
 const site = Astro.site ?? new URL('https://www.thedreamsfactory.es');
-const canonical = new URL(routes[routeKey][lang], site);
+const canonical = new URL(paths[lang], site);
 const ogImage = new URL('/og-image.jpg', site);
 ---
 
@@ -63,8 +67,8 @@ const ogImage = new URL('/og-image.jpg', site);
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
-    {langs.map((l) => <link rel="alternate" hreflang={l} href={new URL(routes[routeKey][l], site)} />)}
-    <link rel="alternate" hreflang="x-default" href={new URL(routes[routeKey].es, site)} />
+    {langs.map((l) => <link rel="alternate" hreflang={l} href={new URL(paths[l], site)} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(paths.es, site)} />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
@@ -88,11 +92,11 @@ const ogImage = new URL('/og-image.jpg', site);
     <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-white focus:px-4 focus:py-2">
       {ui[lang].skipLink}
     </a>
-    <Header lang={lang} routeKey={routeKey} overlay={overlayHeader} />
+    <Header lang={lang} routeKey={routeKey} alternates={alternates} overlay={overlayHeader} />
     <main id="contenido" class={overlayHeader ? '' : 'pt-[4.5rem] min-[1180px]:pt-[5.75rem]'}>
       <slot />
     </main>
-    <Footer lang={lang} routeKey={routeKey} />
+    <Footer lang={lang} routeKey={routeKey} alternates={alternates} />
     <QuickContactBar lang={lang} />
     <script>
       import { initFadeCarousel } from '../scripts/fade-carousel';

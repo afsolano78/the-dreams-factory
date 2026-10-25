@@ -8,10 +8,11 @@ import { ui } from '../i18n/ui';
 interface Props {
   lang: Lang;
   routeKey: RouteKey;
+  alternates?: Record<Lang, string>;
   /** Transparente sobre la foto de la portada; se vuelve sólida al hacer scroll. */
   overlay?: boolean;
 }
-const { lang, routeKey, overlay = false } = Astro.props;
+const { lang, routeKey, alternates, overlay = false } = Astro.props;
 const t = ui[lang];
 ---
 
@@ -41,7 +42,7 @@ const t = ui[lang];
     </nav>
 
     <div class="flex items-center gap-5">
-      <LangSwitch lang={lang} routeKey={routeKey} class="header-fg" />
+      <LangSwitch lang={lang} routeKey={routeKey} alternates={alternates} class="header-fg" />
       <div class="hidden min-[1180px]:block">
         <Button href={path('contact', lang)} variant={overlay ? 'light' : 'secondary'} class="header-button">{t.contactButton}</Button>
       </div>

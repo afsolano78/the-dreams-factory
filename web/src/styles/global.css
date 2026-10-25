@@ -358,7 +358,7 @@ body::after {
   Sin velos oscuros, sin el tono cálido ni el blanco y negro de Bodas y sin la textura de papel (que cubre toda la
   página, fotos incluidas). Para que los textos sobre foto se sigan leyendo, llevan una sombra suave en las letras.
 */
-html[data-proto-sombreado='no'] :is(.hero-shade, .tile-shade, .panel-shade, .mosaic-shade, .photo-shade, .collage-shade) { display: none; }
+html[data-proto-sombreado='no'] :is(.hero-shade, .tile-shade, .panel-shade, .mosaic-shade, .photo-shade, .collage-shade, .wedding-hero-shade) { display: none; }
 html[data-proto-sombreado='no'] .wedding-photo img { filter: none !important; }
 html[data-proto-sombreado='no'] .wedding-view { background-image: none; }
 html[data-proto-sombreado='no'] body::after { display: none; }

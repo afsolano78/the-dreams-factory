@@ -7,8 +7,8 @@
 import { path, langs, type Lang, type RouteKey } from '../i18n/routes';
 import { ui } from '../i18n/ui';
 
-interface Props { lang: Lang; routeKey: RouteKey; up?: boolean; class?: string }
-const { lang, routeKey, up = false, class: className = '' } = Astro.props;
+interface Props { lang: Lang; routeKey: RouteKey; alternates?: Record<Lang, string>; up?: boolean; class?: string }
+const { lang, routeKey, alternates, up = false, class: className = '' } = Astro.props;
 const t = ui[lang].langSwitch;
 const names: Record<Lang, string> = { es: 'Español', en: 'English' };
 ---
@@ -25,7 +25,7 @@ const names: Record<Lang, string> = { es: 'Español', en: 'English' };
     {langs.map((l) => (
       <li>
         <a
-          href={path(routeKey, l)}
+          href={alternates?.[l] ?? path(routeKey, l)}
           hreflang={l}
           lang={l}
           class:list={['flex items-center justify-between gap-4 px-4 py-2 text-[0.9375rem] hover:bg-porcelana-50', { 'text-ciruela-700': l === lang }]}

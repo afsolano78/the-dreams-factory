@@ -1,6 +1,6 @@
 ---
 /*
-  Presentación del logo: el logo (public/brand, con las flores) aparece de arriba abajo; luego se
+  Presentación del logo: el logo (public/brand, con las flores) se materializa: empieza desenfocado y transparente y se va enfocando; luego se
   desvanece y la cortina se abre como un telón, en dos mitades que se retiran hacia arriba y hacia abajo.
   Al empezar a abrirse avisa a la página (html.intro-open + evento «tdf:intro-open», ver src/scripts/intro.ts)
   para que sus efectos arranquen en ese momento y no ocurran tapados.
@@ -41,16 +41,16 @@
   .intro-logo { position: relative; animation: intro-logo-out 0.4s ease 3.3s forwards; }
 
   /* Oculto hasta que empieza la secuencia. */
-  .intro-logo { color: var(--color-pino-800); clip-path: inset(0 0 100% 0); opacity: 0; }
+  .intro-logo { color: var(--color-pino-800); opacity: 0; filter: blur(14px); transform: scale(1.04); }
 
   /* Secuencia normal: empieza cuando el logo ha cargado (html.intro-go, lo pone el script de abajo). */
   :global(html.intro-go) .intro-logo {
-    animation: intro-reveal 1.5s cubic-bezier(0.45, 0, 0.2, 1) forwards, intro-logo-out 0.35s ease 2.3s forwards;
+    animation: intro-reveal 1.6s cubic-bezier(0.3, 0, 0.2, 1) forwards, intro-logo-out 0.35s ease 2.3s forwards;
   }
   :global(html.intro-go) .intro-top { animation: intro-up 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.55s forwards; }
   :global(html.intro-go) .intro-bottom { animation: intro-down 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.55s forwards; }
 
-  @keyframes intro-reveal { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 1; clip-path: inset(0); } }
+  @keyframes intro-reveal { to { opacity: 1; filter: blur(0); transform: none; } }
   @keyframes intro-logo-out { to { opacity: 0; transform: scale(0.97); } }
   @keyframes intro-up { to { transform: translateY(-100%); } }
   @keyframes intro-down { to { transform: translateY(100%); } }

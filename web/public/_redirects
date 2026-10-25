@@ -1,0 +1,78 @@
+# Redirecciones de la web antigua (Drupal 7) a la nueva. Generado por un script a partir de la base de datos
+# antigua (tabla url_alias). Formato de Cloudflare: origen destino código.
+
+# Blog: entradas pasadas a la web nueva
+/nuestro-curso-wedding-planner-experience /blog/nuestro-curso-the-wedding-planner-experience/ 301
+/i-encuentro-dreams-el-peinado-de-tu-boda /blog/encuentro-dreams-el-peinado-de-tu-boda/ 301
+/editorial-nh-palacio-de-ferrera-para-telva-novias /blog/editorial-nh-palacio-de-ferrera-telva-novias/ 301
+/organizacion-de-bodas-Asturias /blog/organizacion-de-bodas-en-asturias/ 301
+/agenda-de-boda-descargable-gratuita-m%C3%A1s-bonita /blog/agenda-de-boda-descargable/ 301
+/por-qu%C3%A9-contratar-una-wedding-planner /blog/por-que-contratar-una-wedding-planner/ 301
+/el-lettering-en-tu-boda /blog/el-lettering-en-tu-boda/ 301
+/la-banda-sonora-de-vuestra-boda /blog/la-banda-sonora-de-vuestra-boda/ 301
+/tu-boda-tu-pelicula /blog/tu-boda-tu-pelicula/ 301
+/el-vestido-te-escoge-ti /blog/el-vestido-te-escoge-a-ti/ 301
+/y-t%C3%BA-%C2%BFd%C3%B3nde-te-sientas /blog/y-tu-donde-te-sientas/ 301
+/ceremonia-civil-%C2%BFfr%C3%ADa-0 /blog/ceremonia-civil-fria/ 301
+
+# Blog: entradas que no se han pasado (al listado)
+/avance-de-la-colecci%C3%B3n-pronovias-2017 /blog/ 301
+/cena-nascdn-2016 /blog/ 301
+/consejos-de-una-wedding-planner-para-tu-lista-de-reyes /blog/ 301
+/hola-mundo /blog/ 301
+/nuestro-paso-por-detiqueta-2015 /blog/ 301
+/visita-mi-boda-rocks-experience-madrid /blog/ 301
+/blogs/* /blog/ 301
+
+# Bodas
+/i-y /bodas/i-y-a-palacio-de-la-riega/ 301
+/o-d-boda-en-la-hacienda-de-la-llorea /bodas/ 301
+/o-y-d-boda-en-la-hacienda-de-la-llorea /bodas/ 301
+/b-y-d-boda-con-encanto-en-la-ermita-de-deva /bodas/ 301
+/c-y-m-boda-en-el-palacio-de-la-riega /bodas/ 301
+/editorial-banjara-wild-romance /bodas/ 301
+/editorial-nh-palacio-de-aviles /bodas/ 301
+/g-ej /bodas/ 301
+/myf-boda /bodas/ 301
+/nyt-boda-en-arenas-de-cabrales /bodas/ 301
+/s /bodas/ 301
+/y-boda-en-el-castillo-de-san-cucao /bodas/ 301
+/y-m /bodas/ 301
+/yk-boda-en-el-palacio-conde-de-toreno /bodas/ 301
+/boda-sp-0 /bodas/ 301
+/boda-sp-1 /bodas/ 301
+/d-s-1 /bodas/ 301
+/d-s-3 /bodas/ 301
+/ds /bodas/ 301
+/ds2 /bodas/ 301
+/ds3 /bodas/ 301
+/ds4 /bodas/ 301
+
+# Opiniones
+/aida-y-adri%C3%A1n /opiniones/ 301
+/alba-y-dani /opiniones/ 301
+/beatriz-y-daniel /opiniones/ 301
+/david-y-germ%C3%A1n /opiniones/ 301
+/katherine-y-albano /opiniones/ 301
+/maria-y-gaspar /opiniones/ 301
+/marta-y-omar /opiniones/ 301
+/nadia-y-tom%C3%A1s /opiniones/ 301
+/nuria-y-manel /opiniones/ 301
+/nuria-y-manel-0 /opiniones/ 301
+/olaya-y-david /opiniones/ 301
+/patricia-y-gerardo /opiniones/ 301
+/paula-y-david /opiniones/ 301
+/sonia-y-alberto /opiniones/ 301
+
+# Servicios, curso y páginas
+/organizacion-integral /servicios/#organizacion-integral 301
+/solo-vuestro /servicios/#diseno-y-decoracion 301
+/el-dia-b /servicios/#coordinacion-dia-b 301
+/tu-idea-nuestro-plan /servicios/#celebraciones 301
+/el-formato /curso-wedding-planner/ 301
+/el-temario-y-los-docentes /curso-wedding-planner/ 301
+/las-tutor%C3%ADas-dreams-factory /tutorias-online/ 301
+/quienes-somos /nosotras/ 301
+/contact-form /contacto/ 301
+/pol%C3%ADtica-de-privacidad /privacidad/ 301
+/pol%C3%ADtica-de-cookies /cookies/ 301

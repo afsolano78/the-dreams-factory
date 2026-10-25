@@ -1,0 +1,145 @@
+---
+/*
+  Página de una entrada del blog: cabecera (tema, fecha, lectura, título y resumen), foto, texto en una columna
+  cómoda de leer, galería de fotos (con visor), «Sigue leyendo» con tres entradas y el cierre de siempre.
+*/
+import { Picture } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Gallery from '../Gallery.astro';
+import ClosingCta from '../home/ClosingCta.astro';
+import { home } from '../../content/home';
+import { blogUi, getPosts, postHref, readingMinutes, formatDate, translationOf, type Post } from '../../lib/blog';
+import { path, type Lang } from '../../i18n/routes';
+
+interface Props { post: Post }
+const { post } = Astro.props;
+const lang = post.data.lang as Lang;
+const c = blogUi[lang];
+const { Content } = await render(post);
+
+// Dirección de esta misma entrada en cada idioma (si no está traducida, el listado del otro idioma).
+const other: Lang = lang === 'es' ? 'en' : 'es';
+const twin = await translationOf(post, other);
+const alternates = { [lang]: postHref(post), [other]: twin ? postHref(twin) : path('blog', other) } as Record<Lang, string>;
+
+// Sigue leyendo: primero las del mismo tema, luego las más recientes.
+const all = (await getPosts(lang)).filter((p) => p.id !== post.id);
+const related = [...all.filter((p) => p.data.category === post.data.category), ...all.filter((p) => p.data.category !== post.data.category)].slice(0, 3);
+---
+
+<BaseLayout lang={lang} routeKey="blog" alternates={alternates} title={`${post.data.title} · The Dreams Factory`} description={post.data.description}>
+  <article>
+    <header class="bg-porcelana-50 pb-10 pt-12 md:pt-16">
+      <div class="container-brand flex max-w-[52rem] flex-col gap-5" data-reveal>
+        <a href={path('blog', lang)} class="eyebrow inline-flex items-center gap-2 self-start !tracking-[0.16em] text-suave hover:text-pino-800">
+          <span aria-hidden="true">←</span> {c.back}
+        </a>
+        <p class="eyebrow text-malva-500">
+          {c.categories[post.data.category]} · <time datetime={post.data.date.toISOString().slice(0, 10)}>{formatDate(post.data.date, lang)}</time> · {c.readingTime.replace('{n}', String(readingMinutes(post)))}
+        </p>
+        <h1 class="display-xl text-pino-800">{post.data.title}</h1>
+        <p class="lead max-w-[40rem]">{post.data.description}</p>
+        {c.note && <p class="text-[0.8125rem] italic text-suave">{c.note}</p>}
+      </div>
+    </header>
+
+    <div class="bg-porcelana-50">
+      <div class="container-brand max-w-[64rem]">
+        <Picture
+          src={post.data.cover}
+          alt={post.data.coverAlt}
+          widths={[640, 960, 1280, 1600]}
+          sizes="(min-width: 1024px) 64rem, 100vw"
+          formats={['avif', 'webp']}
+          loading="eager"
+          fetchpriority="high"
+          class="aspect-[16/9] w-full object-cover"
+          style={post.data.coverFocus ? `object-position:${post.data.coverFocus}` : undefined}
+        />
+      </div>
+    </div>
+
+    <div class="bg-white pb-20 pt-14 md:pt-20">
+      <div class="post-body container-brand max-w-[42rem]">
+        <Content />
+      </div>
+
+      {
+        post.data.gallery.length > 0 && (
+          <div class="container-brand mt-16 flex flex-col gap-6">
+            <p class="eyebrow text-malva-500">
+              {c.photos}{post.data.photoCredit && <span class="normal-case tracking-normal text-suave"> · {c.photoBy}: {post.data.photoCredit}</span>}
+            </p>
+            <Gallery items={post.data.gallery} labels={c.gallery} />
+          </div>
+        )
+      }
+    </div>
+  </article>
+
+  <!-- Sigue leyendo -->
+  <section class="section-y bg-porcelana-50">
+    <div class="container-brand flex flex-col gap-10">
+      <h2 class="display-l text-pino-800">{c.keepReading}</h2>
+      <ul class="grid gap-x-8 gap-y-12 sm:grid-cols-3">
+        {related.map((p) => (
+          <li data-reveal>
+            <a href={postHref(p)} class="group flex flex-col gap-3">
+              <div class="overflow-hidden">
+                <Picture
+                  src={p.data.cover}
+                  alt={p.data.coverAlt}
+                  widths={[400, 640]}
+                  sizes="(min-width: 640px) 30vw, 100vw"
+                  formats={['avif', 'webp']}
+                  class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+                />
+              </div>
+              <p class="eyebrow mt-2 text-malva-500">{c.categories[p.data.category]}</p>
+              <h3 class="display-s text-pino-800 group-hover:text-ciruela-700">{p.data.title}</h3>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <ClosingCta lang={lang} c={home[lang].closing} />
+</BaseLayout>
+
+<style>
+  /* Texto de la entrada (viene de Markdown). */
+  .post-body { color: var(--color-pino-800); font-size: 1.0625rem; line-height: 1.8; }
+  .post-body :global(> * + *) { margin-top: 1.25em; }
+  /* Letra capital solo en el primer párrafo del texto (no en el de una cita). */
+  .post-body > :global(p:first-of-type::first-letter) {
+    float: left;
+    margin: 0.08em 0.12em 0 0;
+    font-family: var(--font-display);
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 12;
+    font-weight: 500;
+    font-size: 3.4em;
+    line-height: 0.82;
+    color: var(--color-ciruela-700);
+  }
+  .post-body :global(blockquote) {
+    border-left: 2px solid color-mix(in srgb, var(--color-malva-500) 50%, transparent);
+    padding-left: 1.25rem;
+    font-family: var(--font-display);
+    font-optical-sizing: none;
+    font-variation-settings: 'opsz' 12;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.45;
+  }
+  .post-body :global(blockquote em) { font-family: var(--font-sans); font-size: 0.8125rem; font-style: normal; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-malva-500); }
+  .post-body :global(a) { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--color-ciruela-700) 60%, transparent); }
+  .post-body :global(a:hover) { color: var(--color-ciruela-700); }
+  .post-body :global(strong) { font-weight: 500; }
+  .post-body :global(ul) { padding-left: 1.2rem; list-style: disc; }
+  .post-body :global(li + li) { margin-top: 0.4em; }
+  .post-body :global(hr) { border: 0; border-top: 1px solid var(--color-linea); margin: 2.5rem 0; }
+</style>

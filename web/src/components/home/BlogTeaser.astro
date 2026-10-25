@@ -10,11 +10,14 @@ import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import SectionEdge from '../SectionEdge.astro';
 import { path, type Lang } from '../../i18n/routes';
 import type { HomeContent } from '../../content/home';
+import { postByKey, postHref } from '../../lib/blog';
 
 interface Props { lang: Lang; c: HomeContent['blog'] }
 const { lang, c } = Astro.props;
 const href = path('blog', lang);
 const reading = (n: number) => c.readingTime.replace('{n}', String(n));
+/** Cada entrada enlaza a su página del blog (o al listado si no la encuentra). */
+const hrefs = await Promise.all(c.posts.map((p) => postByKey(p.post, lang).then((e) => (e ? postHref(e) : href))));
 ---
 
 <section class="section-y relative isolate bg-white">
@@ -32,7 +35,7 @@ const reading = (n: number) => c.readingTime.replace('{n}', String(n));
         const featured = i === 0;
         return (
           <li class:list={['mosaic-tile', { 'sm:col-span-2 lg:row-span-2': featured }]} data-reveal style={`--reveal-delay:${i * 90}ms`}>
-            <a href={href} class="group relative isolate flex h-full flex-col justify-end overflow-hidden p-6 text-white md:p-8">
+            <a href={hrefs[i]} class="group relative isolate flex h-full flex-col justify-end overflow-hidden p-6 text-white md:p-8">
               <Picture
                 src={p.photo.src}
                 alt={p.photo.alt}

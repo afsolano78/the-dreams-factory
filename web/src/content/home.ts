@@ -141,7 +141,8 @@ export interface HomeContent {
      * Mosaico: la primera entrada va grande y con su resumen (`excerpt`); el resto solo muestra el título.
      * `minutes`: tiempo de lectura calculado sobre el texto real de la entrada (200 palabras/min).
      */
-    posts: { category: string; title: string; excerpt: string; minutes: number; photo: Photo }[];
+    /** `post`: clave de la entrada en el blog (translationKey), para enlazarla. */
+    posts: { post: string; category: string; title: string; excerpt: string; minutes: number; photo: Photo }[];
   };
 }
 
@@ -251,11 +252,11 @@ export const home: Record<Lang, HomeContent> = {
       cta: { label: 'Ir al blog', to: 'blog' },
       readingTime: '{n} min de lectura',
       posts: [
-        { category: 'Bodas', title: 'La organización de bodas en Asturias', excerpt: 'Cada vez más parejas de fuera eligen Asturias para casarse. Así organizamos bodas a distancia sin que se note ni un kilómetro.', minutes: 3, photo: { src: blogAsturias, alt: 'Mesa de boda al aire libre con velas, flores silvestres y copas doradas.' } },
-        { category: 'Bodas', title: '¿Una ceremonia civil fría? Ni mucho menos', excerpt: 'Música, palabras de quienes más os quieren y el lugar que soñéis: así una ceremonia civil se convierte en la vuestra.', minutes: 1, photo: { src: blogCeremonia, alt: 'Ceremonia civil al aire libre.' } },
-        { category: 'Inspiración', title: 'Editorial en el NH Palacio de Ferrera para Telva Novias', excerpt: 'Rosa cuarzo, granates y verdes en un palacio de Avilés con salón invernadero: así creamos esta editorial para Telva Novias.', minutes: 2, photo: { src: blogTelva, alt: 'Detalle del vestido de novia, con cuerpo de flores bordadas y capa de plumas.' } },
-        { category: 'Inspiración', title: 'El lettering en tu boda', excerpt: 'Aprendimos lettering con Naranjas Chinas y os contamos por qué la papelería escrita a mano marca la diferencia.', minutes: 2, photo: { src: blogLettering, alt: 'Letras dibujadas a mano con la palabra «Hand lettering».' } },
-        { category: 'Proveedores', title: 'Encuentros Dreams: el peinado de tu boda', excerpt: 'Una mañana de domingo con futuras novias, tendencias en peinados y tocados, y una mesa dulce irresistible.', minutes: 2, photo: { src: blogEncuentro, alt: 'Mesa preparada para el encuentro con futuras novias.' } },
+        { post: 'bodas-asturias', category: 'Consejos', title: 'La organización de bodas en Asturias', excerpt: 'Cada vez más parejas de fuera eligen Asturias para casarse. Así organizamos bodas a distancia sin que se note ni un kilómetro.', minutes: 3, photo: { src: blogAsturias, alt: 'Mesa de boda al aire libre con velas, flores silvestres y copas doradas.' } },
+        { post: 'ceremonia-civil', category: 'Consejos', title: '¿Una ceremonia civil fría? Ni mucho menos', excerpt: 'Música, palabras de quienes más os quieren y el lugar que soñéis: así una ceremonia civil se convierte en la vuestra.', minutes: 1, photo: { src: blogCeremonia, alt: 'Ceremonia civil al aire libre.' } },
+        { post: 'editorial-telva', category: 'Inspiración', title: 'Editorial en el NH Palacio de Ferrera para Telva Novias', excerpt: 'Rosa cuarzo, granates y verdes en un palacio de Avilés con salón invernadero: así creamos esta editorial para Telva Novias.', minutes: 2, photo: { src: blogTelva, alt: 'Detalle del vestido de novia, con cuerpo de flores bordadas y capa de plumas.' } },
+        { post: 'lettering', category: 'Inspiración', title: 'El lettering en tu boda', excerpt: 'Aprendimos lettering con Naranjas Chinas y os contamos por qué la papelería escrita a mano marca la diferencia.', minutes: 2, photo: { src: blogLettering, alt: 'Letras dibujadas a mano con la palabra «Hand lettering».' } },
+        { post: 'encuentro-peinado', category: 'Nuestras cosas', title: 'Encuentros Dreams: el peinado de tu boda', excerpt: 'Una mañana de domingo con futuras novias, tendencias en peinados y tocados, y una mesa dulce irresistible.', minutes: 2, photo: { src: blogEncuentro, alt: 'Mesa preparada para el encuentro con futuras novias.' } },
       ],
     },
   },
@@ -366,11 +367,11 @@ export const home: Record<Lang, HomeContent> = {
       cta: { label: 'Go to the blog', to: 'blog' },
       readingTime: '{n} min read',
       posts: [
-        { category: 'Weddings', title: 'Planning a wedding in Asturias', excerpt: 'More and more couples from elsewhere choose Asturias for their wedding. Here’s how we plan weddings from afar without the distance ever showing.', minutes: 3, photo: { src: blogAsturias, alt: 'An outdoor wedding table with candles, wild flowers and gold-rimmed glasses.' } },
-        { category: 'Weddings', title: 'A cold civil ceremony? Far from it', excerpt: 'Music, words from the people who love you most and the place of your dreams: that’s how a civil ceremony becomes truly yours.', minutes: 1, photo: { src: blogCeremonia, alt: 'An outdoor civil ceremony.' } },
-        { category: 'Inspiration', title: 'An editorial at NH Palacio de Ferrera for Telva Novias', excerpt: 'Rose quartz, garnet and greens in an Avilés palace with a glasshouse ballroom: the story behind our editorial for Telva Novias.', minutes: 2, photo: { src: blogTelva, alt: 'Detail of the wedding dress, with an embroidered floral bodice and a feather cape.' } },
-        { category: 'Inspiration', title: 'Hand lettering at your wedding', excerpt: 'We learned hand lettering with Naranjas Chinas, and here’s why handwritten stationery makes all the difference.', minutes: 2, photo: { src: blogLettering, alt: 'Hand-drawn letters spelling “Hand lettering”.' } },
-        { category: 'Suppliers', title: 'Dreams Meet-up: your wedding hairstyle', excerpt: 'A Sunday morning with brides-to-be, the latest hairstyles and headpieces, and an irresistible sweet table.', minutes: 2, photo: { src: blogEncuentro, alt: 'A table set for a meet-up with brides-to-be.' } },
+        { post: 'bodas-asturias', category: 'Advice', title: 'Planning a wedding in Asturias', excerpt: 'More and more couples from elsewhere choose Asturias for their wedding. Here’s how we plan weddings from afar without the distance ever showing.', minutes: 3, photo: { src: blogAsturias, alt: 'An outdoor wedding table with candles, wild flowers and gold-rimmed glasses.' } },
+        { post: 'ceremonia-civil', category: 'Advice', title: 'A cold civil ceremony? Far from it', excerpt: 'Music, words from the people who love you most and the place of your dreams: that’s how a civil ceremony becomes truly yours.', minutes: 1, photo: { src: blogCeremonia, alt: 'An outdoor civil ceremony.' } },
+        { post: 'editorial-telva', category: 'Inspiration', title: 'An editorial at NH Palacio de Ferrera for Telva Novias', excerpt: 'Rose quartz, garnet and greens in an Avilés palace with a glasshouse ballroom: the story behind our editorial for Telva Novias.', minutes: 2, photo: { src: blogTelva, alt: 'Detail of the wedding dress, with an embroidered floral bodice and a feather cape.' } },
+        { post: 'lettering', category: 'Inspiration', title: 'Hand lettering at your wedding', excerpt: 'We learned hand lettering with Naranjas Chinas, and here’s why handwritten stationery makes all the difference.', minutes: 2, photo: { src: blogLettering, alt: 'Hand-drawn letters spelling “Hand lettering”.' } },
+        { post: 'encuentro-peinado', category: 'Our news', title: 'Dreams Meet-up: your wedding hairstyle', excerpt: 'A Sunday morning with brides-to-be, the latest hairstyles and headpieces, and an irresistible sweet table.', minutes: 2, photo: { src: blogEncuentro, alt: 'A table set for a meet-up with brides-to-be.' } },
       ],
     },
   },

@@ -22,9 +22,7 @@ export type RouteKey = keyof typeof routes;
 export const path = (key: RouteKey, lang: Lang) => routes[key][lang];
 
 /** Páginas que aún no están construidas en el prototipo (se sirven con una página provisional). */
-export const pendingPages: RouteKey[] = [
-  'blog',
-];
+export const pendingPages: RouteKey[] = [];
 
 /** Convierte "texto con *énfasis*" en HTML seguro con <em>. */
 export function emphasize(text: string): string {

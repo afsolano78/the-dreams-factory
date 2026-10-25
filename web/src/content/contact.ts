@@ -3,7 +3,8 @@
  *
  * El formulario envía a /api/contacto (web/worker/index.ts), que valida, filtra el spam y manda el correo.
  * PENDIENTE DE CONFIRMAR con Bea y Vane: el plazo de respuesta que se promete, si quieren el campo de presupuesto
- * (y sus tramos), el texto del correo automático de acuse y la información básica de protección de datos.
+ * (y sus tramos) y el texto del correo automático de acuse. La información básica de protección de datos (`privacy.basic`)
+ * resume la política de privacidad (src/content/legal.ts): si cambia una, hay que cambiar la otra.
  */
 import type { Lang } from '../i18n/routes';
 
@@ -174,7 +175,7 @@ export const contactContent: Record<Lang, ContactContent> = {
     privacy: {
       accept: 'He leído y acepto la',
       link: 'política de privacidad',
-      basic: 'Usaremos vuestros datos solo para responder a vuestra consulta. No los cedemos a nadie. Podéis pedirnos que los borremos cuando queráis.',
+      basic: 'Responsable: Beatriz Soria Gutiérrez (The Dreams Factory). Finalidad: responder a vuestra consulta. Legitimación: vuestro consentimiento. Destinatarios: nadie, salvo los servicios técnicos de la web y el correo, por encargo nuestro, o por obligación legal. Derechos: acceso, rectificación, supresión y los demás que explica la política de privacidad.',
     },
     submit: 'Enviar',
     sending: 'Enviando…',
@@ -314,7 +315,7 @@ export const contactContent: Record<Lang, ContactContent> = {
     privacy: {
       accept: 'I have read and accept the',
       link: 'privacy policy',
-      basic: 'We’ll only use your details to reply to your enquiry. We never share them. You can ask us to delete them at any time.',
+      basic: 'Controller: Beatriz Soria Gutiérrez (The Dreams Factory). Purpose: replying to your enquiry. Legal basis: your consent. Recipients: nobody, except the technical services running the website and email on our behalf, or where required by law. Rights: access, rectification, erasure and the others explained in the privacy policy.',
     },
     submit: 'Send',
     sending: 'Sending…',

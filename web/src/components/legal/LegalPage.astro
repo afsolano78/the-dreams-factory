@@ -1,0 +1,131 @@
+---
+/*
+  Página legal (aviso legal y privacidad): titular y fecha de actualización, un resumen en lenguaje claro si lo hay,
+  el índice (fijo a la izquierda en escritorio) y el texto en una columna cómoda de leer.
+  Los textos están en src/content/legal.ts (**negrita** y [texto](url) se convierten aquí).
+*/
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { LegalDoc, LegalBlock } from '../../content/legal';
+import type { Lang, RouteKey } from '../../i18n/routes';
+
+interface Props { lang: Lang; routeKey: RouteKey; doc: LegalDoc }
+const { lang, routeKey, doc } = Astro.props;
+
+/** Texto seguro con **negrita** y [enlaces](url) (los externos se abren en otra pestaña). */
+const inline = (text: string) =>
+  text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[(.+?)\]\((.+?)\)/g, (_, label: string, href: string) =>
+      /^https?:/.test(href)
+        ? `<a href="${href}" target="_blank" rel="noopener">${label}</a>`
+        : `<a href="${href}">${label}</a>`,
+    );
+const kind = (b: LegalBlock) => Object.keys(b)[0] as 'p' | 'ul' | 'table' | 'dl';
+---
+
+<BaseLayout lang={lang} routeKey={routeKey} title={doc.meta.title} description={doc.meta.description}>
+  <section class="bg-porcelana-50 pb-12 pt-14 md:pt-20">
+    <div class="container-brand flex flex-col gap-5" data-reveal>
+      <p class="eyebrow eyebrow-line text-malva-500">{doc.eyebrow}</p>
+      <h1 class="display-xl text-pino-800">{doc.title}</h1>
+      <p class="text-[0.875rem] text-suave">{doc.updated}</p>
+      {doc.note && <p class="max-w-[40rem] text-[0.875rem] italic text-suave">{doc.note}</p>}
+    </div>
+  </section>
+
+  <section class="bg-white pb-24 pt-12 md:pt-16">
+    <div class="container-brand grid grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16">
+      <!-- Índice -->
+      <nav class="lg:sticky lg:top-28 lg:self-start" aria-label={doc.toc}>
+        <p class="eyebrow mb-4 text-malva-500">{doc.toc}</p>
+        <ol class="flex flex-col gap-2.5 border-l border-linea pl-4 text-[0.875rem]">
+          {doc.sections.map((s) => (
+            <li><a href={`#${s.id}`} class="text-suave hover:text-pino-800">{s.title}</a></li>
+          ))}
+        </ol>
+      </nav>
+
+      <div class="legal-text flex max-w-[44rem] flex-col gap-12">
+        {
+          doc.summary && (
+            <aside class="border border-linea bg-porcelana-50 p-6 md:p-8">
+              <h2 class="display-s mb-5 text-pino-800">{doc.summary.title}</h2>
+              <dl class="grid gap-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-x-6">
+                {doc.summary.items.map(([k, v]) => (
+                  <>
+                    <dt class="eyebrow text-malva-500 sm:pt-1">{k}</dt>
+                    <dd class="text-pino-800" set:html={inline(v)} />
+                  </>
+                ))}
+              </dl>
+            </aside>
+          )
+        }
+
+        {doc.sections.map((s) => (
+          <section id={s.id} class="legal-section flex flex-col gap-4">
+            <h2 class="display-s text-pino-800">{s.title}</h2>
+            {s.blocks.map((b) => {
+              const k = kind(b);
+              if (k === 'p') return <p set:html={inline((b as { p: string }).p)} />;
+              if (k === 'ul') return (
+                <ul class="flex flex-col gap-2.5">
+                  {(b as { ul: string[] }).ul.map((li) => <li set:html={inline(li)} />)}
+                </ul>
+              );
+              if (k === 'dl') return (
+                <dl class="grid gap-3 border-y border-linea py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-6">
+                  {(b as { dl: [string, string][] }).dl.map(([dt, dd]) => (
+                    <>
+                      <dt class="eyebrow text-malva-500 sm:pt-1">{dt}</dt>
+                      <dd class="text-pino-800" set:html={inline(dd)} />
+                    </>
+                  ))}
+                </dl>
+              );
+              const t = (b as { table: { head: string[]; rows: string[][] } }).table;
+              return (
+                <div class="legal-table overflow-x-auto">
+                  <table class="w-full min-w-[34rem] border-collapse text-left text-[0.875rem]">
+                    <thead><tr>{t.head.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+                    <tbody>{t.rows.map((r) => <tr>{r.map((cell, i) => (i === 0 ? <th scope="row" set:html={inline(cell)} /> : <td set:html={inline(cell)} />))}</tr>)}</tbody>
+                  </table>
+                </div>
+              );
+            })}
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-section { scroll-margin-top: 7rem; }
+  .legal-text { color: var(--color-suave); font-size: 0.9875rem; line-height: 1.75; }
+  .legal-text :global(strong) { color: var(--color-pino-800); font-weight: 500; }
+  .legal-text :global(a) { color: var(--color-pino-800); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .legal-text :global(a:hover) { color: var(--color-ciruela-700); }
+  .legal-text ul { padding-left: 1.1rem; list-style: none; }
+  .legal-text ul li { position: relative; }
+  .legal-text ul li::before {
+    content: '';
+    position: absolute;
+    left: -1.1rem;
+    top: 0.72em;
+    width: 0.4rem;
+    height: 1px;
+    background: var(--color-malva-500);
+  }
+  .legal-table th,
+  .legal-table td { padding: 0.85rem 0.9rem 0.85rem 0; vertical-align: top; border-bottom: 1px solid var(--color-linea); }
+  .legal-table thead th {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-malva-500);
+  }
+  .legal-table tbody th { color: var(--color-pino-800); font-weight: 400; }
+</style>

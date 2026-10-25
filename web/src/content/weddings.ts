@@ -78,7 +78,13 @@ export type Wedding = {
   };
 };
 
-export type Editorial = { title: string; text: T; photographer?: string; cover: WeddingPhoto };
+export type Editorial = {
+  title: string; text: T; photographer?: string; cover: WeddingPhoto;
+  /** Cuándo se hizo y dónde se publicó. */
+  date?: T; published?: T;
+  /** Otros proveedores (además del fotógrafo). */
+  credits?: { role: T; name: string }[];
+};
 
 export const weddingsPage: Record<Lang, {
   meta: { title: string; description: string };
@@ -282,8 +288,14 @@ export const editorials: Editorial[] = [
   },
   {
     title: 'NH Collection Palacio de Avilés',
-    text: { es: 'Elegancia de invierno, a la luz de las velas, en el palacio donde también impartimos nuestro curso.', en: 'Winter elegance by candlelight, in the palace where we also hold our course.' },
+    text: { es: 'Elegancia a la luz de las velas en el Palacio de Ferrera, el mismo palacio donde después impartiríamos nuestro curso.', en: 'Candlelit elegance at the Palacio de Ferrera, the same palace where we would later hold our course.' },
     photographer: 'JFK Imagen Social',
+    date: { es: 'Agosto de 2017', en: 'August 2017' },
+    published: { es: 'Publicada en Telva Novias: «Casarse en un palacio asturiano»', en: 'Featured in Telva Novias: “Casarse en un palacio asturiano”' },
+    credits: [
+      { role: { es: 'Diseño floral', en: 'Floral design' }, name: 'Leymar Floristas' },
+      { role: { es: 'Estilismo de novia', en: 'Bridal styling' }, name: 'Marcos Luengo' },
+    ],
     cover: p(editorialNH, 'Una novia con su ramo junto a una escalera iluminada con velas.', 'A bride holding her bouquet beside a candlelit staircase.'),
   },
 ];

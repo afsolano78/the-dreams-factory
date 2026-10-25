@@ -134,7 +134,14 @@ const pressLinks = press.filter((l) => l.href);
               </div>
               <h3 class="display-s text-pino-800">{e.title}</h3>
               <p class="-mt-2 text-[0.9375rem] text-suave">{e.text[lang]}</p>
-              {e.photographer && <p class="-mt-2 text-[0.8125rem] text-suave">{c.photoBy}: {e.photographer}</p>}
+              {e.published && <p class="-mt-1 text-[0.875rem] italic text-ciruela-700">{e.published[lang]}</p>}
+              <p class="-mt-2 text-[0.8125rem] text-suave">
+                {[
+                  e.date?.[lang],
+                  e.photographer && `${c.photoBy}: ${e.photographer}`,
+                  ...(e.credits ?? []).map((cr) => `${cr.role[lang]}: ${cr.name}`),
+                ].filter(Boolean).join(' · ')}
+              </p>
             </li>
           ))
         }

@@ -1,14 +1,12 @@
 /**
  * Página «Nosotras» (/nosotras, /en/about-us). ES y EN.
  *
- * Origen: la presentación de Bea y Vane de la web antigua («¿Quiénes somos?»), los datos confirmados (desde 2015,
- * Asturias y León, 3 ediciones del curso, prensa) y los proveedores que más se repiten en las bodas publicadas.
- * En las fotos, Vane es la rubia y Bea la morena.
+ * Textos de la cabecera, la historia, la línea de tiempo y «Un equipo de confianza»: de Bea y Vane (octubre de 2026).
+ * Trabajan solo en Asturias. En las fotos, Vane es la rubia y Bea la morena (en el retrato de Vane en el jardín,
+ * con moño, el pelo se ve más oscuro).
  *
  * PENDIENTE DE CONFIRMAR con Bea y Vane:
- * - La historia («Cómo empezó todo»): borrador a partir de su presentación antigua.
- * - Los retratos individuales: de momento, recortes de la foto del jardín.
- * - Que se pueden nombrar los proveedores con los que más trabajan.
+ * - El retrato individual de Bea (de momento, un recorte de la foto del jardín).
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -32,9 +30,8 @@ export type AboutContent = {
   };
   values: { eyebrow: string; title: string; items: { title: string; text: string }[] };
   figures: { value: string; label: string }[];
-  partners: { eyebrow: string; title: string; lead: string; groups: { role: string; names: string[] }[] };
-  voices: { eyebrow: string; title: string; cta: string; press: string };
-  education: { eyebrow: string; title: string; text: string; course: string; consultations: string; photo: Photo };
+  press: string;
+  education: { eyebrow: string; title: string; text: string; course: string; photo: Photo };
 };
 
 const studiesEs = 'Universidad Camilo José Cela e Instituto Superior de Protocolo y Eventos (Madrid)';
@@ -44,20 +41,21 @@ export const about: Record<Lang, AboutContent> = {
   es: {
     meta: {
       title: 'Nosotras · Bea y Vane, wedding planners en Asturias · The Dreams Factory',
-      description: 'Somos Bea y Vane, wedding planners en Asturias desde 2015. Conoce nuestra historia, cómo trabajamos y el equipo con el que hacemos realidad cada boda.',
+      description: 'Somos Bea y Vane, wedding planners en Asturias desde 2015. Conoce nuestra historia y cómo trabajamos.',
     },
     hero: {
       eyebrow: 'Nosotras',
       title: 'Somos\n*Bea y Vane*',
-      lead: 'En 2015 decidimos dedicarnos a lo que más nos gustaba: ayudar a cada pareja a celebrar su boda a su manera. Desde entonces lo hacemos en Asturias, León y alrededores.',
+      lead: 'En 2015 empezamos este camino con una idea clara: ayudar a cada pareja a vivir y disfrutar una boda fiel a su esencia. Desde entonces, damos forma a historias únicas en Asturias.',
       photo: { src: fotoJardin, alt: 'Vane, a la izquierda, y Bea sonríen sentadas a una mesa decorada con velas, frutas de otoño y flores en un jardín.', focus: '55% 35%' },
     },
     story: {
       eyebrow: 'Cómo empezó todo',
       title: 'Un sueño *compartido*',
       paragraphs: [
-        'Bea venía de muchos años dedicada al turismo y decidió dar un giro a su vida: quería ser wedding planner y tener su propia empresa. Vane soñaba con organizar bodas únicas y, tras varios años trabajando en el sector, se formó como organizadora y diseñadora de eventos.',
-        'Así nació The Dreams Factory. Desde entonces hemos acompañado a parejas de aquí y de fuera —alguna, desde el otro lado del Atlántico— en palacios, castillos, casas de campo y montaña. Cada boda es distinta, y eso es justo lo que más nos gusta.',
+        'Desde que se conocieron, descubrieron que compartían mucho más que una misma visión: les unía una forma especial de entender y hacer las cosas.',
+        'Muy pronto supieron que juntas podían llegar más lejos. Unieron sus pasiones, apostaron por seguir creciendo, se formaron y se especializaron con un mismo propósito: construir algo único.',
+        'Así, con ilusión, compromiso y la confianza de caminar en la misma dirección, fueron dando forma al tándem perfecto, donde el talento de cada una se convierte en la fuerza de ambas.',
       ],
       photo: { src: fotoFurgoneta, alt: 'Vane, a la izquierda, y Bea, sentadas en una furgoneta antigua decorada con flores secas y plumeros.' },
     },
@@ -65,9 +63,9 @@ export const about: Record<Lang, AboutContent> = {
       eyebrow: 'Nuestro camino',
       items: [
         { year: '2015', text: 'Nace The Dreams Factory.' },
-        { year: '2017', text: 'Telva Novias publica nuestra sesión editorial en el NH Collection Palacio de Avilés, en el reportaje «Casarse en un palacio asturiano».' },
-        { year: '2023', text: 'Primera edición de «The Wedding Planner Experience», nuestro curso para futuras wedding planners.' },
-        { year: '2025', text: '¡HOLA! y Vanitatis publican dos de nuestras bodas.' },
+        { year: '2016', text: 'Organizamos nuestras primeras bodas.' },
+        { year: '2023', text: 'Nace nuestro primer curso, «The Wedding Planner Experience», mientras cumplimos la boda 100 de nuestra trayectoria.' },
+        { year: '2026', text: 'Seguimos acompañando a parejas increíbles en uno de los capítulos más bonitos de sus vidas.' },
       ],
     },
     team: {
@@ -77,7 +75,7 @@ export const about: Record<Lang, AboutContent> = {
       people: [
         {
           name: 'Beatriz', nickname: 'Bea', role: 'Wedding planner · Organización',
-          text: 'Soñadora, amante de las cosas bien hechas, exigente y perfeccionista: no se le escapa ningún detalle. Tras muchos años en el turismo, dio un giro a su vida para cumplir su sueño.',
+          text: 'Soñadora, amante de las cosas bien hechas, exigente y perfeccionista: no se le escapa ningún detalle.',
           studies: `Experta Universitaria en Organización de Eventos Corporativos e Institucionales. ${studiesEs}.`,
           photo: { src: fotoBea, alt: 'Retrato de Bea, sonriente, con la mano bajo la barbilla.' },
         },
@@ -85,7 +83,7 @@ export const about: Record<Lang, AboutContent> = {
           name: 'Vanessa', nickname: 'Vane', role: 'Wedding planner · Diseño y decoración',
           text: 'No hay decoración que se le resista. Experta en las últimas tendencias, curiosa y tenaz, con el «nada es imposible» por bandera: convierte cualquier celebración en algo muy especial.',
           studies: `Especialista Universitaria en Wedding Planner. ${studiesEs}.`,
-          photo: { src: fotoVane, alt: 'Retrato de Vane, de perfil, sonriendo.' },
+          photo: { src: fotoVane, alt: 'Vane coloca una servilleta en una mesa de boda decorada con flores de otoño, bajo una pérgola de piedra en un jardín.', focus: '50% 28%' },
         },
       ],
     },
@@ -95,7 +93,7 @@ export const about: Record<Lang, AboutContent> = {
       items: [
         { title: 'Cerca, de verdad', text: 'Nos gusta que nos llaméis por nuestro nombre: así de cerca trabajamos con cada pareja.' },
         { title: 'Vuestra boda, vuestras normas', text: 'Sin tradiciones obligatorias. Escuchamos, proponemos y la última palabra siempre es vuestra.' },
-        { title: 'Un equipo de confianza', text: 'Proveedores con los que llevamos años trabajando y que funcionan como uno solo.' },
+        { title: 'Un equipo de confianza', text: 'Seleccionamos con vosotros un equipo de profesionales que comparte nuestras visiones, se entiende a la perfección y trabaja en armonía para crear algo extraordinario.' },
         { title: 'Tranquilidad', text: 'Lo tenemos todo previsto, también lo imprevisto: siempre hay una alternativa preparada.' },
       ],
     },
@@ -103,50 +101,35 @@ export const about: Record<Lang, AboutContent> = {
       { value: '2015', label: 'Organizando bodas desde' },
       { value: '+100', label: 'Bodas organizadas' },
       { value: '3', label: 'Ediciones de nuestro curso' },
-      { value: '4', label: 'Revistas han publicado nuestras bodas' },
-      { value: 'Asturias', label: 'Y también León y alrededores' },
+      { value: 'Asturias', label: 'Donde trabajamos' },
     ],
-    partners: {
-      eyebrow: 'Con quién trabajamos',
-      title: 'Nuestro *equipo*',
-      lead: 'Una boda bonita es trabajo de muchas manos. Estos son algunos de los profesionales que más se repiten en nuestras bodas.',
-      groups: [
-        { role: 'Flores', names: ['Pando Floristas'] },
-        { role: 'Mobiliario e iluminación', names: ['Global Rent'] },
-        { role: 'Catering', names: ['Catering Nature'] },
-        { role: 'Fotografía', names: ['M2 Visual Studio', 'JFK Imagen Social', 'Darío Martínez'] },
-        { role: 'Vídeo', names: ['Héctor Torra'] },
-        { role: 'Música', names: ['Cuarteto Arpeggio', 'Siapro', 'Sonifón'] },
-        { role: 'Peluquería', names: ['Peluquería Suárez'] },
-      ],
-    },
-    voices: { eyebrow: 'Lo que dicen las parejas', title: 'En sus *palabras*', cta: 'Leer todas las opiniones', press: 'Nuestras bodas, publicadas en' },
+    press: 'Nuestras bodas, publicadas en',
     education: {
       eyebrow: 'También enseñamos',
       title: 'Compartimos *lo que sabemos*',
-      text: 'Con «The Wedding Planner Experience» formamos a futuras wedding planners, y en las tutorías online ayudamos a las parejas que organizan su boda por su cuenta.',
+      text: 'Con «The Wedding Planner Experience» formamos a futuras wedding planners: tres días para conocer de verdad la profesión, de la mano de quienes trabajamos en ella.',
       course: 'El curso',
-      consultations: 'Tutorías online',
       photo: { src: fotoCurso, alt: 'Bea y Vane dan una clase del curso a las alumnas, sentadas alrededor de una mesa con flores en un salón del palacio.', focus: '50% 40%' },
     },
   },
   en: {
     meta: {
       title: 'About us · Bea and Vane, wedding planners in Asturias · The Dreams Factory',
-      description: 'We are Bea and Vane, wedding planners in Asturias, Spain, since 2015. Discover our story, how we work and the team that helps us bring every wedding to life.',
+      description: 'We are Bea and Vane, wedding planners in Asturias, Spain, since 2015. Discover our story and how we work.',
     },
     hero: {
       eyebrow: 'About us',
       title: 'We are\n*Bea and Vane*',
-      lead: 'In 2015 we decided to devote ourselves to what we love most: helping every couple celebrate their wedding their own way. We’ve been doing it ever since, in Asturias, León and nearby.',
+      lead: 'In 2015 we set out on this path with one clear idea: to help every couple live and enjoy a wedding true to who they are. Since then, we’ve been shaping unique stories in Asturias.',
       photo: { src: fotoJardin, alt: 'Vane, on the left, and Bea smile, seated at a table dressed with candles, autumn fruit and flowers in a garden.', focus: '55% 35%' },
     },
     story: {
       eyebrow: 'How it all began',
       title: 'A shared *dream*',
       paragraphs: [
-        'Bea had spent many years working in tourism when she decided to change course: she wanted to be a wedding planner and run her own business. Vane dreamed of creating one-of-a-kind weddings and, after several years in the industry, trained as an event planner and designer.',
-        'That is how The Dreams Factory was born. Since then we have worked with couples from here and abroad —one of them from the other side of the Atlantic— in palaces, castles, country houses and the mountains. Every wedding is different, and that is exactly what we love most.',
+        'From the moment they met, they discovered they shared much more than a vision: they were united by a special way of understanding and doing things.',
+        'They soon realised that together they could go further. They brought their passions together, committed to keep growing, and trained and specialised with one shared purpose: to build something unique.',
+        'And so, with enthusiasm, commitment and the confidence of walking in the same direction, they shaped the perfect team, where each one’s talent becomes the strength of both.',
       ],
       photo: { src: fotoFurgoneta, alt: 'Vane, on the left, and Bea, sitting in a vintage camper van decorated with dried flowers and pampas grass.' },
     },
@@ -154,9 +137,9 @@ export const about: Record<Lang, AboutContent> = {
       eyebrow: 'Our journey',
       items: [
         { year: '2015', text: 'The Dreams Factory is born.' },
-        { year: '2017', text: 'Telva Novias features our editorial shoot at NH Collection Palacio de Avilés in its story “Casarse en un palacio asturiano” (Getting married in an Asturian palace).' },
-        { year: '2023', text: 'First edition of “The Wedding Planner Experience”, our course for future wedding planners.' },
-        { year: '2025', text: '¡HOLA! and Vanitatis feature two of our weddings.' },
+        { year: '2016', text: 'We plan our first weddings.' },
+        { year: '2023', text: 'Our first course, “The Wedding Planner Experience”, is born, as we celebrate the 100th wedding of our journey.' },
+        { year: '2026', text: 'We keep accompanying amazing couples through one of the most beautiful chapters of their lives.' },
       ],
     },
     team: {
@@ -166,7 +149,7 @@ export const about: Record<Lang, AboutContent> = {
       people: [
         {
           name: 'Beatriz', nickname: 'Bea', role: 'Wedding planner · Planning',
-          text: 'A dreamer who loves things done properly, demanding and a perfectionist: no detail escapes her. After many years in tourism, she changed course to follow her dream.',
+          text: 'A dreamer who loves things done properly, demanding and a perfectionist: no detail escapes her.',
           studies: `University Expert in Corporate and Institutional Event Management. ${studiesEn}.`,
           photo: { src: fotoBea, alt: 'Portrait of Bea, smiling, her hand under her chin.' },
         },
@@ -174,7 +157,7 @@ export const about: Record<Lang, AboutContent> = {
           name: 'Vanessa', nickname: 'Vane', role: 'Wedding planner · Design & styling',
           text: 'There’s no styling challenge she can’t take on. On top of the latest trends, curious and tenacious, with “nothing is impossible” as her motto: she turns any celebration into something truly special.',
           studies: `University Specialist in Wedding Planning. ${studiesEn}.`,
-          photo: { src: fotoVane, alt: 'Portrait of Vane in profile, smiling.' },
+          photo: { src: fotoVane, alt: 'Vane places a napkin on a wedding table dressed with autumn flowers, beneath a stone pergola in a garden.', focus: '50% 28%' },
         },
       ],
     },
@@ -184,7 +167,7 @@ export const about: Record<Lang, AboutContent> = {
       items: [
         { title: 'Truly close', text: 'We like you to call us by our names: that’s how closely we work with every couple.' },
         { title: 'Your wedding, your rules', text: 'No compulsory traditions. We listen, we suggest, and the final word is always yours.' },
-        { title: 'A trusted team', text: 'Suppliers we’ve worked with for years, who work together as one.' },
+        { title: 'A trusted team', text: 'Together with you, we choose a team of professionals who share our vision, understand each other perfectly and work in harmony to create something extraordinary.' },
         { title: 'Peace of mind', text: 'We plan for everything, even the unexpected: there’s always a plan B ready.' },
       ],
     },
@@ -192,30 +175,14 @@ export const about: Record<Lang, AboutContent> = {
       { value: '2015', label: 'Planning weddings since' },
       { value: '100+', label: 'Weddings planned' },
       { value: '3', label: 'Editions of our course' },
-      { value: '4', label: 'Magazines have featured our weddings' },
-      { value: 'Asturias', label: 'And also León and nearby' },
+      { value: 'Asturias', label: 'Where we work' },
     ],
-    partners: {
-      eyebrow: 'Who we work with',
-      title: 'Our *team*',
-      lead: 'A beautiful wedding takes many hands. These are some of the professionals who appear most often in our weddings.',
-      groups: [
-        { role: 'Flowers', names: ['Pando Floristas'] },
-        { role: 'Furniture & lighting', names: ['Global Rent'] },
-        { role: 'Catering', names: ['Catering Nature'] },
-        { role: 'Photography', names: ['M2 Visual Studio', 'JFK Imagen Social', 'Darío Martínez'] },
-        { role: 'Video', names: ['Héctor Torra'] },
-        { role: 'Music', names: ['Cuarteto Arpeggio', 'Siapro', 'Sonifón'] },
-        { role: 'Hair', names: ['Peluquería Suárez'] },
-      ],
-    },
-    voices: { eyebrow: 'What couples say', title: 'In their *own words*', cta: 'Read all reviews', press: 'Our weddings, featured in' },
+    press: 'Our weddings, featured in',
     education: {
       eyebrow: 'We also teach',
       title: 'Sharing *what we know*',
-      text: 'With “The Wedding Planner Experience” we train future wedding planners, and in our online consultations we help couples who are planning their wedding themselves.',
+      text: 'With “The Wedding Planner Experience” we train future wedding planners: three days to truly get to know the profession, guided by people who work in it.',
       course: 'The course',
-      consultations: 'Online consultations',
       photo: { src: fotoCurso, alt: 'Bea and Vane teach a class to the students, seated around a table with flowers in one of the palace’s rooms.', focus: '50% 40%' },
     },
   },

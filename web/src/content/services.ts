@@ -1,10 +1,10 @@
 /**
  * Página de Servicios: una sola página con los cuatro servicios en bloques (cada uno con su #ancla, a la que
- * enlaza la portada), tabla comparativa, cómo trabajamos y preguntas frecuentes. ES y EN.
+ * enlaza la portada), cómo trabajamos y preguntas frecuentes. ES y EN.
  *
  * Origen de los textos: descripción y «Qué incluye» de los tres servicios de boda, de Bea y Vane (octubre de 2026);
  * «Para quién es» y «Cómo trabajamos», de la web antigua revisada en la propuesta. PENDIENTE DE CONFIRMAR con
- * Bea y Vane: Celebraciones, la tabla comparativa y las preguntas frecuentes.
+ * Bea y Vane: Celebraciones y las preguntas frecuentes.
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -37,7 +37,6 @@ export type ServicesContent = {
   intro: { eyebrow: string; title: string; lead: string; jumpLabel: string };
   labels: { forWhom: string; includes: string; cta: string; apart: string };
   services: ServiceBlock[];
-  compare: { eyebrow: string; title: string; note: string; rows: { label: string; has: [boolean, boolean, boolean] }[]; yes: string; no: string };
   process: { eyebrow: string; title: string; steps: { title: string; text: string }[] };
   faq: { eyebrow: string; title: string; items: { q: string; a: string }[] };
 };
@@ -145,19 +144,6 @@ export const servicesContent: Record<Lang, ServicesContent> = {
         photo: { src: fotoCelebraciones, alt: 'Mesa decorada con flores y velas al aire libre.' },
       },
     ],
-    compare: {
-      eyebrow: 'Comparativa',
-      title: 'Qué incluye *cada servicio*',
-      note: 'Cada boda se presupuesta a medida: si necesitáis algo entre medias, lo adaptamos.',
-      yes: 'Incluido',
-      no: 'No incluido',
-      rows: [
-        { label: 'Planificación, calendario y presupuesto', has: [true, false, false] },
-        { label: 'Búsqueda del lugar y de proveedores', has: [true, false, false] },
-        { label: 'Diseño y decoración', has: [true, true, false] },
-        { label: 'Coordinación del día B', has: [true, true, true] },
-      ],
-    },
     process: {
       eyebrow: 'Cómo trabajamos',
       title: 'Paso a paso, *siempre juntos*',
@@ -172,7 +158,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
       eyebrow: 'Preguntas frecuentes',
       title: 'Lo que más *nos preguntáis*',
       items: [
-        { q: '¿Dónde trabajáis?', a: 'Sobre todo en Asturias, y también en León y zonas cercanas. Si vuestra boda es en otro sitio, contádnoslo y lo vemos.' },
+        { q: '¿Dónde trabajáis?', a: 'En Asturias.' },
         { q: 'Vivimos fuera, ¿podemos contar con vosotras?', a: 'Claro. Si vivís lejos, somos vuestros ojos y vuestras manos: visitamos, probamos, escuchamos y os lo contamos todo, con bocetos y videollamadas.' },
         { q: '¿Cuánto cuesta?', a: 'Cada boda es distinta, así que cada presupuesto también. Después de un primer café para conoceros, os preparamos una propuesta a medida con un presupuesto claro.' },
         { q: '¿Podemos elegir nosotros a los proveedores?', a: 'Siempre. Os recomendamos a los profesionales que mejor encajan con vuestra idea, pero la última palabra es vuestra.' },
@@ -281,19 +267,6 @@ export const servicesContent: Record<Lang, ServicesContent> = {
         photo: { src: fotoCelebraciones, alt: 'An outdoor table decorated with flowers and candles.' },
       },
     ],
-    compare: {
-      eyebrow: 'At a glance',
-      title: 'What *each service* includes',
-      note: 'Every wedding is quoted individually: if you need something in between, we’ll adapt.',
-      yes: 'Included',
-      no: 'Not included',
-      rows: [
-        { label: 'Planning, timeline and budget', has: [true, false, false] },
-        { label: 'Venue and supplier search', has: [true, false, false] },
-        { label: 'Design and styling', has: [true, true, false] },
-        { label: 'Wedding-day coordination', has: [true, true, true] },
-      ],
-    },
     process: {
       eyebrow: 'How we work',
       title: 'Step by step, *always together*',
@@ -308,7 +281,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
       eyebrow: 'FAQ',
       title: 'What you *ask us most*',
       items: [
-        { q: 'Where do you work?', a: 'Mainly in Asturias, and also in León and nearby areas. If your wedding is somewhere else, tell us and we’ll see.' },
+        { q: 'Where do you work?', a: 'In Asturias.' },
         { q: 'We live abroad. Can you still help us?', a: 'Of course. If you live far away, we become your eyes and hands: we visit, taste, listen and keep you posted on everything, with sketches and video calls.' },
         { q: 'How much does it cost?', a: 'Every wedding is different, and so is every quote. After a first coffee to get to know you, we prepare a tailored proposal with a clear quote.' },
         { q: 'Can we choose our own suppliers?', a: 'Always. We recommend the professionals who best fit your idea, but the final word is yours.' },

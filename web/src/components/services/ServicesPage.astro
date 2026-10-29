@@ -4,9 +4,8 @@
   1. Introducción con accesos directos a cada servicio (los de boda, de más a menos acompañamiento).
   2. Un bloque por servicio, con su #ancla (la portada enlaza aquí): foto, texto, para quién es, qué incluye.
      Los bloques alternan la foto a izquierda y derecha; Celebraciones va aparte, tras un rótulo propio.
-  3. Tabla comparativa de los tres servicios de boda.
-  4. Cómo trabajamos (cuatro pasos) y preguntas frecuentes.
-  5. El mismo cierre que la portada («¿Os imagináis el día?»).
+  3. Cómo trabajamos (cuatro pasos) y preguntas frecuentes.
+  4. El mismo cierre que la portada («¿Os imagináis el día?»).
 */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -105,46 +104,8 @@ const contactHref = (anchor: string) => `${path('contact', lang)}${serviceKey[an
     </div>
   </section>
 
-  <!-- 3. Tabla comparativa (servicios de boda) -->
+  <!-- 3. Cómo trabajamos -->
   <section class="section-y bg-porcelana-50">
-    <div class="container-brand flex flex-col gap-12">
-      <SectionHeading eyebrow={c.compare.eyebrow} title={c.compare.title} />
-      <div class="overflow-x-auto" data-reveal>
-        <table class="compare w-full min-w-[36rem] border-collapse text-left">
-          <thead>
-            <tr>
-              <th scope="col" class="w-[40%] pb-5"><span class="sr-only">{c.compare.eyebrow}</span></th>
-              {wedding.map((s) => (
-                <th scope="col" class="px-3 pb-5 text-center align-bottom">
-                  <a href={`#${s.anchor}`} class="link-draw display-s text-pino-800">{s.title}</a>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {c.compare.rows.map((row) => (
-              <tr class="border-t border-linea">
-                <th scope="row" class="py-4 pr-4 text-[0.9375rem] font-normal text-pino-800">{row.label}</th>
-                {row.has.map((ok) => (
-                  <td class="px-3 py-4 text-center">
-                    {ok ? (
-                      <svg class="inline-block text-ciruela-700" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label={c.compare.yes}><path d="M4.5 12.5l5 5 10-11" /></svg>
-                    ) : (
-                      <span class="text-linea" role="img" aria-label={c.compare.no}>—</span>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p class="text-[0.9375rem] text-suave">{c.compare.note}</p>
-    </div>
-  </section>
-
-  <!-- 4. Cómo trabajamos -->
-  <section class="section-y bg-white">
     <div class="container-brand flex flex-col gap-12">
       <SectionHeading eyebrow={c.process.eyebrow} title={c.process.title} />
       <ol class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
@@ -159,8 +120,8 @@ const contactHref = (anchor: string) => `${path('contact', lang)}${serviceKey[an
     </div>
   </section>
 
-  <!-- 5. Preguntas frecuentes -->
-  <section class="section-y bg-porcelana-50">
+  <!-- 4. Preguntas frecuentes -->
+  <section class="section-y bg-white">
     <div class="container-brand grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
       <SectionHeading eyebrow={c.faq.eyebrow} title={c.faq.title} />
       <div class="divide-y divide-linea border-y border-linea" data-reveal>
@@ -179,7 +140,7 @@ const contactHref = (anchor: string) => `${path('contact', lang)}${serviceKey[an
     </div>
   </section>
 
-  <!-- 6. Cierre, el mismo que en la portada -->
+  <!-- 5. Cierre, el mismo que en la portada -->
   <ClosingCta lang={lang} c={home[lang].closing} />
 </BaseLayout>
 

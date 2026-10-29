@@ -1,16 +1,14 @@
 /**
- * Formación: el curso «The Wedding Planner Experience» (/curso-wedding-planner) y las tutorías online
- * (/tutorias-online). ES y EN. Son públicos distintos: el curso habla de tú (futuras wedding planners) y las
- * tutorías de vosotros (parejas).
+ * Formación: el curso «The Wedding Planner Experience» (/curso-wedding-planner). ES y EN. Habla de tú (futuras
+ * wedding planners). Las tutorías online para parejas ya no se ofrecen (octubre de 2026).
  *
- * Origen: los textos de la web antigua (formato, aula, temario y docentes del curso; la página de las tutorías),
- * actualizados con los datos confirmados: 3 ediciones (la primera en 2023) en el NH Collection Palacio de Avilés y
- * una nueva edición en preparación con inscripciones abiertas (octubre de 2026), aún sin fechas ni precio publicados;
- * tutorías a 49 € y 90 minutos. Cuando haya fechas, se añaden en `hero.status` y en la pregunta de la próxima edición.
+ * Origen: los textos de la web antigua (formato, aula, temario y docentes), actualizados con los datos confirmados:
+ * 3 ediciones (la primera en 2023) en el NH Collection Palacio de Avilés y la 4.ª el 29, 30 y 31 de enero de 2027 en
+ * el Palacio de La Riega (Gijón), con inscripciones abiertas. Sin precio en la web (así lo quieren). Certificado no
+ * oficial. Ponentes: los de ediciones anteriores, mientras cierran los de esta.
  *
- * PENDIENTE DE CONFIRMAR con Bea y Vane: si siguen vigentes los dos extras de las tutorías (15 % y descuento al
- * contratar un servicio), cómo se reserva y se paga una tutoría y por qué plataforma, si el curso da certificado,
- * los ponentes, opiniones de alumnas y el permiso para las fotos de las ediciones (salen las alumnas).
+ * PENDIENTE DE CONFIRMAR con Bea y Vane: si se mantiene la tutoría individual al terminar el curso, el número de
+ * plazas, fotos del Palacio de La Riega y el permiso para las fotos y los nombres de alumnas.
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -29,9 +27,11 @@ import aula07 from '../assets/photos/curso/aula-07.jpg';
 import aula08 from '../assets/photos/curso/aula-08.jpg';
 import aula09 from '../assets/photos/curso/aula-09.jpg';
 import aula10 from '../assets/photos/curso/aula-10.jpg';
-import fotoJardin from '../assets/photos/nosotras-bea-vane.jpg';
 
 type Photo = { src: ImageMetadata; alt: string };
+
+/** La próxima edición: fechas (ISO) y lugar. */
+export const nextEdition = { start: '2027-01-29', end: '2027-01-31', venue: 'Palacio de La Riega', city: 'Gijón', region: 'Asturias' };
 type Qa = { q: string; a: string };
 
 export type CourseContent = {
@@ -50,16 +50,6 @@ export type CourseContent = {
   gallery: { title: string; enlarge: string; close: string; prev: string; next: string; of: string };
 };
 
-export type ConsultationsContent = {
-  meta: { title: string; description: string };
-  hero: { eyebrow: string; title: string; lead: string; facts: string[]; cta: string; photo: Photo };
-  forYou: { eyebrow: string; title: string; items: string[]; closing: string };
-  how: { eyebrow: string; title: string; steps: { title: string; text: string }[] };
-  topics: { eyebrow: string; title: string; text: string; items: string[] };
-  includes: { eyebrow: string; title: string; price: string; priceNote: string; items: string[]; extrasTitle: string; extras: string[]; cta: string };
-  about: { title: string; text: string; cta: string; photo: Photo };
-  faq: { eyebrow: string; title: string; items: Qa[] };
-};
 
 const aulaEs: Photo[] = [
   { src: aula01, alt: 'Mesa de trabajo preparada en uno de los salones del palacio.' },
@@ -90,14 +80,14 @@ export const course: Record<Lang, CourseContent> = {
   es: {
     meta: {
       title: 'The Wedding Planner Experience · Curso de wedding planner en Asturias · The Dreams Factory',
-      description: 'Curso intensivo de tres días para futuras wedding planners, impartido por Bea y Vane en el NH Collection Palacio de Avilés. Inscripciones abiertas para la nueva edición.',
+      description: 'Curso intensivo de tres días para futuras wedding planners, impartido por Bea y Vane. Nueva edición el 29, 30 y 31 de enero de 2027 en el Palacio de La Riega (Gijón). Inscripciones abiertas.',
     },
     hero: {
       eyebrow: 'Formación · Para futuras wedding planners',
       title: 'The Wedding Planner\n*Experience*',
       lead: 'Un curso intensivo de tres días para quienes sueñan con dedicarse a organizar bodas, impartido por nosotras en un palacio de verdad.',
       badge: 'Nueva edición · Inscripciones abiertas',
-      status: 'Estamos preparando la cuarta edición y ya puedes inscribirte. Las fechas, muy pronto.',
+      status: '29, 30 y 31 de enero de 2027 · Palacio de La Riega, Gijón',
       cta: 'Quiero inscribirme',
       secondary: 'Ver el temario',
       photo: { src: fotoPortada, alt: 'Clase del curso en uno de los salones del palacio: las alumnas, sentadas a una mesa larga con flores, siguen la explicación.' },
@@ -130,8 +120,9 @@ export const course: Record<Lang, CourseContent> = {
       eyebrow: 'El aula',
       title: 'Un palacio como *aula*',
       text: [
-        'La mayor parte del curso se imparte entre las paredes históricas del salón Galiana del NH Collection Palacio de Avilés, con todos los medios técnicos para que las clases sean cómodas y amenas.',
-        'Pero el palacio entero es un aula: lo recorremos para explicarte de forma real cómo se desarrolla una boda completa, desde los preparativos en las habitaciones hasta la puesta en escena del baile, el montaje de barras y corners y, por supuesto, las cocinas, donde nos enseñan cómo funciona un servicio de boda.',
+        'La cuarta edición se celebra en el Palacio de La Riega, en Gijón: un escenario de bodas que conocemos bien.',
+        'Como en cada edición, el palacio entero es un aula: lo recorremos para explicarte de forma real cómo se desarrolla una boda completa, desde los preparativos hasta la puesta en escena del baile y el montaje de barras y corners.',
+        'Las tres primeras ediciones se celebraron en el NH Collection Palacio de Avilés. Estas fotos son de ellas.',
       ],
       gallery: aulaEs,
     },
@@ -147,7 +138,7 @@ export const course: Record<Lang, CourseContent> = {
         'La planificación y la organización de la boda',
         'El diseño',
       ],
-      talks: { title: 'Ponencias de profesionales', text: 'No somos nadie sin nuestros compañeros: proveedores destacados del sector te cuentan cómo desarrollan su trabajo.' },
+      talks: { title: 'Ponencias de profesionales', text: 'No somos nadie sin nuestros compañeros: proveedores destacados del sector te cuentan cómo desarrollan su trabajo. En ediciones anteriores nos acompañaron M2 Visual Studio, Perspective, Liebling Maestro de Ceremonias, Siapro, Leymar Floristas, As de Bodas y A de Lola. Estamos cerrando los participantes de esta edición.' },
     },
     teachers: {
       eyebrow: 'Quién enseña',
@@ -173,31 +164,32 @@ export const course: Record<Lang, CourseContent> = {
       eyebrow: 'Preguntas frecuentes',
       title: 'Lo que más *nos preguntáis*',
       items: [
-        { q: '¿Cuándo es la próxima edición?', a: 'Estamos preparando la cuarta edición y anunciaremos las fechas muy pronto. Ya estamos recibiendo inscripciones: escríbenos y te contamos todos los detalles en cuanto estén cerrados.' },
+        { q: '¿Cuándo es la próxima edición?', a: 'El 29, 30 y 31 de enero de 2027. Ya estamos recibiendo inscripciones: escríbenos y te contamos todos los detalles.' },
         { q: '¿Cómo me inscribo?', a: 'Rellena el formulario de contacto eligiendo «El curso» (o pulsa «Quiero inscribirme») y nos pondremos en contacto contigo.' },
-        { q: '¿Dónde se imparte?', a: 'En el NH Collection Palacio de Avilés (Asturias). Las clases son en el salón Galiana y recorremos el resto del palacio.' },
+        { q: '¿Dónde se imparte?', a: 'En el Palacio de La Riega, en Gijón (Asturias). Las tres primeras ediciones se celebraron en el NH Collection Palacio de Avilés.' },
         { q: '¿Cuántas plazas hay?', a: 'Pocas: trabajamos con grupos muy reducidos para que la atención sea cercana y personalizada.' },
+        { q: '¿Hay certificado?', a: 'Sí: al terminar recibes un certificado de asistencia. No es un título oficial.' },
         { q: '¿Qué pasa cuando termina?', a: 'Tienes una tutoría individual con nosotras para resolver las dudas que te surjan después.' },
       ],
     },
     closing: {
       title: '¿Te apuntas a la *nueva edición*?',
-      text: 'Estamos recibiendo inscripciones. Escríbenos y te contamos fechas, plazas y todos los detalles en cuanto estén cerrados.',
+      text: '29, 30 y 31 de enero de 2027, en el Palacio de La Riega (Gijón). Estamos recibiendo inscripciones: escríbenos y te contamos todos los detalles.',
       cta: 'Quiero inscribirme',
     },
-    gallery: { title: 'El aula', enlarge: 'Ampliar la foto', close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', of: 'de' },
+    gallery: { title: 'Ediciones anteriores', enlarge: 'Ampliar la foto', close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', of: 'de' },
   },
   en: {
     meta: {
       title: 'The Wedding Planner Experience · Wedding planner course in Asturias, Spain · The Dreams Factory',
-      description: 'An intensive three-day course for future wedding planners, taught by Bea and Vane at NH Collection Palacio de Avilés. Registration is open for the new edition.',
+      description: 'An intensive three-day course for future wedding planners, taught by Bea and Vane. New edition on 29, 30 and 31 January 2027 at Palacio de La Riega (Gijón, Spain). Registration open.',
     },
     hero: {
       eyebrow: 'Education · For future wedding planners',
       title: 'The Wedding Planner\n*Experience*',
       lead: 'An intensive three-day course for anyone who dreams of planning weddings for a living, taught by us in a real palace.',
       badge: 'New edition · Registration open',
-      status: 'We’re preparing the fourth edition and you can already sign up. Dates coming very soon.',
+      status: '29, 30 and 31 January 2027 · Palacio de La Riega, Gijón',
       cta: 'I want to sign up',
       secondary: 'See the syllabus',
       photo: { src: fotoPortada, alt: 'A class in one of the palace’s rooms: the students, seated at a long table with flowers, follow the lesson.' },
@@ -230,8 +222,9 @@ export const course: Record<Lang, CourseContent> = {
       eyebrow: 'The classroom',
       title: 'A palace as a *classroom*',
       text: [
-        'Most of the course takes place within the historic walls of the Galiana room at NH Collection Palacio de Avilés, with all the technical resources to make the classes comfortable and enjoyable.',
-        'But the whole palace is a classroom: we walk through it to show you, for real, how a complete wedding unfolds, from getting ready in the rooms to staging the first dance, setting up bars and food corners and, of course, the kitchens, where they show us how a wedding service works.',
+        'The fourth edition takes place at Palacio de La Riega, in Gijón: a wedding venue we know well.',
+        'As in every edition, the whole palace is a classroom: we walk through it to show you, for real, how a complete wedding unfolds, from getting ready to staging the first dance and setting up bars and food corners.',
+        'The first three editions were held at NH Collection Palacio de Avilés. These photos are from them.',
       ],
       gallery: aulaEn,
     },
@@ -247,7 +240,7 @@ export const course: Record<Lang, CourseContent> = {
         'Planning and organising the wedding',
         'Design',
       ],
-      talks: { title: 'Talks by professionals', text: 'We’re nothing without our colleagues: leading suppliers in the industry tell you how they work.' },
+      talks: { title: 'Talks by professionals', text: 'We’re nothing without our colleagues: leading suppliers in the industry tell you how they work. In previous editions we were joined by M2 Visual Studio, Perspective, Liebling Maestro de Ceremonias, Siapro, Leymar Floristas, As de Bodas and A de Lola. We’re finalising this edition’s speakers.' },
     },
     teachers: {
       eyebrow: 'Who teaches',
@@ -273,165 +266,19 @@ export const course: Record<Lang, CourseContent> = {
       eyebrow: 'FAQ',
       title: 'What you *ask us most*',
       items: [
-        { q: 'When is the next edition?', a: 'We’re preparing the fourth edition and will announce the dates very soon. Registration is already open: write to us and we’ll give you all the details as soon as they’re confirmed.' },
+        { q: 'When is the next edition?', a: 'On 29, 30 and 31 January 2027. Registration is already open: write to us and we’ll give you all the details.' },
         { q: 'How do I sign up?', a: 'Fill in the contact form choosing “The course” (or press “I want to sign up”) and we’ll get in touch with you.' },
-        { q: 'Where does it take place?', a: 'At NH Collection Palacio de Avilés (Asturias, Spain). Classes are held in the Galiana room and we explore the rest of the palace.' },
+        { q: 'Where does it take place?', a: 'At Palacio de La Riega, in Gijón (Asturias, Spain). The first three editions were held at NH Collection Palacio de Avilés.' },
         { q: 'How many places are there?', a: 'Few: we work with very small groups so the attention is close and personal.' },
+        { q: 'Is there a certificate?', a: 'Yes: at the end you receive a certificate of attendance. It isn’t an official qualification.' },
         { q: 'What happens when it ends?', a: 'You have a one-to-one consultation with us to sort out any questions that come up afterwards.' },
       ],
     },
     closing: {
       title: 'Will you join *the new edition*?',
-      text: 'Registration is open. Write to us and we’ll tell you about dates, places and every detail as soon as they’re confirmed.',
+      text: '29, 30 and 31 January 2027, at Palacio de La Riega (Gijón). Registration is open: write to us and we’ll give you all the details.',
       cta: 'I want to sign up',
     },
-    gallery: { title: 'The classroom', enlarge: 'Enlarge photo', close: 'Close', prev: 'Previous photo', next: 'Next photo', of: 'of' },
-  },
-};
-
-export const consultations: Record<Lang, ConsultationsContent> = {
-  es: {
-    meta: {
-      title: 'Tutorías online para organizar vuestra boda · The Dreams Factory',
-      description: '¿Organizáis vuestra boda por vuestra cuenta? Una sesión de 90 minutos por videollamada con Bea y Vane para resolver dudas y ordenar ideas. 49 €.',
-    },
-    hero: {
-      eyebrow: 'Tutorías online · Para parejas',
-      title: 'Un café con nosotras para\n*ordenar vuestra boda*',
-      lead: 'Lo estáis organizando vosotros, pero os vendría bien la opinión de alguien que lo hace cada semana. Una sesión por videollamada para resolver dudas y poner orden.',
-      facts: ['49 €', '90 minutos', 'Por videollamada'],
-      cta: 'Reservar mi tutoría',
-      photo: { src: fotoJardin, alt: 'Vane, a la izquierda, y Bea sonríen sentadas a una mesa preparada con velas, frutas de otoño y flores en un jardín.' },
-    },
-    forYou: {
-      eyebrow: '¿Es para vosotros?',
-      title: 'Os habéis embarcado en algo *precioso*',
-      items: [
-        'Tenéis cientos de ideas: una carpeta en el ordenador llena de imágenes, otra en el móvil, tableros de Pinterest…',
-        'Tenéis un Excel de presupuestos lleno de interrogantes.',
-        'Habéis pensado en contar con ayuda profesional, pero creéis que no es para vosotros: solo necesitáis unos consejos para recolocar las ideas y seguir por vuestra cuenta.',
-        'Habéis cambiado de planes y no sabéis por dónde empezar ni qué posibilidades hay.',
-      ],
-      closing: 'Con nuestras tutorías tendréis la opinión de expertas en un terreno que no domináis. Por eso hemos creado algo para vosotros.',
-    },
-    how: {
-      eyebrow: 'Cómo funciona',
-      title: 'Tres pasos, *sin complicaciones*',
-      steps: [
-        { title: 'Nos escribís', text: 'Elegís la mañana o la tarde que mejor os venga, también en fin de semana.' },
-        { title: 'Preparamos la sesión', text: 'Antes del café intercambiamos unos emails o una llamada para que nos contéis vuestras inquietudes. Así llegamos preparadas para dar respuesta a todo.' },
-        { title: 'Un café con nosotras', text: 'Os ponéis cómodos, os servís un buen café y charlamos por videollamada. Escuchamos todas vuestras ideas y dudas, y tomamos nota de todo para darle forma.' },
-      ],
-    },
-    topics: {
-      eyebrow: 'De qué hablamos',
-      title: 'Vosotros *decidís*',
-      text: 'Podemos tratar un tema concreto o dejar la charla abierta y resolver vuestra lista de dudas.',
-      items: ['La decoración', 'Cómo elegir proveedores', 'El presupuesto', 'La organización del día B', 'Charla libre'],
-    },
-    includes: {
-      eyebrow: 'Qué incluye',
-      title: 'Todo lo que *os llevaréis*',
-      price: '49 €',
-      priceNote: 'por tutoría',
-      items: [
-        'Una sesión personalizada de orientación de una hora y media (aunque no estaremos pendientes del reloj).',
-        'La preparación previa por email o llamada, para personalizar la tutoría.',
-        'Material digital sobre lo que tratemos: dosieres, plantillas y listados.',
-      ],
-      extrasTitle: 'Y además',
-      extras: [
-        'Un 15 % de descuento en las siguientes tutorías.',
-        'Si después contratáis la organización integral, el diseño o la coordinación, os descontamos lo invertido en tutorías.',
-      ],
-      cta: 'Reservar mi tutoría',
-    },
-    about: {
-      title: '¿Os apetece *conocernos*?',
-      text: 'Aunque contamos con un equipo mayor, al frente de The Dreams Factory estamos Bea y Vane. Así nos gusta que nos llaméis, porque así de cerca os sentimos. Estamos especializadas en protocolo, organización de eventos y wedding planning, con títulos universitarios por la Universidad Camilo José Cela, entre otras formaciones.',
-      cta: 'Conócenos',
-      photo: { src: fotoDocentes, alt: 'Bea y Vane, con traje azul claro, en el jardín de un palacio.' },
-    },
-    faq: {
-      eyebrow: 'Preguntas frecuentes',
-      title: 'Lo que más *nos preguntáis*',
-      items: [
-        { q: '¿Cuánto dura una tutoría?', a: 'Hora y media, aunque no estaremos pendientes del reloj: si el café se alarga, se alarga.' },
-        { q: '¿Puede ser en fin de semana?', a: 'Sí. Buscamos juntos la mañana o la tarde que mejor os venga.' },
-        { q: '¿Y si después queremos que nos ayudéis con todo?', a: 'Encantadas. Si contratáis la organización integral, el diseño o la coordinación, os descontamos lo que hayáis invertido en tutorías.' },
-      ],
-    },
-  },
-  en: {
-    meta: {
-      title: 'Online wedding planning consultations · The Dreams Factory',
-      description: 'Planning your wedding yourselves? A 90-minute video call with Bea and Vane to answer your questions and put your ideas in order. €49.',
-    },
-    hero: {
-      eyebrow: 'Online consultations · For couples',
-      title: 'A coffee with us to\n*put your wedding in order*',
-      lead: 'You’re planning it yourselves, but you’d love the opinion of people who do it every week. A video call to answer your questions and bring some order.',
-      facts: ['€49', '90 minutes', 'By video call'],
-      cta: 'Book my consultation',
-      photo: { src: fotoJardin, alt: 'Vane, on the left, and Bea smile, seated at a table set with candles, autumn fruit and flowers in a garden.' },
-    },
-    forYou: {
-      eyebrow: 'Is it for you?',
-      title: 'You’ve set out on something *beautiful*',
-      items: [
-        'You have hundreds of ideas: a folder of images on your computer, another on your phone, Pinterest boards…',
-        'You have a budget spreadsheet full of question marks.',
-        'You’ve thought about getting professional help but feel it isn’t for you: you just need some advice to rearrange your ideas and carry on yourselves.',
-        'Your plans have changed and you don’t know where to start or what the options are.',
-      ],
-      closing: 'Our consultations give you the opinion of experts in an area you don’t know well. That’s why we created something for you.',
-    },
-    how: {
-      eyebrow: 'How it works',
-      title: 'Three easy *steps*',
-      steps: [
-        { title: 'You write to us', text: 'You choose the morning or afternoon that suits you best, weekends included.' },
-        { title: 'We prepare the session', text: 'Before the coffee we exchange a few emails or have a quick call so you can tell us what’s on your mind. That way we arrive ready to answer everything.' },
-        { title: 'A coffee with us', text: 'Get comfortable, pour yourselves a good coffee and we chat by video call. We listen to all your ideas and questions and take note of everything to give it shape.' },
-      ],
-    },
-    topics: {
-      eyebrow: 'What we talk about',
-      title: 'You *decide*',
-      text: 'We can focus on one topic or keep the chat open and go through your list of questions.',
-      items: ['Styling', 'Choosing suppliers', 'The budget', 'Organising the big day', 'An open chat'],
-    },
-    includes: {
-      eyebrow: 'What’s included',
-      title: 'Everything *you’ll take away*',
-      price: '€49',
-      priceNote: 'per consultation',
-      items: [
-        'A personalised one-and-a-half-hour guidance session (though we won’t be watching the clock).',
-        'Preparation beforehand by email or phone, to tailor the consultation.',
-        'Digital material on what we discuss: guides, templates and checklists.',
-      ],
-      extrasTitle: 'And also',
-      extras: [
-        '15% off your next consultations.',
-        'If you later hire us for full planning, design or coordination, we’ll deduct what you spent on consultations.',
-      ],
-      cta: 'Book my consultation',
-    },
-    about: {
-      title: 'Would you like to *meet us*?',
-      text: 'Although we have a larger team, The Dreams Factory is led by Bea and Vane. That’s what we like you to call us, because that’s how close we feel to you. We specialise in protocol, event management and wedding planning, with university qualifications from Camilo José Cela University, among other training.',
-      cta: 'Meet us',
-      photo: { src: fotoDocentes, alt: 'Bea and Vane, in light blue suits, in a palace garden.' },
-    },
-    faq: {
-      eyebrow: 'FAQ',
-      title: 'What you *ask us most*',
-      items: [
-        { q: 'How long is a consultation?', a: 'An hour and a half, though we won’t be watching the clock: if the coffee runs over, it runs over.' },
-        { q: 'Can it be at the weekend?', a: 'Yes. We’ll find the morning or afternoon that suits you best.' },
-        { q: 'What if we then want you to help us with everything?', a: 'We’d love to. If you hire us for full planning, design or coordination, we’ll deduct what you spent on consultations.' },
-      ],
-    },
+    gallery: { title: 'Previous editions', enlarge: 'Enlarge photo', close: 'Close', prev: 'Previous photo', next: 'Next photo', of: 'of' },
   },
 };

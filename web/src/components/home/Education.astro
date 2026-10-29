@@ -1,6 +1,6 @@
 ---
 /*
-  Formación («Aprende con nosotras»): el curso (para futuras wedding planners) y las tutorías (para parejas).
+  Formación («Aprende con nosotras»): el curso para futuras wedding planners.
   PROTOTIPO: cuatro maquetaciones para comparar desde la tarjeta «Prototipo · Opciones» (desplegable «formacion»;
   por defecto, «lista»):
   - paneles: dos fotos a sangre con el texto encima (la versión original).
@@ -19,11 +19,8 @@ import type { HomeContent } from '../../content/home';
 
 interface Props { lang: Lang; c: HomeContent['education'] }
 const { lang, c } = Astro.props;
-const { course, consultations } = c;
-const panels = [
-  { item: course, badge: course.badge },
-  { item: consultations, badge: null },
-];
+const { course } = c;
+const panels = [{ item: course, badge: course.badge }];
 ---
 
 <section class="section-y relative isolate bg-porcelana-50">

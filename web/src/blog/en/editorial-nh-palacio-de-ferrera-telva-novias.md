@@ -28,4 +28,4 @@ We took care of designing the spaces and coordinating the shoot. After visiting 
 
 We chose a very natural décor, with a palette of rose quartz, burgundy and green that made one of the palace’s wrought-iron doors stand out, dressed in a loose arrangement of ivy, eucalyptus, flowers and candles. The bouquet followed the same tones: wild, natural and unstructured.
 
-The shoot was featured in **Telva Novias**, in the story “Casarse en un palacio asturiano” (Getting married in an Asturian palace). [You can see this and other editorials on our weddings page](/en/weddings/).
+The shoot was featured in **Telva Novias**, in the story “Casarse en un palacio asturiano” (Getting married in an Asturian palace). [You can see the story on the Telva website](https://www.telva.com/novias/2017/08/29/59a538e3e2704ead328b4585.html) (in Spanish).

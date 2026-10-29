@@ -1,7 +1,7 @@
 /**
  * Página «Opiniones» (/opiniones, /en/reviews). ES y EN.
  *
- * Origen: las 13 opiniones publicadas en la web antigua (2017-2020), literales: solo se corrigen erratas. En inglés
+ * Origen: las opiniones publicadas en la web antigua (2017-2020), sin la de Sonia y Alberto (quitada a petición de Bea y Vane), literales: solo se corrigen erratas. En inglés
  * van traducidas, con un aviso de que el original está en español. Las parejas, solo por su nombre de pila.
  * `wedding`: iniciales de su boda en el listado de Bodas (si tiene página, la tarjeta enlaza a ella).
  *
@@ -11,7 +11,6 @@
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
 import fotoNadiaTomas from '../assets/photos/opiniones/nadia-tomas.jpg';
-import fotoSoniaAlberto from '../assets/photos/opiniones/sonia-alberto.jpg';
 import fotoPaulaDavid from '../assets/photos/opiniones/paula-david.jpg';
 import fotoOlayaDavid from '../assets/photos/opiniones/olaya-david.jpg';
 import fotoMartaOmar from '../assets/photos/opiniones/marta-omar.jpg';
@@ -53,7 +52,7 @@ export const reviewsPage: Record<Lang, {
   es: {
     meta: {
       title: 'Opiniones de parejas · The Dreams Factory, wedding planners en Asturias',
-      description: 'Lo que dicen las parejas que han confiado en Bea y Vane para organizar, diseñar y coordinar su boda en Asturias y León.',
+      description: 'Lo que dicen las parejas que han confiado en Bea y Vane para organizar, diseñar y coordinar su boda en Asturias.',
     },
     eyebrow: 'Opiniones',
     title: 'Lo que dicen\n*las parejas*',
@@ -79,7 +78,7 @@ export const reviewsPage: Record<Lang, {
   en: {
     meta: {
       title: 'Reviews from couples · The Dreams Factory, wedding planners in Asturias',
-      description: 'What couples say about Bea and Vane, who planned, designed and coordinated their weddings in Asturias and León, Spain.',
+      description: 'What couples say about Bea and Vane, who planned, designed and coordinated their weddings in Asturias, Spain.',
     },
     eyebrow: 'Reviews',
     title: 'What couples\n*say about us*',
@@ -124,28 +123,6 @@ export const reviews: Review[] = [
         'We got married in May in Asturias. We live abroad and wanted our wedding to be at a family estate, so we decided to look for help. We clicked with Bea and Vane from the very first moment, or rather, from the very first Skype call! Hiring them was the best decision we could have made. Our wedding was perfect, 100% perfect, and it was all thanks to them. All our guests were delighted; everyone agreed on how special and detailed it was and how perfectly it represented us. Incredible! Fairy-tale décor, stunning stationery, and every supplier they recommended was a true professional, all coordinated so that everything ran like clockwork.',
         'They take care of absolutely everything and adapt to your tastes and needs. We don’t know how, but every time we came to Asturias they were there to meet us. On the wedding day they were with us and took care of EVERYTHING; they give you an incredible sense of calm, and we were able to switch off completely and enjoy our day. Whatever you ask of them, even the typical wedding-nerves meltdown, they never say “no”: always with a smile, they do everything they can so it all turns out the way you want.',
         'We will always remember them fondly and be eternally grateful. From the bottom of our hearts, a million thanks, girls, you are the best!',
-      ],
-    },
-  },
-  {
-    couple: { es: 'Sonia y Alberto', en: 'Sonia & Alberto' },
-    place: 'Castillo Bosque de la Zoreda', wedding: 'S & A',
-    highlight: { es: '«Las recomendaremos una y mil veces, las que hagan falta.»', en: '“We’ll recommend them a thousand times over, as many times as it takes.”' },
-    photo: { src: fotoSoniaAlberto, focus: '50% 30%' }, credit: 'M2 Visual Studio',
-    text: {
-      es: [
-        'Lo primero que queremos decirles es un ¡GRACIAS! gigantesco.',
-        'Contactamos con Bea y Vane para que nos ayudaran en el día de nuestra boda; nos las recomendó una amiga que trabaja en el sector, porque por temas de trabajo nos iba a ser muy complicado organizar el día B sin su ayuda, y no pudimos tomar mejor decisión que contar con ellas.',
-        'El día que nos conocimos supe que iba a ser estupendo contar con ellas: son unas profesionales como la copa de un pino y con muchísimas ideas que luego llevan a cabo, y así fue.',
-        'El resultado no pudo ser mejor: todo quedó genial, precioso, estupendo, no faltó detalle, todo fue muy nosotros… No tengo adjetivos para describir lo que hicieron el día de nuestra boda, y todo fue gracias a ellas. La gente nos dio la enhorabuena por lo genial que había salido todo y lo bonito que estaba decorado (gusto no les falta).',
-        'Las recomendaremos una y mil veces, las que hagan falta. Profesionales como ellas en este sector dan muchísima luz a los novios, muchísima ilusión y, sobre todo, sueños cumplidos… ¿Qué más se puede pedir?',
-      ],
-      en: [
-        'The first thing we want to say to them is a giant THANK YOU!',
-        'We got in touch with Bea and Vane to help us with our wedding day; a friend who works in the industry recommended them, because with our jobs it was going to be very hard to organise the big day without their help, and we couldn’t have made a better decision.',
-        'The day we met them I knew it would be wonderful to have them on board: they are true professionals, with loads of ideas that they then bring to life, and so they did.',
-        'The result couldn’t have been better: everything looked great, beautiful, wonderful, not a detail was missing, it was all so “us”… I have no words to describe what they did on our wedding day, and it was all thanks to them. People congratulated us on how well everything went and how beautiful the décor was (they certainly have taste).',
-        'We’ll recommend them a thousand times over, as many times as it takes. Professionals like them bring so much light and excitement to couples and, above all, dreams come true… What more could you ask for?',
       ],
     },
   },

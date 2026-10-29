@@ -33,7 +33,6 @@ export const ui = {
       ] as [RouteKey, string][],
       educationLinks: [
         ['course', 'The Wedding Planner Experience'],
-        ['consultations', 'Tutorías online'],
       ] as [RouteKey, string][],
       legalLinks: [
         ['legal', 'Aviso legal'],
@@ -79,7 +78,6 @@ export const ui = {
       ] as [RouteKey, string][],
       educationLinks: [
         ['course', 'The Wedding Planner Experience'],
-        ['consultations', 'Online consultations'],
       ] as [RouteKey, string][],
       legalLinks: [
         ['legal', 'Legal notice'],
@@ -105,7 +103,7 @@ export type SocialName = 'Instagram' | 'Facebook' | 'TikTok';
 /** `size`: altura del logo respecto a la de los sellos redondos (por defecto 1 en sellos y 0,5 en logotipos alargados). */
 export type PressLogo = { name: string; detail: Record<Lang, string>; logo: string; ratio: number; kind: 'seal' | 'wordmark'; size?: number; href?: string };
 export const press: PressLogo[] = [
-  { name: 'Telva Novias', detail: { es: 'Nuestro trabajo publicado en Telva Novias', en: 'Our work featured in Telva Novias' }, logo: '/logos/telva-novias.png', ratio: 340 / 161, kind: 'wordmark' },
+  { name: 'Telva Novias', detail: { es: 'Nuestra editorial en Telva Novias: «Casarse en un palacio asturiano»', en: 'Our editorial in Telva Novias: “Casarse en un palacio asturiano”' }, logo: '/logos/telva-novias.png', ratio: 340 / 161, kind: 'wordmark', href: 'https://www.telva.com/novias/2017/08/29/59a538e3e2704ead328b4585.html' },
   { name: '¡HOLA!', detail: { es: 'Una de nuestras bodas publicada en ¡HOLA! Novias', en: 'One of our weddings featured in ¡HOLA! Brides' }, logo: '/logos/hola.png', ratio: 800 / 295, kind: 'wordmark', size: 0.42, href: 'https://www.hola.com/novias/20250408825048/vestido-de-novia-sencillo-transformable-boda-en-asturias/' },
   { name: 'Vanitatis', detail: { es: 'Una de nuestras bodas publicada en Vanitatis (El Confidencial)', en: 'One of our weddings featured in Vanitatis (El Confidencial)' }, logo: '/logos/vanitatis.png', ratio: 639 / 227, kind: 'wordmark', size: 0.48, href: 'https://www.vanitatis.elconfidencial.com/novias/2025-12-04/album-boda-palacio-siglo-xvi-vestido-capa_4259310/' },
   { name: 'Theodore', detail: { es: 'Una de nuestras bodas publicada en Theodore Magazine', en: 'One of our weddings featured in Theodore Magazine' }, logo: '/logos/theodore.png', ratio: 1395 / 126, kind: 'wordmark', size: 0.22, href: 'https://theodoremagazine.com/real-weddings/marcos-and-dom' },
@@ -114,7 +112,7 @@ export const press: PressLogo[] = [
 
 export const contact: {
   phones: string[];
-  /** Número de WhatsApp en formato internacional sin espacios ni «+» (para wa.me). PENDIENTE DE CONFIRMAR. */
+  /** Número de WhatsApp (el de Vanessa) en formato internacional sin espacios ni «+» (para wa.me). */
   whatsapp: string;
   email: string;
   social: { name: SocialName; handle: string; url: string }[];

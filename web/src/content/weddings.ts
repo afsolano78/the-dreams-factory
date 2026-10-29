@@ -21,8 +21,6 @@ import bodaSyA from '../assets/photos/bodas/sya-zoreda.jpg';
 import bodaCyM from '../assets/photos/bodas/cym-la-riega.jpg';
 import bodaYyK from '../assets/photos/bodas/yyk-conde-toreno.jpg';
 import bodaAyA from '../assets/photos/bodas/aya-san-cucao.jpg';
-import editorialNH from '../assets/photos/bodas/editorial-nh-aviles.jpg';
-import editorialBanjara from '../assets/photos/bodas/editorial-banjara.jpg';
 
 import iyaPortada from '../assets/photos/bodas/iya-la-riega/00-portada.jpg';
 import iya01 from '../assets/photos/bodas/iya-la-riega/01.jpg';
@@ -78,13 +76,6 @@ export type Wedding = {
   };
 };
 
-export type Editorial = {
-  title: string; text: T; photographer?: string; cover: WeddingPhoto;
-  /** Cuándo se hizo y dónde se publicó. */
-  date?: T; published?: T;
-  /** Otros proveedores (además del fotógrafo). */
-  credits?: { role: T; name: string }[];
-};
 
 export const weddingsPage: Record<Lang, {
   meta: { title: string; description: string };
@@ -93,7 +84,6 @@ export const weddingsPage: Record<Lang, {
   services: Record<Service, string>;
   viewLabel: string; soon: string; photoBy: string;
   press: { eyebrow: string };
-  editorials: { eyebrow: string; title: string; lead: string };
   detail: {
     back: string; facts: { place: string; season: string; service: string; photo: string; video: string };
     gallery: string; credits: string; more: string; all: string; enlarge: string; close: string; prev: string; next: string; of: string;
@@ -113,11 +103,6 @@ export const weddingsPage: Record<Lang, {
     soon: 'Galería próximamente',
     photoBy: 'Fotografía',
     press: { eyebrow: 'Nuestras bodas, publicadas en' },
-    editorials: {
-      eyebrow: 'Editoriales',
-      title: 'Cuando *jugamos a imaginar*',
-      lead: 'Sesiones creativas con fotógrafos y firmas amigas: sin novios de verdad, pero con todo nuestro estilo.',
-    },
     detail: {
       back: 'Todas las bodas',
       facts: { place: 'Lugar', season: 'Época', service: 'Servicio', photo: 'Fotografía', video: 'Vídeo' },
@@ -146,11 +131,6 @@ export const weddingsPage: Record<Lang, {
     soon: 'Gallery coming soon',
     photoBy: 'Photography',
     press: { eyebrow: 'Our weddings, featured in' },
-    editorials: {
-      eyebrow: 'Editorials',
-      title: 'When we *play at imagining*',
-      lead: 'Creative shoots with photographers and brands we love: no real couples, but all of our style.',
-    },
     detail: {
       back: 'All weddings',
       facts: { place: 'Venue', season: 'Season', service: 'Service', photo: 'Photography', video: 'Video' },
@@ -280,25 +260,6 @@ export const weddings: Wedding[] = [
   },
 ];
 
-export const editorials: Editorial[] = [
-  {
-    title: 'Banjara · A Wild Romance',
-    text: { es: 'Una historia bohemia entre rocas, flores secas y encaje.', en: 'A bohemian story among rocks, dried flowers and lace.' },
-    cover: p(editorialBanjara, 'Una pareja bajo un arco triangular de flores secas ante una pared de roca.', 'A couple beneath a triangular arch of dried flowers against a rock face.', '50% 35%'),
-  },
-  {
-    title: 'NH Collection Palacio de Avilés',
-    text: { es: 'Elegancia a la luz de las velas en el Palacio de Ferrera, el mismo palacio donde después impartiríamos nuestro curso.', en: 'Candlelit elegance at the Palacio de Ferrera, the same palace where we would later hold our course.' },
-    photographer: 'JFK Imagen Social',
-    date: { es: 'Agosto de 2017', en: 'August 2017' },
-    published: { es: 'Publicada en Telva Novias: «Casarse en un palacio asturiano»', en: 'Featured in Telva Novias: “Casarse en un palacio asturiano”' },
-    credits: [
-      { role: { es: 'Diseño floral', en: 'Floral design' }, name: 'Leymar Floristas' },
-      { role: { es: 'Estilismo de novia', en: 'Bridal styling' }, name: 'Marcos Luengo' },
-    ],
-    cover: p(editorialNH, 'Una novia con su ramo junto a una escalera iluminada con velas.', 'A bride holding her bouquet beside a candlelit staircase.'),
-  },
-];
 
 /** Dirección de la página de una boda (o del listado, si aún no tiene página). */
 export function weddingHref(w: Wedding, lang: Lang): string {

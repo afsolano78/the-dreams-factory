@@ -47,15 +47,13 @@ const LABELS: [string, string][] = [
   ['servicio', 'Servicio'],
   ['presupuesto', 'Presupuesto orientativo'],
   ['celebracion', 'Celebración'],
-  ['franja', 'Franja para la tutoría'],
-  ['tema', 'Tema de la tutoría'],
   ['experiencia', 'Experiencia en eventos'],
   ['como_nos_conocisteis', 'Cómo nos conocieron'],
   ['idea', 'Su idea'],
   ['pagina', 'Enviado desde'],
   ['idioma', 'Idioma'],
 ];
-const MOTIVES: Data = { boda: 'Boda', celebracion: 'Otra celebración', tutoria: 'Tutoría online', curso: 'Curso' };
+const MOTIVES: Data = { boda: 'Boda', celebracion: 'Otra celebración', curso: 'Curso' };
 const SERVICES: Data = {
   integral: 'Organización integral',
   diseno: 'Diseño y coordinación del día B',

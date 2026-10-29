@@ -6,15 +6,13 @@
      y fotógrafo). Las que tienen página enlazan a ella; el resto, de momento, avisan de que su galería llegará pronto.
      El mosaico (columnas CSS) se recoloca solo al filtrar, sin huecos.
   3. «Publicadas en»: los reportajes en prensa, con enlace.
-  4. Editoriales: sesiones creativas, aparte de las bodas reales.
-  5. El mismo cierre que la portada.
+  4. El mismo cierre que la portada.
 */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SectionHeading from '../SectionHeading.astro';
 import LogoRow from '../LogoRow.astro';
 import ClosingCta from '../home/ClosingCta.astro';
-import { weddings, editorials, weddingsPage, weddingHref } from '../../content/weddings';
+import { weddings, weddingsPage, weddingHref } from '../../content/weddings';
 import { home } from '../../content/home';
 import { press } from '../../i18n/ui';
 import { emphasize, type Lang } from '../../i18n/routes';
@@ -110,46 +108,8 @@ const pressLinks = press.filter((l) => l.href);
     </div>
   </section>
 
-  <!-- 4. Editoriales -->
-  <section class="section-y bg-porcelana-50">
-    <div class="container-brand flex flex-col gap-12">
-      <div class="flex flex-col gap-5">
-        <SectionHeading eyebrow={c.editorials.eyebrow} title={c.editorials.title} />
-        <p class="max-w-[38rem] text-suave" data-reveal>{c.editorials.lead}</p>
-      </div>
-      <ul class="grid gap-10 md:grid-cols-2 md:gap-8">
-        {
-          editorials.map((e, i) => (
-            <li class="flex flex-col gap-4" data-reveal style={`--reveal-delay:${i * 120}ms`}>
-              <div class="overflow-hidden">
-                <Picture
-                  src={e.cover.src}
-                  alt={e.cover.alt[lang]}
-                  widths={[560, 800, 1120]}
-                  sizes="(min-width: 768px) 45vw, 100vw"
-                  formats={['avif', 'webp']}
-                  class="aspect-[4/3] w-full object-cover"
-                  style={e.cover.focus ? `object-position:${e.cover.focus}` : undefined}
-                />
-              </div>
-              <h3 class="display-s text-pino-800">{e.title}</h3>
-              <p class="-mt-2 text-[0.9375rem] text-suave">{e.text[lang]}</p>
-              {e.published && <p class="-mt-1 text-[0.875rem] italic text-ciruela-700">{e.published[lang]}</p>}
-              <p class="-mt-2 text-[0.8125rem] text-suave">
-                {[
-                  e.date?.[lang],
-                  e.photographer && `${c.photoBy}: ${e.photographer}`,
-                  ...(e.credits ?? []).map((cr) => `${cr.role[lang]}: ${cr.name}`),
-                ].filter(Boolean).join(' · ')}
-              </p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
 
-  <!-- 5. Cierre, el mismo que en la portada -->
+  <!-- 4. Cierre, el mismo que en la portada -->
   <ClosingCta lang={lang} c={home[lang].closing} />
 </BaseLayout>
 

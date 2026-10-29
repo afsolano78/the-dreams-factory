@@ -6,7 +6,6 @@
 /i-encuentro-dreams-el-peinado-de-tu-boda /blog/encuentro-dreams-el-peinado-de-tu-boda/ 301
 /editorial-nh-palacio-de-ferrera-para-telva-novias /blog/editorial-nh-palacio-de-ferrera-telva-novias/ 301
 /organizacion-de-bodas-Asturias /blog/organizacion-de-bodas-en-asturias/ 301
-/agenda-de-boda-descargable-gratuita-m%C3%A1s-bonita /blog/ 301
 /por-qu%C3%A9-contratar-una-wedding-planner /blog/por-que-contratar-una-wedding-planner/ 301
 /el-lettering-en-tu-boda /blog/el-lettering-en-tu-boda/ 301
 /la-banda-sonora-de-vuestra-boda /blog/la-banda-sonora-de-vuestra-boda/ 301
@@ -16,6 +15,7 @@
 /ceremonia-civil-%C2%BFfr%C3%ADa-0 /blog/ceremonia-civil-fria/ 301
 
 # Blog: entradas que no se han pasado (al listado)
+/agenda-de-boda-descargable-gratuita-m%C3%A1s-bonita /blog/ 301
 /avance-de-la-colecci%C3%B3n-pronovias-2017 /blog/ 301
 /cena-nascdn-2016 /blog/ 301
 /consejos-de-una-wedding-planner-para-tu-lista-de-reyes /blog/ 301
@@ -70,7 +70,13 @@
 /tu-idea-nuestro-plan /servicios/#celebraciones 301
 /el-formato /curso-wedding-planner/ 301
 /el-temario-y-los-docentes /curso-wedding-planner/ 301
-/las-tutor%C3%ADas-dreams-factory /tutorias-online/ 301
+
+# Tutorías online: ya no se ofrecen (a Servicios)
+/las-tutor%C3%ADas-dreams-factory /servicios/ 301
+/tutorias-online /servicios/ 301
+/en/online-consultations /en/services/ 301
+
+# Páginas
 /quienes-somos /nosotras/ 301
 /contact-form /contacto/ 301
 /pol%C3%ADtica-de-privacidad /privacidad/ 301

@@ -44,4 +44,4 @@ Todo esto, y un poquito más, podéis verlo en las imágenes de M2 Visual Studio
 
 ---
 
-**Hoy:** desde aquella primera edición hemos celebrado dos más, y ya estamos preparando la cuarta. [Toda la información del curso y las inscripciones, aquí](/curso-wedding-planner/).
+**Hoy:** desde aquella primera edición hemos celebrado dos más, y la cuarta será el 29, 30 y 31 de enero de 2027 en el Palacio de La Riega (Gijón). [Toda la información del curso y las inscripciones, aquí](/curso-wedding-planner/).

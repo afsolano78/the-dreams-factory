@@ -1,9 +1,9 @@
 ---
 /*
   Formulario de contacto completo, en tres pasos: qué celebráis → los detalles → vosotros.
-  El paso 2 muestra solo el bloque que corresponde a lo elegido en el paso 1 (boda, otra celebración, tutoría o
+  El paso 2 muestra solo el bloque que corresponde a lo elegido en el paso 1 (boda, otra celebración o
   curso); los campos de los demás bloques se desactivan para que no se validen ni se envíen.
-  Se puede llegar con datos ya puestos por la dirección: ?motivo=boda|celebracion|tutoria|curso, ?servicio=integral|
+  Se puede llegar con datos ya puestos por la dirección: ?motivo=boda|celebracion|curso, ?servicio=integral|
   diseno|coordinacion y ?boda=I%20%26%20A (empieza el mensaje con «Nos encantó la boda de…»).
   Envío, validación y pasos: src/scripts/contact-form.ts. Sin JavaScript, el formulario se envía igualmente.
 */
@@ -124,24 +124,6 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undef
       </div>
     </div>
 
-    <div data-for="tutoria" class="flex flex-col gap-8" hidden>
-      <h2 class="display-m text-pino-800">{c.consultation.legend}</h2>
-      <div class="flex flex-col gap-3">
-        <p class="eyebrow text-malva-500" id="cf-franja-label">{c.consultation.slot.label}</p>
-        <div class="flex flex-wrap gap-2" role="radiogroup" aria-labelledby="cf-franja-label">
-          {c.consultation.slot.options.map((o) => (
-            <label class="chip">
-              <input type="radio" name="franja" value={o.value} class="sr-only" />
-              {o.label}
-            </label>
-          ))}
-        </div>
-      </div>
-      <div class="field">
-        <label for="cf-tema" class="eyebrow text-malva-500">{c.consultation.topic[0]}</label>
-        <input id="cf-tema" name="tema" type="text" placeholder={c.consultation.topic[1]} />
-      </div>
-    </div>
 
     <div data-for="curso" class="flex flex-col gap-8" hidden>
       <h2 class="display-m text-pino-800">{c.course.legend}</h2>

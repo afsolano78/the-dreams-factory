@@ -43,4 +43,4 @@ All this, and a little more, can be seen in the photos by M2 Visual Studio: a re
 
 ---
 
-**Today:** since that first edition we have held two more, and we are already preparing the fourth. [All the course information and registration, here](/en/wedding-planner-course/).
+**Today:** since that first edition we have held two more, and the fourth will take place on 29, 30 and 31 January 2027 at Palacio de La Riega (Gijón). [All the course information and registration, here](/en/wedding-planner-course/).

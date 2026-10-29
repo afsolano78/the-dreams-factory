@@ -10,21 +10,44 @@
   7. Lo que dijeron las alumnas.
   8. Preguntas frecuentes y cierre con la inscripción en la nueva edición.
 */
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
 import Gallery from '../Gallery.astro';
-import { course } from '../../content/education';
+import { course, nextEdition } from '../../content/education';
 import { path, emphasize, type Lang } from '../../i18n/routes';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const c = course[lang];
 const notify = `${path('contact', lang)}?motivo=curso`;
+
+// Datos de evento para Google (la próxima edición, con fechas y lugar). Sin precio: no se publica.
+const hero = await getImage({ src: c.hero.photo.src, width: 1200, format: 'jpg' });
+const event = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: 'The Wedding Planner Experience',
+  description: c.meta.description,
+  startDate: nextEdition.start,
+  endDate: nextEdition.end,
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  inLanguage: 'es',
+  image: new URL(hero.src, Astro.site).href,
+  url: new URL(path('course', lang), Astro.site).href,
+  location: {
+    '@type': 'Place',
+    name: nextEdition.venue,
+    address: { '@type': 'PostalAddress', addressLocality: nextEdition.city, addressRegion: nextEdition.region, addressCountry: 'ES' },
+  },
+  organizer: { '@type': 'Organization', name: 'The Dreams Factory', url: Astro.site?.href },
+};
 ---
 
 <BaseLayout lang={lang} routeKey="course" title={c.meta.title} description={c.meta.description} overlayHeader>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(event)} />
   <!-- 1. Cabecera -->
   <!-- Crece con el texto si la pantalla es baja; arriba deja sitio para la cabecera. -->
   <section class="relative isolate flex min-h-[min(88svh,920px)] items-end overflow-hidden bg-pino-900 pt-36 text-white">

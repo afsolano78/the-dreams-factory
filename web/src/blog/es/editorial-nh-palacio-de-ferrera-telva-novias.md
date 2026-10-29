@@ -29,4 +29,4 @@ Nosotras nos encargamos del diseño de los espacios y de la coordinación. Tras 
 
 Apostamos por una decoración en tonos muy naturales, con una paleta de rosa cuarzo, granates y verdes, que hacía destacar una de las puertas de forja del palacio con una decoración desestructurada de enredadera, eucalipto, flores y velas. El ramo seguía los mismos tonos: flor silvestre, natural y desestructurado.
 
-La sesión se publicó en **Telva Novias**, en el reportaje «Casarse en un palacio asturiano». [Puedes ver esta y otras editoriales en nuestra página de bodas](/bodas/).
+La sesión se publicó en **Telva Novias**, en el reportaje «Casarse en un palacio asturiano». [Puedes ver el reportaje en la web de Telva](https://www.telva.com/novias/2017/08/29/59a538e3e2704ead328b4585.html).

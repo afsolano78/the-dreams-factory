@@ -8,7 +8,7 @@
  */
 import type { Lang } from '../i18n/routes';
 
-export type Motive = 'boda' | 'celebracion' | 'tutoria' | 'curso';
+export type Motive = 'boda' | 'celebracion' | 'curso';
 export type ServiceKey = 'integral' | 'diseno' | 'coordinacion' | 'nose';
 
 type Option = { value: string; label: string };
@@ -29,7 +29,6 @@ export type ContactContent = {
     budget: { label: string; options: Option[] };
   };
   celebration: { legend: string; kind: [string, string]; date: [string, string]; place: [string, string] };
-  consultation: { legend: string; slot: { label: string; options: Option[] }; topic: [string, string] };
   course: { legend: string; text: string; experience: { label: string; options: Option[] } };
   you: {
     legend: string;
@@ -67,7 +66,7 @@ export const contactContent: Record<Lang, ContactContent> = {
   es: {
     meta: {
       title: 'Contacto · The Dreams Factory, wedding planners en Asturias',
-      description: 'Contadnos vuestra idea: escribidnos, llamadnos o mandadnos un WhatsApp. Organizamos bodas en Asturias, León y alrededores.',
+      description: 'Contadnos vuestra idea: escribidnos, llamadnos o mandadnos un WhatsApp. Organizamos bodas en Asturias.',
     },
     eyebrow: 'Contacto',
     title: 'Contadnos\n*vuestra idea*',
@@ -78,7 +77,7 @@ export const contactContent: Record<Lang, ContactContent> = {
       whatsapp: 'Escribidnos por WhatsApp',
       email: 'Email',
       zone: 'Dónde trabajamos',
-      zoneText: 'Asturias, León y alrededores. Y si os casáis desde fuera, os acompañamos a distancia.',
+      zoneText: 'Asturias. Y si os casáis desde fuera, os acompañamos a distancia.',
       reply: 'Os contestamos personalmente, normalmente en uno o dos días.',
       social: 'Síguenos',
     },
@@ -91,7 +90,6 @@ export const contactContent: Record<Lang, ContactContent> = {
       options: [
         { value: 'boda', label: 'Nuestra boda', text: 'Organización, diseño o coordinación del día B.' },
         { value: 'celebracion', label: 'Otra celebración', text: 'Una pedida, un aniversario, una fiesta…' },
-        { value: 'tutoria', label: 'Una tutoría online', text: 'Lo organizamos nosotros, pero queremos consejo.' },
         { value: 'curso', label: 'El curso', text: 'Quiero inscribirme en la nueva edición.' },
       ],
     },
@@ -127,22 +125,9 @@ export const contactContent: Record<Lang, ContactContent> = {
       date: ['Fecha aproximada', 'La primavera que viene'],
       place: ['Lugar o zona', 'Asturias'],
     },
-    consultation: {
-      legend: 'Vuestra tutoría',
-      slot: {
-        label: '¿Cuándo os viene mejor?',
-        options: [
-          { value: 'mananas', label: 'Por las mañanas' },
-          { value: 'tardes', label: 'Por las tardes' },
-          { value: 'fin-de-semana', label: 'En fin de semana' },
-          { value: 'indiferente', label: 'Nos da igual' },
-        ],
-      },
-      topic: ['¿De qué os gustaría hablar?', 'La decoración, elegir proveedores, el presupuesto, el día B…'],
-    },
     course: {
       legend: 'El curso',
-      text: 'Estamos preparando una nueva edición y ya recibimos inscripciones. Déjanos tus datos y te contamos fechas, plazas y todos los detalles en cuanto estén cerrados.',
+      text: 'La nueva edición es el 29, 30 y 31 de enero de 2027, en el Palacio de La Riega (Gijón). Déjanos tus datos y te contamos todos los detalles.',
       experience: {
         label: '¿Tienes experiencia en eventos?',
         options: [
@@ -175,7 +160,7 @@ export const contactContent: Record<Lang, ContactContent> = {
     privacy: {
       accept: 'He leído y acepto la',
       link: 'política de privacidad',
-      basic: 'Responsable: Beatriz Soria Gutiérrez (The Dreams Factory). Finalidad: responder a vuestra consulta. Legitimación: vuestro consentimiento. Destinatarios: nadie, salvo los servicios técnicos de la web y el correo, por encargo nuestro, o por obligación legal. Derechos: acceso, rectificación, supresión y los demás que explica la política de privacidad.',
+      basic: 'Responsable: B-V The Dreams Factory, S.C. Finalidad: responder a vuestra consulta. Legitimación: vuestro consentimiento. Destinatarios: nadie, salvo los servicios técnicos de la web y el correo, por encargo nuestro, o por obligación legal. Derechos: acceso, rectificación, supresión y los demás que explica la política de privacidad.',
     },
     submit: 'Enviar',
     sending: 'Enviando…',
@@ -207,7 +192,7 @@ export const contactContent: Record<Lang, ContactContent> = {
   en: {
     meta: {
       title: 'Contact · The Dreams Factory, wedding planners in Asturias, Spain',
-      description: 'Tell us your idea: write to us, call us or send us a WhatsApp. We plan weddings in Asturias, León and nearby, in northern Spain.',
+      description: 'Tell us your idea: write to us, call us or send us a WhatsApp. We plan weddings in Asturias, in northern Spain.',
     },
     eyebrow: 'Contact',
     title: 'Tell us\n*your idea*',
@@ -218,7 +203,7 @@ export const contactContent: Record<Lang, ContactContent> = {
       whatsapp: 'Message us on WhatsApp',
       email: 'Email',
       zone: 'Where we work',
-      zoneText: 'Asturias, León and nearby, in northern Spain. And if you’re planning from abroad, we’ll be with you from a distance.',
+      zoneText: 'Asturias, in northern Spain. And if you’re planning from abroad, we’ll be with you from a distance.',
       reply: 'We reply personally, usually within a day or two.',
       social: 'Follow us',
     },
@@ -231,7 +216,6 @@ export const contactContent: Record<Lang, ContactContent> = {
       options: [
         { value: 'boda', label: 'Our wedding', text: 'Planning, design or wedding-day coordination.' },
         { value: 'celebracion', label: 'Another celebration', text: 'A proposal, an anniversary, a party…' },
-        { value: 'tutoria', label: 'An online consultation', text: 'We’re planning it ourselves but want advice.' },
         { value: 'curso', label: 'The course', text: 'I want to sign up for the new edition.' },
       ],
     },
@@ -267,22 +251,9 @@ export const contactContent: Record<Lang, ContactContent> = {
       date: ['Approximate date', 'Next spring'],
       place: ['Venue or area', 'Asturias'],
     },
-    consultation: {
-      legend: 'Your consultation',
-      slot: {
-        label: 'When suits you best?',
-        options: [
-          { value: 'mananas', label: 'Mornings' },
-          { value: 'tardes', label: 'Afternoons' },
-          { value: 'fin-de-semana', label: 'Weekends' },
-          { value: 'indiferente', label: 'Any time' },
-        ],
-      },
-      topic: ['What would you like to talk about?', 'Styling, choosing suppliers, the budget, the big day…'],
-    },
     course: {
       legend: 'The course',
-      text: 'We’re preparing a new edition and registration is open. Leave us your details and we’ll tell you about dates, places and every detail as soon as they’re confirmed.',
+      text: 'The new edition takes place on 29, 30 and 31 January 2027 at Palacio de La Riega (Gijón). Leave us your details and we’ll tell you everything.',
       experience: {
         label: 'Do you have experience in events?',
         options: [
@@ -315,7 +286,7 @@ export const contactContent: Record<Lang, ContactContent> = {
     privacy: {
       accept: 'I have read and accept the',
       link: 'privacy policy',
-      basic: 'Controller: Beatriz Soria Gutiérrez (The Dreams Factory). Purpose: replying to your enquiry. Legal basis: your consent. Recipients: nobody, except the technical services running the website and email on our behalf, or where required by law. Rights: access, rectification, erasure and the others explained in the privacy policy.',
+      basic: 'Controller: B-V The Dreams Factory, S.C. Purpose: replying to your enquiry. Legal basis: your consent. Recipients: nobody, except the technical services running the website and email on our behalf, or where required by law. Rights: access, rectification, erasure and the others explained in the privacy policy.',
     },
     submit: 'Send',
     sending: 'Sending…',

@@ -9,7 +9,6 @@ export const routes = {
   about: { es: '/nosotras', en: '/en/about-us' },
   reviews: { es: '/opiniones', en: '/en/reviews' },
   course: { es: '/curso-wedding-planner', en: '/en/wedding-planner-course' },
-  consultations: { es: '/tutorias-online', en: '/en/online-consultations' },
   blog: { es: '/blog', en: '/en/blog' },
   contact: { es: '/contacto', en: '/en/contact' },
   legal: { es: '/aviso-legal', en: '/en/legal-notice' },

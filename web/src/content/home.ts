@@ -22,12 +22,10 @@ import opDavidGerman from '../assets/photos/opiniones/david-german.jpg';
 import opMartaOmar from '../assets/photos/opiniones/marta-omar.jpg';
 import opNadiaTomas from '../assets/photos/opiniones/nadia-tomas.jpg';
 import opAidaAdrian from '../assets/photos/opiniones/aida-adrian.jpg';
-import opSoniaAlberto from '../assets/photos/opiniones/sonia-alberto.jpg';
 import opMariaGaspar from '../assets/photos/opiniones/maria-gaspar.jpg';
 import nosotras from '../assets/photos/nosotras-bea-vane.jpg';
 import nosotrasRetrato from '../assets/photos/nosotras-bea-vane-retrato.jpg';
 import cursoEdicion from '../assets/photos/curso-edicion.jpg';
-import tutorias from '../assets/photos/tutorias.jpg';
 import blogCeremonia from '../assets/photos/blog-ceremonia-civil.jpg';
 import blogLettering from '../assets/photos/blog-lettering.jpg';
 import blogEncuentro from '../assets/photos/blog-encuentro-dreams.jpg';
@@ -122,14 +120,12 @@ export interface HomeContent {
     items: { quote: string; author: string; credit?: string; photo: ImageMetadata; focus?: string }[];
   };
   /**
-   * Formación: el curso (para futuras profesionales) y las tutorías (para parejas).
-   * Son públicos distintos: `audience` lo deja claro en cada bloque.
+   * Formación: el curso (para futuras wedding planners). `audience` deja claro a quién va dirigido.
    */
   education: {
     eyebrow: string; title: string;
     /** `focus`: object-position de la foto dentro del panel vertical. */
     course: { audience: string; badge: string; title: string; text: string; meta: string; cta: Link; photo: Photo; focus?: string };
-    consultations: { audience: string; title: string; text: string; meta: string; cta: Link; photo: Photo; focus?: string };
   };
   /** Cierre de la portada: frase caligráfica, titular y botón para escribir. */
   closing: { script: string; title: string; text: string; cta: Link };
@@ -163,7 +159,7 @@ export const home: Record<Lang, HomeContent> = {
         { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Momentos que\n*se quedan con vosotros*', intro: 'Cuidamos cada detalle para que los momentos importantes lleguen solos, sin prisas ni sobresaltos.', photo: { src: hero1, alt: 'N y T se abrazan bajo una carpa decorada con guirnaldas de luces y ramas verdes.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Cada detalle,\n*pensado para vosotros*', intro: 'Diseño, decoración y ambientación con carácter propio: flores, luz y mesas que cuentan vuestra historia.', photo: { src: hero2, alt: 'Mesa imperial del banquete con hortensias, velas y ramas de eucalipto colgando del techo.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'Toda la emoción,\n*ninguna preocupación*', intro: 'Nos ocupamos de proveedores, tiempos y planes B para que vosotros solo tengáis que mirar hacia delante.', photo: { src: hero3, alt: 'A y M salen de la iglesia bajo una lluvia de pétalos lanzados por sus invitados.' } },
-        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Vuestra historia,\n*a vuestra manera*', intro: 'Sin tradiciones obligatorias ni bodas «raras»: escuchamos cómo sois y lo convertimos en vuestra boda.', photo: { src: hero4, alt: 'A y S, apoyados en un coche clásico negro; ella, con velo largo, sostiene una sombrilla blanca y al fondo se ven las montañas.' } },
+        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Vuestra historia,\n*a vuestra manera*', intro: 'Sin tradiciones obligatorias ni reglas que seguir: escuchamos cómo sois y lo convertimos en vuestra boda.', photo: { src: hero4, alt: 'A y S, apoyados en un coche clásico negro; ella, con velo largo, sostiene una sombrilla blanca y al fondo se ven las montañas.' } },
         { couple: 'A & M', place: 'La fiesta', focus: '48% 35%', title: 'Y vosotros,\n*a disfrutar*', intro: 'El día B coordinamos todo entre bastidores para que lo viváis de principio a fin con vuestra gente.', photo: { src: hero5, alt: 'A y M, sentados juntos y sonriendo, bajo un neón que dice «Fly me to the moon» rodeado de hiedra.' } },
       ],
       controls: { region: 'Bodas destacadas', slide: 'Foto {n} de {total}', goTo: 'Ver foto {n}: {caption}', pause: 'Pausar el pase de fotos', play: 'Reanudar el pase de fotos' },
@@ -171,7 +167,7 @@ export const home: Record<Lang, HomeContent> = {
     story: {
       eyebrow: 'Nuestra filosofía',
       title: 'Vuestra boda,\n*vuestras normas*',
-      lead: 'No hay tradiciones obligatorias ni bodas «raras». Hay dos personas, una historia y una forma de celebrarla que solo es vuestra.',
+      lead: 'No hay tradiciones obligatorias ni reglas que seguir. Hay dos personas, una historia y una forma de celebrarla que solo es vuestra.',
       body: 'Nosotras escuchamos, proponemos y nos ocupamos de todo lo demás: proveedores, calendario, presupuesto y ese plan B que siempre llevamos preparado. Vosotros tomáis cada decisión; nosotras hacemos que sea fácil. Nos gusta que nos llaméis por nuestro nombre, porque así de cerca trabajamos con cada pareja.',
       signature: 'Bea & Vane',
       credentials: 'Wedding planners en Asturias desde 2015, con formación universitaria en protocolo y organización de eventos.',
@@ -215,7 +211,6 @@ export const home: Record<Lang, HomeContent> = {
         { quote: '«Nuestra boda fue perfecta, 100 % perfecta, y todo gracias a ellas.»', author: 'Nadia y Tomás', credit: 'David Fernández', photo: opNadiaTomas, focus: '50% 35%' },
         { quote: '«¡El día de la boda estuve súper tranquila, y fue sobre todo porque sabía que ellas estaban allí!»', author: 'María y Gaspar', credit: 'La Cabina Roja', photo: opMariaGaspar },
         { quote: '«No podemos estar más contentos de haberos escogido. Si me volviera a casar, sin duda os volvería a contratar.»', author: 'Aida y Adrián', credit: 'M2 Visual Studio', photo: opAidaAdrian, focus: '50% 35%' },
-        { quote: '«Las recomendaremos una y mil veces, las que hagan falta.»', author: 'Sonia y Alberto', credit: 'M2 Visual Studio', photo: opSoniaAlberto, focus: '50% 30%' },
       ],
     },
     education: {
@@ -226,18 +221,10 @@ export const home: Record<Lang, HomeContent> = {
         badge: 'Nueva edición · Inscripciones abiertas',
         title: 'The Wedding Planner Experience',
         text: 'Un curso intensivo de tres días para quienes quieren dedicarse a organizar bodas. Compartimos nuestro método, nuestros proveedores y una boda recorrida de principio a fin en un escenario real.',
-        meta: 'Grupos reducidos · 3 días inmersivos',
+        meta: '29, 30 y 31 de enero de 2027 · Palacio de La Riega, Gijón',
         cta: { label: 'Descubre el curso', to: 'course' },
         photo: { src: cursoEdicion, alt: 'Bea y Vane dan una clase del curso a las alumnas, sentadas alrededor de una mesa con flores en un salón del palacio.' },
         focus: '50% 40%',
-      },
-      consultations: {
-        audience: 'Para parejas',
-        title: 'Tutorías online',
-        text: '¿Lo organizáis vosotros pero queréis la opinión de expertas? Una sesión con café para ordenar ideas y resolver dudas.',
-        meta: '90 minutos por videollamada · 49 €',
-        cta: { label: 'Reservar tutoría', to: 'consultations' },
-        photo: { src: tutorias, alt: 'Cuaderno de wedding planner con notas manuscritas.' },
       },
     },
     closing: {
@@ -277,7 +264,7 @@ export const home: Record<Lang, HomeContent> = {
         { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Moments that\n*stay with you*', intro: 'We look after every detail so the moments that matter arrive on their own, unhurried and worry-free.', photo: { src: hero1, alt: 'N and T embrace under a marquee decorated with string lights and greenery.' } },
         { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Every detail,\n*made for you*', intro: 'Design, styling and décor with a character of their own: flowers, light and tables that tell your story.', photo: { src: hero2, alt: 'A long banquet table with hydrangeas, candles and eucalyptus hanging from the ceiling.' } },
         { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'All the emotion,\n*none of the worry*', intro: 'We handle suppliers, timings and back-up plans so all you have to do is look ahead.', photo: { src: hero3, alt: 'A and M leave the church under a shower of petals thrown by their guests.' } },
-        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Your story,\n*your way*', intro: 'No compulsory traditions, no “odd” weddings: we listen to who you are and turn it into your wedding.', photo: { src: hero4, alt: 'A and S lean against a black vintage car; she holds a white parasol, her long veil in the breeze, with mountains behind them.' } },
+        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Your story,\n*your way*', intro: 'No compulsory traditions, no rules to follow: we listen to who you are and turn it into your wedding.', photo: { src: hero4, alt: 'A and S lean against a black vintage car; she holds a white parasol, her long veil in the breeze, with mountains behind them.' } },
         { couple: 'A & M', place: 'The party', focus: '48% 35%', title: 'And you,\n*just enjoy it*', intro: 'On the day we coordinate everything behind the scenes so you can live it from start to finish with your people.', photo: { src: hero5, alt: 'A and M sit close together, smiling, beneath an ivy-framed neon sign reading “Fly me to the moon”.' } },
       ],
       controls: { region: 'Featured weddings', slide: 'Photo {n} of {total}', goTo: 'Show photo {n}: {caption}', pause: 'Pause the slideshow', play: 'Play the slideshow' },
@@ -285,7 +272,7 @@ export const home: Record<Lang, HomeContent> = {
     story: {
       eyebrow: 'Our philosophy',
       title: 'Your wedding,\n*your rules*',
-      lead: 'There are no compulsory traditions and no such thing as a “strange” wedding. There are two people, one story and a way of celebrating it that is theirs alone.',
+      lead: 'There are no compulsory traditions and no rules to follow. There are two people, one story and a way of celebrating it that is theirs alone.',
       body: 'We listen, we suggest and we take care of everything else: suppliers, timelines, budget and the plan B we always have ready. You make every decision; we make it easy. We like you to call us by our first names, because that’s how closely we work with every couple.',
       signature: 'Bea & Vane',
       credentials: 'Wedding planners in Asturias since 2015, with university training in protocol and event management.',
@@ -330,7 +317,6 @@ export const home: Record<Lang, HomeContent> = {
         { quote: '“Our wedding was perfect, 100% perfect, and it was all thanks to them.”', author: 'Nadia & Tomás', credit: 'David Fernández', photo: opNadiaTomas, focus: '50% 35%' },
         { quote: '“On our wedding day I was completely calm, and it was mostly because I knew they were there!”', author: 'María & Gaspar', credit: 'La Cabina Roja', photo: opMariaGaspar },
         { quote: '“We couldn’t be happier that we chose you. If I got married again, I’d hire you again without a doubt.”', author: 'Aida & Adrián', credit: 'M2 Visual Studio', photo: opAidaAdrian, focus: '50% 35%' },
-        { quote: '“We’ll recommend them a thousand times over, as many times as it takes.”', author: 'Sonia & Alberto', credit: 'M2 Visual Studio', photo: opSoniaAlberto, focus: '50% 30%' },
       ],
     },
     education: {
@@ -341,18 +327,10 @@ export const home: Record<Lang, HomeContent> = {
         badge: 'New edition · Registration open',
         title: 'The Wedding Planner Experience',
         text: 'A three-day intensive course for anyone who wants to plan weddings for a living. We share our method, our supplier network and a complete wedding walked through from start to finish at a real venue.',
-        meta: 'Small groups · 3 immersive days',
+        meta: '29, 30 and 31 January 2027 · Palacio de La Riega, Gijón',
         cta: { label: 'Discover the course', to: 'course' },
         photo: { src: cursoEdicion, alt: 'Bea and Vane teach a course session to students seated around a flower-dressed table in a palace room.' },
         focus: '50% 40%',
-      },
-      consultations: {
-        audience: 'For couples',
-        title: 'Online consultations',
-        text: 'Planning it yourselves but want an expert’s view? A session over coffee to sort out your ideas and answer your questions.',
-        meta: '90-minute video call · €49',
-        cta: { label: 'Book a consultation', to: 'consultations' },
-        photo: { src: tutorias, alt: 'A wedding planner’s notebook with handwritten notes.' },
       },
     },
     closing: {

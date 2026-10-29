@@ -85,7 +85,7 @@ function setup(form: HTMLFormElement) {
     showStep(1, false);
   }
 
-  /** Datos que llegan por la dirección (botones de Servicios, páginas de bodas, curso, tutorías). */
+  /** Datos que llegan por la dirección (botones de Servicios, páginas de bodas, curso). */
   function prefill() {
     const q = new URLSearchParams(location.search);
     const m = q.get('motivo') ?? (q.get('servicio') || q.get('boda') ? 'boda' : null);

@@ -6,9 +6,9 @@
  * y añadido lo que faltaba (bases legales y plazos por finalidad, encargados del tratamiento y transferencias
  * internacionales por el alojamiento y el correo, reclamación ante la AEPD, menores, ley aplicable).
  *
+ * Titular: la sociedad civil B-V The Dreams Factory, S.C. (confirmado por Bea y Vane en octubre de 2026).
+ *
  * PENDIENTE DE CONFIRMAR con Bea y Vane (y, si es posible, con su gestoría o asesoría legal):
- * - Que la titular sigue siendo Beatriz Soria Gutiérrez como autónoma (y no una sociedad) y que NIF y domicilio
- *   siguen vigentes.
  * - El plazo de conservación de las consultas que no acaban en contrato (aquí, un año).
  * - Los proveedores técnicos (Cloudflare, Resend y Google) cuando la web esté en producción.
  *
@@ -38,9 +38,9 @@ export type LegalDoc = {
   sections: LegalSection[];
 };
 
-const OWNER = 'Beatriz Soria Gutiérrez';
-const NIF = '71890448S';
-const ADDRESS = 'Avda. Galicia, 6, 2.º B · 33450 Piedras Blancas (Castrillón) · Asturias';
+const OWNER = 'B-V The Dreams Factory, S.C.';
+const NIF = 'J09855123';
+const ADDRESS = 'Avda. de Galicia, 6, 2.º B · 33450 Piedras Blancas (Castrillón) · Asturias';
 const EMAIL = 'thedreamsfactoryweddingplanner@gmail.com';
 const PHONE = '+34 659 251 373';
 const AEPD = 'https://www.aepd.es';
@@ -48,21 +48,22 @@ const AEPD = 'https://www.aepd.es';
 export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalDoc>> = {
   notice: {
     es: {
-      meta: { title: 'Aviso legal · The Dreams Factory', description: 'Datos identificativos de la titular y condiciones de uso de la web de The Dreams Factory.' },
+      meta: { title: 'Aviso legal · The Dreams Factory', description: 'Datos identificativos del titular y condiciones de uso de la web de The Dreams Factory.' },
       eyebrow: 'Legal',
       title: 'Aviso legal',
-      updated: 'Última actualización: 25 de octubre de 2026',
+      updated: 'Última actualización: 29 de octubre de 2026',
       toc: 'En esta página',
       sections: [
         {
           id: 'titular',
-          title: 'Datos de la titular',
+          title: 'Datos del titular',
           blocks: [
-            { p: 'En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), estos son los datos de la titular de la web www.thedreamsfactory.es:' },
+            { p: 'En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), estos son los datos del titular de la web www.thedreamsfactory.es:' },
             { dl: [
               ['Titular', OWNER],
+              ['Forma jurídica', 'Sociedad civil'],
               ['Nombre comercial', 'The Dreams Factory'],
-              ['NIF', NIF],
+              ['CIF', NIF],
               ['Domicilio', ADDRESS],
               ['Email', `[${EMAIL}](mailto:${EMAIL})`],
               ['Teléfono', PHONE],
@@ -83,7 +84,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
           id: 'propiedad',
           title: 'Propiedad intelectual e industrial',
           blocks: [
-            { p: 'Los contenidos de la web —textos, diseño, logotipos, nombre comercial, iconos e imágenes— pertenecen a la titular o se usan con autorización de sus autores, y están protegidos por la normativa de propiedad intelectual e industrial. No se permite reproducirlos, distribuirlos, comunicarlos públicamente ni transformarlos, total o parcialmente, sin autorización previa y por escrito.' },
+            { p: 'Los contenidos de la web —textos, diseño, logotipos, nombre comercial, iconos e imágenes— pertenecen al titular o se usan con autorización de sus autores, y están protegidos por la normativa de propiedad intelectual e industrial. No se permite reproducirlos, distribuirlos, comunicarlos públicamente ni transformarlos, total o parcialmente, sin autorización previa y por escrito.' },
             { p: 'Las **fotografías** de bodas son obra de los fotógrafos que se citan en cada caso y se publican con su permiso y el de las parejas. Para usarlas, hay que pedir autorización a sus autores.' },
           ],
         },
@@ -91,14 +92,14 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
           id: 'enlaces',
           title: 'Enlaces a otras webs',
           blocks: [
-            { p: 'La web puede incluir enlaces a otras páginas (revistas, redes sociales, proveedores). La titular no controla esos sitios ni se hace responsable de sus contenidos ni de sus condiciones de uso o privacidad: se accede a ellos bajo la exclusiva responsabilidad de cada persona.' },
+            { p: 'La web puede incluir enlaces a otras páginas (revistas, redes sociales, proveedores). El titular no controla esos sitios ni se hace responsable de sus contenidos ni de sus condiciones de uso o privacidad: se accede a ellos bajo la exclusiva responsabilidad de cada persona.' },
           ],
         },
         {
           id: 'responsabilidad',
           title: 'Responsabilidad',
           blocks: [
-            { p: 'La titular procura que la web funcione correctamente y que su información sea exacta y esté al día, pero no puede garantizar que esté siempre disponible ni libre de errores, y no se hace responsable de los daños que pudieran derivarse de interrupciones, fallos técnicos o del uso indebido de la web por terceros.' },
+            { p: 'El titular procura que la web funcione correctamente y que su información sea exacta y esté al día, pero no puede garantizar que esté siempre disponible ni libre de errores, y no se hace responsable de los daños que pudieran derivarse de interrupciones, fallos técnicos o del uso indebido de la web por terceros.' },
           ],
         },
         {
@@ -121,7 +122,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
       meta: { title: 'Legal notice · The Dreams Factory', description: 'Owner details and terms of use of The Dreams Factory website.' },
       eyebrow: 'Legal',
       title: 'Legal notice',
-      updated: 'Last updated: 25 October 2026',
+      updated: 'Last updated: 29 October 2026',
       note: 'This is a translation for information purposes. In case of discrepancy, the Spanish version prevails.',
       toc: 'On this page',
       sections: [
@@ -132,8 +133,9 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
             { p: 'In accordance with article 10 of Spanish Law 34/2002 on information society services and electronic commerce (LSSI), these are the details of the owner of the website www.thedreamsfactory.es:' },
             { dl: [
               ['Owner', OWNER],
+              ['Legal form', 'Civil partnership (sociedad civil)'],
               ['Trade name', 'The Dreams Factory'],
-              ['Tax ID (NIF)', NIF],
+              ['Tax ID (CIF)', NIF],
               ['Address', ADDRESS],
               ['Email', `[${EMAIL}](mailto:${EMAIL})`],
               ['Phone', PHONE],
@@ -169,7 +171,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
           id: 'liability',
           title: 'Liability',
           blocks: [
-            { p: 'The owner does her best to keep the website working properly and its information accurate and up to date, but cannot guarantee that it will always be available or error-free, and is not liable for any damage arising from interruptions, technical faults or misuse of the website by third parties.' },
+            { p: 'The owner does its best to keep the website working properly and its information accurate and up to date, but cannot guarantee that it will always be available or error-free, and is not liable for any damage arising from interruptions, technical faults or misuse of the website by third parties.' },
           ],
         },
         {
@@ -195,13 +197,13 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
       meta: { title: 'Política de privacidad · The Dreams Factory', description: 'Cómo tratamos los datos personales que nos facilitáis a través de la web, el email, el teléfono o WhatsApp.' },
       eyebrow: 'Legal',
       title: 'Política de privacidad',
-      updated: 'Última actualización: 25 de octubre de 2026',
+      updated: 'Última actualización: 29 de octubre de 2026',
       toc: 'En esta página',
       summary: {
         title: 'En pocas palabras',
         items: [
-          ['Quién', `${OWNER} (The Dreams Factory).`],
-          ['Para qué', 'Para responder a vuestras consultas y, si trabajamos juntos, para organizar vuestra boda o celebración, impartir el curso o la tutoría y facturar.'],
+          ['Quién', `${OWNER}`],
+          ['Para qué', 'Para responder a vuestras consultas y, si trabajamos juntos, para organizar vuestra boda o celebración, impartir el curso y facturar.'],
           ['Con quién', 'Con nadie, salvo los servicios técnicos que hacen funcionar la web y el correo, y cuando la ley lo exija.'],
           ['Vuestros derechos', `Podéis acceder a vuestros datos, corregirlos, borrarlos y mucho más escribiendo a [${EMAIL}](mailto:${EMAIL}).`],
         ],
@@ -213,8 +215,8 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
           blocks: [
             { p: 'Esta política explica cómo tratamos vuestros datos personales conforme al Reglamento (UE) 2016/679, general de protección de datos (RGPD), y a la Ley Orgánica 3/2018, de protección de datos personales y garantía de los derechos digitales (LOPDGDD).' },
             { dl: [
-              ['Responsable', `${OWNER} (The Dreams Factory)`],
-              ['NIF', NIF],
+              ['Responsable', OWNER],
+              ['CIF', NIF],
               ['Domicilio', ADDRESS],
               ['Email', `[${EMAIL}](mailto:${EMAIL})`],
               ['Teléfono', PHONE],
@@ -228,7 +230,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
             { p: 'Solo los imprescindibles para atenderos:' },
             { ul: [
               '**Si nos escribís** por el formulario de la web, por email, por teléfono o por WhatsApp: vuestros nombres, email, teléfono y lo que nos contéis sobre vuestra boda o celebración (fecha, lugar, número de invitados, presupuesto orientativo, vuestra idea) y, si queréis decírnoslo, cómo nos conocisteis.',
-              '**Si nos contratáis** (organización, diseño, coordinación, tutorías o curso): además, los datos necesarios para prestar el servicio y facturarlo.',
+              '**Si nos contratáis** (organización, diseño, coordinación o curso): además, los datos necesarios para prestar el servicio y facturarlo.',
               '**Si os inscribís en el curso** o pedís información sobre él: vuestro nombre, email y teléfono y, si queréis contárnoslo, vuestra experiencia en eventos.',
             ] },
             { p: 'No necesitamos datos especialmente protegidos (salud, creencias…). Os pedimos que no los incluyáis en vuestros mensajes; si hace falta conocer, por ejemplo, alguna alergia de los invitados para el banquete, la trataremos solo para ese fin y con vuestro consentimiento.' },
@@ -242,7 +244,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
               head: ['Para qué', 'Base legal', 'Cuánto tiempo'],
               rows: [
                 ['Responder a vuestras consultas y prepararos una propuesta', 'Vuestro consentimiento y la aplicación, a petición vuestra, de medidas precontractuales (art. 6.1.a y b RGPD)', 'El necesario para atenderos; si no llegamos a trabajar juntos, como máximo un año'],
-                ['Prestar los servicios contratados (boda, celebración, tutoría o curso)', 'La ejecución del contrato (art. 6.1.b RGPD)', 'Mientras dure el servicio y, después, durante los plazos de prescripción de posibles responsabilidades'],
+                ['Prestar los servicios contratados (boda, celebración o curso)', 'La ejecución del contrato (art. 6.1.b RGPD)', 'Mientras dure el servicio y, después, durante los plazos de prescripción de posibles responsabilidades'],
                 ['Facturar y cumplir las obligaciones contables y fiscales', 'Una obligación legal (art. 6.1.c RGPD)', '6 años (art. 30 del Código de Comercio) y 4 años a efectos fiscales (arts. 66 a 70 de la Ley General Tributaria)'],
                 ['Gestionar vuestra inscripción en el curso e informaros de las fechas y condiciones de la edición', 'La aplicación, a petición vuestra, de medidas precontractuales y, si os matriculáis, la ejecución del contrato (art. 6.1.b RGPD)', 'Hasta que se celebre la edición o nos pidáis que dejemos de escribiros y, si os matriculáis, como en los servicios contratados'],
                 ['Publicar fotos u opiniones de vuestra boda en la web o en redes', 'Vuestro consentimiento expreso, que os pediremos aparte (art. 6.1.a RGPD)', 'Hasta que lo retiréis'],
@@ -329,14 +331,14 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
       meta: { title: 'Privacy policy · The Dreams Factory', description: 'How we process the personal data you give us through the website, email, phone or WhatsApp.' },
       eyebrow: 'Legal',
       title: 'Privacy policy',
-      updated: 'Last updated: 25 October 2026',
+      updated: 'Last updated: 29 October 2026',
       note: 'This is a translation for information purposes. In case of discrepancy, the Spanish version prevails.',
       toc: 'On this page',
       summary: {
         title: 'In a nutshell',
         items: [
-          ['Who', `${OWNER} (The Dreams Factory).`],
-          ['What for', 'To reply to your enquiries and, if we work together, to plan your wedding or celebration, run the course or consultation, and invoice.'],
+          ['Who', `${OWNER}`],
+          ['What for', 'To reply to your enquiries and, if we work together, to plan your wedding or celebration, run the course, and invoice.'],
           ['Shared with', 'Nobody, except the technical services that run the website and email, and when required by law.'],
           ['Your rights', `You can access, correct or delete your data, and much more, by writing to [${EMAIL}](mailto:${EMAIL}).`],
         ],
@@ -348,8 +350,8 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
           blocks: [
             { p: 'This policy explains how we process your personal data under Regulation (EU) 2016/679, the General Data Protection Regulation (GDPR), and Spanish Organic Law 3/2018 on data protection and digital rights (LOPDGDD).' },
             { dl: [
-              ['Controller', `${OWNER} (The Dreams Factory)`],
-              ['Tax ID (NIF)', NIF],
+              ['Controller', OWNER],
+              ['Tax ID (CIF)', NIF],
               ['Address', ADDRESS],
               ['Email', `[${EMAIL}](mailto:${EMAIL})`],
               ['Phone', PHONE],
@@ -363,7 +365,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
             { p: 'Only what we need to help you:' },
             { ul: [
               '**If you write to us** through the website form, by email, by phone or on WhatsApp: your names, email, phone number and whatever you tell us about your wedding or celebration (date, venue, number of guests, approximate budget, your idea) and, if you wish to tell us, how you found us.',
-              '**If you hire us** (planning, design, coordination, consultations or the course): also the data needed to provide and invoice the service.',
+              '**If you hire us** (planning, design, coordination or the course): also the data needed to provide and invoice the service.',
               '**If you sign up for the course** or ask about it: your name, email and phone number and, if you wish to tell us, your experience in events.',
             ] },
             { p: 'We don’t need special categories of data (health, beliefs…). Please don’t include them in your messages; if we need to know, for example, about a guest’s allergy for the menu, we will process it only for that purpose and with your consent.' },
@@ -377,7 +379,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
               head: ['Purpose', 'Legal basis', 'How long'],
               rows: [
                 ['Replying to your enquiries and preparing a proposal', 'Your consent and taking steps at your request before entering into a contract (art. 6.1.a and b GDPR)', 'As long as needed to help you; if we don’t end up working together, one year at most'],
-                ['Providing the services you hire (wedding, celebration, consultation or course)', 'Performance of the contract (art. 6.1.b GDPR)', 'For the duration of the service and, afterwards, for the limitation periods of any possible liability'],
+                ['Providing the services you hire (wedding, celebration or course)', 'Performance of the contract (art. 6.1.b GDPR)', 'For the duration of the service and, afterwards, for the limitation periods of any possible liability'],
                 ['Invoicing and meeting accounting and tax obligations', 'A legal obligation (art. 6.1.c GDPR)', '6 years (art. 30 of the Spanish Commercial Code) and 4 years for tax purposes (arts. 66 to 70 of the General Tax Law)'],
                 ['Managing your course registration and letting you know the dates and terms of the edition', 'Taking steps at your request before entering into a contract and, if you enrol, performance of the contract (art. 6.1.b GDPR)', 'Until the edition takes place or you ask us to stop writing to you and, if you enrol, as for hired services'],
                 ['Publishing photos or reviews of your wedding on the website or social media', 'Your express consent, which we will ask for separately (art. 6.1.a GDPR)', 'Until you withdraw it'],

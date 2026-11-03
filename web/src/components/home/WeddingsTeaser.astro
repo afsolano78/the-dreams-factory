@@ -13,13 +13,14 @@ import Button from '../Button.astro';
 import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import { path, type Lang } from '../../i18n/routes';
 import type { HomeContent } from '../../content/home';
-import { weddingByCouple, weddingHref } from '../../content/weddings';
+import { getWeddings, weddingHref } from '../../content/weddings';
 
 interface Props { lang: Lang; c: HomeContent['weddings'] }
 const { lang, c } = Astro.props;
+const weddings = await getWeddings();
 /** Cada boda enlaza a su página si ya la tiene; si no, al listado. */
 const href = (couple: string) => {
-  const w = weddingByCouple(couple);
+  const w = weddings.find((x) => x.couple === couple);
   return w ? weddingHref(w, lang) : path('weddings', lang);
 };
 const formats: ('avif' | 'webp')[] = ['avif', 'webp'];

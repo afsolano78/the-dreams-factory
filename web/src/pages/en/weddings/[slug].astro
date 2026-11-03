@@ -1,10 +1,10 @@
 ---
 import WeddingPage from '../../../components/weddings/WeddingPage.astro';
-import { weddings, type Wedding } from '../../../content/weddings';
+import { getWeddings, type Wedding } from '../../../content/weddings';
 
 /** One page per wedding that already has a gallery. */
-export function getStaticPaths() {
-  return weddings.filter((w) => w.page).map((w) => ({ params: { slug: w.slug.en }, props: { wedding: w } }));
+export async function getStaticPaths() {
+  return (await getWeddings()).filter((w) => w.page).map((w) => ({ params: { slug: w.slug.en }, props: { wedding: w } }));
 }
 
 const { wedding } = Astro.props as { wedding: Wedding };

@@ -1,6 +1,6 @@
 /**
- * Worker de Cloudflare de la web: sirve las páginas (dist/), atiende el formulario de contacto en /api/contacto y
- * da las últimas publicaciones de Instagram para la portada en /api/instagram.
+ * Worker de Cloudflare de la web: sirve las páginas (dist/), atiende el formulario de contacto en /api/contacto, da
+ * las últimas publicaciones de Instagram para la portada en /api/instagram y conecta el panel (/admin) con GitHub.
  *
  * Formulario (POST /api/contacto, JSON o formulario normal):
  * 1. Antispam: campo trampa «web» vacío, al menos 3 s entre que se abre el formulario («t») y se envía, y
@@ -13,11 +13,14 @@
  * Configuración en wrangler.jsonc (vars) y en el panel de Cloudflare (secretos). Ver web/CONTACTO.md.
  *
  * Instagram (GET /api/instagram y su cron diario): ver worker/instagram.ts y web/INSTAGRAM.md.
+ *
+ * Inicio de sesión del panel (/api/auth y /api/callback): ver worker/cms-auth.ts y web/PANEL.md.
  */
 
 import { instagramFeed, instagramImage, updateInstagram, type IgEnv } from './instagram';
+import { cmsAuth, cmsCallback, type CmsAuthEnv } from './cms-auth';
 
-interface Env extends IgEnv {
+interface Env extends IgEnv, CmsAuthEnv {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
   CONTACT_TO?: string;
   CONTACT_FROM?: string;
@@ -69,6 +72,8 @@ export default {
     if (route === '/api/contacto') return contact(request, env);
     if (route === '/api/instagram') return instagramFeed(env, ctx);
     if (route.startsWith('/api/instagram/img/')) return instagramImage(route.slice('/api/instagram/img/'.length), env);
+    if (route === '/api/auth') return cmsAuth(request, env);
+    if (route === '/api/callback') return cmsCallback(request, env);
     return env.ASSETS.fetch(request);
   },
   // Cron diario (wrangler.jsonc): últimas publicaciones de Instagram.

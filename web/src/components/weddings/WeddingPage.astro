@@ -3,7 +3,7 @@
   Página de una boda (/bodas/{slug}, /en/weddings/{slug}).
   1. Foto a sangre con la pareja y el lugar (cabecera transparente encima).
   2. Ficha: lugar, época, servicio, fotografía y vídeo.
-  3. Su historia (y su opinión, si la dejó).
+  3. Su historia.
   4. Galería en mosaico (cada foto con su proporción); al pulsar una se abre el visor con anterior/siguiente.
   5. Proveedores.
   6. Más bodas y el mismo cierre que la portada.
@@ -14,7 +14,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
 import ClosingCta from '../home/ClosingCta.astro';
-import { weddings, weddingsPage, weddingHref, type Wedding } from '../../content/weddings';
+import { getWeddings, weddingsPage, weddingHref, type Wedding } from '../../content/weddings';
 import { home } from '../../content/home';
 import { path, type Lang } from '../../i18n/routes';
 
@@ -24,21 +24,24 @@ const page = w.page!;
 const c = weddingsPage[lang];
 const d = c.detail;
 const alternates = { es: weddingHref(w, 'es'), en: weddingHref(w, 'en') };
-const title = lang === 'es' ? `Boda de ${w.couple} en ${w.place.split(' · ')[0]} · The Dreams Factory` : `${w.couple}’s wedding at ${w.place.split(' · ')[0]} · The Dreams Factory`;
-const description = page.story[lang].join(' ');
+const venue = w.place.split(' · ')[0];
+const title = lang === 'es' ? `Boda de ${w.couple} en ${venue} · The Dreams Factory` : `${w.couple}’s wedding at ${venue} · The Dreams Factory`;
+const description =
+  page.story[lang].join(' ') || (lang === 'es' ? `La boda de ${w.couple} en ${w.place}.` : `${w.couple}’s wedding at ${w.place}.`);
 
-
+// La ficha muestra solo los datos que tiene la boda.
 const facts = [
   { label: d.facts.place, value: w.place },
-  { label: d.facts.season, value: page.season[lang] },
-  ...(w.service ? [{ label: d.facts.service, value: c.services[w.service] }] : []),
+  { label: d.facts.season, value: page.season?.[lang] },
+  { label: d.facts.service, value: w.service && c.services[w.service] },
   { label: d.facts.photo, value: w.photographer },
-  ...(page.video ? [{ label: d.facts.video, value: page.video }] : []),
-];
+  { label: d.facts.video, value: page.video },
+].filter((f): f is { label: string; value: string } => !!f.value);
 
 /** Más bodas: las tres siguientes del listado (vuelve al principio al llegar al final). */
-const i = weddings.indexOf(w);
-const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]);
+const weddings = await getWeddings();
+const i = weddings.findIndex((x) => x.slug.es === w.slug.es);
+const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]).filter((m) => m !== weddings[i]);
 ---
 
 <BaseLayout lang={lang} routeKey="weddings" alternates={alternates} title={title} description={description} overlayHeader>
@@ -83,14 +86,6 @@ const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]);
   <section class="bg-porcelana-50 py-16 md:py-24">
     <div class="container-brand flex max-w-[44rem] flex-col gap-6 text-center" data-reveal>
       {page.story[lang].map((para, k) => <p class:list={k === 0 ? 'display-m text-pino-800' : 'lead'}>{para}</p>)}
-      {
-        page.review && (
-          <figure class="mt-6 flex flex-col gap-4 border-t border-linea pt-10">
-            <blockquote class="quote text-pino-800">{page.review.quote[lang]}</blockquote>
-            <figcaption class="eyebrow text-malva-500">{page.review.author}</figcaption>
-          </figure>
-        )
-      }
       <!-- Abre el formulario con esta boda ya mencionada («Nos encantó la boda de…»). -->
       <a href={`${path('contact', lang)}?boda=${encodeURIComponent(w.couple)}`} class="link-draw eyebrow mt-2 self-center text-pino-800">
         {lang === 'es' ? '¿Os imagináis algo así? Contádnoslo' : 'Picturing something like this? Tell us'} →
@@ -109,22 +104,24 @@ const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]);
     </div>
   </section>
 
-  <!-- 5. Proveedores -->
-  <section class="bg-porcelana-50 py-16 md:py-20">
-    <div class="container-brand grid gap-10 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-16">
-      <h2 class="display-l text-pino-800" data-reveal>{d.credits}</h2>
-      <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
-        {
-          page.credits.map((cr) => (
-            <div class="flex flex-col gap-1 border-t border-linea pt-4">
-              <dt class="eyebrow text-malva-500">{cr.role[lang]}</dt>
-              <dd class="text-pino-800">{cr.name}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
-  </section>
+  <!-- 5. Proveedores (si los hay) -->
+  {
+    page.credits.length > 0 && (
+      <section class="bg-porcelana-50 py-16 md:py-20">
+        <div class="container-brand grid gap-10 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-16">
+          <h2 class="display-l text-pino-800" data-reveal>{d.credits}</h2>
+          <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+            {page.credits.map((cr) => (
+              <div class="flex flex-col gap-1 border-t border-linea pt-4">
+                <dt class="eyebrow text-malva-500">{cr.role[lang]}</dt>
+                <dd class="text-pino-800">{cr.name}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )
+  }
 
   <!-- 6. Más bodas -->
   <section class="section-y bg-white">

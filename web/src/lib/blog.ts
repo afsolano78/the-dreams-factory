@@ -1,5 +1,5 @@
 /**
- * Blog: textos de la interfaz y utilidades sobre la colección `blog` (src/blog/{es,en}/*.md).
+ * Blog: textos de la interfaz y utilidades sobre la colección `blog` (src/blog/<carpeta>/index.{es,en}.md).
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Lang } from '../i18n/routes';
@@ -58,15 +58,19 @@ export const blogUi: Record<Lang, {
   },
 };
 
+/** Carpeta de la entrada (la misma en los dos idiomas) e idioma de esta versión, sacados del id «<carpeta>/index.<idioma>». */
+export const folderOf = (p: Post) => p.id.split('/')[0];
+export const langOf = (p: Post) => p.id.split('.').pop() as Lang;
+
 /** Entradas de un idioma, de la más reciente a la más antigua. */
 export async function getPosts(lang: Lang): Promise<Post[]> {
-  const all = await getCollection('blog', (p) => p.data.lang === lang);
+  const all = await getCollection('blog', (p) => langOf(p) === lang);
   return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 
-/** Dirección de la entrada (el nombre del archivo). */
-export const slugOf = (p: Post) => p.id.split('/').pop()!;
-export const postHref = (p: Post) => `${p.data.lang === 'es' ? '/blog' : '/en/blog'}/${slugOf(p)}/`;
+/** Dirección de la entrada: en español, la carpeta; en inglés, su `url` (o la carpeta, si no la tiene). */
+export const slugOf = (p: Post) => p.data.url || folderOf(p);
+export const postHref = (p: Post) => `${langOf(p) === 'es' ? '/blog' : '/en/blog'}/${slugOf(p)}/`;
 
 /** Minutos de lectura (200 palabras por minuto). */
 export const readingMinutes = (p: Post) => Math.max(1, Math.ceil((p.body ?? '').split(/\s+/).filter(Boolean).length / 200));
@@ -74,13 +78,12 @@ export const readingMinutes = (p: Post) => Math.max(1, Math.ceil((p.body ?? '').
 export const formatDate = (d: Date, lang: Lang) =>
   d.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
-/** La misma entrada en el otro idioma (por `translationKey`). */
+/** La misma entrada en el otro idioma (la de la misma carpeta). */
 export async function translationOf(p: Post, lang: Lang): Promise<Post | undefined> {
-  const others = await getPosts(lang);
-  return others.find((o) => o.data.translationKey === p.data.translationKey);
+  return (await getPosts(lang)).find((o) => folderOf(o) === folderOf(p));
 }
 
-/** Entrada por su clave común, para enlazarla desde otras páginas (p. ej. la portada). */
+/** Entrada por su carpeta, para enlazarla desde otras páginas (p. ej. la portada). */
 export async function postByKey(key: string, lang: Lang): Promise<Post | undefined> {
-  return (await getPosts(lang)).find((p) => p.data.translationKey === key);
+  return (await getPosts(lang)).find((p) => folderOf(p) === key);
 }

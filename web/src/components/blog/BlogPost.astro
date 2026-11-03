@@ -9,12 +9,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Gallery from '../Gallery.astro';
 import ClosingCta from '../home/ClosingCta.astro';
 import { home } from '../../content/home';
-import { blogUi, getPosts, postHref, readingMinutes, formatDate, translationOf, type Post } from '../../lib/blog';
+import { blogUi, langOf, getPosts, postHref, readingMinutes, formatDate, translationOf, type Post } from '../../lib/blog';
 import { path, type Lang } from '../../i18n/routes';
 
 interface Props { post: Post }
 const { post } = Astro.props;
-const lang = post.data.lang as Lang;
+const lang = langOf(post);
 const c = blogUi[lang];
 const { Content } = await render(post);
 

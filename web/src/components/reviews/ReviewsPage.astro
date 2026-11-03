@@ -12,7 +12,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import ClosingCta from '../home/ClosingCta.astro';
 import { reviews, reviewsPage, featuredReview } from '../../content/reviews';
-import { weddingByCouple, weddingHref } from '../../content/weddings';
+import { getWeddings, weddingHref } from '../../content/weddings';
 import { home } from '../../content/home';
 import { emphasize, type Lang } from '../../i18n/routes';
 
@@ -21,9 +21,10 @@ const { lang } = Astro.props;
 const c = reviewsPage[lang];
 const f = featuredReview;
 const rest = reviews.filter((r) => r !== f);
+const weddings = await getWeddings();
 /** Enlace a la página de su boda, solo si ya la tiene. */
 const weddingLink = (initials?: string) => {
-  const w = initials ? weddingByCouple(initials) : undefined;
+  const w = initials ? weddings.find((x) => x.couple === initials) : undefined;
   return w?.page ? weddingHref(w, lang) : undefined;
 };
 const fLink = weddingLink(f.wedding);

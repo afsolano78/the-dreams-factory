@@ -1,0 +1,212 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.248.0/schema/sveltia-cms.json
+#
+# Panel de edición de The Dreams Factory (Sveltia CMS): bodas y blog, en español e inglés.
+# Cada boda o entrada es una carpeta con index.es.md, index.en.md y sus fotos (ver src/content.config.ts).
+# Al guardar, el panel hace un commit en `main` y Cloudflare publica la web en uno o dos minutos.
+# El inicio de sesión va por worker/cms-auth.ts (la dirección la pone index.html). Guía: web/PANEL.md.
+
+backend:
+  name: github
+  repo: afsolano78/the-dreams-factory
+  branch: main
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'Panel: nueva {{collection}} «{{slug}}»'
+    update: 'Panel: cambios en {{collection}} «{{slug}}»'
+    delete: 'Panel: borrada {{collection}} «{{slug}}»'
+    uploadMedia: 'Panel: sube «{{path}}»'
+    deleteMedia: 'Panel: borra «{{path}}»'
+
+logo_url: /favicon.svg
+
+# Fotos: se guardan junto a cada boda o entrada. Al subirlas, el panel las pasa a WebP y las reduce a 2400 px como
+# mucho (la web las vuelve a optimizar al publicar).
+media_folder: web/src/assets/panel
+public_folder: /src/assets/panel
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+
+i18n:
+  structure: multiple_files
+  locales: [es, en]
+  default_locale: es
+
+collections:
+  # ---------------------------------------------------------------- Bodas
+  - name: bodas
+    label: Bodas
+    label_singular: Boda
+    description: >-
+      Las bodas del listado de /bodas. Las que tienen fotos en «Galería» tienen su propia página. Escribid en español
+      y usad el botón de traducir (o escribid vosotras) para la versión en inglés.
+    folder: web/src/weddings
+    path: '{{slug}}/index'
+    extension: md
+    format: frontmatter
+    media_folder: ''
+    public_folder: ''
+    create: true
+    delete: true
+    slug: '{{couple}}-{{place}}'
+    identifier_field: couple
+    summary: '{{couple}} · {{place}}'
+    sortable_fields:
+      fields: [order, couple]
+      default: { field: order, direction: ascending }
+    i18n: true
+    fields:
+      - { name: couple, label: Pareja (iniciales), widget: string, i18n: duplicate, hint: 'Por ejemplo: «I & A».' }
+      - { name: place, label: Lugar, widget: string, i18n: duplicate, hint: 'Lugar y zona separados por « · », por ejemplo: «Palacio de La Riega · Gijón».' }
+      - name: order
+        label: Orden en el listado
+        widget: number
+        value_type: int
+        default: 0
+        i18n: duplicate
+        hint: Las de número más bajo salen primero. Con 0 sale delante de todas.
+      - name: service
+        label: Servicio
+        widget: select
+        required: false
+        i18n: duplicate
+        options:
+          - { label: Organización integral, value: integral }
+          - { label: Diseño y coordinación del día B, value: diseno }
+          - { label: Coordinación del día B, value: coordinacion }
+      - { name: photographer, label: Fotografía, widget: string, required: false, i18n: duplicate }
+      - { name: video, label: Vídeo, widget: string, required: false, i18n: duplicate }
+      - { name: season, label: Época, widget: string, required: false, i18n: true, hint: 'Por ejemplo: «Otoño».' }
+      - { name: cover, label: Foto del listado, widget: image, i18n: duplicate }
+      - name: coverAlt
+        label: Qué se ve en la foto del listado
+        widget: string
+        required: false
+        i18n: true
+        hint: Una frase corta. La leen quienes no ven la imagen y Google.
+      - name: coverFocus
+        label: Punto de la foto que no se recorta (opcional)
+        widget: string
+        required: false
+        i18n: duplicate
+        hint: 'Horizontal y vertical en %, por ejemplo «50% 30%» (centro, un poco arriba). Vacío = el centro.'
+      - { name: hero, label: Foto grande de su página (opcional), widget: image, required: false, i18n: duplicate, hint: Si no hay, se usa la del listado. }
+      - { name: heroAlt, label: Qué se ve en la foto grande, widget: string, required: false, i18n: true }
+      - { name: heroFocus, label: Punto de la foto grande que no se recorta (opcional), widget: string, required: false, i18n: duplicate }
+      - name: gallery
+        label: Galería
+        label_singular: foto
+        widget: list
+        required: false
+        i18n: duplicate
+        hint: Con alguna foto aquí, la boda tiene su propia página.
+        summary: '{{fields.alt}}'
+        fields:
+          - { name: src, label: Foto, widget: image, i18n: duplicate }
+          - { name: alt, label: Qué se ve, widget: string, required: false, i18n: true }
+      - name: credits
+        label: Proveedores
+        label_singular: proveedor
+        widget: list
+        required: false
+        i18n: duplicate
+        summary: '{{fields.role}}: {{fields.name}}'
+        fields:
+          - { name: role, label: Qué hizo, widget: string, i18n: true, hint: 'Por ejemplo: «Flores».' }
+          - { name: name, label: Nombre, widget: string, i18n: duplicate }
+      - name: body
+        label: Su historia
+        widget: markdown
+        required: false
+        i18n: true
+        buttons: [bold, italic]
+        editor_components: []
+        hint: Uno o varios párrafos. El primero se muestra más grande.
+      - name: url
+        label: Dirección de la página en inglés (opcional)
+        widget: string
+        required: false
+        i18n: true
+        hint: 'Solo en la versión en inglés, por ejemplo «i-and-a-palacio-de-la-riega». Si se deja vacía, se usa la española.'
+
+  # ---------------------------------------------------------------- Blog
+  - name: blog
+    label: Blog
+    label_singular: Entrada
+    description: Las entradas del blog. Escribid en español y usad el botón de traducir para la versión en inglés.
+    folder: web/src/blog
+    path: '{{slug}}/index'
+    extension: md
+    format: frontmatter
+    media_folder: ''
+    public_folder: ''
+    create: true
+    delete: true
+    slug: '{{title}}'
+    identifier_field: title
+    summary: '{{title}} · {{date | date("DD/MM/YYYY")}}'
+    sortable_fields:
+      fields: [date, title]
+      default: { field: date, direction: descending }
+    i18n: true
+    fields:
+      - { name: title, label: Título, widget: string, i18n: true }
+      - name: description
+        label: Resumen
+        widget: text
+        i18n: true
+        hint: Dos o tres líneas. Sale en el listado del blog y en Google.
+      - name: date
+        label: Fecha
+        widget: datetime
+        time_format: false
+        date_format: DD/MM/YYYY
+        format: YYYY-MM-DD
+        i18n: duplicate
+      - name: category
+        label: Tema
+        widget: select
+        i18n: duplicate
+        options:
+          - { label: Consejos, value: consejos }
+          - { label: Inspiración, value: inspiracion }
+          - { label: Nuestras cosas, value: nuestras-cosas }
+      - { name: cover, label: Foto de portada, widget: image, i18n: duplicate }
+      - { name: coverAlt, label: Qué se ve en la portada, widget: string, required: false, i18n: true, hint: Una frase corta. La leen quienes no ven la imagen y Google. }
+      - name: coverFocus
+        label: Punto de la portada que no se recorta (opcional)
+        widget: string
+        required: false
+        i18n: duplicate
+        hint: 'Horizontal y vertical en %, por ejemplo «50% 30%». Vacío = el centro.'
+      - name: body
+        label: Texto
+        widget: markdown
+        i18n: true
+        buttons: [bold, italic, link, heading-two, heading-three, quote, bulleted-list, numbered-list]
+        # Sin fotos dentro del texto: van en la galería (así la web las optimiza siempre).
+        editor_components: []
+      - name: gallery
+        label: Galería (al final de la entrada)
+        label_singular: foto
+        widget: list
+        required: false
+        i18n: duplicate
+        summary: '{{fields.alt}}'
+        fields:
+          - { name: src, label: Foto, widget: image, i18n: duplicate }
+          - { name: alt, label: Qué se ve, widget: string, required: false, i18n: true }
+      - { name: photoCredit, label: Autor de las fotos, widget: string, required: false, i18n: duplicate }
+      - name: url
+        label: Dirección de la entrada en inglés (opcional)
+        widget: string
+        required: false
+        i18n: true
+        hint: 'Solo en la versión en inglés, por ejemplo «why-hire-a-wedding-planner». Si se deja vacía, se usa la española.'
+      - { name: legacyPath, label: Dirección en la web antigua, widget: hidden, required: false, i18n: duplicate }

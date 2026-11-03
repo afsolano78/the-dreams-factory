@@ -11,7 +11,7 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LogoRow from '../LogoRow.astro';
 import ClosingCta from '../home/ClosingCta.astro';
-import { weddings, weddingsPage, weddingHref } from '../../content/weddings';
+import { getWeddings, weddingsPage, weddingHref } from '../../content/weddings';
 import { home } from '../../content/home';
 import { press } from '../../i18n/ui';
 import { emphasize, type Lang } from '../../i18n/routes';
@@ -19,6 +19,7 @@ import { emphasize, type Lang } from '../../i18n/routes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const c = weddingsPage[lang];
+const weddings = await getWeddings();
 const pressLinks = press.filter((l) => l.href);
 ---
 

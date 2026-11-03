@@ -9,7 +9,6 @@
  * Titular: la sociedad civil B-V The Dreams Factory, S.C. (confirmado por Bea y Vane en octubre de 2026).
  *
  * PENDIENTE DE CONFIRMAR con Bea y Vane (y, si es posible, con su gestoría o asesoría legal):
- * - El plazo de conservación de las consultas que no acaban en contrato (aquí, un año).
  * - Los proveedores técnicos (Cloudflare, Resend y Google) cuando la web esté en producción.
  *
  * Cookies: la web no instala cookies propias ni usa analítica o publicidad. Solo guarda en el navegador un aviso

@@ -1,12 +1,14 @@
 /**
  * Página «Opiniones» (/opiniones, /en/reviews). ES y EN.
  *
- * Origen: las opiniones publicadas en la web antigua (2017-2020), sin la de Sonia y Alberto (quitada a petición de Bea y Vane), literales: solo se corrigen erratas. En inglés
- * van traducidas, con un aviso de que el original está en español. Las parejas, solo por su nombre de pila.
+ * Origen: las opiniones publicadas en la web antigua (2017-2020), sin la de Sonia y Alberto (quitada a petición de
+ * Bea y Vane), y las más recientes de su ficha de Google (sin foto). Literales: solo se corrigen erratas. En inglés
+ * van traducidas, con un aviso de que el original está en español. Las parejas, solo por su nombre de pila (en las de
+ * Google, el de quien la escribió).
  * `wedding`: iniciales de su boda en el listado de Bodas (si tiene página, la tarjeta enlaza a ella).
  *
- * PENDIENTE (Bea y Vane): opiniones de bodas recientes (2021-2025), perfiles de reseñas (Google, Bodas.net…) con
- * enlace y nota media (`profiles`), y fotos de Katherine y Albano y de Nuria y Manel.
+ * PENDIENTE: el enlace a su perfil de Bodas.net (`profiles`), una tercera opinión reciente de Google (sin iniciar
+ * sesión, Google solo deja ver tres) y fotos de Katherine y Albano y de Nuria y Manel.
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -73,7 +75,7 @@ export const reviewsPage: Record<Lang, {
     readLess: 'Cerrar',
     seeWedding: 'Ver su boda',
     photoBy: 'Foto',
-    profiles: { eyebrow: 'Más opiniones', title: 'Encuéntranos *también en*', items: [] },
+    profiles: { eyebrow: 'Más opiniones', title: 'Encuéntranos *también en*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5,0 · 26 opiniones' }] },
   },
   en: {
     meta: {
@@ -100,12 +102,45 @@ export const reviewsPage: Record<Lang, {
     seeWedding: 'See their wedding',
     photoBy: 'Photo',
     note: 'Reviews translated from the original Spanish.',
-    profiles: { eyebrow: 'More reviews', title: 'You’ll also *find us on*', items: [] },
+    profiles: { eyebrow: 'More reviews', title: 'You’ll also *find us on*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5.0 · 26 reviews' }] },
   },
 };
 
 /** De la más reciente a la más antigua. La destacada (`featured`) se muestra entera en su propio bloque. */
 export const reviews: Review[] = [
+  {
+    // Google, verano de 2026.
+    couple: { es: 'Sara', en: 'Sara' },
+    highlight: { es: '«Han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día.»', en: '“They understood exactly what we wanted and were a key support in planning the big day.”' },
+    text: {
+      es: [
+        'Bea y Vane fueron nuestras wedding planners. Estamos muy agradecidos de haber podido contar con ellas: han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día. Súper recomendables. ¡Gracias por todo el trabajo hecho durante este año de preparación; ha sido un éxito gracias a vosotras!',
+      ],
+      en: [
+        'Bea and Vane were our wedding planners. We’re so grateful to have had them with us: they understood exactly what we wanted and were a key support in planning the big day. Highly recommended. Thank you for all your work during this year of preparation; it was a success thanks to you!',
+      ],
+    },
+  },
+  {
+    // Google, 2026. Boda de mayo de 2025.
+    couple: { es: 'Almudena', en: 'Almudena' },
+    place: 'Palacio de Avilés',
+    highlight: { es: '«Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar.»', en: '“Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made.”' },
+    text: {
+      es: [
+        'El pasado mayo de 2025 nos casamos en la parroquia de San Nicolás y lo celebramos en el Palacio de Avilés. Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar. Además, como vivimos fuera de Asturias, se adaptaron a nuestras visitas, y les agradecimos mucho su flexibilidad.',
+        'Desde el primer momento, Bea y Vane demostraron una profesionalidad impecable: la planificación de todo, el contacto con proveedores (te seleccionan proveedores de su confianza), el diseño de la decoración, los meseros, la mesa principal, la mesa dulce… En definitiva, se encargaron de que fuera un éxito rotundo. No hubo un solo cabo suelto: cuidaron cada detalle con un mimo increíble y supieron aprovechar al máximo todos los recursos disponibles (sobre todo las flores, que son precisamente una partida muy importante del presupuesto) para que el resultado fuera espectacular.',
+        'Gracias a su trabajo, pudimos disfrutar de nuestro día con total tranquilidad, sabiendo que estábamos en las mejores manos y que todo estaba bajo control.',
+        'No dudamos en recomendar a Vane y Bea: si buscáis una boda de ensueño y un equipo que se vuelque al 100 %, no dudéis en confiar en ellas. ¡Gracias por hacer nuestro día inolvidable!',
+      ],
+      en: [
+        'Last May, in 2025, we got married at the church of San Nicolás and celebrated at the Palacio de Avilés. Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made. And since we live outside Asturias, they worked around our visits, and we were very grateful for their flexibility.',
+        'From the very first moment, Bea and Vane showed impeccable professionalism: planning everything, dealing with suppliers (they choose suppliers they trust), designing the décor, the table plan, the top table, the dessert table… In short, they made sure it was a resounding success. Not a single loose end: they took care of every detail with incredible care and made the most of every resource available (especially the flowers, which are a very big part of the budget) so that the result was spectacular.',
+        'Thanks to their work, we could enjoy our day completely at ease, knowing we were in the best hands and that everything was under control.',
+        'We wouldn’t hesitate to recommend Vane and Bea: if you’re looking for a dream wedding and a team that gives 100%, don’t hesitate to trust them. Thank you for making our day unforgettable!',
+      ],
+    },
+  },
   {
     couple: { es: 'Nadia y Tomás', en: 'Nadia & Tomás' },
     place: 'Arenas de Cabrales · Picos de Europa', wedding: 'N & T',

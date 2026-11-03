@@ -1,5 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import type { Lang, RouteKey } from '../i18n/routes';
+import { yearsPlanning } from './brand';
 
 import heroVideoPoster from '../assets/photos/hero/0-video-mesa.jpg';
 import hero1 from '../assets/photos/hero/1-nyt-beso.jpg';
@@ -170,7 +171,7 @@ export const home: Record<Lang, HomeContent> = {
       lead: 'No hay tradiciones obligatorias ni reglas que seguir. Hay dos personas, una historia y una forma de celebrarla que solo es vuestra.',
       body: 'Nosotras escuchamos, proponemos y nos ocupamos de todo lo demás: proveedores, calendario, presupuesto y ese plan B que siempre llevamos preparado. Vosotros tomáis cada decisión; nosotras hacemos que sea fácil. Nos gusta que nos llaméis por nuestro nombre, porque así de cerca trabajamos con cada pareja.',
       signature: 'Bea & Vane',
-      credentials: 'Wedding planners en Asturias desde 2015, con formación universitaria en protocolo y organización de eventos.',
+      credentials: `Más de ${yearsPlanning} años organizando bodas en Asturias, con formación universitaria en protocolo y organización de eventos.`,
       cta: { label: 'Conócenos', to: 'about' },
       team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Vanessa, a la izquierda, y Beatriz, de The Dreams Factory, sonríen sentadas a una mesa decorada con velas, frutas de otoño y flores en un jardín.' },
     },
@@ -275,7 +276,7 @@ export const home: Record<Lang, HomeContent> = {
       lead: 'There are no compulsory traditions and no rules to follow. There are two people, one story and a way of celebrating it that is theirs alone.',
       body: 'We listen, we suggest and we take care of everything else: suppliers, timelines, budget and the plan B we always have ready. You make every decision; we make it easy. We like you to call us by our first names, because that’s how closely we work with every couple.',
       signature: 'Bea & Vane',
-      credentials: 'Wedding planners in Asturias since 2015, with university training in protocol and event management.',
+      credentials: `More than ${yearsPlanning} years planning weddings in Asturias, with university training in protocol and event management.`,
       cta: { label: 'Get to know us', to: 'about' },
       team: { src: nosotras, thumb: nosotrasRetrato, alt: 'Vanessa, on the left, and Beatriz of The Dreams Factory smile, seated at a table dressed with candles, autumn fruit and flowers in a garden.' },
     },

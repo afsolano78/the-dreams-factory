@@ -7,8 +7,8 @@
  * el Palacio de La Riega (Gijón), con inscripciones abiertas. Sin precio en la web (así lo quieren). Certificado no
  * oficial. Ponentes: los de ediciones anteriores, mientras cierran los de esta.
  *
- * PENDIENTE DE CONFIRMAR con Bea y Vane: si se mantiene la tutoría individual al terminar el curso, el número de
- * plazas, fotos del Palacio de La Riega y el permiso para las fotos y los nombres de alumnas.
+ * Confirmado con Bea y Vane: se mantiene la tutoría individual al terminar; sin número de plazas («grupos
+ * reducidos»); hay permiso firmado de las alumnas para sus fotos y nombres.
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -27,6 +27,9 @@ import aula07 from '../assets/photos/curso/aula-07.jpg';
 import aula08 from '../assets/photos/curso/aula-08.jpg';
 import aula09 from '../assets/photos/curso/aula-09.jpg';
 import aula10 from '../assets/photos/curso/aula-10.jpg';
+import riegaTerraza from '../assets/photos/curso/riega-terraza.jpg';
+import riegaTorre from '../assets/photos/curso/riega-torre.jpg';
+import riegaArco from '../assets/photos/curso/riega-arco.jpg';
 
 type Photo = { src: ImageMetadata; alt: string };
 
@@ -39,7 +42,8 @@ export type CourseContent = {
   hero: { eyebrow: string; title: string; lead: string; badge: string; status: string; cta: string; secondary: string; photo: Photo };
   forWhom: { eyebrow: string; title: string; items: string[]; features: { title: string; text: string }[] };
   days: { eyebrow: string; title: string; items: { label: string; title: string; text: string; photo: Photo }[] };
-  palace: { eyebrow: string; title: string; text: string[]; gallery: Photo[] };
+  /** El palacio: la sede de esta edición (tres fotos) y la galería de las anteriores. */
+  palace: { eyebrow: string; title: string; text: string[]; venue: { label: string; photos: [Photo, Photo, Photo] }; previous: string; gallery: Photo[] };
   syllabus: { eyebrow: string; title: string; items: string[]; talks: { title: string; text: string } };
   teachers: { eyebrow: string; title: string; text: string; cta: string; photo: Photo };
   after: { title: string; text: string };
@@ -122,8 +126,17 @@ export const course: Record<Lang, CourseContent> = {
       text: [
         'La cuarta edición se celebra en el Palacio de La Riega, en Gijón: un escenario de bodas que conocemos bien.',
         'Como en cada edición, el palacio entero es un aula: lo recorremos para explicarte de forma real cómo se desarrolla una boda completa, desde los preparativos hasta la puesta en escena del baile y el montaje de barras y corners.',
-        'Las tres primeras ediciones se celebraron en el NH Collection Palacio de Avilés. Estas fotos son de ellas.',
+        'Las tres primeras ediciones se celebraron en el NH Collection Palacio de Avilés.',
       ],
+      venue: {
+        label: 'Palacio de La Riega · Gijón',
+        photos: [
+          { src: riegaTerraza, alt: 'Cóctel de una boda en la terraza del Palacio de La Riega: los invitados bajo guirnaldas de luces y un cuarteto de cuerda junto a la fachada de piedra.' },
+          { src: riegaTorre, alt: 'La torre de piedra del Palacio de La Riega, con su alero de madera tallada y balcones de forja.' },
+          { src: riegaArco, alt: 'Arco de entrada del palacio decorado con flores de otoño y faroles, junto a un banco tapizado en terciopelo verde.' },
+        ],
+      },
+      previous: 'Ediciones anteriores · NH Collection Palacio de Avilés',
       gallery: aulaEs,
     },
     syllabus: {
@@ -224,8 +237,17 @@ export const course: Record<Lang, CourseContent> = {
       text: [
         'The fourth edition takes place at Palacio de La Riega, in Gijón: a wedding venue we know well.',
         'As in every edition, the whole palace is a classroom: we walk through it to show you, for real, how a complete wedding unfolds, from getting ready to staging the first dance and setting up bars and food corners.',
-        'The first three editions were held at NH Collection Palacio de Avilés. These photos are from them.',
+        'The first three editions were held at NH Collection Palacio de Avilés.',
       ],
+      venue: {
+        label: 'Palacio de La Riega · Gijón',
+        photos: [
+          { src: riegaTerraza, alt: 'A wedding cocktail on the terrace of Palacio de La Riega: guests beneath strings of lights and a string quartet by the stone façade.' },
+          { src: riegaTorre, alt: 'The stone tower of Palacio de La Riega, with its carved wooden eaves and wrought-iron balconies.' },
+          { src: riegaArco, alt: 'The palace’s entrance arch dressed with autumn flowers and lanterns, beside a green velvet bench.' },
+        ],
+      },
+      previous: 'Previous editions · NH Collection Palacio de Avilés',
       gallery: aulaEn,
     },
     syllabus: {

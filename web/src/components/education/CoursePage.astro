@@ -137,7 +137,30 @@ const event = {
           {c.palace.text.map((p) => <p>{p}</p>)}
         </div>
       </div>
-      <Gallery items={c.palace.gallery} labels={c.gallery} />
+
+      <!-- La sede de esta edición: la terraza y la torre a la izquierda, el arco de entrada a la derecha. -->
+      <figure class="flex flex-col gap-4" data-reveal>
+        <div class="grid gap-3 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:gap-4">
+          {c.palace.venue.photos.map((ph, i) => (
+            <div class:list={['overflow-hidden', { 'md:col-start-2 md:row-span-2 md:row-start-1': i === 2 }]}>
+              <Picture
+                src={ph.src}
+                alt={ph.alt}
+                widths={i === 2 ? [480, 720, 960] : [640, 960, 1280]}
+                sizes={i === 2 ? '(min-width: 768px) 38vw, 100vw' : '(min-width: 768px) 58vw, 100vw'}
+                formats={['avif', 'webp']}
+                class:list={['w-full object-cover', i === 2 ? 'aspect-[2/3] md:aspect-auto md:h-full' : 'aspect-[3/2]']}
+              />
+            </div>
+          ))}
+        </div>
+        <figcaption class="eyebrow text-malva-500">{c.palace.venue.label}</figcaption>
+      </figure>
+
+      <div class="flex flex-col gap-6 border-t border-linea pt-10">
+        <p class="eyebrow text-malva-500">{c.palace.previous}</p>
+        <Gallery items={c.palace.gallery} labels={c.gallery} />
+      </div>
     </div>
   </section>
 

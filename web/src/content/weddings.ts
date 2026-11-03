@@ -48,7 +48,6 @@ type T = Record<Lang, string>;
 export type WeddingPhoto = { src: ImageMetadata; alt: T; focus?: string };
 
 /** Tipo de lugar (filtros del listado). */
-export type Venue = 'palacio' | 'campo';
 /** Servicio contratado (mismos nombres que la página de Servicios). */
 export type Service = 'integral' | 'diseno' | 'coordinacion';
 
@@ -58,7 +57,6 @@ export type Wedding = {
   couple: string;
   /** «Lugar · Zona». */
   place: string;
-  venue: Venue;
   service?: Service;
   photographer: string;
   cover: WeddingPhoto;
@@ -80,7 +78,6 @@ export type Wedding = {
 export const weddingsPage: Record<Lang, {
   meta: { title: string; description: string };
   eyebrow: string; title: string; lead: string;
-  filters: { all: string; palacio: string; campo: string; label: string };
   services: Record<Service, string>;
   viewLabel: string; soon: string; photoBy: string;
   press: { eyebrow: string };
@@ -97,7 +94,6 @@ export const weddingsPage: Record<Lang, {
     eyebrow: 'Bodas',
     title: 'Días que *seguimos recordando*',
     lead: 'Cada boda es la historia de una pareja. Estas son algunas de las que hemos tenido la suerte de acompañar en Asturias, cada una a su manera.',
-    filters: { label: 'Filtrar por lugar', all: 'Todas', palacio: 'Palacios y castillos', campo: 'Campo y montaña' },
     services: { integral: 'Organización integral', diseno: 'Diseño y coordinación del día B', coordinacion: 'Coordinación del día B' },
     viewLabel: 'Ver la boda',
     soon: 'Galería próximamente',
@@ -125,7 +121,6 @@ export const weddingsPage: Record<Lang, {
     eyebrow: 'Weddings',
     title: 'Days we *still remember*',
     lead: 'Every wedding tells a couple’s story. These are some of the ones we have been lucky enough to be part of in Asturias, each in its own way.',
-    filters: { label: 'Filter by venue', all: 'All', palacio: 'Palaces & castles', campo: 'Countryside & mountains' },
     services: { integral: 'Full planning', diseno: 'Design & wedding-day coordination', coordinacion: 'Wedding-day coordination' },
     viewLabel: 'See the wedding',
     soon: 'Gallery coming soon',
@@ -155,7 +150,7 @@ export const weddings: Wedding[] = [
     slug: { es: 'i-y-a-palacio-de-la-riega', en: 'i-and-a-palacio-de-la-riega' },
     couple: 'I & A',
     place: 'Palacio de La Riega · Gijón',
-    venue: 'palacio',
+   
     photographer: 'Darío Martínez',
     cover: p(bodaIyA, 'I y A pasean por el jardín del Palacio de La Riega.', 'I and A stroll through the gardens of Palacio de La Riega.'),
     page: {
@@ -210,52 +205,52 @@ export const weddings: Wedding[] = [
   },
   {
     slug: { es: 'a-y-m-palacio-de-moutas', en: 'a-and-m-palacio-de-moutas' },
-    couple: 'A & M', place: 'Palacio de Moutas', venue: 'palacio', photographer: 'M2 Visual Studio',
+    couple: 'A & M', place: 'Palacio de Moutas', photographer: 'M2 Visual Studio',
     cover: p(bodaAyM, 'A y M sonríen con el ramo de novia en las manos.', 'A and M smile, holding the bridal bouquet.', '50% 40%'),
   },
   {
     slug: { es: 'n-y-t-arenas-de-cabrales', en: 'n-and-t-arenas-de-cabrales' },
-    couple: 'N & T', place: 'Arenas de Cabrales · Picos de Europa', venue: 'campo', photographer: 'David Fernández',
+    couple: 'N & T', place: 'Arenas de Cabrales · Picos de Europa', photographer: 'David Fernández',
     cover: p(bodaNyT, 'N y T se besan en una carpa iluminada con guirnaldas.', 'N and T kiss under a marquee lit with string lights.'),
   },
   {
     slug: { es: 'm-y-f-coto-del-pomar', en: 'm-and-f-coto-del-pomar' },
-    couple: 'M & F', place: 'Hotel Coto del Pomar', venue: 'campo', photographer: 'Pedro Mon',
+    couple: 'M & F', place: 'Hotel Coto del Pomar', photographer: 'Pedro Mon',
     cover: p(bodaMyF, 'M y F, ante unas ruinas de piedra cubiertas de vegetación.', 'M and F in front of stone ruins covered in greenery.', '30% 60%'),
   },
   {
     slug: { es: 'g-y-ej-puebloastur', en: 'g-and-ej-puebloastur' },
-    couple: 'G & EJ', place: 'Puebloastur', venue: 'campo', photographer: 'JFK Imagen Social',
+    couple: 'G & EJ', place: 'Puebloastur', photographer: 'JFK Imagen Social',
     cover: p(bodaGyEJ, 'Retrato en blanco y negro de G y EJ con las montañas de fondo.', 'Black-and-white portrait of G and EJ with the mountains behind them.', '45% 40%'),
   },
   {
     slug: { es: 's-y-a-castillo-de-la-zoreda', en: 's-and-a-castillo-de-la-zoreda' },
-    couple: 'S & A', place: 'Castillo Bosque de la Zoreda', venue: 'palacio', photographer: 'M2 Visual Studio',
+    couple: 'S & A', place: 'Castillo Bosque de la Zoreda', photographer: 'M2 Visual Studio',
     cover: p(bodaSyA, 'S y A se besan delante del seating plan decorado con flores.', 'S and A kiss in front of the flower-decked seating plan.'),
   },
   {
     slug: { es: 'o-y-d-hacienda-de-la-llorea', en: 'o-and-d-hacienda-de-la-llorea' },
-    couple: 'O & D', place: 'Hacienda de la Llorea · Gijón', venue: 'campo', service: 'diseno', photographer: 'M2 Visual Studio',
+    couple: 'O & D', place: 'Hacienda de la Llorea · Gijón', service: 'diseno', photographer: 'M2 Visual Studio',
     cover: p(bodaOyD, 'O y D se abrazan en un jardín decorado con flores silvestres y alfombras.', 'O and D embrace in a garden dressed with wildflowers and rugs.'),
   },
   {
     slug: { es: 'c-y-m-palacio-de-la-riega', en: 'c-and-m-palacio-de-la-riega' },
-    couple: 'C & M', place: 'Palacio de La Riega · Gijón', venue: 'palacio', service: 'coordinacion', photographer: 'JFK Imagen Social',
+    couple: 'C & M', place: 'Palacio de La Riega · Gijón', service: 'coordinacion', photographer: 'JFK Imagen Social',
     cover: p(bodaCyM, 'C y M, durante la ceremonia al aire libre en el jardín del palacio.', 'C and M during the outdoor ceremony in the palace garden.', '60% 50%'),
   },
   {
     slug: { es: 'y-y-k-palacio-conde-de-toreno', en: 'y-and-k-palacio-conde-de-toreno' },
-    couple: 'Y & K', place: 'Palacio Conde de Toreno', venue: 'palacio', service: 'integral', photographer: 'Días de Vino y Rosas',
+    couple: 'Y & K', place: 'Palacio Conde de Toreno', service: 'integral', photographer: 'Días de Vino y Rosas',
     cover: p(bodaYyK, 'Y, de espaldas, en la balaustrada del palacio rodeada de hortensias.', 'Y, seen from behind, at the palace balustrade surrounded by hydrangeas.'),
   },
   {
     slug: { es: 'b-y-d-ermita-de-deva', en: 'b-and-d-ermita-de-deva' },
-    couple: 'B & D', place: 'Ermita de Deva · Gijón', venue: 'campo', service: 'integral', photographer: 'Darío Martínez',
+    couple: 'B & D', place: 'Ermita de Deva · Gijón', service: 'integral', photographer: 'Darío Martínez',
     cover: p(bodaByD, 'Retrato en blanco y negro de B y D.', 'Black-and-white portrait of B and D.'),
   },
   {
     slug: { es: 'a-y-a-castillo-de-san-cucao', en: 'a-and-a-castillo-de-san-cucao' },
-    couple: 'A & A', place: 'Castillo de San Cucao', venue: 'palacio', service: 'diseno', photographer: 'M2 Visual Studio',
+    couple: 'A & A', place: 'Castillo de San Cucao', service: 'diseno', photographer: 'M2 Visual Studio',
     cover: p(bodaAyA, 'A y A se abrazan bajo un arco de flores.', 'A and A embrace beneath an arch of flowers.', '40% 50%'),
   },
 ];

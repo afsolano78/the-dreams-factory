@@ -653,7 +653,7 @@ html[data-proto-servicios='escala'] [data-servicios='escala'] { display: flex; }
    (oscuro sobre claro, blanco en el pie). */
 .brand-logo {
   display: block;
-  aspect-ratio: 960 / 930;
+  aspect-ratio: 960 / 933;
   background-color: currentColor;
   -webkit-mask: url('/brand/logo-960.webp') center / contain no-repeat;
   mask: url('/brand/logo-960.webp') center / contain no-repeat;

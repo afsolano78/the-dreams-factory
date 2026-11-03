@@ -5,11 +5,11 @@
  * Trabajan solo en Asturias. En las fotos, Vane es la rubia y Bea la morena (en el retrato de Vane en el jardín,
  * con moño, el pelo se ve más oscuro).
  *
- * PENDIENTE DE CONFIRMAR con Bea y Vane:
- * - El retrato individual de Bea (de momento, un recorte de la foto del jardín).
+ * Los retratos de Bea y de Vane son de la misma sesión (confirmado por ellas).
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
+import { yearsPlanning } from './brand';
 import fotoJardin from '../assets/photos/nosotras-bea-vane.jpg';
 import fotoFurgoneta from '../assets/photos/nosotras/furgoneta.jpg';
 import fotoBea from '../assets/photos/nosotras/bea.jpg';
@@ -93,12 +93,12 @@ export const about: Record<Lang, AboutContent> = {
       items: [
         { title: 'Cerca, de verdad', text: 'Nos gusta que nos llaméis por nuestro nombre: así de cerca trabajamos con cada pareja.' },
         { title: 'Vuestra boda, vuestras normas', text: 'Sin tradiciones obligatorias. Escuchamos, proponemos y la última palabra siempre es vuestra.' },
-        { title: 'Un equipo de confianza', text: 'Seleccionamos con vosotros un equipo de profesionales que comparte nuestras visiones, se entiende a la perfección y trabaja en armonía para crear algo extraordinario.' },
+        { title: 'Un equipo de confianza', text: 'Seleccionamos con vosotros un equipo de profesionales que comparte nuestra visión, se entiende a la perfección y trabaja en armonía para crear algo extraordinario.' },
         { title: 'Tranquilidad', text: 'Lo tenemos todo previsto, también lo imprevisto: siempre hay una alternativa preparada.' },
       ],
     },
     figures: [
-      { value: '2015', label: 'Organizando bodas desde' },
+      { value: `+${yearsPlanning}`, label: 'Años organizando bodas' },
       { value: '+100', label: 'Bodas organizadas' },
       { value: '3', label: 'Ediciones de nuestro curso' },
       { value: 'Asturias', label: 'Donde trabajamos' },
@@ -172,7 +172,7 @@ export const about: Record<Lang, AboutContent> = {
       ],
     },
     figures: [
-      { value: '2015', label: 'Planning weddings since' },
+      { value: `${yearsPlanning}+`, label: 'Years planning weddings' },
       { value: '100+', label: 'Weddings planned' },
       { value: '3', label: 'Editions of our course' },
       { value: 'Asturias', label: 'Where we work' },

@@ -7,8 +7,7 @@
  * Google, el de quien la escribió).
  * `wedding`: iniciales de su boda en el listado de Bodas (si tiene página, la tarjeta enlaza a ella).
  *
- * PENDIENTE: el enlace a su perfil de Bodas.net (`profiles`), una tercera opinión reciente de Google (sin iniciar
- * sesión, Google solo deja ver tres) y fotos de Katherine y Albano y de Nuria y Manel.
+ * PENDIENTE: una tercera opinión reciente de Google (sin iniciar sesión, Google solo deja ver tres) y fotos de Katherine y Albano y de Nuria y Manel.
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -75,7 +74,7 @@ export const reviewsPage: Record<Lang, {
     readLess: 'Cerrar',
     seeWedding: 'Ver su boda',
     photoBy: 'Foto',
-    profiles: { eyebrow: 'Más opiniones', title: 'Encuéntranos *también en*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5,0 · 26 opiniones' }] },
+    profiles: { eyebrow: 'Más opiniones', title: 'Encuéntranos *también en*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5,0 · 26 opiniones' }, { name: 'Bodas.net', href: 'https://www.bodas.net/organizacion-bodas/the-dreams-factory--e73577', rating: '4,9 · 33 opiniones' }] },
   },
   en: {
     meta: {
@@ -102,7 +101,7 @@ export const reviewsPage: Record<Lang, {
     seeWedding: 'See their wedding',
     photoBy: 'Photo',
     note: 'Reviews translated from the original Spanish.',
-    profiles: { eyebrow: 'More reviews', title: 'You’ll also *find us on*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5.0 · 26 reviews' }] },
+    profiles: { eyebrow: 'More reviews', title: 'You’ll also *find us on*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5.0 · 26 reviews' }, { name: 'Bodas.net', href: 'https://www.bodas.net/organizacion-bodas/the-dreams-factory--e73577', rating: '4.9 · 33 reviews' }] },
   },
 };
 

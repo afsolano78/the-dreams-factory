@@ -35,17 +35,18 @@ web en uno o dos minutos.
 callback URL» de la OAuth App. Mientras el prototipo esté protegido con Cloudflare Access, Bea y Vane necesitan estar
 en la lista de correos permitidos para llegar al panel.
 
-### 3. Traducción automática (opcional)
+### 3. Traducción automática con Google Gemini
 
-El panel tiene un botón para traducir al inglés lo escrito en español. **DeepL no está disponible** en Sveltia por
-ahora; sirven, entre otros:
+El panel tiene un botón para traducir al inglés lo escrito en español. Usamos **Google Gemini** (nivel gratuito;
+DeepL no está disponible en Sveltia). Ojo: en el nivel gratuito Google puede usar los textos para mejorar sus
+productos, así que no hay que traducir nada privado (en bodas y blog todo es público de todas formas).
 
-- **Google Cloud Translation**: gratis hasta 500.000 caracteres al mes (pide una cuenta de Google Cloud con tarjeta).
-- **Anthropic (Claude)** u **OpenAI**: de pago por uso, con un mínimo de unos 5 € de saldo; para unas pocas bodas y
-  entradas al año, céntimos.
-- **Google Gemini**: tiene un nivel gratuito, pero Google puede usar los textos para mejorar sus productos.
+1. Entrar en <https://aistudio.google.com/apikey> con una cuenta de Google (puede ser la de The Dreams Factory) y
+   copiar la clave (**Create API key** si no aparece ninguna). No pide tarjeta.
+2. En el panel, en cada navegador donde se vaya a usar (ordenador de Bea, de Vane…): **⚙ Ajustes → Traducción** →
+   elegir **Google: Gemini** como servicio por defecto y pegar la clave. Se guarda solo en ese navegador.
 
-La clave del servicio se pega una vez en el panel (⚙ Ajustes → Traducción) y se guarda en ese navegador.
+La clave no se guarda en el repositorio ni en la web. Si se pierde o se filtra, se borra en AI Studio y se crea otra.
 
 ## Uso (para Bea y Vane)
 
@@ -56,7 +57,7 @@ La clave del servicio se pega una vez en el panel (⚙ Ajustes → Traducción) 
    - **Galería**: subir las fotos (se pueden arrastrar varias). Con fotos en la galería, la boda tiene su propia página.
    - **Proveedores** y **Su historia**.
    - **Orden en el listado**: con 0 sale la primera; las de número más bajo, antes.
-3. Arriba, cambiar a **English** y pulsar **Traducir** (o escribir el inglés). En las bodas, lo que quede vacío en
+3. Arriba, cambiar a **English** y pulsar **Traducir** (Gemini; repasad siempre el resultado) o escribir el inglés. En las bodas, lo que quede vacío en
    inglés se muestra en español.
 4. **Guardar**. En uno o dos minutos está en la web.
 

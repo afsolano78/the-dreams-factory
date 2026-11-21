@@ -5,13 +5,12 @@
   2. Lo que más repiten: tres temas con una cita corta cada uno.
   3. Una opinión destacada, entera, con su foto.
   4. Todas las opiniones en mosaico: la frase destacada, la pareja, su foto y el texto completo desplegable; debajo,
-     el enlace a todas las de Google.
-  5. Perfiles de reseñas (cuando los haya) y el mismo cierre que la portada.
+     los perfiles de reseñas (Google, Bodas.net).
+  5. El mismo cierre que la portada.
 */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
-import Button from '../Button.astro';
 import ClosingCta from '../home/ClosingCta.astro';
 import { reviews, reviewsPage, featuredReview } from '../../content/reviews';
 import { getWeddings, weddingHref } from '../../content/weddings';
@@ -163,35 +162,25 @@ const fLink = weddingLink(f.wedding);
           })
         }
       </ul>
-      <p class="flex justify-center" data-reveal>
-        <Button href={c.googleAll.href} variant="secondary" class="flex-wrap gap-x-3 gap-y-2 text-center" target="_blank" rel="noopener">
-          <span class="whitespace-nowrap">{c.googleAll.label}</span>
-          <span class="whitespace-nowrap font-normal normal-case tracking-normal opacity-80">★ {c.googleAll.rating}</span>
-        </Button>
-      </p>
+      {
+        c.profiles.items.length > 0 && (
+          <div class="mt-4 flex flex-col items-center gap-6 border-t border-linea pt-14 text-center" data-reveal>
+            <SectionHeading eyebrow={c.profiles.eyebrow} title={c.profiles.title} size="m" />
+            <ul class="flex flex-wrap justify-center gap-4">
+              {c.profiles.items.map((p) => (
+                <li>
+                  <a href={p.href} target="_blank" rel="noopener" class="inline-flex items-center gap-2 border border-linea px-5 py-3 text-pino-800 hover:border-pino-800">
+                    {p.name}
+                    {p.rating && <span class="text-ciruela-700">★ {p.rating}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
     </div>
   </section>
-
-  <!-- 5. Perfiles de reseñas (cuando los haya) -->
-  {
-    c.profiles.items.length > 0 && (
-      <section class="border-t border-linea bg-porcelana-50 py-14">
-        <div class="container-brand flex flex-col items-center gap-6 text-center">
-          <SectionHeading eyebrow={c.profiles.eyebrow} title={c.profiles.title} size="m" />
-          <ul class="flex flex-wrap justify-center gap-4">
-            {c.profiles.items.map((p) => (
-              <li>
-                <a href={p.href} target="_blank" rel="noopener" class="inline-flex items-center gap-2 border border-linea px-5 py-3 text-pino-800 hover:border-pino-800">
-                  {p.name}
-                  {p.rating && <span class="text-ciruela-700">★ {p.rating}</span>}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    )
-  }
 
   <ClosingCta lang={lang} c={home[lang].closing} />
 </BaseLayout>

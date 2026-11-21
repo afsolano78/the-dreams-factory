@@ -6,7 +6,7 @@
  * van traducidas, con un aviso de que el original está en español. Las parejas, solo por su nombre de pila (en las de
  * Google, el de quien la escribió).
  * `wedding`: iniciales de su boda en el listado de Bodas (si tiene página, la tarjeta enlaza a ella).
- * No se añaden más: para el resto, el enlace a Google (`googleAll`) y «Encuéntranos también en».
+ * No se añaden más: para el resto, los enlaces de «Encuéntranos también en» (Google y Bodas.net).
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -44,8 +44,6 @@ export const reviewsPage: Record<Lang, {
   featured: { eyebrow: string };
   all: { eyebrow: string; title: string };
   readMore: string; readLess: string; seeWedding: string; photoBy: string;
-  /** Enlace a todas las opiniones de Google, debajo de la lista. */
-  googleAll: { label: string; rating: string; href: string };
   /** Aviso de traducción (solo en inglés). */
   note?: string;
   profiles: { eyebrow: string; title: string; items: { name: string; href: string; rating?: string }[] };
@@ -74,7 +72,6 @@ export const reviewsPage: Record<Lang, {
     readLess: 'Cerrar',
     seeWedding: 'Ver su boda',
     photoBy: 'Foto',
-    googleAll: { label: 'Ver todas en Google', rating: '5,0 · 26 opiniones', href: 'https://maps.google.com/?cid=7217640799929621108' },
     profiles: { eyebrow: 'Más opiniones', title: 'Encuéntranos *también en*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5,0 · 26 opiniones' }, { name: 'Bodas.net', href: 'https://www.bodas.net/organizacion-bodas/the-dreams-factory--e73577', rating: '4,9 · 33 opiniones' }] },
   },
   en: {
@@ -101,7 +98,6 @@ export const reviewsPage: Record<Lang, {
     readLess: 'Close',
     seeWedding: 'See their wedding',
     photoBy: 'Photo',
-    googleAll: { label: 'See them all on Google', rating: '5.0 · 26 reviews', href: 'https://maps.google.com/?cid=7217640799929621108' },
     note: 'Reviews translated from the original Spanish.',
     profiles: { eyebrow: 'More reviews', title: 'You’ll also *find us on*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5.0 · 26 reviews' }, { name: 'Bodas.net', href: 'https://www.bodas.net/organizacion-bodas/the-dreams-factory--e73577', rating: '4.9 · 33 reviews' }] },
   },

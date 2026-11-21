@@ -77,6 +77,6 @@ credits:
 url: ''
 ---
 
-C y M se casaron al aire libre en el jardín del Palacio de La Riega, con Gijón a sus pies y la luz dorada de la tarde.
+C y M se casaron al aire libre, en el jardín del Palacio de La Riega, con Gijón a sus pies y la luz dorada de la tarde.
 
 Hortensias blancas para la ceremonia y, al caer la noche, una cena bajo una carpa vestida de telas, plantas y velas.

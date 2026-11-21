@@ -28,8 +28,11 @@ web en uno o dos minutos.
      `https://www.thedreamsfactory.es/api/callback`.
 2. **Register application**. Copiar el **Client ID** y pulsar **Generate a new client secret** (copiarlo: solo se ve una vez).
 3. En Cloudflare: **Workers & Pages → dreams-factory-prototipo → Settings → Variables and secrets → Add**:
-   - `GITHUB_CLIENT_ID` = el Client ID (tipo Text o Secret).
+   - `GITHUB_CLIENT_ID` = el Client ID (tipo **Secret**).
    - `GITHUB_CLIENT_SECRET` = el secreto (tipo **Secret**).
+
+   Los dos como **Secret**: las variables de tipo Text que no están en `wrangler.jsonc` se borran en cada
+   publicación desde GitHub; los secretos se conservan.
 
 **Al cambiar de dominio** (del prototipo al definitivo), hay que poner la nueva dirección en la «Authorization
 callback URL» de la OAuth App. Mientras el prototipo esté protegido con Cloudflare Access, Bea y Vane necesitan estar

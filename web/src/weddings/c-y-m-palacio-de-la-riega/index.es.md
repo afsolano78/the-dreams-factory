@@ -4,11 +4,14 @@ place: Palacio de La Riega · Gijón
 order: 80
 service: coordinacion
 photographer: JFK Imagen Social
+video: ''
+season: ''
 cover: portada.jpg
 coverAlt: C y M, durante la ceremonia al aire libre en el jardín del palacio.
 coverFocus: 60% 50%
 hero: cabecera.jpg
 heroAlt: C y M, abrazados bajo un árbol a contraluz del atardecer.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: El vestido de novia colgado en la puerta. En blanco y negro.
@@ -71,8 +74,9 @@ credits:
     name: Monique Lhuillier
   - role: Zapatos
     name: Jimmy Choo
+url: ''
 ---
 
-C y M se casaron al aire libre, en el jardín del Palacio de La Riega, con Gijón a sus pies y la luz dorada de la tarde.
+C y M se casaron al aire libre en el jardín del Palacio de La Riega, con Gijón a sus pies y la luz dorada de la tarde.
 
 Hortensias blancas para la ceremonia y, al caer la noche, una cena bajo una carpa vestida de telas, plantas y velas.

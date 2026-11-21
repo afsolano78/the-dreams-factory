@@ -1,15 +1,17 @@
 ---
-url: c-and-m-palacio-de-la-riega
 couple: C & M
 place: Palacio de La Riega · Gijón
 order: 80
 service: coordinacion
 photographer: JFK Imagen Social
+video: ''
+season: ''
 cover: portada.jpg
 coverAlt: C and M during the outdoor ceremony in the palace garden.
 coverFocus: 60% 50%
 hero: cabecera.jpg
 heroAlt: C and M embrace beneath a tree against the sunset.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: The wedding dress hanging on a door. In black and white.
@@ -72,6 +74,7 @@ credits:
     name: Monique Lhuillier
   - role: Shoes
     name: Jimmy Choo
+url: c-and-m-palacio-de-la-riega
 ---
 
 C and M were married outdoors, in the gardens of Palacio de La Riega, with Gijón at their feet and the golden evening light.

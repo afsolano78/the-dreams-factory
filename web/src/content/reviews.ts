@@ -103,41 +103,12 @@ export const reviewsPage: Record<Lang, {
   },
 };
 
-/** De la más reciente a la más antigua. La destacada (`featured`) se muestra entera en su propio bloque. */
+/**
+ * Orden del mosaico: casi siempre de la más reciente a la más antigua, pero las que no tienen foto (Sara y Almudena)
+ * van intercaladas entre las que sí, y la primera siempre lleva foto. La destacada (`featured`) se muestra entera en
+ * su propio bloque.
+ */
 export const reviews: Review[] = [
-  {
-    // Google, verano de 2026.
-    couple: { es: 'Sara', en: 'Sara' },
-    highlight: { es: '«Han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día.»', en: '“They understood exactly what we wanted and were a key support in planning the big day.”' },
-    text: {
-      es: [
-        'Bea y Vane fueron nuestras wedding planners. Estamos muy agradecidos de haber podido contar con ellas: han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día. Súper recomendables. ¡Gracias por todo el trabajo hecho durante este año de preparación; ha sido un éxito gracias a vosotras!',
-      ],
-      en: [
-        'Bea and Vane were our wedding planners. We’re so grateful to have had them with us: they understood exactly what we wanted and were a key support in planning the big day. Highly recommended. Thank you for all your work during this year of preparation; it was a success thanks to you!',
-      ],
-    },
-  },
-  {
-    // Google, 2026. Boda de mayo de 2025.
-    couple: { es: 'Almudena', en: 'Almudena' },
-    place: 'Palacio de Avilés',
-    highlight: { es: '«Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar.»', en: '“Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made.”' },
-    text: {
-      es: [
-        'El pasado mayo de 2025 nos casamos en la parroquia de San Nicolás y lo celebramos en el Palacio de Avilés. Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar. Además, como vivimos fuera de Asturias, se adaptaron a nuestras visitas, y les agradecimos mucho su flexibilidad.',
-        'Desde el primer momento, Bea y Vane demostraron una profesionalidad impecable: la planificación de todo, el contacto con proveedores (te seleccionan proveedores de su confianza), el diseño de la decoración, los meseros, la mesa principal, la mesa dulce… En definitiva, se encargaron de que fuera un éxito rotundo. No hubo un solo cabo suelto: cuidaron cada detalle con un mimo increíble y supieron aprovechar al máximo todos los recursos disponibles (sobre todo las flores, que son precisamente una partida muy importante del presupuesto) para que el resultado fuera espectacular.',
-        'Gracias a su trabajo, pudimos disfrutar de nuestro día con total tranquilidad, sabiendo que estábamos en las mejores manos y que todo estaba bajo control.',
-        'No dudamos en recomendar a Vane y Bea: si buscáis una boda de ensueño y un equipo que se vuelque al 100 %, no dudéis en confiar en ellas. ¡Gracias por hacer nuestro día inolvidable!',
-      ],
-      en: [
-        'Last May, in 2025, we got married at the church of San Nicolás and celebrated at the Palacio de Avilés. Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made. And since we live outside Asturias, they worked around our visits, and we were very grateful for their flexibility.',
-        'From the very first moment, Bea and Vane showed impeccable professionalism: planning everything, dealing with suppliers (they choose suppliers they trust), designing the décor, the table plan, the top table, the dessert table… In short, they made sure it was a resounding success. Not a single loose end: they took care of every detail with incredible care and made the most of every resource available (especially the flowers, which are a very big part of the budget) so that the result was spectacular.',
-        'Thanks to their work, we could enjoy our day completely at ease, knowing we were in the best hands and that everything was under control.',
-        'We wouldn’t hesitate to recommend Vane and Bea: if you’re looking for a dream wedding and a team that gives 100%, don’t hesitate to trust them. Thank you for making our day unforgettable!',
-      ],
-    },
-  },
   {
     couple: { es: 'Nadia y Tomás', en: 'Nadia & Tomás' },
     place: 'Arenas de Cabrales · Picos de Europa', wedding: 'N & T',
@@ -155,6 +126,19 @@ export const reviews: Review[] = [
         'We got married in May in Asturias. We live abroad and wanted our wedding to be at a family estate, so we decided to look for help. We clicked with Bea and Vane from the very first moment, or rather, from the very first Skype call! Hiring them was the best decision we could have made. Our wedding was perfect, 100% perfect, and it was all thanks to them. All our guests were delighted; everyone agreed on how special and detailed it was and how perfectly it represented us. Incredible! Fairy-tale décor, stunning stationery, and every supplier they recommended was a true professional, all coordinated so that everything ran like clockwork.',
         'They take care of absolutely everything and adapt to your tastes and needs. We don’t know how, but every time we came to Asturias they were there to meet us. On the wedding day they were with us and took care of EVERYTHING; they give you an incredible sense of calm, and we were able to switch off completely and enjoy our day. Whatever you ask of them, even the typical wedding-nerves meltdown, they never say “no”: always with a smile, they do everything they can so it all turns out the way you want.',
         'We will always remember them fondly and be eternally grateful. From the bottom of our hearts, a million thanks, girls, you are the best!',
+      ],
+    },
+  },
+  {
+    // Google, verano de 2026.
+    couple: { es: 'Sara', en: 'Sara' },
+    highlight: { es: '«Han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día.»', en: '“They understood exactly what we wanted and were a key support in planning the big day.”' },
+    text: {
+      es: [
+        'Bea y Vane fueron nuestras wedding planners. Estamos muy agradecidos de haber podido contar con ellas: han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día. Súper recomendables. ¡Gracias por todo el trabajo hecho durante este año de preparación; ha sido un éxito gracias a vosotras!',
+      ],
+      en: [
+        'Bea and Vane were our wedding planners. We’re so grateful to have had them with us: they understood exactly what we wanted and were a key support in planning the big day. Highly recommended. Thank you for all your work during this year of preparation; it was a success thanks to you!',
       ],
     },
   },
@@ -260,6 +244,26 @@ export const reviews: Review[] = [
       en: [
         'We trusted Vane and Bea to organise our wedding, and every one of our guests agrees it was the most moving and thoughtfully cared-for celebration they have ever been to. They paid attention to every detail and made both the planning and the wedding itself an exciting and inspiring process.',
         'They are warm and attentive, with a brilliant ability to turn our tastes and ideas into countless well-chosen, meticulous details. We can only thank them for shaping such a special moment for us and, of course, we recommend them!',
+      ],
+    },
+  },
+  {
+    // Google, 2026. Boda de mayo de 2025.
+    couple: { es: 'Almudena', en: 'Almudena' },
+    place: 'Palacio de Avilés',
+    highlight: { es: '«Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar.»', en: '“Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made.”' },
+    text: {
+      es: [
+        'El pasado mayo de 2025 nos casamos en la parroquia de San Nicolás y lo celebramos en el Palacio de Avilés. Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar. Además, como vivimos fuera de Asturias, se adaptaron a nuestras visitas, y les agradecimos mucho su flexibilidad.',
+        'Desde el primer momento, Bea y Vane demostraron una profesionalidad impecable: la planificación de todo, el contacto con proveedores (te seleccionan proveedores de su confianza), el diseño de la decoración, los meseros, la mesa principal, la mesa dulce… En definitiva, se encargaron de que fuera un éxito rotundo. No hubo un solo cabo suelto: cuidaron cada detalle con un mimo increíble y supieron aprovechar al máximo todos los recursos disponibles (sobre todo las flores, que son precisamente una partida muy importante del presupuesto) para que el resultado fuera espectacular.',
+        'Gracias a su trabajo, pudimos disfrutar de nuestro día con total tranquilidad, sabiendo que estábamos en las mejores manos y que todo estaba bajo control.',
+        'No dudamos en recomendar a Vane y Bea: si buscáis una boda de ensueño y un equipo que se vuelque al 100 %, no dudéis en confiar en ellas. ¡Gracias por hacer nuestro día inolvidable!',
+      ],
+      en: [
+        'Last May, in 2025, we got married at the church of San Nicolás and celebrated at the Palacio de Avilés. Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made. And since we live outside Asturias, they worked around our visits, and we were very grateful for their flexibility.',
+        'From the very first moment, Bea and Vane showed impeccable professionalism: planning everything, dealing with suppliers (they choose suppliers they trust), designing the décor, the table plan, the top table, the dessert table… In short, they made sure it was a resounding success. Not a single loose end: they took care of every detail with incredible care and made the most of every resource available (especially the flowers, which are a very big part of the budget) so that the result was spectacular.',
+        'Thanks to their work, we could enjoy our day completely at ease, knowing we were in the best hands and that everything was under control.',
+        'We wouldn’t hesitate to recommend Vane and Bea: if you’re looking for a dream wedding and a team that gives 100%, don’t hesitate to trust them. Thank you for making our day unforgettable!',
       ],
     },
   },

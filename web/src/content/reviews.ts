@@ -1,13 +1,12 @@
 /**
  * Página «Opiniones» (/opiniones, /en/reviews). ES y EN.
  *
- * Origen: las opiniones publicadas en la web antigua (2017-2020), sin la de Sonia y Alberto (quitada a petición de
- * Bea y Vane), y las más recientes de su ficha de Google (sin foto). Literales: solo se corrigen erratas. En inglés
+ * Origen: las opiniones publicadas en la web antigua (2017-2020), sin las de Sonia y Alberto, Patricia y Gerardo,
+ * Nuria y Manel y Katherine y Albano (quitadas a petición de Bea y Vane, para no alargar la página), y las más recientes de su ficha de Google (sin foto). Literales: solo se corrigen erratas. En inglés
  * van traducidas, con un aviso de que el original está en español. Las parejas, solo por su nombre de pila (en las de
  * Google, el de quien la escribió).
  * `wedding`: iniciales de su boda en el listado de Bodas (si tiene página, la tarjeta enlaza a ella).
- *
- * PENDIENTE: una tercera opinión reciente de Google (sin iniciar sesión, Google solo deja ver tres) y fotos de Katherine y Albano y de Nuria y Manel.
+ * No se añaden más: para el resto, el enlace a Google (`googleAll`) y «Encuéntranos también en».
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
@@ -16,7 +15,6 @@ import fotoPaulaDavid from '../assets/photos/opiniones/paula-david.jpg';
 import fotoOlayaDavid from '../assets/photos/opiniones/olaya-david.jpg';
 import fotoMartaOmar from '../assets/photos/opiniones/marta-omar.jpg';
 import fotoAlbaDani from '../assets/photos/opiniones/alba-dani.jpg';
-import fotoPatriciaGerardo from '../assets/photos/opiniones/patricia-gerardo.jpg';
 import fotoMariaGaspar from '../assets/photos/opiniones/maria-gaspar.jpg';
 import fotoDavidGerman from '../assets/photos/opiniones/david-german.jpg';
 import fotoBeatrizDaniel from '../assets/photos/opiniones/beatriz-daniel.jpg';
@@ -46,6 +44,8 @@ export const reviewsPage: Record<Lang, {
   featured: { eyebrow: string };
   all: { eyebrow: string; title: string };
   readMore: string; readLess: string; seeWedding: string; photoBy: string;
+  /** Enlace a todas las opiniones de Google, debajo de la lista. */
+  googleAll: { label: string; rating: string; href: string };
   /** Aviso de traducción (solo en inglés). */
   note?: string;
   profiles: { eyebrow: string; title: string; items: { name: string; href: string; rating?: string }[] };
@@ -63,8 +63,8 @@ export const reviewsPage: Record<Lang, {
       eyebrow: 'Lo que más repiten',
       title: 'Tres cosas que *nunca faltan*',
       items: [
-        { title: 'Tranquilidad', quote: '«Es la tranquilidad y la certeza de que todo va a salir bien.»', author: 'Katherine y Albano' },
-        { title: 'Detalles', quote: '«Nuestra boda estuvo llena de detalles y tuvo una decoración preciosa, tal y como siempre la habíamos imaginado.»', author: 'Nuria y Manel' },
+        { title: 'Tranquilidad', quote: '«Consiguieron transmitirnos una calma y una seguridad que hicieron que pudiéramos despreocuparnos y disfrutar al máximo de cada momento.»', author: 'Alba y Dani' },
+        { title: 'Detalles', quote: '«Una brillante capacidad para materializar nuestros gustos y nuestras ideas en un sinfín de detalles acertados y minuciosos.»', author: 'David y Germán' },
         { title: 'Cercanía', quote: '«Capaces de emocionarse y vivir una boda tanto como lo hemos vivido nosotros.»', author: 'Marta y Omar' },
       ],
     },
@@ -74,6 +74,7 @@ export const reviewsPage: Record<Lang, {
     readLess: 'Cerrar',
     seeWedding: 'Ver su boda',
     photoBy: 'Foto',
+    googleAll: { label: 'Ver todas en Google', rating: '5,0 · 26 opiniones', href: 'https://maps.google.com/?cid=7217640799929621108' },
     profiles: { eyebrow: 'Más opiniones', title: 'Encuéntranos *también en*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5,0 · 26 opiniones' }, { name: 'Bodas.net', href: 'https://www.bodas.net/organizacion-bodas/the-dreams-factory--e73577', rating: '4,9 · 33 opiniones' }] },
   },
   en: {
@@ -89,8 +90,8 @@ export const reviewsPage: Record<Lang, {
       eyebrow: 'What they mention most',
       title: 'Three things that are *always there*',
       items: [
-        { title: 'Peace of mind', quote: '“It’s the peace of mind and the certainty that everything will go well.”', author: 'Katherine & Albano' },
-        { title: 'Details', quote: '“Our wedding was full of details and had beautiful décor, just as we had always imagined it.”', author: 'Nuria & Manel' },
+        { title: 'Peace of mind', quote: '“They gave us such calm and confidence that we could stop worrying and enjoy every moment to the full.”', author: 'Alba & Dani' },
+        { title: 'Details', quote: '“A brilliant ability to turn our tastes and ideas into countless well-chosen, meticulous details.”', author: 'David & Germán' },
         { title: 'Closeness', quote: '“They get as moved and live a wedding as intensely as we did.”', author: 'Marta & Omar' },
       ],
     },
@@ -100,6 +101,7 @@ export const reviewsPage: Record<Lang, {
     readLess: 'Close',
     seeWedding: 'See their wedding',
     photoBy: 'Photo',
+    googleAll: { label: 'See them all on Google', rating: '5.0 · 26 reviews', href: 'https://maps.google.com/?cid=7217640799929621108' },
     note: 'Reviews translated from the original Spanish.',
     profiles: { eyebrow: 'More reviews', title: 'You’ll also *find us on*', items: [{ name: 'Google', href: 'https://maps.google.com/?cid=7217640799929621108', rating: '5.0 · 26 reviews' }, { name: 'Bodas.net', href: 'https://www.bodas.net/organizacion-bodas/the-dreams-factory--e73577', rating: '4.9 · 33 reviews' }] },
   },
@@ -232,21 +234,7 @@ export const reviews: Review[] = [
       ],
     },
   },
-  {
-    couple: { es: 'Patricia y Gerardo', en: 'Patricia & Gerardo' },
-    highlight: { es: '«Se encargaron de toda la organización y de que todo saliera a la perfección.»', en: '“They took care of all the organising and made sure everything went perfectly.”' },
-    photo: { src: fotoPatriciaGerardo, focus: '50% 55%' },
-    text: {
-      es: [
-        'Bea y Vane, solo puedo decir GRACIAS. Profesionales que saben, desde el primer momento, darte ideas, aconsejarte y entender lo que quieres. Invitaciones, decoración, organización… Sin ellas no hubiera sido posible.',
-        'No hubiéramos tenido ni siquiera la canción de apertura del baile: teníamos un problema con la descarga, se lo mandamos la noche anterior, a altas horas, para ver si nos lo podían solucionar y, cómo no, por fin teníamos canción. Se encargaron el mismo día de la boda de toda la organización y de que todo saliera a la perfección. Contaría con ellas sin duda para cualquier otro evento.',
-      ],
-      en: [
-        'Bea and Vane, all I can say is THANK YOU. Professionals who know, from the very first moment, how to give you ideas, advise you and understand what you want. Invitations, décor, organisation… It wouldn’t have been possible without them.',
-        'We wouldn’t even have had the song for our first dance: we had a problem downloading it, sent it to them late the night before to see if they could fix it and, of course, we finally had our song. On the wedding day they took care of all the organising and made sure everything went perfectly. I would definitely count on them for any other event.',
-      ],
-    },
-  },
+
   {
     couple: { es: 'María y Gaspar', en: 'María & Gaspar' },
     highlight: { es: '«¡El día de la boda estuve súper tranquila, y fue sobre todo porque sabía que ellas estaban allí!»', en: '“On our wedding day I was completely calm, and it was mostly because I knew they were there!”' },
@@ -279,22 +267,7 @@ export const reviews: Review[] = [
       ],
     },
   },
-  {
-    couple: { es: 'Katherine y Albano', en: 'Katherine & Albano' },
-    highlight: { es: '«Disfrutamos muchísimo del día de nuestra boda sin tener que preocuparnos por nada.»', en: '“We enjoyed our wedding day so much without having to worry about anything.”' },
-    text: {
-      es: [
-        'Elegir a The Dreams Factory para que nos ayudaran a organizar nuestra boda ha sido una de las mejores decisiones y experiencias de nuestra boda. Se ocuparon absolutamente de todos los detalles, de que fueran tal y como queríamos, de asesorarnos y de quitarnos todo el trabajo y el estrés posibles.',
-        'El resultado fue que disfrutamos muchísimo del día de nuestra boda sin tener que preocuparnos por nada, gracias a que estuvieron pendientes de todo, ¡con la mayor discreción y profesionalidad! Todo el mundo nos felicitó, porque se quedaron maravillados con la organización y con cada uno de los detalles especiales que envolvieron ese día, que sin las chicas de The Dreams Factory no habrían sido posibles.',
-        'Lo cierto es que desconocíamos el mundo de las wedding planners y, tras nuestra experiencia, es algo que recomiendo a todas las parejas que estén pensando en casarse. Es la tranquilidad y la certeza de que todo va a salir bien. Gracias, Vane y Bea, por haber hecho de nuestra boda un día tan inolvidable.',
-      ],
-      en: [
-        'Choosing The Dreams Factory to help us organise our wedding was one of the best decisions and experiences of our wedding. They took care of absolutely every detail, made sure everything was just as we wanted, advised us and took away all the work and stress they possibly could.',
-        'The result was that we enjoyed our wedding day so much without having to worry about anything, because they kept an eye on everything, with the utmost discretion and professionalism! Everyone congratulated us; they were amazed by the organisation and by every special detail of the day, which wouldn’t have been possible without the girls from The Dreams Factory.',
-        'The truth is we knew nothing about the world of wedding planners and, after our experience, it’s something I recommend to every couple thinking of getting married. It’s the peace of mind and the certainty that everything will go well. Thank you, Vane and Bea, for making our wedding such an unforgettable day.',
-      ],
-    },
-  },
+
   {
     couple: { es: 'Beatriz y Daniel', en: 'Beatriz & Daniel' },
     place: 'Ermita de Deva · Gijón', wedding: 'B & D',
@@ -315,7 +288,7 @@ export const reviews: Review[] = [
   },
   {
     couple: { es: 'Aida y Adrián', en: 'Aida & Adrián' },
-    place: 'Castillo de San Cucao', wedding: 'A & A',
+    place: 'Castillo de San Cucao',
     highlight: { es: '«Si me volviera a casar, sin duda os volvería a contratar.»', en: '“If I got married again, I’d hire you again without a doubt.”' },
     photo: { src: fotoAidaAdrian, focus: '50% 35%' }, credit: 'M2 Visual Studio',
     text: {
@@ -326,25 +299,6 @@ export const reviews: Review[] = [
       en: [
         'We couldn’t be happier that we chose you. We loved the décor; it exceeded our expectations. I recommend them 100%, because they are true professionals at what they do and, as people, they are even better. If I got married again, I’d hire you again without a doubt.',
         'I hope our paths cross again some day. A big hug.',
-      ],
-    },
-  },
-  {
-    couple: { es: 'Nuria y Manel', en: 'Nuria & Manel' },
-    place: 'León',
-    highlight: { es: '«Elegir a Beatriz y Vanessa fue, sin duda, la mejor decisión que pudimos tomar.»', en: '“Choosing Beatriz and Vanessa was, without a doubt, the best decision we could have made.”' },
-    text: {
-      es: [
-        'Nos casamos en junio en León y decidimos contar con la ayuda de unas wedding planners para la organización y la decoración de ese día. Elegir a Beatriz y Vanessa fue, sin duda, la mejor decisión que pudimos tomar. Cuando las conocimos tuvimos muy claro que serían ellas.',
-        'Durante los preparativos están a tu lado en todo momento, te apoyan y te aconsejan en cada decisión. Cada vez que surgen nervios y dudas, al hablar con ellas desaparecen, porque siempre saben qué hacer en cada momento y tienen una solución para cada contratiempo.',
-        'Ese día fueron muchos los invitados que nos felicitaron y nos dieron la enhorabuena por contar con unas wedding planners, porque no están solo para los novios: también están para ayudar a los invitados en cada momento.',
-        'Nuestra boda estuvo llena de detalles y tuvo una decoración preciosa, tal y como siempre la habíamos imaginado, y todo ello fue gracias a Beatriz y Vanessa. Realmente creo que son imprescindibles si estás pensando en preparar tu boda.',
-      ],
-      en: [
-        'We got married in June in León and decided to have wedding planners help us with the organisation and décor of the day. Choosing Beatriz and Vanessa was, without a doubt, the best decision we could have made. When we met them, we knew straight away they were the ones.',
-        'During the preparations they are by your side at every moment, supporting you and advising you on every decision. Whenever nerves and doubts appear, they vanish as soon as you talk to them, because they always know what to do and have a solution for every setback.',
-        'On the day, many guests congratulated us on having wedding planners, because they are not only there for the couple: they are also there to help the guests at every moment.',
-        'Our wedding was full of details and had beautiful décor, just as we had always imagined it, and it was all thanks to Beatriz and Vanessa. I truly believe they are essential if you are thinking of planning your wedding.',
       ],
     },
   },

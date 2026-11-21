@@ -2,8 +2,8 @@
  * Contacto: página (/contacto, /en/contact) y formulario corto del cierre. ES y EN.
  *
  * El formulario envía a /api/contacto (web/worker/index.ts), que valida, filtra el spam y manda el correo.
- * PENDIENTE DE CONFIRMAR con Bea y Vane: el plazo de respuesta que se promete, si quieren el campo de presupuesto
- * (y sus tramos) y el texto del correo automático de acuse. La información básica de protección de datos (`privacy.basic`)
+ * Confirmado con Bea y Vane (noviembre de 2026): respuesta «en uno o dos días», el campo de presupuesto con estos tramos
+ * y el correo automático de acuse (su texto está en worker/index.ts). La información básica de protección de datos (`privacy.basic`)
  * resume la política de privacidad (src/content/legal.ts): si cambia una, hay que cambiar la otra.
  */
 import type { Lang } from '../i18n/routes';

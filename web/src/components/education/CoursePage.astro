@@ -77,13 +77,17 @@ const statusPlace = statusRest.join(' · ');
       <p class="eyebrow">{eyebrowMain}<span class="max-md:hidden">{eyebrowRest && ` · ${eyebrowRest}`}</span></p>
       <h1 class="display-xl max-w-[16ch]" set:html={emphasize(c.hero.title)} />
       <p class="lead max-w-[36rem]">{c.hero.lead}</p>
-      <!-- Estado de la edición: un punto y el texto (sin recuadro, para que no se confunda con un botón). -->
-      <p class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9375rem]">
+      <!--
+        Estado de la edición (un punto, sin recuadro, para que no se confunda con un botón), fecha y lugar, cada uno con
+        su icono en una columna del mismo ancho para que los textos queden alineados. En móvil, uno debajo de otro.
+      -->
+      <p class="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-[0.9375rem] max-md:flex-col max-md:items-start">
         <span class="eyebrow inline-flex items-center gap-2.5 !tracking-[0.14em]">
-          <span class="status-dot" aria-hidden="true"></span>
+          <span class="hero-icon" aria-hidden="true"><span class="status-dot"></span></span>
           <span>{badgeFirst && <span class="max-md:hidden">{badgeFirst} · </span>}{badgeLast}</span>
         </span>
-        <span class="text-white/85"><span class="max-md:block">{statusDate}</span>{statusPlace && <><span class="max-md:hidden"> · </span><span class="max-md:block">{statusPlace}</span></>}</span>
+        <span class="inline-flex items-center gap-2.5 text-white/85"><span class="hero-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5" /><path d="M3.5 10h17M8 3v4M16 3v4" /></svg></span>{statusDate}</span>
+        {statusPlace && <span class="inline-flex items-center gap-2.5 text-white/85"><span class="hero-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z" /><circle cx="12" cy="9.8" r="2.3" /></svg></span>{statusPlace}</span>}
       </p>
       <!-- Una sola acción destacada; el temario, como enlace al lado (debajo en móvil). -->
       <div class="mt-2 flex flex-wrap items-center gap-x-8 gap-y-5">
@@ -295,6 +299,8 @@ const statusPlace = statusRest.join(' · ');
     }
   }
   .course-anchor { scroll-margin-top: 5rem; }
+  /* Columna de iconos de la cabecera (punto, calendario, lugar): mismo ancho para que los textos se alineen. */
+  .hero-icon { display: inline-flex; width: 15px; flex: none; justify-content: center; color: #dccfb6; }
   /* Punto de «inscripciones abiertas» (champán claro, para que destaque sobre la foto), con un halo que late despacio. */
   .status-dot {
     position: relative;

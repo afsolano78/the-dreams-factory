@@ -20,6 +20,7 @@
 import { instagramFeed, instagramImage, updateInstagram, type IgEnv } from './instagram';
 import { cmsAuth, cmsCallback, type CmsAuthEnv } from './cms-auth';
 import { ackEmail } from './ack-email';
+import { LABELS, notifyEmail } from './notify-email';
 
 interface Env extends IgEnv, CmsAuthEnv {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -36,34 +37,6 @@ const MIN_MS = 3000;
 const MAX_BODY = 60_000;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE = /^[+()\d\s.-]{6,}$/;
-
-/** Etiquetas del correo, en el orden en que se muestran. */
-const LABELS: [string, string][] = [
-  ['motivo', 'Qué celebran'],
-  ['nombres', 'Nombres'],
-  ['email', 'Email'],
-  ['telefono', 'Teléfono'],
-  ['contacto', 'Email o teléfono'],
-  ['fecha', 'Fecha'],
-  ['sin_fecha', 'Sin fecha aún'],
-  ['lugar', 'Lugar o zona'],
-  ['invitados', 'Invitados'],
-  ['servicio', 'Servicio'],
-  ['presupuesto', 'Presupuesto orientativo'],
-  ['celebracion', 'Celebración'],
-  ['experiencia', 'Experiencia en eventos'],
-  ['como_nos_conocisteis', 'Cómo nos conocieron'],
-  ['idea', 'Su idea'],
-  ['pagina', 'Enviado desde'],
-  ['idioma', 'Idioma'],
-];
-const MOTIVES: Data = { boda: 'Boda', celebracion: 'Otra celebración', curso: 'Curso' };
-const SERVICES: Data = {
-  integral: 'Organización integral',
-  diseno: 'Diseño y coordinación del día B',
-  coordinacion: 'Coordinación del día B',
-  nose: 'Aún no lo saben',
-};
 
 type Ctx = { waitUntil(p: Promise<unknown>): void };
 
@@ -122,10 +95,7 @@ async function contact(request: Request, env: Env): Promise<Response> {
   }
 
   // 3. Envío.
-  const subject = `Nueva consulta${d.motivo ? ` · ${MOTIVES[d.motivo] ?? d.motivo}` : ''} · ${d.nombres}${d.fecha ? ` · ${d.fecha}` : ''}`;
-  const rows = LABELS.filter(([k]) => d[k]).map(([k, label]) => [label, pretty(k, d[k])] as const);
-  const text = `${subject}\n\n${rows.map(([l, v]) => `${l}: ${v}`).join('\n')}\n`;
-  const html = mailHtml(subject, rows);
+  const { subject, text, html } = notifyEmail(d);
 
   if (!env.RESEND_API_KEY) {
     console.log('[contacto] Envío simulado (falta RESEND_API_KEY):', text);
@@ -176,14 +146,6 @@ function clean(data: Data): Data {
   return out;
 }
 
-function pretty(key: string, value: string): string {
-  if (key === 'motivo') return MOTIVES[value] ?? value;
-  if (key === 'servicio') return SERVICES[value] ?? value;
-  if (key === 'idioma') return value === 'en' ? 'Inglés' : 'Español';
-  if (key === 'sin_fecha') return 'Sí';
-  return value;
-}
-
 async function verifyTurnstile(secret: string, token: string, request: Request): Promise<boolean> {
   if (!token) return false;
   const body = new FormData();
@@ -213,15 +175,6 @@ async function sendMail(key: string, mail: Record<string, unknown>): Promise<boo
     console.log('[contacto] Error al enviar:', e);
     return false;
   }
-}
-
-const esc = (s: string) => s.replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};`);
-
-function mailHtml(subject: string, rows: readonly (readonly [string, string])[]): string {
-  const trs = rows
-    .map(([l, v]) => `<tr><td style="padding:8px 16px 8px 0;color:#806b55;font:12px/1.4 Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;vertical-align:top;white-space:nowrap">${esc(l)}</td><td style="padding:8px 0;color:#222;font:15px/1.5 Arial,sans-serif;white-space:pre-wrap">${esc(v)}</td></tr>`)
-    .join('');
-  return `<div style="max-width:640px"><p style="font:18px/1.4 Georgia,serif;color:#222;margin:0 0 16px">${esc(subject)}</p><table style="border-collapse:collapse">${trs}</table><p style="font:12px/1.4 Arial,sans-serif;color:#888;margin-top:24px">Pulsa «Responder» para contestar directamente a la pareja.</p></div>`;
 }
 
 function json(body: unknown, status = 200, headers: Record<string, string> = {}): Response {

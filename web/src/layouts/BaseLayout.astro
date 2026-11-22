@@ -37,10 +37,13 @@ const ogImage = new URL('/og-image.jpg', site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline>
       document.documentElement.classList.add('js');
-      // Presentación del logo (ver IntroLogo.astro). PROTOTIPO: de momento se muestra en cada carga;
-      // al lanzar, volver a limitarla a la primera visita con: !localStorage.getItem('tdf-intro-seen') && …
+      // Presentación del logo (ver IntroLogo.astro): solo en la portada (/ y /en/) y solo la primera vez que se entra en
+      // la web (al terminar guarda «tdf-intro-seen»). Con ?intro en la dirección se vuelve a ver, para revisarla.
       try {
-        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const home = ['/', '/en', '/en/'].includes(location.pathname);
+        const seen = (() => { try { return !!localStorage.getItem('tdf-intro-seen'); } catch { return false; } })();
+        const force = new URLSearchParams(location.search).has('intro');
+        if ((force || (home && !seen)) && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
           document.documentElement.classList.add('intro');
         }
       } catch {}

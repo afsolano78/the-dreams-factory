@@ -9,6 +9,7 @@
  * - Región opcional [data-carousel-live]: pasa a aria-live="polite" cuando el visitante cambia de diapositiva.
  *
  * El avance lo marca el final de la animación de la barra de progreso, así la pausa detiene todo a la vez.
+ * En pantallas táctiles también se pasa de una a otra deslizando el dedo a los lados.
  */
 export function initFadeCarousel(root: HTMLElement) {
   if (root.dataset.carouselReady) return;
@@ -65,6 +66,22 @@ export function initFadeCarousel(root: HTMLElement) {
   });
 
   toggle?.addEventListener('click', () => setPaused(root.dataset.paused !== 'true'));
+
+  // Deslizar el dedo a los lados (pantallas táctiles): siguiente o anterior. Solo cuenta un gesto claramente
+  // horizontal, para no estorbar al desplazamiento vertical de la página.
+  let startX = 0;
+  let startY = 0;
+  root.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  root.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    live?.setAttribute('aria-live', 'polite');
+    go(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
 
   // Solo avanza mientras se ve: pestaña visible y carrusel dentro de la pantalla.
   document.addEventListener('visibilitychange', () => {

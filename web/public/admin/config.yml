@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.248.0/schema/sveltia-cms.json
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.261.0/schema/sveltia-cms.json
 #
 # Panel de edición de The Dreams Factory (Sveltia CMS): bodas, opiniones y blog, en español e inglés.
 # Cada boda, opinión o entrada es una carpeta con index.es.md, index.en.md y sus fotos (ver src/content.config.ts).

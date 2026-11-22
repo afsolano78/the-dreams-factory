@@ -3,7 +3,7 @@
   Formulario corto del cierre (portada y resto de páginas): nombres, email o teléfono, fecha y la idea.
   Envía al mismo sitio que el completo (/api/contacto) e incluye la página desde la que se escribe.
 */
-import { contactContent } from '../../content/contact';
+import { contactContent, turnstileSiteKey } from '../../content/contact';
 import { path, type Lang } from '../../i18n/routes';
 import Button from '../Button.astro';
 
@@ -11,7 +11,7 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const c = contactContent[lang];
 const s = c.short;
-const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+const turnstileKey = turnstileSiteKey;
 ---
 
 <div class="contact-box" data-contact>
@@ -59,7 +59,7 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undef
       </label>
       <p class="field-error" data-error-for="privacidad" hidden></p>
     </div>
-    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-size="flexible"></div>}
+    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-size="flexible" data-appearance="interaction-only"></div>}
     <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
       <Button type="submit" variant="primary" data-submit>{s.submit}</Button>
       <a href={path('contact', lang)} class="link-draw text-[0.875rem] text-suave hover:text-pino-800">{s.more} →</a>

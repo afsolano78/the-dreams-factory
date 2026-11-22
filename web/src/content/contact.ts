@@ -8,6 +8,14 @@
  */
 import type { Lang } from '../i18n/routes';
 
+/**
+ * Clave pública del antispam (Cloudflare Turnstile, widget «Formulario The Dreams Factory»; la secreta, TURNSTILE_SECRET,
+ * está en el Worker). No es secreta: va dentro de la página. En desarrollo se usa la clave de pruebas de Cloudflare,
+ * que siempre deja pasar, porque la real solo funciona en los dominios de la web.
+ */
+export const turnstileSiteKey: string =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || (import.meta.env.DEV ? '1x00000000000000000000AA' : '0x4AAAAAAGM8t2A7p2ts9LT3');
+
 export type Motive = 'boda' | 'celebracion' | 'curso';
 export type ServiceKey = 'integral' | 'diseno' | 'coordinacion' | 'nose';
 

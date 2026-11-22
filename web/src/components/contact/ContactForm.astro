@@ -7,14 +7,14 @@
   diseno|coordinacion y ?boda=I%20%26%20A (empieza el mensaje con «Nos encantó la boda de…»).
   Envío, validación y pasos: src/scripts/contact-form.ts. Sin JavaScript, el formulario se envía igualmente.
 */
-import { contactContent } from '../../content/contact';
+import { contactContent, turnstileSiteKey } from '../../content/contact';
 import { path, type Lang } from '../../i18n/routes';
 import Button from '../Button.astro';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const c = contactContent[lang];
-const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+const turnstileKey = turnstileSiteKey;
 ---
 
 <div class="contact-box" data-contact>
@@ -174,7 +174,7 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undef
       <p class="field-error" data-error-for="privacidad" hidden></p>
       <p class="text-[0.8125rem] text-suave">{c.privacy.basic}</p>
     </div>
-    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-size="flexible"></div>}
+    {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-size="flexible" data-appearance="interaction-only"></div>}
   </fieldset>
 
   <!-- Botones -->

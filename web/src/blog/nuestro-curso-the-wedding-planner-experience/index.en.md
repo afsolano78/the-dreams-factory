@@ -14,7 +14,7 @@ gallery:
   - src: aula-03.jpg
     alt: The students raise a toast in the palace kitchen.
   - src: aula-04.jpg
-    alt: A student arranges a flower centrepiece.
+    alt: Bea arranges a flower centrepiece.
   - src: aula-05.jpg
     alt: The students set a table together in the glazed gallery.
   - src: aula-06.jpg

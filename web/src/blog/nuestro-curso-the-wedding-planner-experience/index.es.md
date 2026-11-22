@@ -13,7 +13,7 @@ gallery:
   - src: aula-03.jpg
     alt: Las alumnas brindan en la cocina del palacio.
   - src: aula-04.jpg
-    alt: Una alumna prepara un centro de flores.
+    alt: Bea prepara un centro de flores.
   - src: aula-05.jpg
     alt: Las alumnas montan juntas una mesa en la galería acristalada.
   - src: aula-06.jpg

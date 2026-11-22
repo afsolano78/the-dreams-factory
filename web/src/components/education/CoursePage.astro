@@ -79,15 +79,18 @@ const statusPlace = statusRest.join(' · ');
       <p class="lead max-w-[36rem]">{c.hero.lead}</p>
       <!--
         Estado de la edición (un punto, sin recuadro, para que no se confunda con un botón), fecha y lugar, cada uno con
-        su icono en una columna del mismo ancho para que los textos queden alineados. En móvil, uno debajo de otro.
+        su icono en una columna del mismo ancho para que los textos queden alineados. El estado va en su línea y debajo la
+        fecha y el lugar, juntos en ordenador y uno debajo de otro en móvil.
       -->
-      <p class="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-[0.9375rem] max-md:flex-col max-md:items-start">
+      <p class="flex flex-col items-start gap-2.5 text-[0.9375rem]">
         <span class="eyebrow inline-flex items-center gap-2.5 !tracking-[0.14em]">
           <span class="hero-icon" aria-hidden="true"><span class="status-dot"></span></span>
           <span>{badgeFirst && <span class="max-md:hidden">{badgeFirst} · </span>}{badgeLast}</span>
         </span>
+        <span class="flex flex-wrap gap-x-7 gap-y-2.5 max-md:flex-col">
         <span class="inline-flex items-center gap-2.5 text-white/85"><span class="hero-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5" /><path d="M3.5 10h17M8 3v4M16 3v4" /></svg></span>{statusDate}</span>
         {statusPlace && <span class="inline-flex items-center gap-2.5 text-white/85"><span class="hero-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z" /><circle cx="12" cy="9.8" r="2.3" /></svg></span>{statusPlace}</span>}
+        </span>
       </p>
       <!-- Una sola acción destacada; el temario, como enlace al lado (debajo en móvil). -->
       <div class="mt-2 flex flex-wrap items-center gap-x-8 gap-y-5">

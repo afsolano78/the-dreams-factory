@@ -20,16 +20,21 @@ Para probar **antes** de verificar el dominio: Resend solo permite enviar desde 
 email de la propia cuenta. Se puede poner temporalmente `CONTACT_FROM = "onboarding@resend.dev"` y
 `CONTACT_TO` = el email de la cuenta de Resend.
 
-## 2. Acuse de recibo a la pareja (opcional)
+## 2. Acuse de recibo a la pareja
 
-Con el dominio verificado, poner `"AUTOREPLY": "si"` en `wrangler.jsonc`. El texto está en `worker/index.ts`.
+Activo (`"AUTOREPLY": "si"` en `wrangler.jsonc`). El texto está en `worker/index.ts`.
 
-## 3. Antispam invisible (Cloudflare Turnstile, opcional pero recomendado)
+## 3. Antispam invisible (Cloudflare Turnstile)
 
-1. Cloudflare → *Turnstile → Add widget*, modo **Managed**, con los dominios de la web.
-2. La **clave del sitio** (pública) → *Workers & Pages → dreams-factory-prototipo → Settings → Build → Variables*:
-   `PUBLIC_TURNSTILE_SITE_KEY` (se usa al construir la web).
-3. La **clave secreta** → *Settings → Variables and Secrets*: secreto `TURNSTILE_SECRET`.
+Activo desde el 22-11-2026 (widget «Formulario The Dreams Factory», modo Managed, solo visible si hace falta
+interactuar).
+
+1. Cloudflare → *Turnstile*: el widget admite los dominios del prototipo (`*.workers.dev`), `thedreamsfactory.es` y
+   `www.thedreamsfactory.es`. Si cambia el dominio, hay que añadirlo ahí.
+2. La **clave del sitio** (pública) está en `src/content/contact.ts` (`turnstileSiteKey`). En desarrollo se usa la
+   clave de pruebas de Cloudflare.
+3. La **clave secreta** → *Settings → Variables and Secrets*: secreto `TURNSTILE_SECRET`. Sin ella el servidor no
+   comprueba los tokens (en *Turnstile → Analytics* sale «Siteverify isn't being called»).
 
 Sin Turnstile siguen activos el campo trampa y el control de tiempo.
 

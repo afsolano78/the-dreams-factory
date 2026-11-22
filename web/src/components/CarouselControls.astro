@@ -2,6 +2,7 @@
 /*
   Barras de progreso (que también sirven para saltar a una diapositiva) y botón de pausa.
   Con `thumbs`, cada botón muestra además una miniatura redonda (opiniones: la foto de cada pareja).
+  Con `compact`, en móvil todo más discreto: barras cortas a la izquierda y pausa pequeña sin círculo (portada).
 */
 import { Image } from 'astro:assets';
 interface Props {
@@ -13,15 +14,17 @@ interface Props {
   thumbFocus?: (string | undefined)[];
   /** Duración de cada diapositiva en ms, si alguna no usa la general (--interval del carrusel). */
   durations?: (number | undefined)[];
+  /** Versión discreta en móvil (ver arriba). */
+  compact?: boolean;
   pauseLabel: string;
   playLabel: string;
   class?: string;
 }
-const { labels, thumbs, thumbFocus, durations, pauseLabel, playLabel, class: className = '' } = Astro.props;
+const { labels, thumbs, thumbFocus, durations, compact = false, pauseLabel, playLabel, class: className = '' } = Astro.props;
 ---
 
-<div class={`flex w-full items-center gap-4 ${className}`}>
-  <ol class:list={['flex flex-1', thumbs ? 'justify-center gap-2 sm:gap-3' : 'gap-2']}>
+<div class:list={['flex w-full items-center gap-4', { 'max-md:gap-2': compact }, className]}>
+  <ol class:list={['flex flex-1', thumbs ? 'justify-center gap-2 sm:gap-3' : 'gap-2', { 'max-md:max-w-[7.5rem] max-md:gap-1': compact }]}>
     {
       labels.map((label, i) => (
         <li class:list={[thumbs ? 'flex-none' : 'flex-1']}>
@@ -36,7 +39,7 @@ const { labels, thumbs, thumbFocus, durations, pauseLabel, playLabel, class: cla
             {thumbs && (
               <Image src={thumbs[i]} alt="" width={96} height={96} class="thumb-img size-10 rounded-full object-cover sm:size-12" style={thumbFocus?.[i] ? `object-position:${thumbFocus[i]}` : undefined} />
             )}
-            <span class="block h-[2px] w-full overflow-hidden bg-white/30 group-hover:bg-white/50">
+            <span class:list={['block h-[2px] w-full overflow-hidden bg-white/30 group-hover:bg-white/50', { 'max-md:h-px': compact }]}>
               <span class="carousel-bar block h-full w-full bg-white" />
             </span>
           </button>
@@ -46,7 +49,7 @@ const { labels, thumbs, thumbFocus, durations, pauseLabel, playLabel, class: cla
   </ol>
   <button
     type="button"
-    class="grid size-9 shrink-0 place-items-center rounded-full border border-white/50 hover:bg-white/15"
+    class:list={['grid size-9 shrink-0 place-items-center rounded-full border border-white/50 hover:bg-white/15', { 'max-md:size-8 max-md:border-transparent max-md:opacity-80': compact }]}
     data-carousel-pause
     data-pause-label={pauseLabel}
     data-play-label={playLabel}

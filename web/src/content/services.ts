@@ -44,11 +44,11 @@ export type ServicesContent = {
 export const servicesContent: Record<Lang, ServicesContent> = {
   es: {
     meta: {
-      title: 'Servicios de wedding planner en Asturias · The Dreams Factory',
+      title: 'Servicios · The Dreams Factory, wedding planners en Asturias',
       description: 'Organización integral, diseño y coordinación del día B, coordinación del día B y celebraciones a medida en Asturias. Os acompañamos tanto como necesitéis.',
     },
     intro: {
-      eyebrow: 'Servicios',
+      eyebrow: 'Wedding planner en Asturias',
       title: 'Os acompañamos\n*tanto como necesitéis*',
       lead: 'Cada boda es distinta, y también lo que cada pareja necesita de nosotras. Estas son las formas en que podemos acompañaros.',
       jumpLabel: 'Ir a',
@@ -167,11 +167,11 @@ export const servicesContent: Record<Lang, ServicesContent> = {
   },
   en: {
     meta: {
-      title: 'Wedding planning services in Asturias, Spain · The Dreams Factory',
+      title: 'Wedding planning services in Asturias · The Dreams Factory',
       description: 'Full planning, design & wedding-day coordination, wedding-day coordination and bespoke celebrations in Asturias. We’re by your side as much as you need.',
     },
     intro: {
-      eyebrow: 'Services',
+      eyebrow: 'Wedding planner in Asturias',
       title: 'By your side,\n*as much as you need*',
       lead: 'Every wedding is different, and so is what each couple needs from us. These are the ways we can be there for you.',
       jumpLabel: 'Go to',

@@ -27,6 +27,8 @@ export type Wedding = {
   service?: Service;
   photographer: string;
   cover: WeddingPhoto;
+  /** Descripción para Google y redes (unos 150 caracteres). Si falta, se compone con la pareja, el lugar y la zona. */
+  description?: T;
   /** Solo las bodas con fotos en la galería. */
   page?: {
     hero: WeddingPhoto;
@@ -56,7 +58,7 @@ export const weddingsPage: Record<Lang, {
       title: 'Bodas en Asturias · The Dreams Factory',
       description: 'Bodas reales que hemos organizado, diseñado y coordinado en palacios, castillos, casas de campo y montaña de Asturias.',
     },
-    eyebrow: 'Bodas',
+    eyebrow: 'Bodas en Asturias',
     title: 'Días que *seguimos recordando*',
     lead: 'Cada boda es la historia de una pareja. Estas son algunas de las que hemos tenido la suerte de acompañar en Asturias, cada una a su manera.',
     services: { integral: 'Organización integral', diseno: 'Diseño y coordinación del día B', coordinacion: 'Coordinación del día B' },
@@ -83,7 +85,7 @@ export const weddingsPage: Record<Lang, {
       title: 'Weddings in Asturias, Spain · The Dreams Factory',
       description: 'Real weddings we have planned, designed and coordinated in palaces, castles, country houses and mountain venues in Asturias.',
     },
-    eyebrow: 'Weddings',
+    eyebrow: 'Weddings in Asturias',
     title: 'Days we *still remember*',
     lead: 'Every wedding tells a couple’s story. These are some of the ones we have been lucky enough to be part of in Asturias, each in its own way.',
     services: { integral: 'Full planning', diseno: 'Design & wedding-day coordination', coordinacion: 'Wedding-day coordination' },
@@ -127,6 +129,7 @@ function toWedding(folder: string, es: Entry, en: Entry = es): Wedding {
     service: e.service,
     photographer: e.photographer,
     cover: photo(e.cover, e.coverAlt, n.coverAlt, e.coverFocus),
+    description: e.description ? { es: e.description, en: n.description || e.description } : undefined,
   };
   if (e.gallery.length) {
     wedding.page = {

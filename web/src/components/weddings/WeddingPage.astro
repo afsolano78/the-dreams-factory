@@ -18,6 +18,7 @@ import ClosingCta from '../home/ClosingCta.astro';
 import { getWeddings, weddingsPage, weddingHref, type Wedding } from '../../content/weddings';
 import { home } from '../../content/home';
 import { path, type Lang } from '../../i18n/routes';
+import { withBrand, breadcrumbJsonLd } from '../../lib/seo';
 
 interface Props { lang: Lang; wedding: Wedding }
 const { lang, wedding: w } = Astro.props;
@@ -25,10 +26,20 @@ const page = w.page!;
 const c = weddingsPage[lang];
 const d = c.detail;
 const alternates = { es: weddingHref(w, 'es'), en: weddingHref(w, 'en') };
-const venue = w.place.split(' · ')[0];
-const title = lang === 'es' ? `Boda de ${w.couple} en ${venue} · The Dreams Factory` : `${w.couple}’s wedding at ${venue} · The Dreams Factory`;
+const [venue, zone] = w.place.split(' · ');
+const where = zone ? `${venue} (${zone})` : venue;
+const title = withBrand(lang === 'es' ? `Boda de ${w.couple} en ${venue}` : `${w.couple}’s wedding at ${venue}`);
+// Para Google: la descripción de la boda o, si no tiene, una frase con pareja, lugar y zona (cabe en ~155 caracteres).
 const description =
-  page.story[lang].join(' ') || (lang === 'es' ? `La boda de ${w.couple} en ${w.place}.` : `${w.couple}’s wedding at ${w.place}.`);
+  w.description?.[lang] ||
+  (lang === 'es'
+    ? `Boda de ${w.couple} en ${where}, organizada por The Dreams Factory, wedding planners en Asturias.`
+    : `${w.couple}’s wedding at ${where}, by The Dreams Factory, wedding planners in Asturias, Spain.`);
+const breadcrumb = breadcrumbJsonLd([
+  [lang === 'es' ? 'Inicio' : 'Home', path('home', lang)],
+  [lang === 'es' ? 'Bodas' : 'Weddings', path('weddings', lang)],
+  [w.couple, alternates[lang]],
+]);
 
 // La ficha muestra solo los datos que tiene la boda.
 const facts = [
@@ -45,7 +56,7 @@ const i = weddings.findIndex((x) => x.slug.es === w.slug.es);
 const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]).filter((m) => m !== weddings[i]);
 ---
 
-<BaseLayout lang={lang} routeKey="weddings" alternates={alternates} title={title} description={description} overlayHeader>
+<BaseLayout lang={lang} routeKey="weddings" alternates={alternates} title={title} description={description} image={page.hero.src} jsonLd={[breadcrumb]} overlayHeader>
   <!-- 1. Foto a sangre -->
   <section class="relative isolate flex h-[86svh] max-h-[900px] min-h-[560px] items-end overflow-hidden bg-pino-900 text-white">
     <Picture

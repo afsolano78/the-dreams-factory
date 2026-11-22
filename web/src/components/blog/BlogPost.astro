@@ -16,6 +16,8 @@ import { weddingsPage } from '../../content/weddings';
 import { press } from '../../i18n/ui';
 import { blogUi, langOf, getPosts, postHref, readingMinutes, formatDate, translationOf, type Post } from '../../lib/blog';
 import { path, type Lang } from '../../i18n/routes';
+import { withBrand, breadcrumbJsonLd, blogPostingJsonLd, absolute } from '../../lib/seo';
+import { getImage } from 'astro:assets';
 
 interface Props { post: Post }
 const { post } = Astro.props;
@@ -31,9 +33,20 @@ const alternates = { [lang]: postHref(post), [other]: twin ? postHref(twin) : pa
 // Sigue leyendo: primero las del mismo tema, luego las más recientes.
 const all = (await getPosts(lang)).filter((p) => p.id !== post.id);
 const related = [...all.filter((p) => p.data.category === post.data.category), ...all.filter((p) => p.data.category !== post.data.category)].slice(0, 3);
+
+// Para Google: el artículo (con sus autoras y su foto) y las migas de pan.
+const shareImage = await getImage({ src: post.data.cover, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 });
+const jsonLd = [
+  blogPostingJsonLd({ lang, title: post.data.title, description: post.data.description, path: postHref(post), image: absolute(shareImage.src), date: post.data.date }),
+  breadcrumbJsonLd([
+    [lang === 'es' ? 'Inicio' : 'Home', path('home', lang)],
+    ['Blog', path('blog', lang)],
+    [post.data.title, postHref(post)],
+  ]),
+];
 ---
 
-<BaseLayout lang={lang} routeKey="blog" alternates={alternates} title={`${post.data.title} · The Dreams Factory`} description={post.data.description}>
+<BaseLayout lang={lang} routeKey="blog" alternates={alternates} title={withBrand(post.data.title)} description={post.data.description} image={post.data.cover} type="article" jsonLd={jsonLd}>
   <article>
     <header class="bg-porcelana-50 pb-10 pt-12 md:pt-16">
       <div class="container-brand flex max-w-[52rem] flex-col gap-5" data-reveal>

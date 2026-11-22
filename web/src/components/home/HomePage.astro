@@ -10,6 +10,7 @@ import BlogTeaser from './BlogTeaser.astro';
 import ClosingCta from './ClosingCta.astro';
 import InstagramStrip from './InstagramStrip.astro';
 import { home } from '../../content/home';
+import { businessJsonLd, websiteJsonLd } from '../../lib/seo';
 import type { Lang } from '../../i18n/routes';
 
 interface Props { lang: Lang }
@@ -17,7 +18,7 @@ const { lang } = Astro.props;
 const c = home[lang];
 ---
 
-<BaseLayout lang={lang} routeKey="home" title={c.meta.title} description={c.meta.description} overlayHeader>
+<BaseLayout lang={lang} routeKey="home" title={c.meta.title} description={c.meta.description} overlayHeader jsonLd={[businessJsonLd(lang), websiteJsonLd(lang)]}>
   <Hero lang={lang} c={c.hero} />
   <Story lang={lang} c={c.story} />
   <ServicesTeaser lang={lang} c={c.services} />

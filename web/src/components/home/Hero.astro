@@ -79,6 +79,7 @@ const slideTexts = c.slides.map((s, i) => ({
             <div class:list={['fade-text flex flex-col gap-7', { 'is-active is-initial': s === 0 }]} data-slide={s} aria-hidden={s === 0 ? 'false' : 'true'}>
               {s === 0 ? (
                 <h1 class="display-xl">
+                  <span class="sr-only">{c.eyebrow}: </span>
                   {titleLines.map((line, i) => (
                     <span class="title-line">
                       <span class="title-line-inner" style={`--d:${250 + i * 140}ms`} set:html={emphasize(line)} />

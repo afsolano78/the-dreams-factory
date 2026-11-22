@@ -83,8 +83,8 @@ const aulaEn: Photo[] = [
 export const course: Record<Lang, CourseContent> = {
   es: {
     meta: {
-      title: 'The Wedding Planner Experience · Curso de wedding planner en Asturias · The Dreams Factory',
-      description: 'Curso intensivo de tres días para futuras wedding planners, impartido por Bea y Vane. Nueva edición el 29, 30 y 31 de enero de 2027 en el Palacio de La Riega (Gijón). Inscripciones abiertas.',
+      title: 'Curso de wedding planner en Asturias · The Dreams Factory',
+      description: 'Curso intensivo de tres días para futuras wedding planners, con Bea y Vane. Próxima edición: 29–31 de enero de 2027 en el Palacio de La Riega (Gijón).',
     },
     hero: {
       eyebrow: 'Formación · Para futuras wedding planners',
@@ -194,8 +194,8 @@ export const course: Record<Lang, CourseContent> = {
   },
   en: {
     meta: {
-      title: 'The Wedding Planner Experience · Wedding planner course in Asturias, Spain · The Dreams Factory',
-      description: 'An intensive three-day course for future wedding planners, taught by Bea and Vane. New edition on 29, 30 and 31 January 2027 at Palacio de La Riega (Gijón, Spain). Registration open.',
+      title: 'Wedding planner course in Asturias · The Dreams Factory',
+      description: 'A three-day intensive course for future wedding planners, with Bea and Vane. Next edition: 29–31 January 2027 at Palacio de La Riega, Gijón (Spain).',
     },
     hero: {
       eyebrow: 'Education · For future wedding planners',

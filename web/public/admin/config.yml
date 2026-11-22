@@ -64,6 +64,12 @@ collections:
     fields:
       - { name: couple, label: Pareja (iniciales), widget: string, i18n: duplicate, hint: 'Por ejemplo: «I & A».' }
       - { name: place, label: Lugar, widget: string, i18n: duplicate, hint: 'Lugar y zona separados por « · », por ejemplo: «Palacio de La Riega · Gijón».' }
+      - name: description
+        label: Descripción para Google (opcional)
+        widget: text
+        required: false
+        i18n: true
+        hint: 'Una o dos frases, unos 150 caracteres: lo que sale bajo el título en Google y al compartir. Si se deja vacía, la web pone «Boda de … en …, organizada por The Dreams Factory, wedding planners en Asturias».'
       - name: order
         label: Orden en el listado
         widget: number

@@ -54,6 +54,8 @@ const weddings = defineCollection({
       couple: z.string(),
       /** «Lugar · Zona». */
       place: z.string(),
+      /** Descripción para Google y redes (unos 150 caracteres). Si falta, la web compone una. */
+      description: z.string().optional(),
       /** Posición en el listado: las de número más bajo, primero. */
       order: z.coerce.number().default(0),
       /** Servicio contratado (vacío si no se indica). */

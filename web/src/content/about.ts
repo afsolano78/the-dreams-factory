@@ -40,7 +40,7 @@ const studiesEn = 'Camilo José Cela University and the Higher Institute of Prot
 export const about: Record<Lang, AboutContent> = {
   es: {
     meta: {
-      title: 'Nosotras · Bea y Vane, wedding planners en Asturias · The Dreams Factory',
+      title: 'Nosotras · Bea y Vane, wedding planners en Asturias',
       description: 'Somos Bea y Vane, wedding planners en Asturias desde 2015. Conoce nuestra historia y cómo trabajamos.',
     },
     hero: {
@@ -114,7 +114,7 @@ export const about: Record<Lang, AboutContent> = {
   },
   en: {
     meta: {
-      title: 'About us · Bea and Vane, wedding planners in Asturias · The Dreams Factory',
+      title: 'About us · Bea and Vane, wedding planners in Asturias',
       description: 'We are Bea and Vane, wedding planners in Asturias, Spain, since 2015. Discover our story and how we work.',
     },
     hero: {

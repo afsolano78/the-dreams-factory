@@ -37,8 +37,11 @@ const contactHref = (anchor: string) => `${path('contact', lang)}${serviceKey[an
   <section class="relative isolate bg-porcelana-50 pb-16 pt-14 md:pb-20 md:pt-20">
     <div class="container-brand flex flex-col gap-12">
       <div class="flex max-w-[48rem] flex-col gap-6" data-reveal>
-        <p class="eyebrow eyebrow-line text-malva-500">{c.intro.eyebrow}</p>
-        <h1 class="display-xl text-pino-800" set:html={emphasize(c.intro.title)} />
+        <!-- El rótulo va dentro del H1 para que el titular de la página diga qué es y dónde (para Google). -->
+        <h1 class="flex flex-col gap-6">
+          <span class="eyebrow eyebrow-line text-malva-500">{c.intro.eyebrow}</span>
+          <span class="display-xl text-pino-800" set:html={emphasize(c.intro.title)} />
+        </h1>
         <p class="lead max-w-[38rem]">{c.intro.lead}</p>
       </div>
       <nav aria-label={c.intro.eyebrow} data-reveal style="--reveal-delay:120ms">

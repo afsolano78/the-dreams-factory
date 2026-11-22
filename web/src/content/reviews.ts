@@ -46,7 +46,7 @@ export const reviewsPage: Record<Lang, {
 }> = {
   es: {
     meta: {
-      title: 'Opiniones de parejas · The Dreams Factory, wedding planners en Asturias',
+      title: 'Opiniones · The Dreams Factory, wedding planners en Asturias',
       description: 'Lo que dicen las parejas que han confiado en Bea y Vane para organizar, diseñar y coordinar su boda en Asturias.',
     },
     eyebrow: 'Opiniones',
@@ -72,7 +72,7 @@ export const reviewsPage: Record<Lang, {
   },
   en: {
     meta: {
-      title: 'Reviews from couples · The Dreams Factory, wedding planners in Asturias',
+      title: 'Reviews · The Dreams Factory, wedding planners in Asturias',
       description: 'What couples say about Bea and Vane, who planned, designed and coordinated their weddings in Asturias, Spain.',
     },
     eyebrow: 'Reviews',

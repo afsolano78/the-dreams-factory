@@ -199,7 +199,7 @@ export const contactContent: Record<Lang, ContactContent> = {
   },
   en: {
     meta: {
-      title: 'Contact · The Dreams Factory, wedding planners in Asturias, Spain',
+      title: 'Contact · The Dreams Factory, wedding planners in Asturias',
       description: 'Tell us your idea: write to us, call us or send us a WhatsApp. We plan weddings in Asturias, in northern Spain.',
     },
     eyebrow: 'Contact',

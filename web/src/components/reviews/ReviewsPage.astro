@@ -12,7 +12,7 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import ClosingCta from '../home/ClosingCta.astro';
-import { reviews, reviewsPage, featuredReview } from '../../content/reviews';
+import { reviewsPage, getReviews } from '../../content/reviews';
 import { getWeddings, weddingHref } from '../../content/weddings';
 import { home } from '../../content/home';
 import { emphasize, type Lang } from '../../i18n/routes';
@@ -20,7 +20,8 @@ import { emphasize, type Lang } from '../../i18n/routes';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const c = reviewsPage[lang];
-const f = featuredReview;
+const { reviews, featured } = await getReviews();
+const f = featured ?? reviews[0];
 const rest = reviews.filter((r) => r !== f);
 const weddings = await getWeddings();
 /** Enlace a la página de su boda, solo si ya la tiene. */

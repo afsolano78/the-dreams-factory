@@ -4,6 +4,7 @@
  * Cada entrada es una carpeta con una versión por idioma (index.es.md e index.en.md) y sus fotos al lado:
  * - blog: src/blog/<dirección-en-español>/
  * - bodas: src/weddings/<dirección-en-español>/
+ * - opiniones: src/reviews/<pareja>/ (no tienen página propia: salen en /opiniones)
  * La dirección en español es el nombre de la carpeta; la inglesa, el campo `url` de index.en.md (si falta, la misma).
  *
  * Las fotos se escriben con su nombre («portada.jpg», como las guarda el panel) o con ruta relativa («./portada.jpg»).
@@ -76,4 +77,26 @@ const weddings = defineCollection({
     }),
 });
 
-export const collections = { blog, weddings };
+const reviews = defineCollection({
+  loader: loader('./src/reviews'),
+  schema: ({ image }) =>
+    z.object({
+      /** Nombres de pila de la pareja («Nadia y Tomás» / «Nadia & Tomás»). */
+      couple: z.string(),
+      /** Posición en el mosaico: las de número más bajo, primero. */
+      order: z.coerce.number().default(0),
+      /** La que se muestra entera en su propio bloque (si hay varias, la primera). */
+      featured: z.boolean().default(false),
+      place: z.string().optional(),
+      /** Iniciales de su boda en el listado de Bodas (si tiene página, la tarjeta enlaza a ella). */
+      wedding: z.string().optional(),
+      /** La frase que se destaca en la tarjeta, sin comillas (las pone la web). */
+      highlight: z.string(),
+      photo: z.preprocess((v) => rel(v) || undefined, image().optional()),
+      photoFocus: z.string().optional(),
+      /** Fotógrafo de la foto. */
+      credit: z.string().optional(),
+    }),
+});
+
+export const collections = { blog, weddings, reviews };

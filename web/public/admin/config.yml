@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.248.0/schema/sveltia-cms.json
 #
-# Panel de edición de The Dreams Factory (Sveltia CMS): bodas y blog, en español e inglés.
-# Cada boda o entrada es una carpeta con index.es.md, index.en.md y sus fotos (ver src/content.config.ts).
+# Panel de edición de The Dreams Factory (Sveltia CMS): bodas, opiniones y blog, en español e inglés.
+# Cada boda, opinión o entrada es una carpeta con index.es.md, index.en.md y sus fotos (ver src/content.config.ts).
 # Al guardar, el panel hace un commit en `main` y Cloudflare publica la web en uno o dos minutos.
 # El inicio de sesión va por worker/cms-auth.ts (la dirección la pone index.html). Guía: web/PANEL.md.
 
@@ -96,7 +96,7 @@ collections:
         required: false
         i18n: duplicate
         hint: 'Horizontal y vertical en %, por ejemplo «50% 30%» (centro, un poco arriba). Vacío = el centro.'
-      - { name: hero, label: Foto grande de su página (opcional), widget: image, required: false, i18n: duplicate, hint: Si no hay, se usa la del listado. }
+      - { name: hero, label: Foto grande de su página (opcional), widget: image, required: false, i18n: duplicate, hint: 'Si no hay, se usa la del listado.' }
       - { name: heroAlt, label: Qué se ve en la foto grande, widget: string, required: false, i18n: true }
       - { name: heroFocus, label: Punto de la foto grande que no se recorta (opcional), widget: string, required: false, i18n: duplicate }
       - name: gallery
@@ -134,6 +134,76 @@ collections:
         required: false
         i18n: true
         hint: 'Solo en la versión en inglés, por ejemplo «i-and-a-palacio-de-la-riega». Si se deja vacía, se usa la española.'
+
+  # ---------------------------------------------------------------- Opiniones
+  - name: opiniones
+    label: Opiniones
+    label_singular: Opinión
+    description: >-
+      Las opiniones de /opiniones. En español va el texto original de la pareja (solo se corrigen erratas); en inglés,
+      su traducción.
+    folder: web/src/reviews
+    path: '{{slug}}/index'
+    extension: md
+    format: frontmatter
+    media_folder: ''
+    public_folder: ''
+    create: true
+    delete: true
+    slug: '{{couple}}'
+    identifier_field: couple
+    summary: '{{couple}}'
+    sortable_fields:
+      fields: [order, couple]
+      default: { field: order, direction: ascending }
+    i18n: true
+    fields:
+      - { name: couple, label: Pareja, widget: string, i18n: true, hint: 'Solo los nombres de pila: «Nadia y Tomás» (en inglés, «Nadia & Tomás»).' }
+      - name: order
+        label: Orden
+        widget: number
+        value_type: int
+        default: 0
+        i18n: duplicate
+        hint: Las de número más bajo salen primero. Mejor que la primera tenga foto y que las que no tienen se intercalen.
+      - name: featured
+        label: Opinión destacada
+        widget: boolean
+        default: false
+        required: false
+        i18n: duplicate
+        hint: Se muestra entera, con su foto, en su propio bloque. Marcad solo una.
+      - name: highlight
+        label: Frase destacada
+        widget: string
+        i18n: true
+        hint: La frase que se lee en grande en la tarjeta, copiada de su texto y sin comillas (las pone la web).
+      - { name: place, label: Lugar, widget: string, required: false, i18n: duplicate }
+      - name: wedding
+        label: Su boda en la web (opcional)
+        widget: relation
+        collection: bodas
+        value_field: couple
+        search_fields: [couple, place]
+        display_fields: ['{{couple}} · {{place}}']
+        required: false
+        i18n: duplicate
+        hint: Si su boda tiene página, la tarjeta enlaza a ella («Ver su boda»).
+      - { name: photo, label: Foto (opcional), widget: image, required: false, i18n: duplicate, hint: 'Una foto de su boda, con su permiso.' }
+      - name: photoFocus
+        label: Punto de la foto que no se recorta (opcional)
+        widget: string
+        required: false
+        i18n: duplicate
+        hint: 'Horizontal y vertical en %, por ejemplo «50% 30%». Vacío = el centro.'
+      - { name: credit, label: Fotógrafo de la foto, widget: string, required: false, i18n: duplicate }
+      - name: body
+        label: Su opinión
+        widget: markdown
+        i18n: true
+        buttons: [bold, italic]
+        editor_components: []
+        hint: El texto completo, en uno o varios párrafos.
 
   # ---------------------------------------------------------------- Blog
   - name: blog
@@ -209,4 +279,4 @@ collections:
         required: false
         i18n: true
         hint: 'Solo en la versión en inglés, por ejemplo «why-hire-a-wedding-planner». Si se deja vacía, se usa la española.'
-      - { name: legacyPath, label: Dirección en la web antigua, widget: hidden, required: false, i18n: duplicate }
+      - { name: legacyPath, label: Dirección en la web antigua, widget: hidden, i18n: duplicate }

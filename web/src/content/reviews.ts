@@ -1,24 +1,20 @@
 /**
  * Página «Opiniones» (/opiniones, /en/reviews). ES y EN.
  *
+ * Aquí están los textos de la página. Las opiniones están en src/reviews/<pareja>/ (index.es.md con el original,
+ * index.en.md traducido y su foto al lado) y Bea y Vane las editan desde el panel (/admin).
+ *
  * Origen: las opiniones publicadas en la web antigua (2017-2020), sin las de Sonia y Alberto, Patricia y Gerardo,
- * Nuria y Manel y Katherine y Albano (quitadas a petición de Bea y Vane, para no alargar la página), y las más recientes de su ficha de Google (sin foto). Literales: solo se corrigen erratas. En inglés
- * van traducidas, con un aviso de que el original está en español. Las parejas, solo por su nombre de pila (en las de
- * Google, el de quien la escribió).
- * `wedding`: iniciales de su boda en el listado de Bodas (si tiene página, la tarjeta enlaza a ella).
- * No se añaden más: para el resto, los enlaces de «Encuéntranos también en» (Google y Bodas.net).
+ * Nuria y Manel y Katherine y Albano (quitadas a petición de Bea y Vane, para no alargar la página), y las más
+ * recientes de su ficha de Google (sin foto). Literales: solo se corrigen erratas. Las parejas, solo por su nombre de
+ * pila (en las de Google, el de quien la escribió). Para el resto, los enlaces de «Encuéntranos también en».
+ *
+ * Orden del mosaico (campo `order`): casi siempre de la más reciente a la más antigua, pero las que no tienen foto
+ * van intercaladas entre las que sí, y la primera siempre lleva foto.
  */
 import type { ImageMetadata } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Lang } from '../i18n/routes';
-import fotoNadiaTomas from '../assets/photos/opiniones/nadia-tomas.jpg';
-import fotoPaulaDavid from '../assets/photos/opiniones/paula-david.jpg';
-import fotoOlayaDavid from '../assets/photos/opiniones/olaya-david.jpg';
-import fotoMartaOmar from '../assets/photos/opiniones/marta-omar.jpg';
-import fotoAlbaDani from '../assets/photos/opiniones/alba-dani.jpg';
-import fotoMariaGaspar from '../assets/photos/opiniones/maria-gaspar.jpg';
-import fotoDavidGerman from '../assets/photos/opiniones/david-german.jpg';
-import fotoBeatrizDaniel from '../assets/photos/opiniones/beatriz-daniel.jpg';
-import fotoAidaAdrian from '../assets/photos/opiniones/aida-adrian.jpg';
 
 type T = Record<Lang, string>;
 
@@ -103,206 +99,54 @@ export const reviewsPage: Record<Lang, {
   },
 };
 
+type Entry = CollectionEntry<'reviews'>;
+
+/** Párrafos del texto, sin las marcas de Markdown más comunes. */
+const paragraphs = (body = '') =>
+  body
+    .split(/\n\s*\n/)
+    .map((p) => p.replace(/\s*\n\s*/g, ' ').replace(/(\*\*|__|\*|_)(.+?)\1/g, '$2').trim())
+    .filter(Boolean);
+
+/** La frase destacada se escribe sin comillas; aquí se ponen las de cada idioma. */
+const quote = { es: (t: string) => `«${t}»`, en: (t: string) => `“${t}”` };
+
+let cache: Promise<{ reviews: Review[]; featured?: Review }> | undefined;
+
 /**
- * Orden del mosaico: casi siempre de la más reciente a la más antigua, pero las que no tienen foto (Sara y Almudena)
- * van intercaladas entre las que sí, y la primera siempre lleva foto. La destacada (`featured`) se muestra entera en
- * su propio bloque.
+ * Todas las opiniones en el orden del mosaico y la destacada (`featured`), que se muestra entera en su propio bloque.
+ * En inglés, lo que falte se toma del español.
  */
-export const reviews: Review[] = [
-  {
-    couple: { es: 'Nadia y Tomás', en: 'Nadia & Tomás' },
-    place: 'Arenas de Cabrales · Picos de Europa', wedding: 'N & T',
-    highlight: { es: '«Nuestra boda fue perfecta, 100 % perfecta, y todo gracias a ellas.»', en: '“Our wedding was perfect, 100% perfect, and it was all thanks to them.”' },
-    photo: { src: fotoNadiaTomas, focus: '50% 35%' }, credit: 'David Fernández',
-    text: {
-      es: [
-        '¡Nos faltan las palabras para agradecer lo que hicieron por nosotros!',
-        'Nos casamos en mayo en Asturias. Vivimos fuera y queríamos que nuestra boda fuese en una finca familiar, así que decidimos buscar ayuda. Con Bea y Vane conectamos perfectamente desde el primer momento, o mejor dicho, ¡desde el primer Skype! Y contratarlas fue la mejor decisión que pudimos tomar. Nuestra boda fue perfecta, 100 % perfecta, y todo gracias a ellas. Todos los invitados acabaron encantados; todos coincidían en lo especial y llena de detalles que fue y en que nos representaba a la perfección. ¡Increíble! La decoración, de cuento de hadas; la papelería, impresionante, y todos los proveedores que nos recomendaron, profesionales como la copa de un pino, a los que coordinaron para tener todo milimetrado al detalle.',
-        'Se ocupan de absolutamente todo y se amoldan a tus gustos y necesidades. No sabemos ni cómo, pero cada vez que íbamos a Asturias allí estaban ellas para quedar. El día de la boda nos acompañaron y se ocuparon de TODO; te transmiten una tranquilidad increíble y nosotros pudimos desentendernos por completo y disfrutar de nuestro día. Para cualquier cosa que les pidas, aunque sea la típica histeria de novios, jamás te contestan con un «no»: siempre con buena cara, hacen lo posible para que todo salga como tú deseas.',
-        'Siempre nos acordaremos de ellas con mucho cariño y estaremos eternamente agradecidos. De corazón, ¡un millón de gracias, chicas, sois las mejores!',
-      ],
-      en: [
-        'We can’t find the words to thank them for what they did for us!',
-        'We got married in May in Asturias. We live abroad and wanted our wedding to be at a family estate, so we decided to look for help. We clicked with Bea and Vane from the very first moment, or rather, from the very first Skype call! Hiring them was the best decision we could have made. Our wedding was perfect, 100% perfect, and it was all thanks to them. All our guests were delighted; everyone agreed on how special and detailed it was and how perfectly it represented us. Incredible! Fairy-tale décor, stunning stationery, and every supplier they recommended was a true professional, all coordinated so that everything ran like clockwork.',
-        'They take care of absolutely everything and adapt to your tastes and needs. We don’t know how, but every time we came to Asturias they were there to meet us. On the wedding day they were with us and took care of EVERYTHING; they give you an incredible sense of calm, and we were able to switch off completely and enjoy our day. Whatever you ask of them, even the typical wedding-nerves meltdown, they never say “no”: always with a smile, they do everything they can so it all turns out the way you want.',
-        'We will always remember them fondly and be eternally grateful. From the bottom of our hearts, a million thanks, girls, you are the best!',
-      ],
-    },
-  },
-  {
-    // Google, verano de 2026.
-    couple: { es: 'Sara', en: 'Sara' },
-    highlight: { es: '«Han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día.»', en: '“They understood exactly what we wanted and were a key support in planning the big day.”' },
-    text: {
-      es: [
-        'Bea y Vane fueron nuestras wedding planners. Estamos muy agradecidos de haber podido contar con ellas: han entendido muy bien lo que queríamos y han sido un apoyo clave en la organización del gran día. Súper recomendables. ¡Gracias por todo el trabajo hecho durante este año de preparación; ha sido un éxito gracias a vosotras!',
-      ],
-      en: [
-        'Bea and Vane were our wedding planners. We’re so grateful to have had them with us: they understood exactly what we wanted and were a key support in planning the big day. Highly recommended. Thank you for all your work during this year of preparation; it was a success thanks to you!',
-      ],
-    },
-  },
-  {
-    couple: { es: 'Paula y David', en: 'Paula & David' },
-    highlight: { es: '«Ellas son magia y profesionalidad, siempre con una sonrisa.»', en: '“They are magic and professionalism, always with a smile.”' },
-    photo: { src: fotoPaulaDavid, focus: '35% 60%' }, credit: 'F2 Studio',
-    text: {
-      es: [
-        'Solo tenemos palabras de agradecimiento para Vane y Bea. Gracias por recibirnos siempre con una sonrisa y por vuestra profesionalidad y buen gusto.',
-        'En nuestro caso elegimos el pack «El día B» pensando que íbamos a poder organizarlo todo sin agobios y disfrutando (error). Tuvimos que acudir a ellas las últimas semanas y nos atendieron con los brazos abiertos, llenas de tranquilidad y buenas ideas. Gracias a ellas quedó todo súper bonito y pudimos disfrutar de nuestro día al máximo, pensando solamente en disfrutar de cada momento, porque de todo lo demás se encargaban ellas. Son todo disposición y buenas ideas. Organizar a tanta gente y tantos detalles no es nada fácil, y ellas miman cada detalle para que sea especial.',
-        'Si me volviese a casar, pediría sin duda su ayuda desde el principio. Ellas son magia y profesionalidad, siempre con una sonrisa.',
-      ],
-      en: [
-        'We only have words of thanks for Vane and Bea. Thank you for always welcoming us with a smile, and for your professionalism and good taste.',
-        'We chose the “Wedding day” package, thinking we’d be able to organise everything without stress and enjoy it (wrong!). We had to turn to them in the last few weeks and they welcomed us with open arms, full of calm and good ideas. Thanks to them everything looked gorgeous and we could enjoy our day to the full, thinking only about enjoying every moment, because they took care of everything else. They are all willingness and good ideas. Organising so many people and so many details is not easy at all, and they look after every detail to make it special.',
-        'If I got married again, I would definitely ask for their help from the very start. They are magic and professionalism, always with a smile.',
-      ],
-    },
-  },
-  {
-    couple: { es: 'Olaya y David', en: 'Olaya & David' },
-    place: 'Hacienda de la Llorea · Gijón', wedding: 'O & D',
-    highlight: { es: '«Fueron las mejores compañeras de viaje que podíamos tener.»', en: '“They were the best travelling companions we could have wished for.”' },
-    photo: { src: fotoOlayaDavid }, credit: 'M2 Visual Studio',
-    text: {
-      es: [
-        'No sé muy bien por dónde empezar…',
-        'Empecemos por el día que nos conocimos, en una céntrica cafetería de Oviedo. No me olvidaré de llegar allí y ver a dos chicas sentadas al fondo, a las que hicimos un gesto para confirmar que eran ellas. En ese momento, solo con verlas, ya sabíamos que serían nuestras ayudantes en el camino más bonito de nuestras vidas. ¡Y qué ayudantes! Desde ese primer día nos hemos sentido aliviados en todo momento, porque cualquier cosa que se nos ocurría y les comentábamos, ellas ya la tenían resuelta… Fueron las mejores compañeras de viaje que podíamos tener, tanto mi mujer como yo. Detalles en la boda, consejos, decoración, contacto con absolutamente todos los proveedores para que el día de la boda fuera de 10, y así fue, en gran medida gracias a ellas.',
-        'Además de todo esto, fuera del aspecto profesional, en el que son un 10 redondo y sin lugar a dudas, han calado muy hondo en nosotros y se han convertido en personas especiales por lo que han conseguido. Al final, tener a estas personas junto a nosotros, desviviéndose por nuestro día, te hace cogerles un cariño especial. Y cuando ves que se emocionan contigo cuando te enseñan el resultado final del comedor… entonces ya queda todo claro: son únicas.',
-        'Estuvieron encima de todo sin descanso, tienen un gusto maravilloso para la decoración, y los bocetos que te mandan (nosotros vivimos fuera) te mostraban a la perfección el ambiente que generaría cada detalle decorativo, y mucho más… No les puedo poner un pero.',
-        'Ni qué decir tiene que la relación calidad-precio es inmejorable. Gracias a las dos por hacer de nuestro día un día mágico.',
-      ],
-      en: [
-        'I’m not quite sure where to begin…',
-        'Let’s start with the day we met, in a café in the centre of Oviedo. I’ll never forget arriving and seeing two women sitting at the back, to whom we waved to check it was them. At that moment, just by seeing them, we already knew they would be our helpers on the most beautiful journey of our lives. And what helpers! From that first day we felt relieved all the time, because anything that occurred to us and we mentioned to them, they had already sorted… They were the best travelling companions my wife and I could have wished for. Wedding details, advice, décor, contact with absolutely every supplier so the wedding day would be perfect, and so it was, largely thanks to them.',
-        'On top of all that, beyond the professional side, where they are a perfect 10 without a doubt, they have touched us deeply and become special people to us because of what they achieved. In the end, having these people by your side, going all out for your day, makes you grow especially fond of them. And when you see them get emotional with you as they show you the finished dining room… then it’s all clear: they are one of a kind.',
-        'They were on top of everything, tirelessly; they have wonderful taste in décor, and the sketches they send you (we live abroad) showed perfectly the atmosphere each decorative detail would create, and much more… I can’t find a single fault.',
-        'Needless to say, the value for money is unbeatable. Thank you both for making our day a magical one.',
-      ],
-    },
-  },
-  {
-    couple: { es: 'Marta y Omar', en: 'Marta & Omar' },
-    place: 'Parador de Cangas de Onís',
-    highlight: { es: '«La mejor decisión que hemos tomado en nuestra boda ha sido contratarlas a ellas.»', en: '“Hiring them was the best decision we made for our wedding.”' },
-    photo: { src: fotoMartaOmar, focus: '50% 40%' }, credit: 'David Fernández',
-    text: {
-      es: [
-        '¿Qué vamos a decir de Bea y Vane? Atentas, elegantes, profesionales, cercanas, detallistas, honradas, trabajadoras, pacientes… Cualquier idea que tengas, ellas la transforman y la convierten en realidad.',
-        'Un lujo haber conocido a tan buenas personas que aman tanto su profesión. Capaces de emocionarse y vivir una boda tanto como lo hemos vivido nosotros. Hacen un trabajo de 10. La mejor decisión que hemos tomado en nuestra boda ha sido contratarlas a ellas. Con ellas, es imposible que una boda no salga bien.',
-      ],
-      en: [
-        'What can we say about Bea and Vane? Attentive, elegant, professional, warm, meticulous, honest, hard-working, patient… Whatever idea you have, they transform it and make it real.',
-        'It was a privilege to meet such good people who love their profession so much. They get as moved and live a wedding as intensely as we did. They do a perfect job. Hiring them was the best decision we made for our wedding. With them, it’s impossible for a wedding not to go well.',
-      ],
-    },
-  },
-  {
-    couple: { es: 'Alba y Dani', en: 'Alba & Dani' },
-    highlight: { es: '«Nuestra boda fue mágica gracias a ellas.»', en: '“Our wedding was magical thanks to them.”' },
-    photo: { src: fotoAlbaDani, focus: '55% 45%' }, credit: 'Cristina Cañibano',
-    text: {
-      es: [
-        'Contactamos con Bea y Vane después de ver fotos de sus trabajos en internet y, nada más conocerlas, tuvimos claro que serían ellas las encargadas de ayudarnos a hacer que nuestro día fuera especial. La decoración no solo quedó mejor de lo que nunca habríamos podido imaginar, sino que, tanto durante el proceso de diseño como el mismo día del evento, consiguieron transmitirnos una calma y una seguridad que hicieron que pudiéramos despreocuparnos y disfrutar al máximo de cada momento.',
-        'Nuestra boda fue mágica gracias a ellas; no tenemos palabras para expresar nuestra gratitud. Tienen un gusto exquisito y saben escuchar y adaptarse a los demás sin perder su esencia. A nosotros nos comprendieron desde el primer momento, y todos los invitados coincidieron en que la decoración era preciosa y se adaptaba mucho a nuestra personalidad.',
-        'Sin duda volveríamos a contratarlas para cualquier evento. Son de 10, tanto a nivel personal como profesional. Hemos compartido tantos momentos especiales en un periodo tan corto… ¡que ahora las echamos de menos!',
-      ],
-      en: [
-        'We got in touch with Bea and Vane after seeing photos of their work online and, as soon as we met them, we knew they would be the ones to help us make our day special. Not only did the décor turn out better than we could ever have imagined but, both during the design process and on the day itself, they gave us such calm and confidence that we could stop worrying and enjoy every moment to the full.',
-        'Our wedding was magical thanks to them; we have no words to express our gratitude. They have exquisite taste and know how to listen and adapt to others without losing their essence. They understood us from the very first moment, and all our guests agreed the décor was beautiful and suited our personality perfectly.',
-        'We would definitely hire them again for any event. They are top marks, both personally and professionally. We shared so many special moments in such a short time… that now we miss them!',
-      ],
-    },
-  },
-
-  {
-    couple: { es: 'María y Gaspar', en: 'María & Gaspar' },
-    highlight: { es: '«¡El día de la boda estuve súper tranquila, y fue sobre todo porque sabía que ellas estaban allí!»', en: '“On our wedding day I was completely calm, and it was mostly because I knew they were there!”' },
-    photo: { src: fotoMariaGaspar }, credit: 'La Cabina Roja',
-    text: {
-      es: [
-        'No pude tener mejores wedding planners para diseñar la boda de mis sueños con tantos detalles. Teníamos muchos meses por delante para prepararla, muchas ideas, pero poco tiempo y poco orden; ellas fueron guiándonos, marcándonos los tiempos y tranquilizándonos cuando iba llegando el día clave. Cualquier cosa que se me pasaba por la cabeza, me daban mil opciones para elegir la mejor.',
-        '¡El día de la boda estuve súper tranquila, y fue sobre todo porque sabía que ellas estaban allí! Ya desde el día de antes se encargaron de que los imprevistos no nos estresasen más de la cuenta: dejaron todo decorado, los detalles preparados, los proveedores organizados… ¡Ya solo nos quedaba disfrutar de la boda con nuestros invitados!',
-        'Las recomendamos al 200 %. La gente ve un gasto innecesario en tener wedding planner, pero os aseguro que es una inversión. Si quieres una boda personalizada, detallista y en la que todo fluya… ¡estas chicas son lo que buscas!',
-      ],
-      en: [
-        'I couldn’t have had better wedding planners to design the wedding of my dreams with so many details. We had many months ahead to prepare it and lots of ideas, but little time and little order; they guided us, set the pace and calmed us down as the big day approached. Whatever crossed my mind, they gave me a thousand options to choose the best one.',
-        'On our wedding day I was completely calm, and it was mostly because I knew they were there! From the day before, they made sure nothing unexpected stressed us out more than it should: they left everything decorated, the details ready and the suppliers organised… All we had left to do was enjoy the wedding with our guests!',
-        'We recommend them 200%. People see a wedding planner as an unnecessary expense, but I promise you it’s an investment. If you want a personal, detailed wedding where everything flows… these are the women you’re looking for!',
-      ],
-    },
-  },
-  {
-    couple: { es: 'David y Germán', en: 'David & Germán' },
-    highlight: { es: '«Todos los invitados coinciden en que ha sido el evento más emotivo y cuidado en el que han estado.»', en: '“Every one of our guests agrees it was the most moving and thoughtfully cared-for celebration they have ever been to.”' },
-    photo: { src: fotoDavidGerman },
-    text: {
-      es: [
-        'Confiamos en Vane y Bea para organizar nuestra boda, y todos los invitados coinciden en que ha sido el evento más emotivo y cuidado en el que han estado. Estuvieron atentas a todos los detalles e hicieron tanto de la planificación de la boda como del evento en sí un proceso ilusionante y motivador.',
-        'Tienen un trato cálido y atento, y una brillante capacidad para materializar nuestros gustos y nuestras ideas en un sinfín de detalles acertados y minuciosos. No podemos más que agradecerles que hayan dado forma a un momento tan especial para nosotros y, cómo no, ¡las recomendamos!',
-      ],
-      en: [
-        'We trusted Vane and Bea to organise our wedding, and every one of our guests agrees it was the most moving and thoughtfully cared-for celebration they have ever been to. They paid attention to every detail and made both the planning and the wedding itself an exciting and inspiring process.',
-        'They are warm and attentive, with a brilliant ability to turn our tastes and ideas into countless well-chosen, meticulous details. We can only thank them for shaping such a special moment for us and, of course, we recommend them!',
-      ],
-    },
-  },
-  {
-    // Google, 2026. Boda de mayo de 2025.
-    couple: { es: 'Almudena', en: 'Almudena' },
-    place: 'Palacio de Avilés',
-    highlight: { es: '«Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar.»', en: '“Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made.”' },
-    text: {
-      es: [
-        'El pasado mayo de 2025 nos casamos en la parroquia de San Nicolás y lo celebramos en el Palacio de Avilés. Contar con The Dreams Factory para la organización integral de nuestra boda fue, sin duda, la mejor decisión que pudimos tomar. Además, como vivimos fuera de Asturias, se adaptaron a nuestras visitas, y les agradecimos mucho su flexibilidad.',
-        'Desde el primer momento, Bea y Vane demostraron una profesionalidad impecable: la planificación de todo, el contacto con proveedores (te seleccionan proveedores de su confianza), el diseño de la decoración, los meseros, la mesa principal, la mesa dulce… En definitiva, se encargaron de que fuera un éxito rotundo. No hubo un solo cabo suelto: cuidaron cada detalle con un mimo increíble y supieron aprovechar al máximo todos los recursos disponibles (sobre todo las flores, que son precisamente una partida muy importante del presupuesto) para que el resultado fuera espectacular.',
-        'Gracias a su trabajo, pudimos disfrutar de nuestro día con total tranquilidad, sabiendo que estábamos en las mejores manos y que todo estaba bajo control.',
-        'No dudamos en recomendar a Vane y Bea: si buscáis una boda de ensueño y un equipo que se vuelque al 100 %, no dudéis en confiar en ellas. ¡Gracias por hacer nuestro día inolvidable!',
-      ],
-      en: [
-        'Last May, in 2025, we got married at the church of San Nicolás and celebrated at the Palacio de Avilés. Having The Dreams Factory plan our whole wedding was, without a doubt, the best decision we could have made. And since we live outside Asturias, they worked around our visits, and we were very grateful for their flexibility.',
-        'From the very first moment, Bea and Vane showed impeccable professionalism: planning everything, dealing with suppliers (they choose suppliers they trust), designing the décor, the table plan, the top table, the dessert table… In short, they made sure it was a resounding success. Not a single loose end: they took care of every detail with incredible care and made the most of every resource available (especially the flowers, which are a very big part of the budget) so that the result was spectacular.',
-        'Thanks to their work, we could enjoy our day completely at ease, knowing we were in the best hands and that everything was under control.',
-        'We wouldn’t hesitate to recommend Vane and Bea: if you’re looking for a dream wedding and a team that gives 100%, don’t hesitate to trust them. Thank you for making our day unforgettable!',
-      ],
-    },
-  },
-
-  {
-    couple: { es: 'Beatriz y Daniel', en: 'Beatriz & Daniel' },
-    place: 'Ermita de Deva · Gijón', wedding: 'B & D',
-    highlight: { es: '«Sin vosotras no hubiera sido tan, tan, tan bonito.»', en: '“Without you it wouldn’t have been so, so, so beautiful.”' },
-    photo: { src: fotoBeatrizDaniel, focus: '30% 50%' }, credit: 'Darío Martínez',
-    text: {
-      es: [
-        'Solo podemos deciros GRACIAS por habernos ayudado a hacer nuestros sueños realidad; sin vosotras no hubiera sido tan, tan, tan bonito.',
-        'Sois unas grandísimas profesionales, pero, ante todo, buenísima gente, porque solo la buena gente como vosotras puede hacer y transmitir cosas tan hermosas. Nunca os olvidaremos.',
-        'Un beso de Daniel y Beatriz.',
-      ],
-      en: [
-        'All we can say is THANK YOU for helping us make our dreams come true; without you it wouldn’t have been so, so, so beautiful.',
-        'You are tremendous professionals but, above all, wonderful people, because only good people like you can create and convey such beautiful things. We will never forget you.',
-        'Love from Daniel and Beatriz.',
-      ],
-    },
-  },
-  {
-    couple: { es: 'Aida y Adrián', en: 'Aida & Adrián' },
-    place: 'Castillo de San Cucao',
-    highlight: { es: '«Si me volviera a casar, sin duda os volvería a contratar.»', en: '“If I got married again, I’d hire you again without a doubt.”' },
-    photo: { src: fotoAidaAdrian, focus: '50% 35%' }, credit: 'M2 Visual Studio',
-    text: {
-      es: [
-        'No podemos estar más contentos de haberos escogido. Nos encantó la decoración, superó las expectativas. Os las recomiendo al 100 %, porque son unas profesionales en lo que hacen y, como personas, son aún mejores. Si me volviera a casar, sin duda os volvería a contratar.',
-        'Espero algún día volver a coincidir con vosotras. Un abrazo.',
-      ],
-      en: [
-        'We couldn’t be happier that we chose you. We loved the décor; it exceeded our expectations. I recommend them 100%, because they are true professionals at what they do and, as people, they are even better. If I got married again, I’d hire you again without a doubt.',
-        'I hope our paths cross again some day. A big hug.',
-      ],
-    },
-  },
-];
-
-/** La opinión que se muestra entera en su propio bloque. */
-export const featuredReview = reviews.find((r) => r.couple.es === 'Olaya y David')!;
+export function getReviews() {
+  cache ??= (async () => {
+    const byFolder = new Map<string, Partial<Record<Lang, Entry>>>();
+    for (const entry of await getCollection('reviews')) {
+      const [folder, file] = entry.id.split('/');
+      const lang = file.split('.').pop() as Lang;
+      byFolder.set(folder, { ...byFolder.get(folder), [lang]: entry });
+    }
+    const list = [...byFolder]
+      .filter(([, v]) => v.es)
+      .sort(([fa, a], [fb, b]) => a.es!.data.order - b.es!.data.order || fa.localeCompare(fb))
+      .map(([, v]) => {
+        const es = v.es!;
+        const en = v.en ?? es;
+        const e = es.data;
+        const n = en.data;
+        const textEs = paragraphs(es.body);
+        const textEn = paragraphs(en.body);
+        const review: Review = {
+          couple: { es: e.couple, en: n.couple || e.couple },
+          place: e.place,
+          wedding: e.wedding,
+          highlight: { es: quote.es(e.highlight), en: quote.en(n.highlight || e.highlight) },
+          text: { es: textEs, en: textEn.length ? textEn : textEs },
+          photo: e.photo ? { src: e.photo, focus: e.photoFocus } : undefined,
+          credit: e.credit,
+        };
+        return { review, featured: e.featured };
+      });
+    return { reviews: list.map((r) => r.review), featured: list.find((r) => r.featured)?.review };
+  })();
+  return cache;
+}

@@ -1,12 +1,12 @@
-# Panel de edición (bodas y blog)
+# Panel de edición (bodas, opiniones y blog)
 
-En `/admin` (por ejemplo, `https://www.thedreamsfactory.es/admin/`) Bea y Vane pueden crear y cambiar **bodas** y
-**entradas del blog**, en español e inglés, con sus fotos. Es [Sveltia CMS](https://sveltiacms.app): no hay servidor
+En `/admin` (por ejemplo, `https://www.thedreamsfactory.es/admin/`) Bea y Vane pueden crear y cambiar **bodas**,
+**opiniones** y **entradas del blog**, en español e inglés, con sus fotos. Es [Sveltia CMS](https://sveltiacms.app): no hay servidor
 ni base de datos aparte. Al guardar, el panel guarda el cambio en el repositorio de GitHub y Cloudflare publica la
 web en uno o dos minutos.
 
 - Configuración del panel: `public/admin/config.yml` (versión fija de Sveltia en `public/admin/index.html`).
-- Contenido: `src/weddings/<boda>/` y `src/blog/<entrada>/`, cada uno con `index.es.md`, `index.en.md` y sus fotos.
+- Contenido: `src/weddings/<boda>/`, `src/reviews/<pareja>/` y `src/blog/<entrada>/`, cada uno con `index.es.md`, `index.en.md` y sus fotos.
 - Inicio de sesión: `worker/cms-auth.ts` (en nuestro propio Worker, sin servicios de terceros).
 - Si un cambio tuviera algún error, la publicación falla y **la web se queda como estaba**; el aviso sale en Cloudflare
   (Workers & Pages → dreams-factory-prototipo → Deployments).
@@ -68,3 +68,12 @@ Las fotos pueden subirse tal cual salen de la cámara: el panel las convierte a 
 las vuelve a optimizar para cada pantalla.
 
 El **blog** funciona igual: título, resumen, fecha, tema, foto de portada, texto y (opcional) galería al final.
+
+**Opiniones → Nueva**: los nombres de pila de la pareja, la frase destacada (copiada de su texto, sin comillas), su
+opinión entera y, si la hay, una foto de su boda con su permiso. En «Su boda en la web» se elige su boda del listado
+para que la tarjeta enlace a ella. En español va el texto original; en inglés, la traducción.
+
+- **Orden**: las de número más bajo salen primero. Mejor que la primera tenga foto y que las que no tienen se
+  intercalen entre las que sí.
+- **Opinión destacada**: la que se muestra entera, con su foto, en su propio bloque. Solo una.
+- Las citas cortas de «Lo que más repiten» y las de la portada no están en el panel: se cambian en el código.

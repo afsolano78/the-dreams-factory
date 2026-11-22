@@ -48,6 +48,8 @@ const whatsapp = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(q.
     transition: transform 0.35s ease;
   }
   .quick-contact[data-visible='true'] { transform: none; }
+  /* Con el menú del móvil abierto no hace falta (el menú lleva su propio WhatsApp). */
+  :global(html.menu-open) .quick-contact { display: none; }
   @media (min-width: 768px) { .quick-contact { display: none; } }
   .quick-contact a { height: 100%; }
   @media (prefers-reduced-motion: reduce) { .quick-contact { transition: none; } }

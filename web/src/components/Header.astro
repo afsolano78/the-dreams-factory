@@ -2,8 +2,10 @@
 import Wordmark from './Wordmark.astro';
 import Button from './Button.astro';
 import LangSwitch from './LangSwitch.astro';
-import { path, type Lang, type RouteKey } from '../i18n/routes';
-import { ui } from '../i18n/ui';
+import SocialLinks from './SocialLinks.astro';
+import ContactIcon from './ContactIcon.astro';
+import { path, langs, type Lang, type RouteKey } from '../i18n/routes';
+import { ui, contact } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -14,6 +16,10 @@ interface Props {
 }
 const { lang, routeKey, alternates, overlay = false } = Astro.props;
 const t = ui[lang];
+// Menú del móvil: «Inicio» delante de las secciones, WhatsApp junto a Contacto e idioma abajo.
+const menuItems: [RouteKey, string][] = [['home', lang === 'es' ? 'Inicio' : 'Home'], ...t.nav];
+const whatsapp = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(t.quickContact.whatsappText)}`;
+const [emailUser, emailDomain] = contact.email.split('@');
 ---
 
 <header class="site-header" data-overlay={overlay ? 'true' : 'false'} data-scrolled="false" data-menu="closed">
@@ -42,7 +48,7 @@ const t = ui[lang];
     </nav>
 
     <div class="flex items-center gap-5">
-      <LangSwitch lang={lang} routeKey={routeKey} alternates={alternates} class="header-fg" />
+      <LangSwitch lang={lang} routeKey={routeKey} alternates={alternates} class="header-fg lang-top" />
       <div class="hidden min-[1180px]:block">
         <Button href={path('contact', lang)} variant={overlay ? 'light' : 'secondary'} class="header-button">{t.contactButton}</Button>
       </div>
@@ -65,20 +71,58 @@ const t = ui[lang];
   </div>
 
   <div id="mobile-menu" class="mobile-menu min-[1180px]:hidden" hidden>
-    <nav aria-label={lang === 'es' ? 'Menú' : 'Menu'} class="flex flex-col gap-8 px-5 pb-10 pt-6">
-      <ul class="flex flex-col gap-4">
+    <nav aria-label={lang === 'es' ? 'Menú' : 'Menu'} class="flex min-h-full flex-col gap-8 px-5 pb-8 pt-5">
+      <ul class="flex flex-col gap-3">
         {
-          t.nav.map(([key, label]) => (
-            <li>
-              <a href={path(key, lang)} class="display-m text-white" aria-current={key === routeKey ? 'page' : undefined}>
+          menuItems.map(([key, label], i) => (
+            <li class="menu-item" style={`--i:${i}`}>
+              <a href={path(key, lang)} class="menu-link display-m text-white" aria-current={key === routeKey ? 'page' : undefined}>
                 {label}
               </a>
             </li>
           ))
         }
       </ul>
-      <div>
-        <Button href={path('contact', lang)} variant="primary">{t.contactButton}</Button>
+
+      <div class="menu-item flex flex-col gap-5" style={`--i:${menuItems.length}`}>
+        <div class="flex flex-wrap gap-3">
+          <Button href={path('contact', lang)} variant="primary">{t.contactButton}</Button>
+          <Button href={whatsapp} variant="light" target="_blank" rel="noopener">{t.quickContact.whatsapp}</Button>
+        </div>
+        <ul class="flex flex-col gap-2 text-[0.9375rem] text-white/80">
+          <li class="flex flex-wrap gap-x-5 gap-y-2">
+            {contact.phones.map((p) => (
+              <a href={`tel:${p.replace(/\s/g, '')}`} class="inline-flex items-center gap-2"><ContactIcon name="phone" size={15} class="text-eucalipto-500" />{p}</a>
+            ))}
+          </li>
+          <li>
+            <a href={`mailto:${contact.email}`} class="inline-flex items-center gap-2 [overflow-wrap:anywhere]"><ContactIcon name="mail" size={15} class="shrink-0 text-eucalipto-500" />{emailUser}<wbr />@{emailDomain}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Abajo: logo, redes e idioma. -->
+      <div class="menu-item mt-auto flex flex-col gap-5 border-t border-white/15 pt-6" style={`--i:${menuItems.length + 1}`}>
+        <span class="brand-logo brand-logo-sm w-24 text-white" role="img" aria-label="The Dreams Factory · Wedding Planner"></span>
+        <div class="flex flex-wrap items-center justify-between gap-6">
+          <SocialLinks />
+          <p class="eyebrow flex items-center gap-3 !tracking-[0.14em] text-[0.8125rem]">
+            {langs.map((l, k) => (
+              <>
+                {k > 0 && <span class="text-white/40" aria-hidden="true">·</span>}
+                <a
+                  href={alternates?.[l] ?? path(routeKey, l)}
+                  hreflang={l}
+                  lang={l}
+                  class:list={[l === lang ? 'text-eucalipto-500' : 'text-white/70']}
+                  aria-current={l === lang ? 'true' : undefined}
+                >
+                  {l.toUpperCase()}
+                </a>
+              </>
+            ))}
+          </p>
+        </div>
       </div>
     </nav>
   </div>
@@ -141,9 +185,33 @@ const t = ui[lang];
       color: #fff;
     }
   }
+  /* Ocupa el resto de la pantalla y se desplaza por dentro si no cabe (la página queda quieta detrás). */
   .mobile-menu {
     background: var(--color-pino-800);
-    min-height: calc(100dvh - 4.5rem);
+    height: calc(100dvh - 4.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .site-header[data-menu='open'] :global(.lang-top) { visibility: hidden; }
+  /* Página actual: en champán, con un punto delante. */
+  .menu-link { position: relative; display: inline-block; transition: color 0.2s ease; }
+  .menu-link[aria-current='page'] { color: var(--color-eucalipto-500); }
+  .menu-link[aria-current='page']::before {
+    content: '';
+    position: absolute;
+    left: -0.95rem;
+    top: 50%;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    background: currentColor;
+    transform: translateY(-50%);
+  }
+  /* Al abrir, las opciones aparecen una tras otra. */
+  .site-header[data-menu='open'] .menu-item { animation: menu-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 40ms); }
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(0.75rem); }
+    to { opacity: 1; transform: none; }
   }
   .menu-toggle svg path {
     transition: transform 0.25s ease, opacity 0.2s ease;
@@ -154,6 +222,7 @@ const t = ui[lang];
   .site-header[data-menu='open'] .bar-bot { transform: translate(-4px, -8px) rotate(-45deg) scaleX(1.44); }
   @media (prefers-reduced-motion: reduce) {
     .site-header, .menu-toggle svg path, .nav-link::after { transition: none; }
+    .site-header[data-menu='open'] .menu-item { animation: none; }
   }
 </style>
 
@@ -177,12 +246,21 @@ const t = ui[lang];
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? '');
       document.documentElement.style.overflow = open ? 'hidden' : '';
+      document.documentElement.classList.toggle('menu-open', open);
     };
     toggle.addEventListener('click', () => setOpen(header.dataset.menu !== 'open'));
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && header.dataset.menu === 'open') {
+      if (header.dataset.menu !== 'open') return;
+      if (e.key === 'Escape') {
         setOpen(false);
         toggle.focus();
+      } else if (e.key === 'Tab') {
+        // Con el menú abierto, el foco va del botón de cerrar a las opciones y vuelta.
+        const items = [toggle, ...menu.querySelectorAll<HTMLElement>('a[href]')];
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
   }

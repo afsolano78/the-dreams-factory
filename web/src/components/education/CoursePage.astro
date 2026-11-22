@@ -51,6 +51,9 @@ const eyebrowRest = eyebrowParts.join(' · ');
 const badgeParts = c.hero.badge.split(' · ');
 const badgeLast = badgeParts.pop()!;
 const badgeFirst = badgeParts.join(' · ');
+// Fecha y lugar: en una línea en ordenador; en móvil, uno debajo del otro.
+const [statusDate, ...statusRest] = c.hero.status.split(' · ');
+const statusPlace = statusRest.join(' · ');
 ---
 
 <BaseLayout lang={lang} routeKey="course" title={c.meta.title} description={c.meta.description} overlayHeader>
@@ -80,7 +83,7 @@ const badgeFirst = badgeParts.join(' · ');
           <span class="status-dot" aria-hidden="true"></span>
           <span>{badgeFirst && <span class="max-md:hidden">{badgeFirst} · </span>}{badgeLast}</span>
         </span>
-        <span class="text-white/85">{c.hero.status}</span>
+        <span class="text-white/85"><span class="max-md:block">{statusDate}</span>{statusPlace && <><span class="max-md:hidden"> · </span><span class="max-md:block">{statusPlace}</span></>}</span>
       </p>
       <!-- Una sola acción destacada; el temario, como enlace al lado (debajo en móvil). -->
       <div class="mt-2 flex flex-wrap items-center gap-x-8 gap-y-5">

@@ -148,6 +148,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
     background: var(--color-pino-800);
     border-color: transparent;
   }
+  .site-header.no-transition { transition: none !important; }
   .header-fg { color: inherit; }
   .nav-link {
     position: relative;
@@ -240,6 +241,9 @@ const [emailUser, emailDomain] = contact.email.split('@');
 
   if (header && toggle && menu) {
     const setOpen = (open: boolean) => {
+      // La barra cambia de color a la vez que aparece el panel (sin la transición pensada para el scroll).
+      header.classList.add('no-transition');
+      requestAnimationFrame(() => requestAnimationFrame(() => header.classList.remove('no-transition')));
       header.dataset.menu = open ? 'open' : 'closed';
       menu.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));

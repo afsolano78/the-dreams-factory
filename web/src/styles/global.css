@@ -29,11 +29,16 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
+  /*
+    Desplazamiento suave solo en los saltos que hace la persona dentro de la página (BaseLayout pone la clase en su
+    primer toque, clic o tecla). Al llegar desde otra página a una sección (#ancla), el navegador salta directo a ella,
+    sin recorrer la página.
+  */
+  html.smooth-scroll { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
+    html.smooth-scroll { scroll-behavior: auto; }
   }
   body {
     background: var(--color-porcelana-50);

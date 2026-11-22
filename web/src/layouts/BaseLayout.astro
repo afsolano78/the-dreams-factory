@@ -52,6 +52,10 @@ const otherLang = langs.find((l) => l !== lang)!;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline>
       document.documentElement.classList.add('js');
+      // Desplazamiento suave a partir de la primera interacción (ver html.smooth-scroll en global.css).
+      ['pointerdown', 'keydown'].forEach((type) =>
+        addEventListener(type, () => document.documentElement.classList.add('smooth-scroll'), { once: true, passive: true }),
+      );
       // Presentación del logo (ver IntroLogo.astro): solo en la portada (/ y /en/) y solo la primera vez que se entra en
       // la web (al terminar guarda «tdf-intro-seen»). Con ?intro en la dirección se vuelve a ver, para revisarla.
       try {

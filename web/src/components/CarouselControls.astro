@@ -2,7 +2,8 @@
 /*
   Barras de progreso (que también sirven para saltar a una diapositiva) y botón de pausa.
   Con `thumbs`, cada botón muestra además una miniatura redonda (opiniones: la foto de cada pareja).
-  Con `compact`, en móvil todo más discreto: barras cortas a la izquierda y pausa pequeña sin círculo (portada).
+  Con `compact`, en móvil una sola línea fina a todo lo ancho, pegada al borde inferior, que se va llenando foto a
+  foto, y la pausa pequeña en la esquina (portada; el contenedor tiene que acabar sin margen inferior en móvil).
 */
 import { Image } from 'astro:assets';
 interface Props {
@@ -23,8 +24,8 @@ interface Props {
 const { labels, thumbs, thumbFocus, durations, compact = false, pauseLabel, playLabel, class: className = '' } = Astro.props;
 ---
 
-<div class:list={['flex w-full items-center gap-4', { 'max-md:gap-2': compact }, className]}>
-  <ol class:list={['flex flex-1', thumbs ? 'justify-center gap-2 sm:gap-3' : 'gap-2', { 'max-md:max-w-[7.5rem] max-md:gap-1': compact }]}>
+<div class:list={['flex w-full items-center gap-4', { 'carousel-compact': compact }, className]}>
+  <ol class:list={['flex flex-1', thumbs ? 'justify-center gap-2 sm:gap-3' : 'gap-2']}>
     {
       labels.map((label, i) => (
         <li class:list={[thumbs ? 'flex-none' : 'flex-1']}>
@@ -39,7 +40,7 @@ const { labels, thumbs, thumbFocus, durations, compact = false, pauseLabel, play
             {thumbs && (
               <Image src={thumbs[i]} alt="" width={96} height={96} class="thumb-img size-10 rounded-full object-cover sm:size-12" style={thumbFocus?.[i] ? `object-position:${thumbFocus[i]}` : undefined} />
             )}
-            <span class:list={['block h-[2px] w-full overflow-hidden bg-white/30 group-hover:bg-white/50', { 'max-md:h-px': compact }]}>
+            <span class="block h-[2px] w-full overflow-hidden bg-white/30 group-hover:bg-white/50">
               <span class="carousel-bar block h-full w-full bg-white" />
             </span>
           </button>
@@ -49,7 +50,7 @@ const { labels, thumbs, thumbFocus, durations, compact = false, pauseLabel, play
   </ol>
   <button
     type="button"
-    class:list={['grid size-9 shrink-0 place-items-center rounded-full border border-white/50 hover:bg-white/15', { 'max-md:size-8 max-md:border-transparent max-md:opacity-80': compact }]}
+    class="grid size-9 shrink-0 place-items-center rounded-full border border-white/50 hover:bg-white/15"
     data-carousel-pause
     data-pause-label={pauseLabel}
     data-play-label={playLabel}
@@ -61,6 +62,26 @@ const { labels, thumbs, thumbFocus, durations, compact = false, pauseLabel, play
 </div>
 
 <style>
+  /* Versión «compact» en móvil (ver arriba). */
+  @media (max-width: 767px) {
+    .carousel-compact {
+      position: relative;
+      width: auto;
+      /* A sangre: anula el margen lateral del contenedor (.container-brand). */
+      margin-inline: calc(-1 * clamp(1.25rem, 0.2rem + 5.2vw, 7.5rem));
+    }
+    .carousel-compact ol { gap: 0; }
+    .carousel-compact [data-carousel-dot] { padding: 0.875rem 0 0; }
+    .carousel-compact [data-carousel-pause] {
+      position: absolute;
+      right: clamp(1.25rem, 0.2rem + 5.2vw, 7.5rem);
+      bottom: 0.875rem;
+      width: 2rem;
+      height: 2rem;
+      border-color: transparent;
+      opacity: 0.85;
+    }
+  }
   /* Miniaturas: la activa, nítida y con aro blanco; el resto, apagadas. */
   .thumb-img {
     opacity: 0.55;

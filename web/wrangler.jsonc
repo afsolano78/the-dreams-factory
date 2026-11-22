@@ -19,8 +19,7 @@
   },
   // Formulario de contacto. Los secretos (RESEND_API_KEY, TURNSTILE_SECRET) van en el panel, no aquí.
   "vars": {
-    // PRUEBA (22-11-2026): de momento al correo del administrador; volver a thedreamsfactoryweddingplanner@gmail.com.
-    "CONTACT_TO": "afsolano@hotmail.es",
+    "CONTACT_TO": "thedreamsfactoryweddingplanner@gmail.com",
     "CONTACT_FROM": "The Dreams Factory <web@thedreamsfactory.es>",
     // "si" para enviar un acuse de recibo a la pareja (dominio verificado en Resend el 22-11-2026).
     "AUTOREPLY": "si"

@@ -101,7 +101,8 @@ const slideTexts = c.slides.map((s, i) => ({
     </div>
 
     <div class="intro-item flex w-full max-w-[20rem] flex-col gap-4 md:items-end" style="--d:950ms">
-      <a href={path('weddings', lang)} class="eyebrow grid !tracking-[0.16em] hover:underline hover:underline-offset-4 md:text-right" data-carousel-live aria-live="off">
+      <!-- Pie de cada foto (pareja y lugar): solo desde tableta; en móvil ocupaba sitio y la primera foto no lo tiene. -->
+      <a href={path('weddings', lang)} class="eyebrow grid !tracking-[0.16em] hover:underline hover:underline-offset-4 max-md:hidden md:text-right" data-carousel-live aria-live="off">
         {captions.map((cap, i) => <span class:list={['fade-text', { 'is-active is-initial': i === 0 }]} data-slide={i}>{cap}</span>)}
       </a>
       <CarouselControls

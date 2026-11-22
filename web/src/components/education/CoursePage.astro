@@ -74,13 +74,18 @@ const badgeFirst = badgeParts.join(' · ');
       <p class="eyebrow">{eyebrowMain}<span class="max-md:hidden">{eyebrowRest && ` · ${eyebrowRest}`}</span></p>
       <h1 class="display-xl max-w-[16ch]" set:html={emphasize(c.hero.title)} />
       <p class="lead max-w-[36rem]">{c.hero.lead}</p>
+      <!-- Estado de la edición: un punto y el texto (sin recuadro, para que no se confunda con un botón). -->
       <p class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9375rem]">
-        <span class="border border-white/60 px-3 py-1.5 eyebrow !tracking-[0.14em]">{badgeFirst && <span class="max-md:hidden">{badgeFirst} · </span>}{badgeLast}</span>
+        <span class="eyebrow inline-flex items-center gap-2.5 !tracking-[0.14em]">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>{badgeFirst && <span class="max-md:hidden">{badgeFirst} · </span>}{badgeLast}</span>
+        </span>
         <span class="text-white/85">{c.hero.status}</span>
       </p>
-      <div class="mt-2 flex flex-wrap gap-4">
+      <!-- Una sola acción destacada; el temario, como enlace al lado (debajo en móvil). -->
+      <div class="mt-2 flex flex-wrap items-center gap-x-8 gap-y-5">
         <Button href={notify} variant="primary">{c.hero.cta}</Button>
-        <Button href="#temario" variant="light">{c.hero.secondary}</Button>
+        <a href="#temario" class="link-draw eyebrow !tracking-[0.14em] text-white">{c.hero.secondary} ↓</a>
       </div>
     </div>
   </section>
@@ -287,6 +292,27 @@ const badgeFirst = badgeParts.join(' · ');
     }
   }
   .course-anchor { scroll-margin-top: 5rem; }
+  /* Punto de «inscripciones abiertas» (champán claro, para que destaque sobre la foto), con un halo que late despacio. */
+  .status-dot {
+    position: relative;
+    width: 0.5625rem;
+    height: 0.5625rem;
+    border-radius: 9999px;
+    background: #dccfb6;
+  }
+  .status-dot::after {
+    content: '';
+    position: absolute;
+    inset: -0.3rem;
+    border-radius: inherit;
+    border: 1px solid #dccfb6;
+    animation: status-pulse 2.4s ease-out infinite;
+  }
+  @keyframes status-pulse {
+    from { transform: scale(0.6); opacity: 0.9; }
+    to { transform: scale(1.6); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .status-dot::after { animation: none; opacity: 0; } }
   .course-num {
     font-family: var(--font-display);
     font-optical-sizing: none;

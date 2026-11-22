@@ -21,8 +21,8 @@
   "vars": {
     "CONTACT_TO": "thedreamsfactoryweddingplanner@gmail.com",
     "CONTACT_FROM": "The Dreams Factory <web@thedreamsfactory.es>",
-    // "si" para enviar un acuse de recibo a la pareja (requiere el dominio verificado en Resend).
-    "AUTOREPLY": "no"
+    // "si" para enviar un acuse de recibo a la pareja (dominio verificado en Resend el 22-11-2026).
+    "AUTOREPLY": "si"
   },
   // Instagram (worker/instagram.ts): últimas publicaciones una vez al día, a las 5:17 UTC. Ver INSTAGRAM.md.
   "triggers": { "crons": ["17 5 * * *"] },

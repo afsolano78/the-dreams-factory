@@ -8,7 +8,10 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Gallery from '../Gallery.astro';
 import ClosingCta from '../home/ClosingCta.astro';
+import LogoRow from '../LogoRow.astro';
 import { home } from '../../content/home';
+import { weddingsPage } from '../../content/weddings';
+import { press } from '../../i18n/ui';
 import { blogUi, langOf, getPosts, postHref, readingMinutes, formatDate, translationOf, type Post } from '../../lib/blog';
 import { path, type Lang } from '../../i18n/routes';
 
@@ -102,6 +105,14 @@ const related = [...all.filter((p) => p.data.category === post.data.category), .
           </li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <!-- Publicadas en (el mismo bloque que en Bodas y el listado del blog) -->
+  <section class="bg-white py-14 md:py-16">
+    <div class="container-brand flex flex-col items-center gap-8 text-center">
+      <p class="eyebrow text-malva-500">{weddingsPage[lang].press.eyebrow}</p>
+      <LogoRow items={press.filter((l) => l.href)} lang={lang} sealSize="md" class="text-pino-800" />
     </div>
   </section>
 

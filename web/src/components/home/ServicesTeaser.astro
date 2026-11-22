@@ -10,6 +10,7 @@
   Al elegir, dejar solo la variante elegida y quitar el resto (y su regla en global.css).
 */
 import { Picture } from 'astro:assets';
+import { coverSizes, coverWidths } from '../../lib/cover';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
 import HeartGarland from '../deco/HeartGarland.astro';
@@ -49,8 +50,8 @@ const apart = c.items.filter((s) => s.apart);
               <Picture
                 src={s.photo.src}
                 alt={s.photo.alt}
-                widths={[360, 560, 720]}
-                sizes="(min-width: 1024px) 24vw, (min-width: 640px) 48vw, 100vw"
+                widths={coverWidths(s.photo.src, 3 / 5, [360, 560, 720])}
+                sizes={coverSizes(s.photo.src, 3 / 5, '(min-width: 1024px) 24vw, (min-width: 640px) 48vw, 100vw')}
                 formats={['avif', 'webp']}
                 class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05] motion-reduce:transition-none"
               />
@@ -96,8 +97,8 @@ const apart = c.items.filter((s) => s.apart);
           <Picture
             src={s.photo.src}
             alt=""
-            widths={[560, 800, 1120]}
-            sizes="(min-width: 768px) 45vw, 100vw"
+            widths={coverWidths(s.photo.src, 4 / 5, [560, 800, 1120])}
+            sizes={coverSizes(s.photo.src, 4 / 5, '(min-width: 768px) 45vw, 100vw')}
             formats={['avif', 'webp']}
             loading="lazy"
             class:list={['svc-photo absolute inset-0 h-full w-full object-cover', { 'is-active': i === 0 }]}

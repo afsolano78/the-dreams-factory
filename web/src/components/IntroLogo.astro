@@ -27,28 +27,28 @@
   :global(html.intro:not(.intro-open)) .intro-overlay { pointer-events: auto; }
   :global(html.intro) { overflow: hidden; }
 
-  /* Las dos mitades del telón. Red de seguridad: aunque falle el script, se abren solas a los 3,6 s. */
+  /* Las dos mitades del telón. Red de seguridad: aunque falle el script, se abren solas a los 2,4 s. */
   .intro-half {
     position: absolute;
     inset-inline: 0;
     height: 50.5%;
     background: var(--color-porcelana-50);
   }
-  .intro-top { top: 0; animation: intro-up 0.9s cubic-bezier(0.7, 0, 0.2, 1) 3.6s forwards; }
-  .intro-bottom { bottom: 0; animation: intro-down 0.9s cubic-bezier(0.7, 0, 0.2, 1) 3.6s forwards; }
+  .intro-top { top: 0; animation: intro-up 0.65s cubic-bezier(0.7, 0, 0.2, 1) 2.4s forwards; }
+  .intro-bottom { bottom: 0; animation: intro-down 0.65s cubic-bezier(0.7, 0, 0.2, 1) 2.4s forwards; }
   /* Un filo fino donde se separan, como el borde de una tela. */
   .intro-top { box-shadow: 0 1px 0 color-mix(in srgb, var(--color-pino-800) 6%, transparent); }
-  .intro-logo { position: relative; animation: intro-logo-out 0.4s ease 3.3s forwards; }
+  .intro-logo { position: relative; animation: intro-logo-out 0.3s ease 2.2s forwards; }
 
   /* Oculto hasta que empieza la secuencia. */
   .intro-logo { color: var(--color-pino-800); opacity: 0; filter: blur(14px); transform: scale(1.04); }
 
-  /* Secuencia normal: empieza cuando el logo ha cargado (html.intro-go, lo pone el script de abajo). */
+  /* Secuencia normal (unos 2 s): empieza cuando el logo ha cargado (html.intro-go, lo pone el script de abajo). */
   :global(html.intro-go) .intro-logo {
-    animation: intro-reveal 1.6s cubic-bezier(0.3, 0, 0.2, 1) forwards, intro-logo-out 0.35s ease 2.3s forwards;
+    animation: intro-reveal 1s cubic-bezier(0.3, 0, 0.2, 1) forwards, intro-logo-out 0.3s ease 1.3s forwards;
   }
-  :global(html.intro-go) .intro-top { animation: intro-up 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.55s forwards; }
-  :global(html.intro-go) .intro-bottom { animation: intro-down 0.9s cubic-bezier(0.7, 0, 0.2, 1) 2.55s forwards; }
+  :global(html.intro-go) .intro-top { animation: intro-up 0.65s cubic-bezier(0.7, 0, 0.2, 1) 1.4s forwards; }
+  :global(html.intro-go) .intro-bottom { animation: intro-down 0.65s cubic-bezier(0.7, 0, 0.2, 1) 1.4s forwards; }
 
   @keyframes intro-reveal { to { opacity: 1; filter: blur(0); transform: none; } }
   @keyframes intro-logo-out { to { opacity: 0; transform: scale(0.97); } }
@@ -63,11 +63,11 @@
     const top = document.querySelector('.intro-top');
     const bottom = document.querySelector('.intro-bottom');
     const go = () => html.classList.add('intro-go');
-    // Espera a que el logo esté descargado (como mucho 1,2 s; si no, sigue igual).
+    // Espera a que el logo esté descargado (como mucho 0,8 s; si no, sigue igual).
     const img = new Image();
     const loaded = new Promise((r) => { img.onload = img.onerror = r; });
     img.src = '/brand/logo-960.webp';
-    Promise.race([loaded, new Promise((r) => setTimeout(r, 1200))]).then(go, go);
+    Promise.race([loaded, new Promise((r) => setTimeout(r, 800))]).then(go, go);
 
     // El telón empieza a abrirse: la página arranca sus efectos.
     top?.addEventListener('animationstart', (e) => {

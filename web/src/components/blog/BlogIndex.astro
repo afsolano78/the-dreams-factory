@@ -1,12 +1,16 @@
 ---
 /*
   Listado del blog (/blog, /en/blog): la entrada más reciente en grande y el resto en rejilla, con filtros por tema
-  (consejos · inspiración · nuestras cosas). Termina con el cierre de siempre.
+  (consejos · inspiración · nuestras cosas). Termina con las publicaciones en prensa (como en Bodas) y el cierre
+  de siempre.
 */
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ClosingCta from '../home/ClosingCta.astro';
+import LogoRow from '../LogoRow.astro';
 import { home } from '../../content/home';
+import { weddingsPage } from '../../content/weddings';
+import { press } from '../../i18n/ui';
 import { blogUi, getPosts, postHref, readingMinutes, formatDate } from '../../lib/blog';
 import { emphasize, type Lang } from '../../i18n/routes';
 
@@ -16,6 +20,7 @@ const c = blogUi[lang];
 const posts = await getPosts(lang);
 const [first, ...rest] = posts;
 const meta = (p: (typeof posts)[number]) => `${formatDate(p.data.date, lang)} · ${c.readingTime.replace('{n}', String(readingMinutes(p)))}`;
+const pressLinks = press.filter((l) => l.href);
 const filters = [['todas', c.all], ...Object.entries(c.categories)] as [string, string][];
 ---
 
@@ -94,7 +99,15 @@ const filters = [['todas', c.all], ...Object.entries(c.categories)] as [string, 
     </div>
   </section>
 
-  <ClosingCta lang={lang} c={home[lang].closing} />
+  <!-- Publicadas en (el mismo bloque que en Bodas) -->
+  <section class="bg-white py-14 md:py-16">
+    <div class="container-brand flex flex-col items-center gap-8 text-center">
+      <p class="eyebrow text-malva-500">{weddingsPage[lang].press.eyebrow}</p>
+      <LogoRow items={pressLinks} lang={lang} sealSize="md" class="text-pino-800" />
+    </div>
+  </section>
+
+  <ClosingCta lang={lang} c={home[lang].closing} straight />
 </BaseLayout>
 
 <script>

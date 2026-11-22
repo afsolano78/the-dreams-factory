@@ -5,9 +5,6 @@
 */
 import Button from '../Button.astro';
 import ZoomPhoto from '../ZoomPhoto.astro';
-import WeddingBouquet from '../deco/WeddingBouquet.astro';
-import WeddingCake from '../deco/WeddingCake.astro';
-import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import { path, emphasize, type Lang } from '../../i18n/routes';
 import type { HomeContent } from '../../content/home';
 
@@ -16,10 +13,6 @@ const { lang, c } = Astro.props;
 ---
 
 <section class="section-y relative isolate overflow-x-clip bg-porcelana-50">
-  <WeddingBouquet data-toggle="ramo" class="absolute left-2 top-16 -z-10 w-[100px] -rotate-12 text-eucalipto-500 opacity-60 md:left-[6%] md:top-14 md:w-[170px]" />
-  <WeddingCake data-toggle="tarta" class="absolute right-2 top-16 -z-10 w-[90px] rotate-6 text-eucalipto-500 opacity-60 md:right-[6%] md:top-14 md:w-[150px]" />
-  <WatercolorBlob data-toggle="acuarela-filosofia" seed={4} class="absolute left-1/2 top-[6%] -z-10 w-[min(680px,120%)] -translate-x-1/2 text-malva-500 opacity-[0.16]" />
-
   <div class="container-brand flex flex-col items-center gap-10 text-center">
     <div class="flex flex-col items-center gap-6" data-reveal>
       <p class="eyebrow eyebrow-line eyebrow-line-both text-malva-500">{c.eyebrow}</p>

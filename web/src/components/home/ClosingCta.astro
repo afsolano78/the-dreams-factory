@@ -5,7 +5,6 @@
   enlace al formulario completo de la página de contacto.
 */
 import SectionEdge from '../SectionEdge.astro';
-import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import ContactIcon from '../ContactIcon.astro';
 import ShortContactForm from '../contact/ShortContactForm.astro';
 import { emphasize, type Lang } from '../../i18n/routes';
@@ -26,9 +25,6 @@ const whatsapp = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(q.
 <section class="section-y relative isolate overflow-x-clip bg-porcelana-50">
   <!-- Entra con una onda; con «straight», en línea recta (así está en casi todas las páginas). -->
   {!straight && <SectionEdge class="text-porcelana-50" shape={2} />}
-  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-    <WatercolorBlob data-toggle="acuarela-cierre" seed={4} class="absolute left-1/4 top-1/2 w-[min(640px,120%)] -translate-x-1/2 -translate-y-1/2 text-malva-500 opacity-[0.14]" />
-  </div>
   <div class="container-brand grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-20">
     <div class="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left" data-reveal>
       <p class="font-script text-[clamp(2rem,1.5rem+2vw,2.75rem)] leading-none text-ciruela-700">{c.script}</p>

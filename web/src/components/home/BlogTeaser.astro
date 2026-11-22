@@ -6,7 +6,6 @@
 import { Picture } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
-import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import SectionEdge from '../SectionEdge.astro';
 import { path, type Lang } from '../../i18n/routes';
 import type { HomeContent } from '../../content/home';
@@ -22,9 +21,6 @@ const hrefs = await Promise.all(c.posts.map((p) => postByKey(p.post, lang).then(
 
 <section class="section-y relative isolate bg-white">
   <SectionEdge class="text-white" shape={0} />
-  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-    <WatercolorBlob data-toggle="acuarela-blog" seed={27} class="absolute -left-24 -top-10 w-[380px] text-malva-500 opacity-20 md:w-[480px]" />
-  </div>
   <div class="container-brand flex flex-col gap-14">
     <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <SectionHeading eyebrow={c.eyebrow} title={c.title} />

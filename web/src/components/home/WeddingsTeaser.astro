@@ -1,17 +1,10 @@
 ---
 /*
-  Bodas en la portada. PROTOTIPO: varias composiciones para comparar (selector «Bodas» de la tarjeta de opciones):
-  - arcos: rejilla de 3 columnas con la parte de arriba de cada foto en arco.
-  - collage (por defecto): rejilla de revista con fotos de tamaños distintos y un hueco con el enlace a todas las bodas.
-  - mosaico: columnas escalonadas (cada foto con su proporción).
-  - album: fotos impresas con borde blanco, algo giradas y solapadas, con los nombres en caligrafía.
-  - destacada: una foto grande y la lista de parejas; al pasar por un nombre cambia la foto.
+  Bodas en la portada: collage de revista con fotos de tamaños distintos y un hueco con el enlace a todas las bodas.
 */
 import { Picture } from 'astro:assets';
-import { coverSizes, coverWidths } from '../../lib/cover';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
-import WatercolorBlob from '../deco/WatercolorBlob.astro';
 import { path, type Lang } from '../../i18n/routes';
 import type { HomeContent } from '../../content/home';
 import { getWeddings, weddingHref } from '../../content/weddings';
@@ -26,56 +19,17 @@ const href = (couple: string) => {
 };
 const formats: ('avif' | 'webp')[] = ['avif', 'webp'];
 const pos = (focus?: string) => (focus ? `object-position:${focus}` : undefined);
-
-/* Proporción de cada foto en el mosaico (en orden): alterna verticales, horizontales y cuadradas. */
-const mosaicRatio = ['4/5', '3/2', '2/3', '1/1', '3/2', '4/5'];
-/* Álbum: proporción, giro y desplazamiento vertical de cada copia. */
-const albumRatio = ['4/3', '4/5', '3/4', '1/1', '4/5', '4/3'];
-const albumTilt = ['-3deg', '2.4deg', '-1.4deg', '2.8deg', '-2.2deg', '1.6deg'];
-const albumShift = ['0rem', '2.5rem', '-0.75rem', '1.75rem', '0.25rem', '2.75rem'];
 ---
 
 <section class="section-y relative isolate bg-porcelana-50">
-  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-[inherit]" aria-hidden="true">
-    <WatercolorBlob data-toggle="acuarela-bodas" seed={33} class="absolute -left-24 -top-6 w-[380px] text-malva-500 opacity-20 md:w-[500px]" />
-  </div>
   <div class="container-brand flex flex-col gap-14">
     <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <SectionHeading eyebrow={c.eyebrow} title={c.title}  />
       <Button href={path(c.cta.to, lang)} variant="secondary" class="self-start md:self-auto">{c.cta.label}</Button>
     </div>
 
-    <!-- Arcos. Móvil: fila deslizable (con la siguiente tarjeta asomando). Desde md: rejilla de 3 columnas. -->
-    <ul data-bodas="arcos" class="weddings-row -mx-5 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-14 md:overflow-visible md:px-0 md:pb-0">
-      {
-        c.items.map((w, i) => (
-          <li class="w-[78%] shrink-0 snap-start md:w-auto" data-reveal style={`--reveal-delay:${(i % 3) * 140}ms`}>
-            <a href={href(w.couple)} class="group flex flex-col gap-4">
-              <div class="wedding-photo relative overflow-hidden">
-                <Picture
-                  src={w.photo.src}
-                  alt={w.photo.alt}
-                  widths={coverWidths(w.photo.src, 4 / 5, [480, 720, 960])}
-                  sizes={coverSizes(w.photo.src, 4 / 5, '(min-width: 768px) 30vw, 78vw')}
-                  formats={formats}
-                  class="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
-                  style={pos(w.focus)}
-                />
-                <!-- «Ver la boda» sobre la foto al pasar el ratón (solo con ratón, ver global.css). -->
-                <span class="wedding-view pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-pino-900/70 to-transparent pb-6 pt-16 text-white" aria-hidden="true">
-                  <span class="eyebrow">{c.viewLabel} →</span>
-                </span>
-              </div>
-              <p class="eyebrow text-malva-500">{w.place}</p>
-              <h3 class="display-s text-pino-800">{w.couple}</h3>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
-    <!-- A · Collage: tamaños distintos (posiciones en el <style>); el último hueco enlaza a todas las bodas. -->
-    <ul data-bodas="collage" class="wed-collage">
+    <!-- Collage: tamaños distintos (posiciones en el <style>); el último hueco enlaza a todas las bodas. -->
+    <ul class="wed-collage">
       {
         c.items.map((w, i) => (
           <li data-reveal style={`--reveal-delay:${(i % 3) * 120}ms`}>
@@ -106,123 +60,10 @@ const albumShift = ['0rem', '2.5rem', '-0.75rem', '1.75rem', '0.25rem', '2.75rem
         </a>
       </li>
     </ul>
-
-    <!-- B · Mosaico: columnas escalonadas, cada foto con su proporción y el pie debajo. -->
-    <ul data-bodas="mosaico" class="wed-mosaic">
-      {
-        c.items.map((w, i) => (
-          <li data-reveal style={`--reveal-delay:${(i % 3) * 120}ms`}>
-            <a href={href(w.couple)} class="group flex flex-col gap-3">
-              <div class="overflow-hidden">
-                <Picture
-                  src={w.photo.src}
-                  alt={w.photo.alt}
-                  widths={[480, 720, 960]}
-                  sizes="(min-width: 768px) 30vw, 50vw"
-                  formats={formats}
-                  class="w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
-                  style={`aspect-ratio:${mosaicRatio[i % mosaicRatio.length]};${pos(w.focus) ?? ''}`}
-                />
-              </div>
-              <span class="eyebrow text-malva-500">{w.place}</span>
-              <span class="display-s -mt-1 text-pino-800">{w.couple}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
-    <!-- C · Álbum: copias impresas con borde blanco, giradas y solapadas; al pasar el ratón se enderezan. -->
-    <ul data-bodas="album" class="wed-album">
-      {
-        c.items.map((w, i) => (
-          <li
-            data-reveal
-            style={`--reveal-delay:${(i % 3) * 120}ms;--tilt:${albumTilt[i % albumTilt.length]};--shift:${albumShift[i % albumShift.length]}`}
-          >
-            <a href={href(w.couple)} class="album-print group">
-              <Picture
-                src={w.photo.src}
-                alt={w.photo.alt}
-                widths={[400, 640, 900]}
-                sizes="(min-width: 1024px) 26vw, 46vw"
-                formats={formats}
-                class="w-full object-cover"
-                style={`aspect-ratio:${albumRatio[i % albumRatio.length]};${pos(w.focus) ?? ''}`}
-              />
-              <span class="album-name">{w.couple}</span>
-              <span class="album-place">{w.place}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
-    <!-- D · Destacada: una foto grande y la lista de parejas; la foto cambia al pasar por cada nombre. -->
-    <div data-bodas="destacada" class="wed-feature" data-reveal>
-      <div class="feature-photos relative overflow-hidden">
-        {
-          c.items.map((w, i) => (
-            <div class:list={['feature-photo absolute inset-0', { 'is-active': i === 0 }]} data-wed-photo={i}>
-              <Picture
-                src={w.photo.src}
-                alt={i === 0 ? w.photo.alt : ''}
-                widths={[640, 960, 1280, 1600]}
-                sizes="(min-width: 768px) 55vw, 100vw"
-                formats={formats}
-                loading="lazy"
-                class="h-full w-full object-cover"
-                style={pos(w.focus)}
-              />
-            </div>
-          ))
-        }
-      </div>
-      <ol class="flex flex-col justify-center divide-y divide-linea border-y border-linea">
-        {
-          c.items.map((w, i) => (
-            <li>
-              <a href={href(w.couple)} class:list={['feature-row group flex items-baseline justify-between gap-6 py-5', { 'is-active': i === 0 }]} data-wed={i}>
-                <span class="flex flex-col gap-1">
-                  <span class="display-m feature-couple">{w.couple}</span>
-                  <span class="eyebrow text-malva-500">{w.place}</span>
-                </span>
-                <span class="feature-arrow text-xl text-ciruela-700" aria-hidden="true">→</span>
-              </a>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
   </div>
 </section>
 
-<script>
-  // Variante «destacada»: al pasar el ratón (o el foco del teclado) por una pareja, se muestra su foto.
-  document.querySelectorAll<HTMLElement>('.wed-feature').forEach((box) => {
-    const rows = [...box.querySelectorAll<HTMLElement>('[data-wed]')];
-    const photos = [...box.querySelectorAll<HTMLElement>('[data-wed-photo]')];
-    const show = (i: string) => {
-      rows.forEach((r) => r.classList.toggle('is-active', r.dataset.wed === i));
-      photos.forEach((p) => p.classList.toggle('is-active', p.dataset.wedPhoto === i));
-    };
-    rows.forEach((r) => {
-      r.addEventListener('mouseenter', () => show(r.dataset.wed!));
-      r.addEventListener('focus', () => show(r.dataset.wed!));
-    });
-  });
-</script>
-
 <style>
-  .weddings-row { scrollbar-width: none; }
-  /* Móvil: la fila solo se desliza en horizontal (sin esto, la animación de entrada deja margen para moverla
-     hacia arriba y se corta). */
-  @media (max-width: 767px) {
-    .weddings-row { overflow-y: hidden; overscroll-behavior-x: contain; }
-  }
-  .weddings-row::-webkit-scrollbar { display: none; }
-
-  /* ---------- A · Collage ---------- */
   /* Móvil y tableta: 2 columnas; la primera foto a todo el ancho y la vertical (I & A) el doble de alta. */
   .wed-collage {
     display: grid;
@@ -265,77 +106,5 @@ const albumShift = ['0rem', '2.5rem', '-0.75rem', '1.75rem', '0.25rem', '2.75rem
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
-  }
-
-  /* ---------- B · Mosaico ---------- */
-  .wed-mosaic { columns: 2; column-gap: 1rem; }
-  @media (min-width: 768px) { .wed-mosaic { columns: 3; column-gap: 1.5rem; } }
-  .wed-mosaic > li { break-inside: avoid; margin-bottom: 2rem; }
-
-  /* ---------- C · Álbum ---------- */
-  .wed-album {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.75rem 1rem;
-    padding: 0.5rem 0.25rem 1rem;
-  }
-  @media (min-width: 1024px) {
-    .wed-album { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 2.5rem; padding: 1rem 2rem 3rem; }
-    .wed-album > li { translate: 0 var(--shift); }
-    /* Se solapan un poco con la fila de arriba, como copias sueltas sobre una mesa. */
-    .wed-album > li:nth-child(n + 4) { margin-top: -2.5rem; }
-  }
-  .album-print {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    padding: 0.6rem 0.6rem 0.9rem;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 18px 34px -22px rgb(0 0 0 / 0.45);
-    rotate: calc(var(--tilt) * 0.6);
-    transition: rotate 0.5s ease, scale 0.5s ease, box-shadow 0.5s ease;
-  }
-  @media (min-width: 1024px) {
-    .album-print { padding: 0.9rem 0.9rem 1.2rem; rotate: var(--tilt); }
-  }
-  .wed-album > li:hover { z-index: 2; }
-  .album-print:is(:hover, :focus-visible) {
-    rotate: 0deg;
-    scale: 1.04;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 0.08), 0 30px 50px -24px rgb(0 0 0 / 0.5);
-  }
-  .album-name {
-    margin-top: 0.55rem;
-    font-family: var(--font-script);
-    font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.1rem);
-    line-height: 1.1;
-    color: var(--color-pino-800);
-    text-align: center;
-  }
-  .album-place {
-    font-size: 0.6875rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-suave);
-    text-align: center;
-  }
-  @media (prefers-reduced-motion: reduce) { .album-print { transition: none; } }
-
-  /* ---------- D · Destacada ---------- */
-  .wed-feature { display: grid; gap: 2rem; }
-  @media (min-width: 768px) {
-    .wed-feature { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 3.5rem; align-items: stretch; }
-  }
-  .feature-photos { aspect-ratio: 4 / 3; }
-  @media (min-width: 768px) { .feature-photos { aspect-ratio: auto; min-height: 30rem; } }
-  .feature-photo { opacity: 0; transition: opacity 0.6s ease; }
-  .feature-photo.is-active { opacity: 1; }
-  .feature-photo :global(picture) { display: block; height: 100%; }
-  .feature-couple { color: var(--color-pino-800); transition: color 0.3s ease, translate 0.3s ease; }
-  .feature-row.is-active .feature-couple { color: var(--color-ciruela-700); translate: 0.5rem 0; }
-  .feature-arrow { opacity: 0; transition: opacity 0.3s ease; }
-  .feature-row.is-active .feature-arrow { opacity: 1; }
-  @media (prefers-reduced-motion: reduce) {
-    .feature-photo, .feature-couple, .feature-arrow { transition: none; }
   }
 </style>

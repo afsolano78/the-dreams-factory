@@ -14,7 +14,6 @@
  * Cookies: la web no instala cookies propias ni usa analítica o publicidad. Solo guarda en el navegador un aviso
  * técnico («tdf-intro-seen») y, si se activan, Cloudflare puede usar cookies de seguridad y Turnstile. Si en el futuro
  * se añade analítica con cookies, hay que actualizar esta política y pedir consentimiento antes de instalarlas.
- * Las opciones del prototipo («tdf-toggle-*») desaparecen al publicar la web y no se citan.
  *
  * Formato de los textos: **negrita** y [texto](https://…) para enlaces. En inglés prevalece la versión española.
  */

@@ -9,7 +9,6 @@ import Education from './Education.astro';
 import BlogTeaser from './BlogTeaser.astro';
 import ClosingCta from './ClosingCta.astro';
 import InstagramStrip from './InstagramStrip.astro';
-import PrototypeToggles from '../PrototypeToggles.astro';
 import { home } from '../../content/home';
 import type { Lang } from '../../i18n/routes';
 
@@ -28,89 +27,4 @@ const c = home[lang];
   <BlogTeaser lang={lang} c={c.blog} />
   <ClosingCta lang={lang} c={c.closing} straight />
   <InstagramStrip lang={lang} />
-
-  <!--
-    PROTOTIPO: opciones para comparar variantes (valores por defecto o de la URL, p. ej. ?formacion=zigzag).
-    Para ocultar la tarjeta sin perder los valores, añadir `hidden`.
-  -->
-  <PrototypeToggles
-    title={lang === 'es' ? 'Prototipo · Opciones' : 'Prototype · Options'}
-    items={[
-      {
-        group: 'paleta',
-        label: lang === 'es' ? 'Paleta' : 'Palette',
-        options: [
-          { value: 'champan', label: lang === 'es' ? 'E · Negro y champán' : 'E · Black & champagne' },
-          { value: 'terracota-negro', label: lang === 'es' ? 'F · Terracota y negro' : 'F · Terracotta & black' },
-          { value: 'actual', label: lang === 'es' ? 'Actual (granate)' : 'Current (burgundy)' },
-          { value: 'terracota', label: lang === 'es' ? 'A · Terracota y verde' : 'A · Terracotta & green' },
-          { value: 'azul', label: lang === 'es' ? 'B · Azul empolvado' : 'B · Dusty blue' },
-          { value: 'mocha', label: lang === 'es' ? 'C · Mocha' : 'C · Mocha' },
-          { value: 'oliva', label: lang === 'es' ? 'D · Oliva y oro viejo' : 'D · Olive & antique gold' },
-        ],
-      },
-      { group: 'sombreado', label: lang === 'es' ? 'Velos y filtros en las fotos' : 'Overlays & filters on photos' },
-      { group: 'ramo', off: true, label: lang === 'es' ? 'Ramo (Filosofía)' : 'Bouquet (Philosophy)' },
-      { group: 'tarta', off: true, label: lang === 'es' ? 'Tarta (Filosofía)' : 'Cake (Philosophy)' },
-      { group: 'guirnalda', off: true, label: lang === 'es' ? 'Guirnalda de corazones (Servicios)' : 'Heart garland (Services)' },
-      { group: 'libreta', off: true, label: lang === 'es' ? 'Libreta (Formación)' : 'Notebook (Education)' },
-      { group: 'acuarela-filosofia', off: true, label: lang === 'es' ? 'Acuarela · Filosofía' : 'Watercolour · Philosophy' },
-      { group: 'acuarela-servicios', off: true, label: lang === 'es' ? 'Acuarela · Servicios' : 'Watercolour · Services' },
-      { group: 'acuarela-bodas', off: true, label: lang === 'es' ? 'Acuarela · Bodas' : 'Watercolour · Weddings' },
-      { group: 'acuarela-formacion', off: true, label: lang === 'es' ? 'Acuarela · Formación' : 'Watercolour · Education' },
-      { group: 'acuarela-blog', off: true, label: lang === 'es' ? 'Acuarela · Blog' : 'Watercolour · Blog' },
-      { group: 'acuarela-cierre', off: true, label: lang === 'es' ? 'Acuarela · Cierre' : 'Watercolour · Closing' },
-      { group: 'subrayado', label: lang === 'es' ? 'Subrayado dibujado en titulares' : 'Hand-drawn underline in headings' },
-      {
-        group: 'bodas',
-        label: lang === 'es' ? 'Bodas' : 'Weddings',
-        options: [
-          { value: 'collage', label: 'A · Collage' },
-          { value: 'arcos', label: lang === 'es' ? 'Arcos (anterior)' : 'Arches (previous)' },
-          { value: 'mosaico', label: lang === 'es' ? 'B · Mosaico' : 'B · Mosaic' },
-          { value: 'album', label: lang === 'es' ? 'C · Álbum' : 'C · Album' },
-          { value: 'destacada', label: lang === 'es' ? 'D · Destacada' : 'D · Featured' },
-        ],
-      },
-      {
-        group: 'servicios',
-        label: lang === 'es' ? 'Servicios' : 'Services',
-        options: [
-          { value: 'fotos', label: lang === 'es' ? 'Actual (fotos)' : 'Current (photos)' },
-          { value: 'lista', label: lang === 'es' ? '1 · Lista con foto' : '1 · List & photo' },
-          { value: 'escala', label: lang === 'es' ? '2 · Escala' : '2 · Scale' },
-        ],
-      },
-      {
-        group: 'formacion',
-        label: lang === 'es' ? 'Formación' : 'Education',
-        options: [
-          { value: 'lista', label: lang === 'es' ? 'C · Foto y lista' : 'C · Photo & list' },
-          { value: 'paneles', label: lang === 'es' ? 'Original' : 'Original' },
-          { value: 'zigzag', label: 'A · Zigzag' },
-          { value: 'tarjetas', label: lang === 'es' ? 'B · Tarjetas' : 'B · Cards' },
-        ],
-      },
-      {
-        group: 'enlace-formacion',
-        label: lang === 'es' ? 'Enlaces de Formación' : 'Education links',
-        options: [
-          { value: 'circulo', label: lang === 'es' ? '3 · Círculo' : '3 · Circle' },
-          { value: 'texto', label: lang === 'es' ? 'Texto' : 'Text' },
-          { value: 'boton', label: lang === 'es' ? '1 · Botón' : '1 · Button' },
-          { value: 'fila', label: lang === 'es' ? '4 · Fila entera' : '4 · Whole row' },
-        ],
-      },
-      {
-        group: 'rotulo',
-        label: lang === 'es' ? 'Adorno del rótulo' : 'Label ornament',
-        options: [
-          { value: 'linea', label: lang === 'es' ? 'Línea' : 'Line' },
-          { value: 'anillo', label: lang === 'es' ? 'Anillito' : 'Little ring' },
-          { value: 'hoja', label: lang === 'es' ? 'Ramita' : 'Sprig' },
-          { value: 'ninguno', label: lang === 'es' ? 'Nada' : 'None' },
-        ],
-      },
-    ]}
-  />
 </BaseLayout>

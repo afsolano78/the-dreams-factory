@@ -9,6 +9,7 @@
   6. Más bodas y el mismo cierre que la portada.
 */
 import { Picture } from 'astro:assets';
+import { coverSizes, coverWidths } from '../../lib/cover';
 import Gallery from '../Gallery.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
@@ -139,8 +140,8 @@ const more = [1, 2, 3].map((k) => weddings[(i + k) % weddings.length]).filter((m
                   <Picture
                     src={m.cover.src}
                     alt={m.cover.alt[lang]}
-                    widths={[400, 640, 800]}
-                    sizes="(min-width: 640px) 30vw, 100vw"
+                    widths={coverWidths(m.cover.src, 4 / 5, [400, 640, 800])}
+                    sizes={coverSizes(m.cover.src, 4 / 5, '(min-width: 640px) 30vw, 100vw')}
                     formats={['avif', 'webp']}
                     class="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
                     style={m.cover.focus ? `object-position:${m.cover.focus}` : undefined}

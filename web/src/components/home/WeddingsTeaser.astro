@@ -8,6 +8,7 @@
   - destacada: una foto grande y la lista de parejas; al pasar por un nombre cambia la foto.
 */
 import { Picture } from 'astro:assets';
+import { coverSizes, coverWidths } from '../../lib/cover';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
 import WatercolorBlob from '../deco/WatercolorBlob.astro';
@@ -54,8 +55,8 @@ const albumShift = ['0rem', '2.5rem', '-0.75rem', '1.75rem', '0.25rem', '2.75rem
                 <Picture
                   src={w.photo.src}
                   alt={w.photo.alt}
-                  widths={[480, 720, 960]}
-                  sizes="(min-width: 768px) 30vw, 78vw"
+                  widths={coverWidths(w.photo.src, 4 / 5, [480, 720, 960])}
+                  sizes={coverSizes(w.photo.src, 4 / 5, '(min-width: 768px) 30vw, 78vw')}
                   formats={formats}
                   class="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
                   style={pos(w.focus)}

@@ -9,6 +9,7 @@
   5. El mismo cierre que la portada.
 */
 import { Picture } from 'astro:assets';
+import { coverSizes, coverWidths } from '../../lib/cover';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import ClosingCta from '../home/ClosingCta.astro';
@@ -78,8 +79,8 @@ const fLink = weddingLink(f.wedding);
               <Picture
                 src={f.photo.src}
                 alt=""
-                widths={[560, 800, 1120]}
-                sizes="(min-width: 1024px) 40vw, 100vw"
+                widths={coverWidths(f.photo.src, 4 / 5, [560, 800, 1120])}
+                sizes={coverSizes(f.photo.src, 4 / 5, '(min-width: 1024px) 40vw, 100vw')}
                 formats={['avif', 'webp']}
                 class="aspect-[4/5] w-full object-cover"
                 style={f.photo.focus ? `object-position:${f.photo.focus}` : undefined}

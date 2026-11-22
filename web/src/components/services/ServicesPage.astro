@@ -8,6 +8,7 @@
   4. El mismo cierre que la portada («¿Os imagináis el día?»).
 */
 import { Picture } from 'astro:assets';
+import { coverSizes, coverWidths } from '../../lib/cover';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
@@ -68,8 +69,8 @@ const contactHref = (anchor: string) => `${path('contact', lang)}${serviceKey[an
               <Picture
                 src={s.photo.src}
                 alt={s.photo.alt}
-                widths={[560, 800, 1120]}
-                sizes="(min-width: 768px) 45vw, 100vw"
+                widths={coverWidths(s.photo.src, 4 / 5, [560, 800, 1120])}
+                sizes={coverSizes(s.photo.src, 4 / 5, '(min-width: 768px) 45vw, 100vw')}
                 formats={['avif', 'webp']}
                 class="aspect-[4/5] w-full object-cover"
                 style={s.focus ? `object-position:${s.focus}` : undefined}

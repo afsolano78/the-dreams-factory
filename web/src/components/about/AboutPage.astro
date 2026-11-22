@@ -11,6 +11,7 @@
   8. El mismo cierre que la portada.
 */
 import { Picture } from 'astro:assets';
+import { coverSizes, coverWidths } from '../../lib/cover';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
@@ -40,8 +41,8 @@ const pos = (focus?: string) => (focus ? `object-position:${focus}` : undefined)
         <Picture
           src={c.hero.photo.src}
           alt={c.hero.photo.alt}
-          widths={[560, 800, 1120, 1600]}
-          sizes="(min-width: 768px) 45vw, 100vw"
+          widths={coverWidths(c.hero.photo.src, 4 / 5, [560, 800, 1120, 1600])}
+          sizes={coverSizes(c.hero.photo.src, 4 / 5, '(min-width: 768px) 45vw, 100vw')}
           formats={['avif', 'webp']}
           loading="eager"
           fetchpriority="high"
@@ -102,8 +103,8 @@ const pos = (focus?: string) => (focus ? `object-position:${focus}` : undefined)
                 <Picture
                   src={p.photo.src}
                   alt={p.photo.alt}
-                  widths={[400, 600, 760]}
-                  sizes="(min-width: 768px) 40vw, 100vw"
+                  widths={coverWidths(p.photo.src, 4 / 5, [400, 600, 760])}
+                  sizes={coverSizes(p.photo.src, 4 / 5, '(min-width: 768px) 40vw, 100vw')}
                   formats={['avif', 'webp']}
                   class="aspect-[4/5] w-full object-cover"
                   style={pos(p.photo.focus)}

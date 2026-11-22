@@ -11,6 +11,7 @@
   8. Preguntas frecuentes y cierre con la inscripción en la nueva edición.
 */
 import { Picture, getImage } from 'astro:assets';
+import { coverSizes, coverWidths } from '../../lib/cover';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Button from '../Button.astro';
@@ -113,8 +114,8 @@ const event = {
               <Picture
                 src={d.photo.src}
                 alt={d.photo.alt}
-                widths={[400, 640, 800]}
-                sizes="(min-width: 768px) 30vw, 100vw"
+                widths={coverWidths(d.photo.src, 4 / 5, [400, 640, 800])}
+                sizes={coverSizes(d.photo.src, 4 / 5, '(min-width: 768px) 30vw, 100vw')}
                 formats={['avif', 'webp']}
                 class="aspect-[4/5] w-full object-cover"
               />

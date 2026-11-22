@@ -19,6 +19,7 @@
 
 import { instagramFeed, instagramImage, updateInstagram, type IgEnv } from './instagram';
 import { cmsAuth, cmsCallback, type CmsAuthEnv } from './cms-auth';
+import { ackEmail } from './ack-email';
 
 interface Env extends IgEnv, CmsAuthEnv {
   ASSETS: { fetch: (request: Request) => Promise<Response> };
@@ -30,32 +31,6 @@ interface Env extends IgEnv, CmsAuthEnv {
 }
 
 type Data = Record<string, string>;
-
-/** Acuse de recibo a la pareja (texto aprobado por Bea y Vane, noviembre de 2026). */
-const ACK_ES = `Hola, {nombres}:
-
-¡Gracias por escribirnos! Ya tenemos vuestro mensaje y lo vamos a leer con calma. Os contestaremos personalmente en uno o dos días.
-
-Mientras tanto, si os apetece, podéis ver algunas de nuestras bodas en https://thedreamsfactory.es/bodas/ o seguirnos en Instagram (@the_dreamsfactory).
-
-Si os acordáis de algo más, respondéis a este correo y nos llega directamente.
-
-Un abrazo,
-Bea y Vane
-The Dreams Factory · Wedding planners en Asturias`;
-
-const ACK_EN = `Hi {nombres},
-
-Thank you for writing to us! We’ve got your message and we’ll read it carefully. We’ll get back to you personally within a day or two.
-
-In the meantime, if you like, you can see some of our weddings at https://thedreamsfactory.es/en/weddings/ or follow us on Instagram (@the_dreamsfactory).
-
-If you think of anything else, just reply to this email and it will come straight to us.
-
-Warm wishes,
-Bea & Vane
-The Dreams Factory · Wedding planners in Asturias`;
-
 
 const MIN_MS = 3000;
 const MAX_BODY = 60_000;
@@ -170,14 +145,8 @@ async function contact(request: Request, env: Env): Promise<Response> {
   if (!sent) return json({ ok: false, error: 'send' }, 502);
 
   if (env.AUTOREPLY === 'si' && d.email) {
-    const en = d.idioma === 'en';
-    await sendMail(env.RESEND_API_KEY, {
-      from,
-      to: [d.email],
-      reply_to: to,
-      subject: en ? 'We’ve got your message ✨ · The Dreams Factory' : 'Hemos recibido vuestro mensaje ✨ · The Dreams Factory',
-      text: (en ? ACK_EN : ACK_ES).replace('{nombres}', d.nombres),
-    });
+    const ack = ackEmail(d.idioma === 'en' ? 'en' : 'es', d.nombres);
+    await sendMail(env.RESEND_API_KEY, { from, to: [d.email], reply_to: to, ...ack });
   }
 
   return reply(true, request, d, wantsJson);

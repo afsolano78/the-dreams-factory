@@ -45,6 +45,12 @@ const event = {
   },
   organizer: { '@type': 'Organization', name: 'The Dreams Factory', url: Astro.site?.href },
 };
+// Cabecera en móvil: antetítulo y etiqueta acortados (ver la plantilla).
+const [eyebrowMain, ...eyebrowParts] = c.hero.eyebrow.split(' · ');
+const eyebrowRest = eyebrowParts.join(' · ');
+const badgeParts = c.hero.badge.split(' · ');
+const badgeLast = badgeParts.pop()!;
+const badgeFirst = badgeParts.join(' · ');
 ---
 
 <BaseLayout lang={lang} routeKey="course" title={c.meta.title} description={c.meta.description} overlayHeader>
@@ -64,11 +70,12 @@ const event = {
     />
     <div class="course-hero-shade absolute inset-0 -z-10" aria-hidden="true"></div>
     <div class="photo-text container-brand flex w-full flex-col gap-6 pb-12 md:pb-20">
-      <p class="eyebrow">{c.hero.eyebrow}</p>
+      <!-- En móvil, textos más cortos para que el bloque tape menos foto. -->
+      <p class="eyebrow">{eyebrowMain}<span class="max-md:hidden">{eyebrowRest && ` · ${eyebrowRest}`}</span></p>
       <h1 class="display-xl max-w-[16ch]" set:html={emphasize(c.hero.title)} />
       <p class="lead max-w-[36rem]">{c.hero.lead}</p>
       <p class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.9375rem]">
-        <span class="border border-white/60 px-3 py-1.5 eyebrow !tracking-[0.14em]">{c.hero.badge}</span>
+        <span class="border border-white/60 px-3 py-1.5 eyebrow !tracking-[0.14em]">{badgeFirst && <span class="max-md:hidden">{badgeFirst} · </span>}{badgeLast}</span>
         <span class="text-white/85">{c.hero.status}</span>
       </p>
       <div class="mt-2 flex flex-wrap gap-4">
@@ -267,6 +274,17 @@ const event = {
       color-mix(in srgb, var(--color-pino-900) 45%, transparent) 60%,
       color-mix(in srgb, var(--color-pino-900) 88%, transparent) 100%
     );
+  }
+  @media (max-width: 767px) {
+    .course-hero-shade {
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-pino-900) 55%, transparent) 0%,
+        color-mix(in srgb, var(--color-pino-900) 50%, transparent) 25%,
+        color-mix(in srgb, var(--color-pino-900) 68%, transparent) 50%,
+        color-mix(in srgb, var(--color-pino-900) 92%, transparent) 100%
+      );
+    }
   }
   .course-anchor { scroll-margin-top: 5rem; }
   .course-num {

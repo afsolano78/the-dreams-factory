@@ -1,6 +1,6 @@
 # Panel de edición (bodas, opiniones y blog)
 
-En `/admin` (por ejemplo, `https://www.thedreamsfactory.es/admin/`) Bea y Vane pueden crear y cambiar **bodas**,
+En `/admin` (por ejemplo, `https://thedreamsfactory.es/admin/`) Bea y Vane pueden crear y cambiar **bodas**,
 **opiniones** y **entradas del blog**, en español e inglés, con sus fotos. Es [Sveltia CMS](https://sveltiacms.app): no hay servidor
 ni base de datos aparte. Al guardar, el panel guarda el cambio en el repositorio de GitHub y Cloudflare publica la
 web en uno o dos minutos.
@@ -25,7 +25,7 @@ web en uno o dos minutos.
    - Application name: `Panel The Dreams Factory`
    - Homepage URL: la dirección de la web (la del prototipo ahora; la definitiva al publicar).
    - Authorization callback URL: **la misma dirección + `/api/callback`**, por ejemplo
-     `https://www.thedreamsfactory.es/api/callback`.
+     `https://thedreamsfactory.es/api/callback`.
 2. **Register application**. Copiar el **Client ID** y pulsar **Generate a new client secret** (copiarlo: solo se ve una vez).
 3. En Cloudflare: **Workers & Pages → dreams-factory-prototipo → Settings → Variables and secrets → Add**:
    - `GITHUB_CLIENT_ID` = el Client ID (tipo **Secret**).

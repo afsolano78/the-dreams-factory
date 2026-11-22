@@ -1,19 +1,23 @@
 export const langs = ['es', 'en'] as const;
 export type Lang = (typeof langs)[number];
 
-/** Cada página del sitio con su dirección en cada idioma. El selector ES · EN usa este mapa. */
+/**
+ * Cada página del sitio con su dirección en cada idioma. El selector ES · EN usa este mapa.
+ * Siempre con barra final: es la dirección real de cada página (Cloudflare redirige la versión sin barra), y así lo
+ * son también la canónica, las alternativas de idioma y el mapa del sitio.
+ */
 export const routes = {
-  home: { es: '/', en: '/en' },
-  services: { es: '/servicios', en: '/en/services' },
-  weddings: { es: '/bodas', en: '/en/weddings' },
-  about: { es: '/nosotras', en: '/en/about-us' },
-  reviews: { es: '/opiniones', en: '/en/reviews' },
-  course: { es: '/curso-wedding-planner', en: '/en/wedding-planner-course' },
-  blog: { es: '/blog', en: '/en/blog' },
-  contact: { es: '/contacto', en: '/en/contact' },
-  legal: { es: '/aviso-legal', en: '/en/legal-notice' },
-  privacy: { es: '/privacidad', en: '/en/privacy' },
-  cookies: { es: '/cookies', en: '/en/cookies' },
+  home: { es: '/', en: '/en/' },
+  services: { es: '/servicios/', en: '/en/services/' },
+  weddings: { es: '/bodas/', en: '/en/weddings/' },
+  about: { es: '/nosotras/', en: '/en/about-us/' },
+  reviews: { es: '/opiniones/', en: '/en/reviews/' },
+  course: { es: '/curso-wedding-planner/', en: '/en/wedding-planner-course/' },
+  blog: { es: '/blog/', en: '/en/blog/' },
+  contact: { es: '/contacto/', en: '/en/contact/' },
+  legal: { es: '/aviso-legal/', en: '/en/legal-notice/' },
+  privacy: { es: '/privacidad/', en: '/en/privacy/' },
+  cookies: { es: '/cookies/', en: '/en/cookies/' },
 } as const satisfies Record<string, Record<Lang, string>>;
 
 export type RouteKey = keyof typeof routes;

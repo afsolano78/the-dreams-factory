@@ -164,8 +164,8 @@ export function getWeddings(): Promise<Wedding[]> {
 
 /** Dirección de la página de una boda (o del listado, si aún no tiene página). */
 export function weddingHref(w: Wedding, lang: Lang): string {
-  const base = lang === 'es' ? '/bodas' : '/en/weddings';
-  return w.page ? `${base}/${w.slug[lang]}` : base;
+  const base = lang === 'es' ? '/bodas/' : '/en/weddings/';
+  return w.page ? `${base}${w.slug[lang]}/` : base;
 }
 
 /** La boda de una pareja (por sus iniciales, como aparecen en la portada). */

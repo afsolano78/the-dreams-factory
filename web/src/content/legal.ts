@@ -56,7 +56,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
           id: 'titular',
           title: 'Datos del titular',
           blocks: [
-            { p: 'En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), estos son los datos del titular de la web www.thedreamsfactory.es:' },
+            { p: 'En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), estos son los datos del titular de la web thedreamsfactory.es:' },
             { dl: [
               ['Titular', OWNER],
               ['Forma jurídica', 'Sociedad civil'],
@@ -128,7 +128,7 @@ export const legal: Record<'notice' | 'privacy' | 'cookies', Record<Lang, LegalD
           id: 'owner',
           title: 'Owner details',
           blocks: [
-            { p: 'In accordance with article 10 of Spanish Law 34/2002 on information society services and electronic commerce (LSSI), these are the details of the owner of the website www.thedreamsfactory.es:' },
+            { p: 'In accordance with article 10 of Spanish Law 34/2002 on information society services and electronic commerce (LSSI), these are the details of the owner of the website thedreamsfactory.es:' },
             { dl: [
               ['Owner', OWNER],
               ['Legal form', 'Civil partnership (sociedad civil)'],

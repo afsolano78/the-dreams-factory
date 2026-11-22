@@ -11,6 +11,7 @@ import IntroLogo from '../components/IntroLogo.astro';
 import QuickContactBar from '../components/QuickContactBar.astro';
 import { routes, langs, type Lang, type RouteKey } from '../i18n/routes';
 import { ui } from '../i18n/ui';
+import { SITE, INDEXABLE } from '../../site.config.mjs';
 
 interface Props {
   lang: Lang;
@@ -22,10 +23,12 @@ interface Props {
   description?: string;
   /** Cabecera transparente sobre una foto a sangre (portada). */
   overlayHeader?: boolean;
+  /** Página de error: sin canónica ni alternativas de idioma, y nunca indexable. */
+  notFound?: boolean;
 }
-const { lang, routeKey, alternates, title, description, overlayHeader = false } = Astro.props;
+const { lang, routeKey, alternates, title, description, overlayHeader = false, notFound = false } = Astro.props;
 const paths = alternates ?? routes[routeKey];
-const site = Astro.site ?? new URL('https://www.thedreamsfactory.es');
+const site = Astro.site ?? new URL(SITE);
 const canonical = new URL(paths[lang], site);
 const ogImage = new URL('/og-image.jpg', site);
 ---
@@ -50,9 +53,9 @@ const ogImage = new URL('/og-image.jpg', site);
     </script>
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
-    <link rel="canonical" href={canonical} />
-    {langs.map((l) => <link rel="alternate" hreflang={l} href={new URL(paths[l], site)} />)}
-    <link rel="alternate" hreflang="x-default" href={new URL(paths.es, site)} />
+    {!notFound && <link rel="canonical" href={canonical} />}
+    {!notFound && langs.map((l) => <link rel="alternate" hreflang={l} href={new URL(paths[l], site)} />)}
+    {!notFound && <link rel="alternate" hreflang="x-default" href={new URL(paths.es, site)} />}
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
@@ -63,13 +66,13 @@ const ogImage = new URL('/og-image.jpg', site);
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <!-- Oscuro de la paleta por defecto (negro y champán); el script de arriba lo ajusta a la paleta elegida. -->
+    <!-- Color de la barra del navegador en móviles: el oscuro de la paleta. -->
     <meta name="theme-color" content="#222222" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <!-- Prototipo: no indexar mientras se publica en una dirección de pruebas. Quitar al lanzar. -->
-    <meta name="robots" content="noindex, nofollow" />
+    <!-- Sin indexar mientras la web no se lance (INDEXABLE en site.config.mjs) y siempre en la página de error. -->
+    {(!INDEXABLE || notFound) && <meta name="robots" content="noindex, nofollow" />}
   </head>
   <body class="min-h-dvh">
     <IntroLogo />

@@ -36,7 +36,7 @@ const ACK_ES = `Hola, {nombres}:
 
 ¡Gracias por escribirnos! Ya tenemos vuestro mensaje y lo vamos a leer con calma. Os contestaremos personalmente en uno o dos días.
 
-Mientras tanto, si os apetece, podéis ver algunas de nuestras bodas en https://www.thedreamsfactory.es/bodas/ o seguirnos en Instagram (@the_dreamsfactory).
+Mientras tanto, si os apetece, podéis ver algunas de nuestras bodas en https://thedreamsfactory.es/bodas/ o seguirnos en Instagram (@the_dreamsfactory).
 
 Si os acordáis de algo más, respondéis a este correo y nos llega directamente.
 
@@ -48,7 +48,7 @@ const ACK_EN = `Hi {nombres},
 
 Thank you for writing to us! We’ve got your message and we’ll read it carefully. We’ll get back to you personally within a day or two.
 
-In the meantime, if you like, you can see some of our weddings at https://www.thedreamsfactory.es/en/weddings/ or follow us on Instagram (@the_dreamsfactory).
+In the meantime, if you like, you can see some of our weddings at https://thedreamsfactory.es/en/weddings/ or follow us on Instagram (@the_dreamsfactory).
 
 If you think of anything else, just reply to this email and it will come straight to us.
 

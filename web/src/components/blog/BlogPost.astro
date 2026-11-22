@@ -8,6 +8,8 @@ import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Gallery from '../Gallery.astro';
 import ClosingCta from '../home/ClosingCta.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Button from '../Button.astro';
 import LogoRow from '../LogoRow.astro';
 import { home } from '../../content/home';
 import { weddingsPage } from '../../content/weddings';
@@ -83,8 +85,11 @@ const related = [...all.filter((p) => p.data.category === post.data.category), .
 
   <!-- Sigue leyendo -->
   <section class="section-y bg-porcelana-50">
-    <div class="container-brand flex flex-col gap-10">
-      <h2 class="display-l text-pino-800">{c.keepReading}</h2>
+    <div class="container-brand flex flex-col gap-12">
+      <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <SectionHeading eyebrow={c.keepReading.eyebrow} title={c.keepReading.title} />
+        <Button href={path('blog', lang)} variant="secondary" class="self-start md:self-auto">{c.keepReading.all}</Button>
+      </div>
       <ul class="grid gap-x-8 gap-y-12 sm:grid-cols-3">
         {related.map((p) => (
           <li data-reveal>
@@ -93,14 +98,17 @@ const related = [...all.filter((p) => p.data.category === post.data.category), .
                 <Picture
                   src={p.data.cover}
                   alt={p.data.coverAlt}
-                  widths={[400, 640]}
+                  widths={[400, 640, 800]}
                   sizes="(min-width: 640px) 30vw, 100vw"
                   formats={['avif', 'webp']}
                   class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+                  style={p.data.coverFocus ? `object-position:${p.data.coverFocus}` : undefined}
                 />
               </div>
               <p class="eyebrow mt-2 text-malva-500">{c.categories[p.data.category]}</p>
               <h3 class="display-s text-pino-800 group-hover:text-ciruela-700">{p.data.title}</h3>
+              <p class="text-[0.9375rem] text-suave">{p.data.description}</p>
+              <p class="text-[0.8125rem] text-suave">{formatDate(p.data.date, lang)} · {c.readingTime.replace('{n}', String(readingMinutes(p)))}</p>
             </a>
           </li>
         ))}

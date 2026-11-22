@@ -12,7 +12,7 @@ export const blogUi: Record<Lang, {
   eyebrow: string; title: string; lead: string;
   categories: Record<Category, string>;
   all: string; filterLabel: string;
-  readingTime: string; back: string; photos: string; photoBy: string; keepReading: string; featured: string;
+  readingTime: string; back: string; photos: string; photoBy: string; keepReading: { eyebrow: string; title: string; all: string }; featured: string;
   /** Aviso de traducción (solo en inglés). */
   note?: string;
   gallery: { title: string; enlarge: string; close: string; prev: string; next: string; of: string };
@@ -32,7 +32,7 @@ export const blogUi: Record<Lang, {
     back: 'Todas las entradas',
     photos: 'Las fotos',
     photoBy: 'Fotografía',
-    keepReading: 'Sigue leyendo',
+    keepReading: { eyebrow: 'Del blog', title: 'Sigue *leyendo*', all: 'Ver todo el blog' },
     featured: 'Lo último',
     gallery: { title: 'Fotos de la entrada', enlarge: 'Ampliar la foto', close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', of: 'de' },
   },
@@ -51,7 +51,7 @@ export const blogUi: Record<Lang, {
     back: 'All posts',
     photos: 'The photos',
     photoBy: 'Photography',
-    keepReading: 'Keep reading',
+    keepReading: { eyebrow: 'From the blog', title: 'Keep *reading*', all: 'See the whole blog' },
     featured: 'Latest',
     note: 'Posts translated from the original Spanish.',
     gallery: { title: 'Post photos', enlarge: 'Enlarge photo', close: 'Close', prev: 'Previous photo', next: 'Next photo', of: 'of' },

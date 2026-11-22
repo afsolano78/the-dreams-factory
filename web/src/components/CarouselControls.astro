@@ -64,9 +64,10 @@ const { labels, thumbs, thumbFocus, durations, compact = false, pauseLabel, play
 <style>
   /* Versión «compact» en móvil (ver arriba). */
   @media (max-width: 767px) {
-    .carousel-compact { justify-content: flex-end; gap: 0.5rem; }
+    /* Más pegado a la esquina inferior derecha de la foto que el resto del texto. */
+    .carousel-compact { width: auto; justify-content: flex-end; gap: 0.5rem; margin-right: -0.75rem; }
     .carousel-compact ol { flex: none; width: 7.5rem; gap: 0.25rem; }
-    .carousel-compact [data-carousel-dot] { padding-block: 0.5rem; }
+    .carousel-compact [data-carousel-dot] { padding: 0.5rem 0 0.25rem; }
     .carousel-compact [data-carousel-dot] > span { height: 1px; }
     .carousel-compact [data-carousel-pause] { width: 1.75rem; height: 1.75rem; border-color: transparent; opacity: 0.85; }
   }

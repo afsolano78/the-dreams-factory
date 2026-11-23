@@ -196,13 +196,13 @@ const [emailUser, emailDomain] = contact.email.split('@');
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
-    /* Telón: recogido bajo la barra; al abrir se despliega hacia abajo y al cerrar vuelve a subir. */
-    clip-path: inset(0 0 100% 0);
-    transition: clip-path 0.5s cubic-bezier(0.65, 0, 0.25, 1);
+    /* Panel lateral: entra desde la derecha (el lado del botón) y sale hacia ese mismo lado. */
+    transform: translateX(100%);
+    transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
   }
   .mobile-menu::-webkit-scrollbar { display: none; }
-  .site-header[data-menu='open'] .mobile-menu { clip-path: inset(0); }
-  .site-header[data-menu='closing'] .mobile-menu { transition-duration: 0.4s; }
+  .site-header[data-menu='open'] .mobile-menu { transform: none; }
+  .site-header[data-menu='closing'] .mobile-menu { transition: transform 0.35s cubic-bezier(0.55, 0, 0.75, 0.2); }
   .site-header:is([data-menu='open'], [data-menu='closing']) :global(.lang-top) { visibility: hidden; }
   /* Página actual: en champán, con un punto delante. */
   .menu-link { position: relative; display: inline-block; transition: color 0.2s ease; }
@@ -218,10 +218,10 @@ const [emailUser, emailDomain] = contact.email.split('@');
     background: currentColor;
     transform: translateY(-50%);
   }
-  /* Al abrir, las opciones aparecen una tras otra. */
-  .site-header[data-menu='open'] .menu-item { animation: menu-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(140ms + var(--i) * 40ms); }
+  /* Al abrir, las opciones llegan una tras otra, un poco por detrás del panel. */
+  .site-header[data-menu='open'] .menu-item { animation: menu-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(100ms + var(--i) * 40ms); }
   @keyframes menu-in {
-    from { opacity: 0; transform: translateY(0.75rem); }
+    from { opacity: 0; transform: translateX(2rem); }
     to { opacity: 1; transform: none; }
   }
   .menu-toggle svg path {
@@ -253,8 +253,8 @@ const [emailUser, emailDomain] = contact.email.split('@');
 
   if (header && toggle && menu) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    // La barra cambia de color de golpe, sin la transición pensada para el scroll: al abrir, antes de que baje el
-    // telón; al cerrar, cuando ya ha subido.
+    // La barra cambia de color de golpe, sin la transición pensada para el scroll: al abrir, antes de que entre el
+    // panel; al cerrar, cuando ya ha salido.
     const instantColor = () => {
       header.classList.add('no-transition');
       requestAnimationFrame(() => requestAnimationFrame(() => header.classList.remove('no-transition')));
@@ -274,14 +274,14 @@ const [emailUser, emailDomain] = contact.email.split('@');
       if (open) {
         instantColor();
         menu.hidden = false;
-        void menu.offsetHeight; // pinta el telón recogido antes de desplegarlo, para que se anime
+        void menu.offsetHeight; // pinta el panel fuera de la pantalla antes de meterlo, para que se anime
         header.dataset.menu = 'open';
         document.documentElement.style.overflow = 'hidden';
         document.documentElement.classList.add('menu-open');
       } else if (header.dataset.menu === 'open') {
         if (reduceMotion.matches) return finishClose();
         header.dataset.menu = 'closing';
-        closeTimer = window.setTimeout(finishClose, 420);
+        closeTimer = window.setTimeout(finishClose, 370);
       }
     };
     toggle.addEventListener('click', () => setOpen(header.dataset.menu !== 'open'));

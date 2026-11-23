@@ -1,6 +1,7 @@
 ---
 /*
-  Foto que se amplía al hacer clic: la miniatura es un botón que abre un <dialog> con la foto grande sobre un fondo
+  Foto que se amplía al hacer clic (con ratón, el cursor es una lupa y al pasar por encima aparece un velo con otra
+  lupa en el centro): la miniatura es un botón que abre un <dialog> con la foto grande sobre un fondo
   oscurecido (entra con un zoom suave). Se cierra con un clic en cualquier sitio, con Escape o con el botón ×.
   La foto grande solo se descarga al abrir por primera vez (loading="lazy" dentro del diálogo cerrado).
 */
@@ -26,8 +27,9 @@ const { src, thumbSrc, alt, label, closeLabel, thumbClass = '', thumbWidths = [3
 <div class="zoom-photo">
   <button type="button" class="zoom-open group relative block cursor-zoom-in rounded-full" aria-label={label} aria-haspopup="dialog">
     <Picture src={thumbSrc ?? src} alt={alt} widths={thumbWidths} sizes={thumbSizes} formats={['avif', 'webp']} class={`transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none ${thumbClass}`} />
-    <span class="zoom-hint absolute bottom-1 right-1 grid size-8 place-items-center rounded-full bg-white/90 text-pino-800 shadow" aria-hidden="true">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 20 20M10.5 8v5M8 10.5h5" /></svg>
+    <!-- Pista solo con ratón o teclado: velo suave y lupa en el centro. En pantallas táctiles la foto queda limpia. -->
+    <span class="zoom-hint absolute inset-0 grid place-items-center rounded-full bg-pino-900/30 text-white" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 20 20M10.5 8v5M8 10.5h5" /></svg>
     </span>
   </button>
   <dialog class="zoom-dialog" aria-label={alt}>
@@ -39,9 +41,14 @@ const { src, thumbSrc, alt, label, closeLabel, thumbClass = '', thumbWidths = [3
 </div>
 
 <style>
-  .zoom-hint { opacity: 0; transition: opacity 0.3s ease; }
-  .zoom-open:is(:hover, :focus-visible) .zoom-hint { opacity: 1; }
-  @media (hover: none) { .zoom-hint { opacity: 1; } }
+  .zoom-hint { opacity: 0; transition: opacity 0.35s ease; }
+  .zoom-hint svg { transform: scale(0.85); transition: transform 0.35s ease; }
+  @media (hover: hover) {
+    .zoom-open:hover .zoom-hint { opacity: 1; }
+    .zoom-open:hover .zoom-hint svg { transform: none; }
+  }
+  .zoom-open:focus-visible .zoom-hint { opacity: 1; }
+  .zoom-open:focus-visible .zoom-hint svg { transform: none; }
 
   /* El diálogo ocupa siempre toda la pantalla (también en móvil) y no se desplaza. */
   .zoom-dialog {

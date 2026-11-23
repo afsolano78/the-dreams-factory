@@ -38,7 +38,9 @@ const { lang, c } = Astro.props;
           alt={c.team.alt}
           label={lang === 'es' ? 'Ampliar la foto de Bea y Vane' : 'Enlarge the photo of Bea and Vane'}
           closeLabel={lang === 'es' ? 'Cerrar' : 'Close'}
-          thumbClass="size-36 rounded-full object-cover sm:size-40"
+          thumbClass="size-48 rounded-full object-cover sm:size-[13.5rem]"
+          thumbWidths={[400, 640]}
+          thumbSizes="(min-width: 640px) 216px, 192px"
         />
       </div>
       <div class="flex flex-col gap-1">

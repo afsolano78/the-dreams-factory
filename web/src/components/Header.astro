@@ -147,7 +147,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
     background: transparent;
     border-color: transparent;
   }
-  .site-header[data-menu='open'] {
+  .site-header:is([data-menu='open'], [data-menu='closing']) {
     color: #fff;
     background: var(--color-pino-800);
     border-color: transparent;
@@ -195,8 +195,15 @@ const [emailUser, emailDomain] = contact.email.split('@');
     height: calc(100dvh - 4.5rem);
     overflow-y: auto;
     overscroll-behavior: contain;
+    scrollbar-width: none;
+    /* Telón: recogido bajo la barra; al abrir se despliega hacia abajo y al cerrar vuelve a subir. */
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.5s cubic-bezier(0.65, 0, 0.25, 1);
   }
-  .site-header[data-menu='open'] :global(.lang-top) { visibility: hidden; }
+  .mobile-menu::-webkit-scrollbar { display: none; }
+  .site-header[data-menu='open'] .mobile-menu { clip-path: inset(0); }
+  .site-header[data-menu='closing'] .mobile-menu { transition-duration: 0.4s; }
+  .site-header:is([data-menu='open'], [data-menu='closing']) :global(.lang-top) { visibility: hidden; }
   /* Página actual: en champán, con un punto delante. */
   .menu-link { position: relative; display: inline-block; transition: color 0.2s ease; }
   .menu-link[aria-current='page'] { color: var(--color-eucalipto-500); }
@@ -212,7 +219,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
     transform: translateY(-50%);
   }
   /* Al abrir, las opciones aparecen una tras otra. */
-  .site-header[data-menu='open'] .menu-item { animation: menu-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 40ms); }
+  .site-header[data-menu='open'] .menu-item { animation: menu-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(140ms + var(--i) * 40ms); }
   @keyframes menu-in {
     from { opacity: 0; transform: translateY(0.75rem); }
     to { opacity: 1; transform: none; }
@@ -227,6 +234,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
   @media (prefers-reduced-motion: reduce) {
     .site-header, .menu-toggle svg path, .nav-link::after { transition: none; }
     .site-header[data-menu='open'] .menu-item { animation: none; }
+    .mobile-menu { transition: none; }
   }
 </style>
 
@@ -244,16 +252,37 @@ const [emailUser, emailDomain] = contact.email.split('@');
   }
 
   if (header && toggle && menu) {
-    const setOpen = (open: boolean) => {
-      // La barra cambia de color a la vez que aparece el panel (sin la transición pensada para el scroll).
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // La barra cambia de color de golpe, sin la transición pensada para el scroll: al abrir, antes de que baje el
+    // telón; al cerrar, cuando ya ha subido.
+    const instantColor = () => {
       header.classList.add('no-transition');
       requestAnimationFrame(() => requestAnimationFrame(() => header.classList.remove('no-transition')));
-      header.dataset.menu = open ? 'open' : 'closed';
-      menu.hidden = !open;
+    };
+    let closeTimer: number | undefined;
+    const finishClose = () => {
+      instantColor();
+      header.dataset.menu = 'closed';
+      menu.hidden = true;
+      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('menu-open');
+    };
+    const setOpen = (open: boolean) => {
+      clearTimeout(closeTimer);
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? '');
-      document.documentElement.style.overflow = open ? 'hidden' : '';
-      document.documentElement.classList.toggle('menu-open', open);
+      if (open) {
+        instantColor();
+        menu.hidden = false;
+        void menu.offsetHeight; // pinta el telón recogido antes de desplegarlo, para que se anime
+        header.dataset.menu = 'open';
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.classList.add('menu-open');
+      } else if (header.dataset.menu === 'open') {
+        if (reduceMotion.matches) return finishClose();
+        header.dataset.menu = 'closing';
+        closeTimer = window.setTimeout(finishClose, 420);
+      }
     };
     toggle.addEventListener('click', () => setOpen(header.dataset.menu !== 'open'));
     document.addEventListener('keydown', (e) => {

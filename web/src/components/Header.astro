@@ -141,17 +141,35 @@ const [emailUser, emailDomain] = contact.email.split('@');
       border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
       color 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.12s;
   }
-  /* Sobre la foto: transparente y en blanco, hasta que se hace scroll o se abre el menú. */
-  .site-header[data-overlay='true'][data-scrolled='false'][data-menu='closed'] {
+  /* Sobre la foto: transparente y en blanco, hasta que se hace scroll. */
+  .site-header[data-overlay='true'][data-scrolled='false'] {
     color: #fff;
     background: transparent;
     border-color: transparent;
   }
-  .site-header:is([data-menu='open'], [data-menu='closing']) {
-    color: #fff;
+  /*
+    Menú del móvil: el fondo oscuro (barra incluida) es una capa que entra entera desde la derecha con el contenido.
+    La barra no cambia de fondo; solo el logo y el botón pasan a blanco cuando el panel ya los va cubriendo, y al
+    cerrar vuelven a su color en cuanto el panel empieza a irse.
+  */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background: var(--color-pino-800);
-    border-color: transparent;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s 0.45s;
   }
+  .site-header[data-menu='open']::before { transform: none; visibility: visible; transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1); }
+  .site-header[data-menu='closing']::before { visibility: visible; transition: transform 0.35s cubic-bezier(0.55, 0, 0.75, 0.2); }
+  .site-header[data-menu='open'] {
+    color: #fff;
+    border-color: transparent;
+    transition: color 0.25s ease 0.12s, border-color 0s;
+  }
+  .site-header[data-menu='closing'] { transition: color 0.2s ease 0.1s, border-color 0.4s ease 0.2s; }
   .site-header.no-transition { transition: none !important; }
   .header-fg { color: inherit; }
   .nav-link {
@@ -191,12 +209,11 @@ const [emailUser, emailDomain] = contact.email.split('@');
   }
   /* Ocupa el resto de la pantalla y se desplaza por dentro si no cabe (la página queda quieta detrás). */
   .mobile-menu {
-    background: var(--color-pino-800);
     height: calc(100dvh - 4.5rem);
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: none;
-    /* Panel lateral: entra desde la derecha (el lado del botón) y sale hacia ese mismo lado. */
+    /* El contenido viaja con el fondo (ver .site-header::before): entra desde la derecha y sale hacia ese lado. */
     transform: translateX(100%);
     transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
   }
@@ -234,7 +251,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
   @media (prefers-reduced-motion: reduce) {
     .site-header, .menu-toggle svg path, .nav-link::after { transition: none; }
     .site-header[data-menu='open'] .menu-item { animation: none; }
-    .mobile-menu { transition: none; }
+    .mobile-menu, .site-header::before { transition: none !important; }
   }
 </style>
 
@@ -253,15 +270,8 @@ const [emailUser, emailDomain] = contact.email.split('@');
 
   if (header && toggle && menu) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    // La barra cambia de color de golpe, sin la transición pensada para el scroll: al abrir, antes de que entre el
-    // panel; al cerrar, cuando ya ha salido.
-    const instantColor = () => {
-      header.classList.add('no-transition');
-      requestAnimationFrame(() => requestAnimationFrame(() => header.classList.remove('no-transition')));
-    };
     let closeTimer: number | undefined;
     const finishClose = () => {
-      instantColor();
       header.dataset.menu = 'closed';
       menu.hidden = true;
       document.documentElement.style.overflow = '';
@@ -272,7 +282,6 @@ const [emailUser, emailDomain] = contact.email.split('@');
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', (open ? toggle.dataset.closeLabel : toggle.dataset.openLabel) ?? '');
       if (open) {
-        instantColor();
         menu.hidden = false;
         void menu.offsetHeight; // pinta el panel fuera de la pantalla antes de meterlo, para que se anime
         header.dataset.menu = 'open';

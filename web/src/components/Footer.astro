@@ -45,7 +45,8 @@ const [emailUser, emailDomain] = contact.email.split('@');
 
       <div class="col-span-2 md:col-span-1">
         <h2 class="eyebrow mb-4 text-eucalipto-500">{t.footer.contact}</h2>
-        <ul class="flex flex-col gap-2.5">
+        <!-- Móvil: los dos teléfonos en dos columnas y el correo debajo. -->
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-2.5 md:flex md:flex-col">
           {contact.phones.map((p) => (
             <li>
               <a href={`tel:${p.replace(/\s/g, '')}`} class="flex items-center gap-3 hover:text-eucalipto-500">
@@ -53,7 +54,7 @@ const [emailUser, emailDomain] = contact.email.split('@');
               </a>
             </li>
           ))}
-          <li>
+          <li class="col-span-2">
             <a href={`mailto:${contact.email}`} class="flex items-start gap-3 text-[0.9375rem] hover:text-eucalipto-500">
               <ContactIcon name="mail" size={16} class="mt-1 shrink-0 text-eucalipto-500" /><span class="link-draw min-w-0 [overflow-wrap:break-word]">{emailUser}<wbr />@{emailDomain}</span>
             </a>
@@ -62,10 +63,11 @@ const [emailUser, emailDomain] = contact.email.split('@');
       </div>
     </div>
 
-    <div class="mt-16 flex flex-col gap-4 border-t border-white/15 pt-6 text-[0.8125rem] text-eucalipto-500 sm:flex-row sm:items-center sm:justify-between">
-      <p>
-        © {year} The Dreams Factory
-        {t.footer.legalLinks.map(([key, label]) => <>{' · '}<a href={path(key, lang)} class="link-draw hover:text-white">{label}</a></>)}
+    <!-- Móvil: el copyright en una línea y los textos legales en otra, con el idioma a la derecha. -->
+    <div class="mt-16 flex items-center justify-between gap-4 border-t border-white/15 pt-6 text-[0.8125rem] text-eucalipto-500">
+      <p class="flex flex-col gap-1 sm:block">
+        <span>© {year} The Dreams Factory</span>
+        <span><span class="hidden sm:inline">{' · '}</span>{t.footer.legalLinks.map(([key, label], i) => <>{i > 0 && ' · '}<a href={path(key, lang)} class="link-draw hover:text-white">{label}</a></>)}</span>
       </p>
       <LangSwitch lang={lang} routeKey={routeKey} alternates={alternates} up class="text-white" />
     </div>

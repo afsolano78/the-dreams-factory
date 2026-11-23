@@ -135,7 +135,11 @@ const [emailUser, emailDomain] = contact.email.split('@');
     color: var(--color-pino-800);
     background: var(--color-porcelana-50);
     border-bottom: 1px solid var(--color-linea);
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    /* Paso de transparente a sólida al hacer scroll: suave, y las letras cambian un poco después que el fondo. */
+    transition:
+      background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.12s;
   }
   /* Sobre la foto: transparente y en blanco, hasta que se hace scroll o se abre el menú. */
   .site-header[data-overlay='true'][data-scrolled='false'][data-menu='closed'] {

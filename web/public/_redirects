@@ -81,6 +81,39 @@
 /contact-form /contacto/ 301
 /pol%C3%ADtica-de-privacidad /privacidad/ 301
 /pol%C3%ADtica-de-cookies /cookies/ 301
+/%C2%BFquienes-somos /nosotras/ 301
+
+# Prensa y asociaciones (los logos salen en Nosotras)
+/telva /nosotras/ 301
+/all-lovely-party /nosotras/ 301
+/zankyou /nosotras/ 301
+/ziwa-awards /nosotras/ 301
+/asociaci%C3%B3n-profesionales-bodas-espa%C3%B1a /nosotras/ 301
+
+# Bodas antiguas que no tenían entrada en el mapa del sitio
+/b-d /bodas/b-y-d-ermita-de-deva/ 301
+/yk /bodas/y-y-k-palacio-conde-de-toreno/ 301
+/d-s /bodas/ 301
+/i-v /bodas/ 301
+/boda-sp /bodas/ 301
+/boda-de-il /bodas/ 301
+/boda-de-ak /bodas/ 301
+/nm /bodas/ 301
+/a-a /bodas/ 301
+/d-b /bodas/ 301
+/la /bodas/ 301
+
+# Entradas antiguas del blog que no se han pasado
+/el-mol%C3%ADn-de-mingo /blog/ 301
+/callejeando-callejeando /blog/ 301
+/mesa-ganadora-mi-boda-rocks-experience-oviedo /blog/ 301
+/sunday-love-o-un-domingo-lleno-de-amor /blog/ 301
 
 # Al final: las reglas con * van detrás de las exactas (más rápido en Cloudflare).
 /blogs/* /blog/ 301
+# Categorías, la tienda antigua y perfiles de usuario de Drupal
+/blog-categories/* /blog/ 301
+/portfolio-categories/* /bodas/ 301
+/product-categories/* / 301
+/product-tags/* / 301
+/users/* /nosotras/ 301

@@ -1,4 +1,5 @@
 ---
+published: true
 title: El vestido te escoge a ti
 description: 'Consejos para disfrutar de la búsqueda del vestido de novia: con quién ir, probar sin prejuicios, no precipitarse… y por qué no, ¿dos vestidos?'
 date: 2015-11-30

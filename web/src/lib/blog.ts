@@ -62,9 +62,9 @@ export const blogUi: Record<Lang, {
 export const folderOf = (p: Post) => p.id.split('/')[0];
 export const langOf = (p: Post) => p.id.split('.').pop() as Lang;
 
-/** Entradas de un idioma, de la más reciente a la más antigua. */
+/** Entradas publicadas de un idioma (sin borradores), de la más reciente a la más antigua. */
 export async function getPosts(lang: Lang): Promise<Post[]> {
-  const all = await getCollection('blog', (p) => langOf(p) === lang);
+  const all = await getCollection('blog', (p) => langOf(p) === lang && p.data.published);
   return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 

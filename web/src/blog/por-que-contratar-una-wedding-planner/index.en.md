@@ -1,4 +1,5 @@
 ---
+published: true
 url: why-hire-a-wedding-planner
 title: Why hire a wedding planner?
 description: What a wedding planner really does, what she doesn’t do, and why she makes a difference, not only on the day but throughout the months before.

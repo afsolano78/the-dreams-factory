@@ -1,4 +1,5 @@
 ---
+published: true
 url: planning-a-wedding-in-asturias
 title: Planning a wedding in Asturias
 description: More and more couples from elsewhere are choosing Asturias to get married. This is how we plan weddings from a distance without the miles ever showing.

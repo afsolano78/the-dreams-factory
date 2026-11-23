@@ -1,4 +1,5 @@
 ---
+published: true
 url: and-where-are-you-sitting
 title: And where are you sitting?
 description: 'An original seating plan adds so much to a wedding’s décor, as long as we don’t forget its real job: helping every guest find their seat.'

@@ -62,12 +62,15 @@ La clave no se guarda en el repositorio ni en la web. Si se pierde o se filtra, 
    - **Orden en el listado**: con 0 sale la primera; las de número más bajo, antes.
 3. Arriba, cambiar a **English** y pulsar **Traducir** (Gemini; repasad siempre el resultado) o escribir el inglés. En las bodas, lo que quede vacío en
    inglés se muestra en español.
-4. **Guardar**. En uno o dos minutos está en la web.
+4. **Guardar**. Las bodas y entradas nuevas empiezan como **borrador** (el interruptor **Publicada** apagado): se
+   guardan pero no salen en la web, así que se puede ir preparando con calma y guardar cuantas veces haga falta.
+5. Cuando esté lista, activar **Publicada** y **Guardar**. En uno o dos minutos está en la web. Para retirar una boda
+   sin borrarla, basta con volver a apagarlo. En el listado del panel, el filtro **Borradores** muestra las pendientes.
 
 Las fotos pueden subirse tal cual salen de la cámara: el panel las convierte a WebP y las reduce a 2400 px, y la web
 las vuelve a optimizar para cada pantalla.
 
-El **blog** funciona igual: título, resumen, fecha, tema, foto de portada, texto y (opcional) galería al final.
+El **blog** funciona igual (también con borradores): título, resumen, fecha, tema, foto de portada, texto y (opcional) galería al final.
 
 **Opiniones → Nueva**: los nombres de pila de la pareja, la frase destacada (copiada de su texto, sin comillas), su
 opinión entera y, si la hay, una foto de su boda con su permiso. En «Su boda en la web» se elige su boda del listado

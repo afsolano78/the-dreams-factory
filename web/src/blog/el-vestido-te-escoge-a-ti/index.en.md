@@ -1,4 +1,5 @@
 ---
+published: true
 url: the-dress-chooses-you
 title: The dress chooses you
 description: 'Tips for enjoying the search for your wedding dress: who to go with, trying things on with an open mind, not rushing… and why not two dresses?'

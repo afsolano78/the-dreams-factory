@@ -1,4 +1,5 @@
 ---
+published: true
 title: Editorial en el NH Palacio de Ferrera para Telva Novias
 description: 'Rosa cuarzo, granates y verdes en un palacio de Avilés con salón invernadero: así diseñamos esta editorial publicada en Telva Novias.'
 date: 2017-09-28

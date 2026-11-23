@@ -1,4 +1,5 @@
 ---
+published: true
 url: editorial-nh-palacio-de-ferrera-telva-novias
 title: Editorial at NH Palacio de Ferrera for Telva Novias
 description: 'Rose quartz, burgundy and green in a palace in Avilés with a conservatory: this is how we designed this editorial, featured in Telva Novias.'

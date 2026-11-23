@@ -1,4 +1,5 @@
 ---
+published: true
 url: b-and-d-ermita-de-deva
 couple: B & D
 place: Ermita de Deva · Gijón

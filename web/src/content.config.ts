@@ -26,6 +26,8 @@ const blog = defineCollection({
     z.object({
       /** Dirección de esta versión (solo hace falta en inglés; en español es el nombre de la carpeta). */
       url: z.string().optional(),
+      /** Si está en false, se guarda pero no sale en la web (borrador). Lo que no lo indica, publicado. */
+      published: z.boolean().default(true),
       title: z.string(),
       /** Resumen corto para el listado y para Google. */
       description: z.string(),
@@ -50,6 +52,8 @@ const weddings = defineCollection({
     z.object({
       /** Dirección de esta versión (solo hace falta en inglés; en español es el nombre de la carpeta). */
       url: z.string().optional(),
+      /** Si está en false, se guarda pero no sale en la web (borrador). Lo que no lo indica, publicado. */
+      published: z.boolean().default(true),
       /** Iniciales de la pareja («I & A»). */
       couple: z.string(),
       /** «Lugar · Zona». */

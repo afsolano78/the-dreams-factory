@@ -1,4 +1,5 @@
 ---
+published: true
 title: Y tú, ¿dónde te sientas?
 description: 'Los seating plans originales dan mucho juego en la decoración de una boda, siempre que no olvidemos su verdadera misión: que cada invitado encuentre su sitio.'
 date: 2015-09-28

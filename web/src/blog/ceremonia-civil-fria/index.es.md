@@ -1,4 +1,5 @@
 ---
+published: true
 title: ¿Una ceremonia civil fría? Ni mucho menos
 description: 'Música, palabras de quienes más os quieren y el lugar que soñéis: así una ceremonia civil se convierte en vuestra y solo vuestra.'
 date: 2015-05-23

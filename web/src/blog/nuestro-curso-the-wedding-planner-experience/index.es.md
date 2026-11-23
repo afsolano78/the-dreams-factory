@@ -1,4 +1,5 @@
 ---
+published: true
 title: 'Nuestro curso: The Wedding Planner Experience'
 description: 'Así fue la primera edición de nuestro curso para futuras wedding planners: tres días en el Palacio de Avilés aprendiendo cómo se organiza una boda de verdad.'
 date: 2023-03-26

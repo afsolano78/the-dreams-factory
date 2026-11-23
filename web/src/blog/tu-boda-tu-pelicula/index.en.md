@@ -1,4 +1,5 @@
 ---
+published: true
 url: your-wedding-your-film
 title: Your wedding, your film
 description: The couple are the stars; the flowers, lights and tablecloths, the supporting cast. Advice for never losing your script while you plan your wedding.

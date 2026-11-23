@@ -1,4 +1,5 @@
 ---
+published: true
 title: La banda sonora de vuestra boda
 description: 'La música de la ceremonia, del cóctel, de la fiesta y del primer baile: ideas para que vuestras canciones también sean invitadas a vuestra boda.'
 date: 2016-03-31

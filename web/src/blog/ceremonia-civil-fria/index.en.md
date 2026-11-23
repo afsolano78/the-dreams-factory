@@ -1,4 +1,5 @@
 ---
+published: true
 url: a-cold-civil-ceremony
 title: A cold civil ceremony? Far from it
 description: 'Music, words from those who love you most and the place you dream of: that’s how a civil ceremony becomes yours and yours alone.'

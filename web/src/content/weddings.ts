@@ -147,7 +147,7 @@ function toWedding(folder: string, es: Entry, en: Entry = es): Wedding {
 
 let cache: Promise<Wedding[]> | undefined;
 
-/** Todas las bodas, en el orden del listado (campo `order`: las de número más bajo, primero). */
+/** Todas las bodas publicadas (sin borradores), en el orden del listado (campo `order`: las de número más bajo, primero). */
 export function getWeddings(): Promise<Wedding[]> {
   cache ??= (async () => {
     const entries = await getCollection('weddings');
@@ -158,7 +158,7 @@ export function getWeddings(): Promise<Wedding[]> {
       byFolder.set(folder, { ...byFolder.get(folder), [lang]: entry });
     }
     return [...byFolder]
-      .filter(([, v]) => v.es)
+      .filter(([, v]) => v.es && v.es.data.published)
       .sort(([fa, a], [fb, b]) => a.es!.data.order - b.es!.data.order || fa.localeCompare(fb))
       .map(([folder, v]) => toWedding(folder, v.es!, v.en));
   })();

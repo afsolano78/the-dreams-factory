@@ -1,4 +1,5 @@
 ---
+published: true
 title: La organización de bodas en Asturias
 description: Cada vez más parejas de fuera eligen Asturias para casarse. Así organizamos bodas a distancia sin que se note un solo kilómetro.
 date: 2017-02-28

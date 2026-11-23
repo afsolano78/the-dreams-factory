@@ -1,4 +1,5 @@
 ---
+published: true
 url: m-and-f-coto-del-pomar
 couple: M & F
 place: Hotel Coto del Pomar

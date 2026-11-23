@@ -1,4 +1,5 @@
 ---
+published: true
 title: Tu boda, tu película
 description: Los novios son los protagonistas; las flores, las luces y los manteles, los secundarios. Consejos para no perder nunca vuestro guion mientras organizáis la boda.
 date: 2015-12-23

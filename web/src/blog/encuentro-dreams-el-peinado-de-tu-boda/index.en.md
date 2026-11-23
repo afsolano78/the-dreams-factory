@@ -1,4 +1,5 @@
 ---
+published: true
 url: dreams-gathering-your-wedding-hairstyle
 title: 'First Dreams Gathering: your wedding hairstyle'
 description: A Sunday morning with brides-to-be, the latest hairstyle and headpiece trends, and an irresistible dessert table.

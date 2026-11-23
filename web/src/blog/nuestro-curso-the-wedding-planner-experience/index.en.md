@@ -1,4 +1,5 @@
 ---
+published: true
 url: our-course-the-wedding-planner-experience
 title: 'Our course: The Wedding Planner Experience'
 description: 'This is how the first edition of our course for future wedding planners went: three days at the Palacio de Avilés learning how a real wedding is planned.'

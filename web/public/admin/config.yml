@@ -60,8 +60,18 @@ collections:
     sortable_fields:
       fields: [order, couple]
       default: { field: order, direction: ascending }
+    view_filters:
+      - { label: Borradores, field: published, pattern: false }
+      - { label: Publicadas, field: published, pattern: true }
     i18n: true
     fields:
+      - name: published
+        label: Publicada
+        widget: boolean
+        default: false
+        required: false
+        i18n: duplicate
+        hint: 'Mientras esté desactivada, la boda se guarda pero no sale en la web: podéis ir preparándola. Activadla y guardad cuando esté lista.'
       - { name: couple, label: Pareja (iniciales), widget: string, i18n: duplicate, hint: 'Por ejemplo: «I & A».' }
       - { name: place, label: Lugar, widget: string, i18n: duplicate, hint: 'Lugar y zona separados por « · », por ejemplo: «Palacio de La Riega · Gijón».' }
       - name: description
@@ -230,8 +240,18 @@ collections:
     sortable_fields:
       fields: [date, title]
       default: { field: date, direction: descending }
+    view_filters:
+      - { label: Borradores, field: published, pattern: false }
+      - { label: Publicadas, field: published, pattern: true }
     i18n: true
     fields:
+      - name: published
+        label: Publicada
+        widget: boolean
+        default: false
+        required: false
+        i18n: duplicate
+        hint: 'Mientras esté desactivada, la entrada se guarda pero no sale en la web: podéis ir preparándola. Activadla y guardad cuando esté lista.'
       - { name: title, label: Título, widget: string, i18n: true }
       - name: description
         label: Resumen

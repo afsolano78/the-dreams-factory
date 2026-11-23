@@ -1,4 +1,5 @@
 ---
+published: true
 url: the-soundtrack-of-your-wedding
 title: The soundtrack of your wedding
 description: 'Music for the ceremony, the cocktail hour, the party and the first dance: ideas so your songs are invited to your wedding too.'

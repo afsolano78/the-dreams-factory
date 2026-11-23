@@ -1,4 +1,5 @@
 ---
+published: true
 url: o-and-d-hacienda-de-la-llorea
 couple: O & D
 place: Hacienda de la Llorea · Gijón

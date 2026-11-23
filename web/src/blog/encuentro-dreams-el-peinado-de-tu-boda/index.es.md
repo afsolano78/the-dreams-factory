@@ -1,4 +1,5 @@
 ---
+published: true
 title: 'I Encuentro Dreams: el peinado de tu boda'
 description: Una mañana de domingo con futuras novias, tendencias en peinados y tocados, y una mesa dulce irresistible.
 date: 2020-02-13

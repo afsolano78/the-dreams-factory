@@ -1,4 +1,5 @@
 ---
+published: true
 url: g-and-ej-puebloastur
 couple: G & EJ
 place: Puebloastur

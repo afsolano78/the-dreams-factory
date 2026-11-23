@@ -1,4 +1,5 @@
 ---
+published: true
 couple: G & EJ
 place: Puebloastur
 order: 50

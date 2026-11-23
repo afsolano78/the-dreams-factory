@@ -1,4 +1,5 @@
 ---
+published: true
 title: El lettering en tu boda
 description: Aprendimos lettering con Naranjas Chinas y os contamos por qué la papelería escrita a mano marca la diferencia.
 date: 2016-04-20

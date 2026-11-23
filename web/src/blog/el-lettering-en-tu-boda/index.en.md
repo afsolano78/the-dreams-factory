@@ -1,4 +1,5 @@
 ---
+published: true
 url: hand-lettering-at-your-wedding
 title: Hand lettering at your wedding
 description: We learned hand lettering with Naranjas Chinas, and here’s why handwritten stationery makes all the difference.

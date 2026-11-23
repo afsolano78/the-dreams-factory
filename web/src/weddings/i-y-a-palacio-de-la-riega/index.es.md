@@ -1,4 +1,5 @@
 ---
+published: true
 couple: I & A
 place: Palacio de La Riega · Gijón
 order: 10

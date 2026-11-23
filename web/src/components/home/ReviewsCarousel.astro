@@ -13,15 +13,20 @@ const INTERVAL = 8000;
 const photoLabel = lang === 'es' ? 'Foto' : 'Photo';
 ---
 
+<!--
+  Efecto «ventana»: la foto se queda fija en la pantalla y el bloque se desliza por encima. La capa es fixed y el
+  clip-path de la sección la recorta a su caja (funciona también en iPhone, donde background-attachment: fixed no).
+  Con movimiento reducido, la foto vuelve a ir con el bloque.
+-->
 <section
-  class="relative isolate overflow-hidden bg-pino-900 text-white"
+  class="reviews-window relative isolate overflow-hidden bg-pino-900 text-white"
   data-carousel="reviews"
   data-paused="false"
   style={`--interval:${INTERVAL}ms`}
   aria-roledescription={lang === 'es' ? 'carrusel' : 'carousel'}
   aria-label={c.controls.region}
 >
-  <div class="absolute inset-0 -z-10" aria-hidden="true" data-parallax="10">
+  <div class="reviews-bg absolute inset-0 -z-10" aria-hidden="true">
     {
       c.items.map((r, i) => (
         <div class:list={['fade-img', { 'is-active is-initial': i === 0 }]} data-slide={i}>
@@ -79,3 +84,20 @@ const photoLabel = lang === 'es' ? 'Foto' : 'Photo';
     <Button href={path(c.cta.to, lang)} variant="light">{c.cta.label}</Button>
   </div>
 </section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .reviews-window { clip-path: inset(0); }
+    /* lvh: la altura con las barras del navegador recogidas, para que la foto no salte al aparecer o esconderse. */
+    .reviews-bg { position: fixed; inset: 0 0 auto 0; height: 100lvh; }
+    /* Mientras la sección está lejos, la capa no se pinta (y sus fotos, con carga diferida, no se descargan). */
+    .reviews-window:not([data-near]) .reviews-bg { display: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.reviews-window').forEach((section) => {
+    if (!('IntersectionObserver' in window)) return section.setAttribute('data-near', '');
+    new IntersectionObserver(([e]) => section.toggleAttribute('data-near', e.isIntersecting), { rootMargin: '100% 0px' }).observe(section);
+  });
+</script>

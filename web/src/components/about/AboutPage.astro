@@ -57,7 +57,8 @@ const pos = (focus?: string) => (focus ? `object-position:${focus}` : undefined)
   <section class="section-y bg-white">
     <div class="container-brand flex flex-col gap-16 md:gap-20">
       <div class="grid items-center gap-10 md:grid-cols-2 md:gap-14 lg:gap-20">
-        <div class="overflow-hidden md:order-2" data-reveal>
+        <!-- La foto, detrás del texto también en móvil (así no van seguidas la del principio y esta). -->
+        <div class="order-2 overflow-hidden" data-reveal>
           <Picture
             src={c.story.photo.src}
             alt={c.story.photo.alt}

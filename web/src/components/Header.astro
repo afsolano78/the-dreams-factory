@@ -221,18 +221,9 @@ const [emailUser, emailDomain] = contact.email.split('@');
   .site-header[data-menu='open'] .mobile-menu { transform: none; }
   .site-header[data-menu='closing'] .mobile-menu { transition: transform 0.35s cubic-bezier(0.55, 0, 0.75, 0.2); }
   .site-header:is([data-menu='open'], [data-menu='closing']) :global(.lang-top) { visibility: hidden; }
-  /* Página actual: en champán y subrayada con una línea fina, como en la barra de escritorio. */
-  .menu-link { position: relative; display: inline-block; transition: color 0.2s ease; }
+  /* Página actual: solo en champán, sin marca. */
+  .menu-link { display: inline-block; transition: color 0.2s ease; }
   .menu-link[aria-current='page'] { color: var(--color-eucalipto-500); }
-  .menu-link[aria-current='page']::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0.05em;
-    height: 1px;
-    background: currentColor;
-  }
   .menu-toggle svg path {
     transition: transform 0.25s ease, opacity 0.2s ease;
     transform-origin: center;

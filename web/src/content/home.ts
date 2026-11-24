@@ -8,10 +8,10 @@ import hero2 from '../assets/photos/hero/2-byd-banquete.jpg';
 import hero3 from '../assets/photos/hero/3-aym-confeti.jpg';
 import hero4 from '../assets/photos/hero/4-coche-clasico.jpg';
 import hero5 from '../assets/photos/hero/5-aym-fiesta.jpg';
-import srvIntegral from '../assets/photos/servicio-organizacion-integral.jpg';
-import srvDiseno from '../assets/photos/servicio-diseno-decoracion.jpg';
-import srvDiaB from '../assets/photos/servicio-dia-b.jpg';
-import srvCelebraciones from '../assets/photos/servicio-celebraciones.jpg';
+import srvIntegral from '../assets/photos/servicio-integral-carpa.jpg';
+import srvDiseno from '../assets/photos/servicio-diseno-menu.jpg';
+import srvDiaB from '../assets/photos/servicio-dia-b-novia-mesa.jpg';
+import srvCelebraciones from '../assets/photos/servicio-celebraciones-manos.jpg';
 import bodaNyT from '../assets/photos/boda-nyt-arenas-de-cabrales.jpg';
 import bodaIyA from '../assets/photos/boda-iya-palacio-la-riega.jpg';
 import bodaByD from '../assets/photos/boda-byd-ermita-de-deva.jpg';
@@ -103,7 +103,7 @@ export interface HomeContent {
      * `level`: etiqueta corta del nivel de acompañamiento (variante «escala»).
      * `apart`: va fuera de la escala (no es un grado de ayuda para una boda, sino otro tipo de celebración).
      */
-    items: { title: string; text: string; anchor: string; photo: Photo; level?: string; apart?: boolean }[];
+    items: { title: string; text: string; anchor: string; photo: Photo; level?: string; apart?: boolean; focus?: string }[];
   };
   /** Seis bodas destacadas. Las fotos en blanco y negro van en filas y columnas distintas. */
   /** `viewLabel`: rótulo que aparece sobre la foto al pasar el ratón («Ver la boda»). */
@@ -182,10 +182,10 @@ export const home: Record<Lang, HomeContent> = {
       viewLabel: 'Ver servicio',
       scale: { more: 'Más acompañamiento', less: 'Menos acompañamiento', apart: '¿Celebráis otra cosa?' },
       items: [
-        { title: 'Organización integral', level: 'Todo, de principio a fin', anchor: 'organizacion-integral', text: 'Os acompañamos desde la primera idea hasta el último baile: lugar, proveedores, diseño, presupuesto y coordinación.', photo: { src: srvIntegral, alt: 'Jardín preparado para una ceremonia, con cestas de flores y sillas.' } },
-        { title: 'Diseño y coordinación del día B', level: 'La parte creativa', anchor: 'diseno-y-decoracion', text: 'Ya lo tenéis organizado, pero queréis que se note que es vuestra boda. Creamos la ambientación y los detalles que os representan.', photo: { src: srvDiseno, alt: 'Novia con ramo silvestre junto a un arco floral.' } },
-        { title: 'Coordinación del día B', level: 'El gran día', anchor: 'coordinacion-dia-b', text: 'Lo habéis preparado vosotros; nosotras nos aseguramos de que todo salga como está previsto, desde días antes.', photo: { src: srvDiaB, alt: 'La novia ríe con sus amigas mientras se prepara.' } },
-        { title: 'Celebraciones y momentos', apart: true, anchor: 'celebraciones', text: 'Una pedida, unas bodas de oro, una cena al atardecer. Contadnos la idea y la convertimos en un momento inolvidable.', photo: { src: srvCelebraciones, alt: 'Mesa decorada con flores y velas al aire libre.' } },
+        { title: 'Organización integral', level: 'Todo, de principio a fin', anchor: 'organizacion-integral', text: 'Os acompañamos desde la primera idea hasta el último baile: lugar, proveedores, diseño, presupuesto y coordinación.', photo: { src: srvIntegral, alt: 'Los novios recorren una carpa preparada para el banquete, con mesas largas, velas y una lámpara de flores blancas.' }, focus: '55% 50%' },
+        { title: 'Diseño y coordinación del día B', level: 'La parte creativa', anchor: 'diseno-y-decoracion', text: 'Ya lo tenéis organizado, pero queréis que se note que es vuestra boda. Creamos la ambientación y los detalles que os representan.', photo: { src: srvDiseno, alt: 'Mesa puesta con el menú y el nombre del invitado sobre la servilleta, rosas blancas y una vela.' } },
+        { title: 'Coordinación del día B', level: 'El gran día', anchor: 'coordinacion-dia-b', text: 'Lo habéis preparado vosotros; nosotras nos aseguramos de que todo salga como está previsto, desde días antes.', photo: { src: srvDiaB, alt: 'La novia, de espaldas, sentada a una mesa larga con velas en un patio al atardecer.' } },
+        { title: 'Celebraciones y momentos', apart: true, anchor: 'celebraciones', text: 'Una pedida, unas bodas de oro, una cena al atardecer. Contadnos la idea y la convertimos en un momento inolvidable.', photo: { src: srvCelebraciones, alt: 'Las manos de los novios, con sus alianzas, sobre una mesa con velas y flores.' } },
       ],
     },
     weddings: {
@@ -287,10 +287,10 @@ export const home: Record<Lang, HomeContent> = {
       viewLabel: 'See this service',
       scale: { more: 'More support', less: 'Less support', apart: 'Celebrating something else?' },
       items: [
-        { title: 'Full planning', level: 'Everything, start to finish', anchor: 'full-planning', text: 'From the first idea to the last dance: venue, suppliers, design, budget and coordination.', photo: { src: srvIntegral, alt: 'A garden set for a ceremony, with flower baskets and chairs.' } },
-        { title: 'Design & wedding-day coordination', level: 'The creative side', anchor: 'design-and-styling', text: 'You’ve planned it yourselves, and now you want it to feel like yours. We create the styling and the details that tell your story.', photo: { src: srvDiseno, alt: 'A bride with a wildflower bouquet beside a floral arch.' } },
-        { title: 'Wedding-day coordination', level: 'The big day', anchor: 'wedding-day-coordination', text: 'You’ve done the planning; we make sure everything runs as it should, starting days before.', photo: { src: srvDiaB, alt: 'The bride laughing with her friends while getting ready.' } },
-        { title: 'Proposals & celebrations', apart: true, anchor: 'celebrations', text: 'A proposal, a golden anniversary, a sunset dinner. Tell us the idea and we’ll turn it into a moment to remember.', photo: { src: srvCelebraciones, alt: 'An outdoor table decorated with flowers and candles.' } },
+        { title: 'Full planning', level: 'Everything, start to finish', anchor: 'full-planning', text: 'From the first idea to the last dance: venue, suppliers, design, budget and coordination.', photo: { src: srvIntegral, alt: 'The couple walk through a marquee set for the banquet, with long tables, candles and a chandelier of white flowers.' }, focus: '55% 50%' },
+        { title: 'Design & wedding-day coordination', level: 'The creative side', anchor: 'design-and-styling', text: 'You’ve planned it yourselves, and now you want it to feel like yours. We create the styling and the details that tell your story.', photo: { src: srvDiseno, alt: 'A place setting with the menu and the guest’s name card on the napkin, white roses and a candle.' } },
+        { title: 'Wedding-day coordination', level: 'The big day', anchor: 'wedding-day-coordination', text: 'You’ve done the planning; we make sure everything runs as it should, starting days before.', photo: { src: srvDiaB, alt: 'The bride, seen from behind, sitting at a long candlelit table in a courtyard at dusk.' } },
+        { title: 'Proposals & celebrations', apart: true, anchor: 'celebrations', text: 'A proposal, a golden anniversary, a sunset dinner. Tell us the idea and we’ll turn it into a moment to remember.', photo: { src: srvCelebraciones, alt: 'The couple’s hands, wearing their rings, on a table with candles and flowers.' } },
       ],
     },
     weddings: {

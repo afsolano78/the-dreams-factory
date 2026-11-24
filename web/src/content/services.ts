@@ -8,10 +8,10 @@
  */
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../i18n/routes';
-import fotoIntegral from '../assets/photos/hero/3-aym-confeti.jpg';
-import fotoDiseno from '../assets/photos/servicio-diseno-decoracion.jpg';
-import fotoDiaB from '../assets/photos/servicio-dia-b.jpg';
-import fotoCelebraciones from '../assets/photos/servicio-celebraciones.jpg';
+import fotoIntegral from '../assets/photos/servicio-integral-carpa.jpg';
+import fotoDiseno from '../assets/photos/servicio-diseno-menu.jpg';
+import fotoDiaB from '../assets/photos/servicio-dia-b-novia-mesa.jpg';
+import fotoCelebraciones from '../assets/photos/servicio-celebraciones-manos.jpg';
 
 type Photo = { src: ImageMetadata; alt: string };
 
@@ -76,8 +76,8 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'Coordinación presencial durante la boda',
           'Resolución de imprevistos y supervisión del desmontaje',
         ],
-        photo: { src: fotoIntegral, alt: 'A y M salen de la iglesia bajo una lluvia de pétalos lanzados por sus invitados.' },
-        focus: '50% 45%',
+        photo: { src: fotoIntegral, alt: 'Los novios recorren una carpa preparada para el banquete, con mesas largas, velas y una lámpara de flores blancas.' },
+        focus: '55% 50%',
       },
       {
         anchor: 'diseno-y-decoracion',
@@ -100,7 +100,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'Elaboración del cronograma del evento',
           'Coordinación del día de la boda, proveedores e incidencias',
         ],
-        photo: { src: fotoDiseno, alt: 'Novia con ramo silvestre junto a un arco floral.' },
+        photo: { src: fotoDiseno, alt: 'Mesa puesta con el menú y el nombre del invitado sobre la servilleta, rosas blancas y una vela.' },
       },
       {
         anchor: 'coordinacion-dia-b',
@@ -123,7 +123,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'Resolución de incidencias y cambios de última hora',
           'Control de tiempos y comunicación entre proveedores',
         ],
-        photo: { src: fotoDiaB, alt: 'La novia ríe con sus amigas mientras se prepara.' },
+        photo: { src: fotoDiaB, alt: 'La novia, de espaldas, sentada a una mesa larga con velas en un patio al atardecer.' },
       },
       {
         anchor: 'celebraciones',
@@ -141,7 +141,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'Proveedores y decoración',
           'Coordinación el mismo día',
         ],
-        photo: { src: fotoCelebraciones, alt: 'Mesa decorada con flores y velas al aire libre.' },
+        photo: { src: fotoCelebraciones, alt: 'Las manos de los novios, con sus alianzas, sobre una mesa con velas y flores.' },
       },
     ],
     process: {
@@ -199,8 +199,8 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'On-site coordination on the wedding day',
           'Handling the unexpected and overseeing the take-down',
         ],
-        photo: { src: fotoIntegral, alt: 'A and M leave the church under a shower of petals thrown by their guests.' },
-        focus: '50% 45%',
+        photo: { src: fotoIntegral, alt: 'The couple walk through a marquee set for the banquet, with long tables, candles and a chandelier of white flowers.' },
+        focus: '55% 50%',
       },
       {
         anchor: 'design-and-styling',
@@ -223,7 +223,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'Running order for the event',
           'Coordination of the wedding day, suppliers and any issues',
         ],
-        photo: { src: fotoDiseno, alt: 'A bride with a wildflower bouquet beside a floral arch.' },
+        photo: { src: fotoDiseno, alt: 'A place setting with the menu and the guest’s name card on the napkin, white roses and a candle.' },
       },
       {
         anchor: 'wedding-day-coordination',
@@ -246,7 +246,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'Handling issues and last-minute changes',
           'Timekeeping and communication between suppliers',
         ],
-        photo: { src: fotoDiaB, alt: 'The bride laughing with her friends while getting ready.' },
+        photo: { src: fotoDiaB, alt: 'The bride, seen from behind, sitting at a long candlelit table in a courtyard at dusk.' },
       },
       {
         anchor: 'celebrations',
@@ -264,7 +264,7 @@ export const servicesContent: Record<Lang, ServicesContent> = {
           'Suppliers and styling',
           'Coordination on the day',
         ],
-        photo: { src: fotoCelebraciones, alt: 'An outdoor table decorated with flowers and candles.' },
+        photo: { src: fotoCelebraciones, alt: 'The couple’s hands, wearing their rings, on a table with candles and flowers.' },
       },
     ],
     process: {

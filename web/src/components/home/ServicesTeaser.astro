@@ -38,6 +38,7 @@ const base = path('services', lang);
                 sizes={coverSizes(s.photo.src, 3 / 5, '(min-width: 1024px) 24vw, (min-width: 640px) 48vw, 100vw')}
                 formats={['avif', 'webp']}
                 class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05] motion-reduce:transition-none"
+                style={s.focus ? `object-position:${s.focus}` : undefined}
               />
               <span class="tile-shade absolute inset-0" aria-hidden="true"></span>
             </div>

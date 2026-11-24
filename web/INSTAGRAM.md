@@ -11,6 +11,19 @@ Mientras no esté configurado (o si Instagram falla), la franja muestra las foto
 - Cada foto enlaza a su publicación. El texto alternativo sale del pie de foto (sin las etiquetas #).
 - El código de acceso de Instagram dura 60 días: el Worker lo renueva solo cada semana.
 
+## Estado (24-11-2026): pendiente
+
+Se intentó el día del lanzamiento y se dejó para más adelante. Lo aprendido:
+
+- Meta ha renombrado la configuración: la de **«inicio de sesión de Instagram»** (la que da el código `IG…` que usa la
+  web) ahora se llama **«API setup with Unified login»**. La de «inicio de sesión con Facebook» es la antigua.
+- «Unified login» exige vincular la app a un **portfolio comercial** (business.facebook.com). Al crearlo con la cuenta
+  de Facebook que se usó, Meta dio error porque esa cuenta tiene la **cuenta de pago desactivada**.
+- Próximo intento: crear el portfolio y la app con **otra cuenta de Facebook** (la de Bea o la de Vane). Si tampoco
+  se puede, alternativa: la configuración antigua con inicio de sesión de Facebook (Instagram vinculado a la página de
+  Facebook; da un código `EAA…`), que exige adaptar `worker/instagram.ts` a `graph.facebook.com`.
+- Mientras tanto la franja muestra las fotos de bodas de siempre, con el enlace al Instagram: no hay nada roto.
+
 ## Puesta en marcha (una sola vez)
 
 ### 1. Cuenta profesional

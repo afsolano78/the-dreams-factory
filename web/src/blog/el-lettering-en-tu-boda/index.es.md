@@ -1,11 +1,12 @@
 ---
-published: true
+published: false
 title: El lettering en tu boda
 description: Aprendimos lettering con Naranjas Chinas y os contamos por qué la papelería escrita a mano marca la diferencia.
 date: 2016-04-20
 category: inspiracion
 cover: portada.jpg
 coverAlt: Un cuaderno abierto con las palabras «Hand lettering» escritas a mano en turquesa.
+coverFocus: ''
 gallery:
   - src: lettering-01.jpg
     alt: Asistentes al taller practicando lettering alrededor de una mesa.
@@ -17,6 +18,8 @@ gallery:
     alt: Un cuaderno de «Hand lettering para principiantes» sobre un atril.
   - src: lettering-05.jpg
     alt: Una mano escribe «The Dreams Factory» con rotulador.
+photoCredit: ''
+url: ''
 legacyPath: /el-lettering-en-tu-boda
 ---
 

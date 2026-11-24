@@ -1,12 +1,12 @@
 ---
-published: true
-url: hand-lettering-at-your-wedding
+published: false
 title: Hand lettering at your wedding
 description: We learned hand lettering with Naranjas Chinas, and here’s why handwritten stationery makes all the difference.
 date: 2016-04-20
 category: inspiracion
 cover: portada.jpg
 coverAlt: An open notebook with the words “Hand lettering” handwritten in turquoise.
+coverFocus: ''
 gallery:
   - src: lettering-01.jpg
     alt: Workshop participants practising hand lettering around a table.
@@ -18,6 +18,9 @@ gallery:
     alt: A “Hand lettering for beginners” notebook on a stand.
   - src: lettering-05.jpg
     alt: A hand writes “The Dreams Factory” with a brush pen.
+photoCredit: ''
+url: hand-lettering-at-your-wedding
+legacyPath: /el-lettering-en-tu-boda
 ---
 
 As wedding planners, we always keep up with the trends in the wedding world, especially in Asturias.

@@ -6,9 +6,8 @@ Pasos del día en que la web nueva sustituye a la antigua (hoy en el servidor Pl
 
 ## Antes
 
-- Correo de @thedreamsfactory.es: vive en el servidor antiguo (registro MX `mail.thedreamsfactory.es`) y al apagarlo
-  deja de funcionar. Decidido: reenvío al Gmail con Cloudflare Email Routing y respuesta como `contacto@` con Resend
-  (pasos en CORREO.md). No depende del lanzamiento de la web.
+- Correo de @thedreamsfactory.es: decidido que el dominio no tendrá correo; `contacto@` se elimina con el servidor
+  antiguo (qué revisar y qué borrar del DNS, en CORREO.md). No depende del lanzamiento de la web.
 - Bea y Vane con acceso al panel (PANEL.md) e Instagram configurado (INSTAGRAM.md), si se quiere tener todo el mismo
   día.
 

@@ -22,9 +22,17 @@
     "CONTACT_TO": "thedreamsfactoryweddingplanner@gmail.com",
     "CONTACT_FROM": "The Dreams Factory <web@thedreamsfactory.es>",
     // "si" para enviar un acuse de recibo a la pareja (dominio verificado en Resend el 22-11-2026).
-    "AUTOREPLY": "si"
+    "AUTOREPLY": "si",
+    // Cuenta de Instagram @the_dreamsfactory (no es secreto). El código IG_TOKEN es de usuario del sistema de Meta
+    // («EAA…», sin caducidad) y con él la web no puede averiguar esta cuenta sola. Ver INSTAGRAM.md.
+    "IG_USER_ID": "17841402337576102"
   },
   // Instagram (worker/instagram.ts): últimas publicaciones una vez al día, a las 5:17 UTC. Ver INSTAGRAM.md.
   "triggers": { "crons": ["17 5 * * *"] },
+  // Lista y fotos de Instagram (KV «dreams-instagram»).
+  "kv_namespaces": [{ "binding": "INSTAGRAM", "id": "2e9bce879bca4cc887a1dfb3ef2f0db2" }],
+  // Reduce las fotos de Instagram a 720 px en WebP (Cloudflare Images; el plan gratuito incluye 5000 transformaciones
+  // al mes y aquí se usan unas pocas al día).
+  "images": { "binding": "IMAGES" },
   "observability": { "enabled": true }
 }

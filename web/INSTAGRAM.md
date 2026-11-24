@@ -11,18 +11,18 @@ Mientras no esté configurado (o si Instagram falla), la franja muestra las foto
 - Cada foto enlaza a su publicación. El texto alternativo sale del pie de foto (sin las etiquetas #).
 - El código de acceso de Instagram dura 60 días: el Worker lo renueva solo cada semana.
 
-## Estado (24-11-2026): pendiente
+## Estado (24-11-2026): configurado
 
-Se intentó el día del lanzamiento y se dejó para más adelante. Lo aprendido:
+Cómo quedó, porque Meta había cambiado las pantallas respecto a la guía de abajo:
 
-- Meta ha renombrado la configuración: la de **«inicio de sesión de Instagram»** (la que da el código `IG…` que usa la
-  web) ahora se llama **«API setup with Unified login»**. La de «inicio de sesión con Facebook» es la antigua.
-- «Unified login» exige vincular la app a un **portfolio comercial** (business.facebook.com). Al crearlo con la cuenta
-  de Facebook que se usó, Meta dio error porque esa cuenta tiene la **cuenta de pago desactivada**.
-- Próximo intento: crear el portfolio y la app con **otra cuenta de Facebook** (la de Bea o la de Vane). Si tampoco
-  se puede, alternativa: la configuración antigua con inicio de sesión de Facebook (Instagram vinculado a la página de
-  Facebook; da un código `EAA…`), que exige adaptar `worker/instagram.ts` a `graph.facebook.com`.
-- Mientras tanto la franja muestra las fotos de bodas de siempre, con el enlace al Instagram: no hay nada roto.
+- La app de Meta («The dreams Factory web») está creada con la **cuenta de Facebook de Bea**, en un **portfolio
+  comercial** (con otra cuenta Meta dio error por tener la cuenta de pago desactivada).
+- Configuración **«API setup with Unified login»**, que da un código de **usuario del sistema** («EAA…») que **no
+  caduca**. Está guardado como secreto `IG_TOKEN` en Cloudflare.
+- Con ese código la web no puede averiguar la cuenta de Instagram, así que su identificador va en `wrangler.jsonc`
+  (`IG_USER_ID`, no es secreto). KV: `dreams-instagram`.
+- Si hubiera que volver a generar el código: en la app, Instagram → API setup with Unified login → generar identificador
+  con la configuración ya creada (permiso necesario: solo `instagram_basic`), y sustituir el secreto `IG_TOKEN`.
 
 ## Puesta en marcha (una sola vez)
 

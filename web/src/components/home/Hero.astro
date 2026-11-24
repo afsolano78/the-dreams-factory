@@ -25,8 +25,12 @@ const slideTexts = c.slides.map((s, i) => ({
 }));
 ---
 
+<!--
+  Altura: el 92 % de la ventana (entre 620 y 960 px) es un mínimo. Si el texto no cabe (ventana baja, titular largo),
+  la foto crece en vez de que el texto se meta bajo el menú, que tiene reservado su hueco arriba (pt-28).
+-->
 <section
-  class="relative isolate flex h-[92svh] max-h-[960px] min-h-[620px] items-end overflow-hidden bg-pino-900 text-white"
+  class="relative isolate flex min-h-[max(620px,min(92svh,960px))] items-end overflow-hidden bg-pino-900 pt-28 text-white"
   data-carousel="hero"
   data-paused="false"
   style={`--interval:${INTERVAL}ms`}
@@ -64,7 +68,12 @@ const slideTexts = c.slides.map((s, i) => ({
     <div class="hero-shade absolute inset-0 z-10" aria-hidden="true"></div>
   </div>
 
-  <div class="photo-text container-brand flex w-full flex-col gap-5 pb-1 md:flex-row md:items-end md:justify-between md:gap-10 md:pb-[7.5rem]">
+  <!--
+    Texto a la izquierda y pie de foto + carrusel a la derecha solo en pantallas grandes (las mismas en las que el menú
+    se ve entero). En anchos intermedios el titular necesita todo el ancho para no irse a tres líneas: el pie y el
+    carrusel pasan debajo de los botones.
+  -->
+  <div class="photo-text container-brand flex w-full flex-col gap-5 pb-1 md:gap-8 md:pb-[7.5rem] min-[1180px]:flex-row min-[1180px]:items-end min-[1180px]:justify-between min-[1180px]:gap-10">
     <div class="flex max-w-[52rem] flex-col gap-7">
       <!-- En móvil se oculta: ahí el titular y la frase ya ocupan casi toda la foto. -->
       <p class="eyebrow intro-item max-sm:hidden" style="--d:100ms">{c.eyebrow}</p>
@@ -100,9 +109,9 @@ const slideTexts = c.slides.map((s, i) => ({
       </div>
     </div>
 
-    <div class="intro-item flex w-full flex-col gap-4 md:max-w-[20rem] md:items-end" style="--d:950ms">
+    <div class="intro-item flex w-full flex-col gap-4 md:flex-row md:items-center md:justify-between min-[1180px]:max-w-[20rem] min-[1180px]:flex-col min-[1180px]:items-end min-[1180px]:justify-start" style="--d:950ms">
       <!-- Pie de cada foto (pareja y lugar): solo desde tableta; en móvil ocupaba sitio y la primera foto no lo tiene. -->
-      <a href={path('weddings', lang)} class="eyebrow grid !tracking-[0.16em] hover:underline hover:underline-offset-4 max-md:hidden md:text-right" data-carousel-live aria-live="off">
+      <a href={path('weddings', lang)} class="eyebrow grid !tracking-[0.16em] hover:underline hover:underline-offset-4 max-md:hidden min-[1180px]:text-right" data-carousel-live aria-live="off">
         {captions.map((cap, i) => <span class:list={['fade-text', { 'is-active is-initial': i === 0 }]} data-slide={i}>{cap}</span>)}
       </a>
       <CarouselControls

@@ -6,7 +6,12 @@
  *   sus fotos en KV (reducidas con Cloudflare Images si está disponible) y la lista en KV («feed»).
  * - GET /api/instagram devuelve la lista; GET /api/instagram/img/<id> devuelve cada foto.
  * - Si aún no hay lista (recién configurado), la primera petición la prepara en segundo plano.
- * - El código de acceso (secreto IG_TOKEN) caduca a los 60 días: se renueva solo cada semana y se guarda en KV.
+ * - El código de acceso (secreto IG_TOKEN) puede ser de dos tipos, según cómo se genere en Meta:
+ *   · «IG…» (inicio de sesión de Instagram): se lee de graph.instagram.com; caduca a los 60 días y se renueva solo
+ *     cada semana (se guarda en KV).
+ *   · «EAA…» (inicio de sesión de Facebook o «Unified login»): se lee de graph.facebook.com a través de la cuenta de
+ *     Instagram vinculada (su identificador se averigua solo, o se fija con la variable IG_USER_ID). Estos no se
+ *     pueden renovar sin el secreto de la app: hay que generarlos sin caducidad o sustituirlos antes de que caduquen.
  *
  * Sin KV o sin IG_TOKEN no hace nada y la portada muestra sus fotos de siempre. Configuración: web/INSTAGRAM.md.
  */
@@ -32,6 +37,8 @@ export interface IgEnv {
   INSTAGRAM?: Kv;
   IMAGES?: Images;
   IG_TOKEN?: string;
+  /** Identificador de la cuenta de Instagram (solo códigos «EAA…»; si falta, se averigua con el código). */
+  IG_USER_ID?: string;
   /** Solo para pruebas en local: otra dirección en lugar de la API de Instagram. */
   IG_API?: string;
 }
@@ -56,6 +63,8 @@ const COUNT = 6;
 const DAY = 86_400_000;
 const REFRESH_EVERY = 7 * DAY;
 const FIELDS = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp';
+/** Versión de la API de Facebook para los códigos «EAA…» (cada versión dura unos dos años). */
+const FB_GRAPH = 'https://graph.facebook.com/v23.0';
 
 export async function instagramFeed(env: IgEnv, ctx: Ctx): Promise<Response> {
   const kv = env.INSTAGRAM;
@@ -87,10 +96,23 @@ export async function instagramImage(id: string, env: IgEnv): Promise<Response> 
 export async function updateInstagram(env: IgEnv): Promise<void> {
   const kv = env.INSTAGRAM;
   if (!kv || !env.IG_TOKEN) return;
-  const api = env.IG_API ?? 'https://graph.instagram.com';
+  const facebook = env.IG_TOKEN.startsWith('EAA');
+  const api = env.IG_API ?? (facebook ? FB_GRAPH : 'https://graph.instagram.com');
   try {
-    const token = await currentToken(kv, env.IG_TOKEN, api);
-    const res = await fetch(`${api}/me/media?fields=${FIELDS}&limit=${COUNT * 2}&access_token=${encodeURIComponent(token)}`);
+    let token: string;
+    let user = 'me';
+    if (facebook) {
+      token = env.IG_TOKEN;
+      const id = env.IG_USER_ID || (await instagramUserId(kv, api, token));
+      if (!id) {
+        console.log('[instagram] El código no da acceso a ninguna cuenta de Instagram');
+        return;
+      }
+      user = id;
+    } else {
+      token = await currentToken(kv, env.IG_TOKEN, api);
+    }
+    const res = await fetch(`${api}/${user}/media?fields=${FIELDS}&limit=${COUNT * 2}&access_token=${encodeURIComponent(token)}`);
     if (!res.ok) {
       console.log('[instagram] La API respondió', res.status, await res.text());
       return;
@@ -115,6 +137,39 @@ export async function updateInstagram(env: IgEnv): Promise<void> {
   } catch (e) {
     console.log('[instagram] Error al actualizar:', e);
   }
+}
+
+/**
+ * Identificador de la cuenta de Instagram para un código «EAA…». Se prueba, por este orden:
+ * la página del propio código (código de página), las páginas de Facebook a las que da acceso (código de usuario)
+ * y el propio código como cuenta de Instagram («Unified login»). Se guarda en KV para no repetirlo.
+ */
+async function instagramUserId(kv: Kv, api: string, token: string): Promise<string | undefined> {
+  const saved = (await kv.get('ig-user', 'json')) as { id: string; token: string } | null;
+  if (saved && saved.token === token.slice(-12)) return saved.id;
+  const get = async (path: string) => {
+    const res = await fetch(`${api}/${path}${path.includes('?') ? '&' : '?'}access_token=${encodeURIComponent(token)}`);
+    return res.ok ? ((await res.json()) as Record<string, unknown>) : undefined;
+  };
+  // Código de página: su cuenta de Instagram vinculada.
+  const page = await get('me?fields=instagram_business_account');
+  let id = (page?.instagram_business_account as { id?: string } | undefined)?.id;
+  // Código de usuario de Facebook: la primera de sus páginas con Instagram vinculado.
+  if (!id) {
+    const pages = (await get('me/accounts?fields=instagram_business_account'))?.data as
+      | { instagram_business_account?: { id: string } }[]
+      | undefined;
+    id = pages?.find((p) => p.instagram_business_account)?.instagram_business_account?.id;
+  }
+  // Código de la propia cuenta de Instagram.
+  let me: Record<string, unknown> | undefined;
+  if (!id) {
+    me = await get('me?fields=id,username');
+    if (typeof me?.id === 'string' && typeof me.username === 'string') id = me.id;
+  }
+  if (id) await kv.put('ig-user', JSON.stringify({ id, token: token.slice(-12) }));
+  else console.log('[instagram] Respuesta de /me:', JSON.stringify(me));
+  return id;
 }
 
 /** El código de acceso vigente: el de KV (renovado) o el del secreto si es nuevo. Se renueva cada semana. */

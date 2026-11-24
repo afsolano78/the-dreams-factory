@@ -6,6 +6,16 @@
     <meta name="robots" content="noindex" />
     <title>Panel · The Dreams Factory</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      /*
+        Vista en cuadrícula: si una entrada no tiene foto (p. ej. una opinión sin imagen), Sveltia deja el hueco de la
+        imagen a altura cero y el nombre queda debajo de la casilla de selección. Así conserva el cuadrado, como las
+        demás tarjetas, y el nombre sale debajo.
+      */
+      .grid-view .grid-row .grid-cell.image:not(:has(img, video)) {
+        aspect-ratio: 1 / 1;
+      }
+    </style>
   </head>
   <body>
     <!--

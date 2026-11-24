@@ -39,3 +39,7 @@ Pasos del día en que la web nueva sustituye a la antigua (hoy en el servidor Pl
   semanas, revisar el informe de páginas no encontradas (404) para añadir a `public/_redirects` lo que falte.
 - **PageSpeed Insights** sobre la portada y una boda, ya en el dominio real.
 - Apagar el servidor Plesk cuando el correo esté resuelto y Search Console no muestre problemas.
+  **Antes de cancelar:** en IONOS el dominio figura como «Dominio adicional» del contrato del Servidor Cloud. Al
+  cancelar ese contrato podría darse de baja con él: primero pasarlo a un contrato propio de solo dominio o
+  transferirlo (por ejemplo, a Cloudflare Registrar), y confirmarlo con IONOS.
+- Borrar la zona de Route 53 unos días después del cambio, cuando todo funcione (ya no se usa).

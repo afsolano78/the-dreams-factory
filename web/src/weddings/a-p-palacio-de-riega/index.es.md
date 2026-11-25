@@ -8,7 +8,7 @@ service: integral
 photographer: JFK Imagen Social
 video: JFK Imagen Social
 season: Invierno
-cover: Ana y Pelayo ©JFK0755.webp
+cover: Ana y Pelayo ©JFK0738.webp
 coverAlt: ''
 coverFocus: ''
 hero: ''

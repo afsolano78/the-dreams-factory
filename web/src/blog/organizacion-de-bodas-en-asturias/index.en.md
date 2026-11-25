@@ -1,12 +1,16 @@
 ---
 published: true
-url: planning-a-wedding-in-asturias
 title: Planning a wedding in Asturias
 description: More and more couples from elsewhere are choosing Asturias to get married. This is how we plan weddings from a distance without the miles ever showing.
 date: 2017-02-28
 category: consejos
-cover: portada.jpg
+cover: Alejandra & Peter ©JFK138.webp
 coverAlt: A reception table with flowers, candles and tableware, by night.
+coverFocus: ''
+gallery: []
+photoCredit: ''
+url: planning-a-wedding-in-asturias
+legacyPath: /organizacion-de-bodas-Asturias
 ---
 
 More and more people who aren’t from Asturias write to us saying how beautiful this part of northern Spain is and that they want to get married here. Sometimes neither of them is from here, but they happily tell us why they decided to celebrate their wedding in Asturias, while we nod proudly… They say we don’t value what’s close to home, and it’s often true, but the reasons to get married in Asturias are endless: all kinds of landscapes, sea and mountains, wonderful towns, delicious food and the best suppliers, ready to make your wedding the party you’ve always imagined.

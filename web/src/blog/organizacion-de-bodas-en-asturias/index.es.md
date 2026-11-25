@@ -4,8 +4,12 @@ title: La organización de bodas en Asturias
 description: Cada vez más parejas de fuera eligen Asturias para casarse. Así organizamos bodas a distancia sin que se note un solo kilómetro.
 date: 2017-02-28
 category: consejos
-cover: portada.jpg
-coverAlt: Mesa de banquete con flores, velas y vajilla, a la luz de la noche.
+cover: Alejandra & Peter ©JFK138.webp
+coverAlt: Ceremonia civil
+coverFocus: ''
+gallery: []
+photoCredit: ''
+url: ''
 legacyPath: /organizacion-de-bodas-Asturias
 ---
 

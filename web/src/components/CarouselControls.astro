@@ -2,7 +2,7 @@
 /*
   Barras de progreso (que también sirven para saltar a una diapositiva) y botón de pausa.
   Con `thumbs`, cada botón muestra además una miniatura redonda (opiniones: la foto de cada pareja).
-  Con `compact`, en móvil todo más discreto y bajo: barras cortas y finas a la derecha y pausa pequeña sin círculo
+  Con `compact`, por debajo de 1180 px todo más discreto y bajo: barras cortas y finas a la derecha y pausa pequeña sin círculo
   (portada).
 */
 import { Image } from 'astro:assets';
@@ -15,7 +15,7 @@ interface Props {
   thumbFocus?: (string | undefined)[];
   /** Duración de cada diapositiva en ms, si alguna no usa la general (--interval del carrusel). */
   durations?: (number | undefined)[];
-  /** Versión discreta en móvil (ver arriba). */
+  /** Versión discreta por debajo de 1180 px (ver arriba). */
   compact?: boolean;
   pauseLabel: string;
   playLabel: string;
@@ -62,8 +62,8 @@ const { labels, thumbs, thumbFocus, durations, compact = false, pauseLabel, play
 </div>
 
 <style>
-  /* Versión «compact» en móvil (ver arriba). */
-  @media (max-width: 767px) {
+  /* Versión «compact» en móvil y tableta, hasta que la portada pasa a dos columnas (1180 px): sin pasos intermedios. */
+  @media (max-width: 1179px) {
     /* Más pegado a la esquina inferior derecha de la foto que el resto del texto. */
     .carousel-compact { width: auto; justify-content: flex-end; gap: 0.5rem; margin-right: -0.75rem; }
     .carousel-compact ol { flex: none; width: 7.5rem; gap: 0.25rem; }

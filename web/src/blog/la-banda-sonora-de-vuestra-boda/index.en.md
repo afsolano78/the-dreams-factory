@@ -1,12 +1,16 @@
 ---
 published: true
-url: the-soundtrack-of-your-wedding
 title: The soundtrack of your wedding
 description: 'Music for the ceremony, the cocktail hour, the party and the first dance: ideas so your songs are invited to your wedding too.'
 date: 2016-03-31
 category: consejos
-cover: portada.jpg
+cover: CHRISTINA Y FERNANDO0183.webp
 coverAlt: A and M embrace beneath a neon sign reading “Fly me to the moon”.
+coverFocus: ''
+gallery: []
+photoCredit: ''
+url: the-soundtrack-of-your-wedding
+legacyPath: /la-banda-sonora-de-vuestra-boda
 ---
 
 Music is with us all our lives. It awakens the senses, stirs memories and, in a heartbeat, takes us back to the moment when one song or another was playing.

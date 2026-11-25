@@ -4,8 +4,12 @@ title: La banda sonora de vuestra boda
 description: 'La música de la ceremonia, del cóctel, de la fiesta y del primer baile: ideas para que vuestras canciones también sean invitadas a vuestra boda.'
 date: 2016-03-31
 category: consejos
-cover: portada.jpg
+cover: CHRISTINA Y FERNANDO0183.webp
 coverAlt: A y M, abrazados, bajo un neón con la frase «Fly me to the moon».
+coverFocus: ''
+gallery: []
+photoCredit: ''
+url: ''
 legacyPath: /la-banda-sonora-de-vuestra-boda
 ---
 

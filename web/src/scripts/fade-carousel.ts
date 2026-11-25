@@ -43,6 +43,16 @@ export function initFadeCarousel(root: HTMLElement) {
     layers(next).forEach((el) => {
       el.classList.add('is-active');
       el.setAttribute('aria-hidden', 'false');
+      // Si su foto aún no ha llegado (se elige antes de que termine de bajar), sigue viéndose la anterior y el
+      // fundido empieza cuando la foto está lista, en vez de mostrar la de debajo o aparecer de golpe.
+      const img = el.querySelector('img');
+      if (img && !img.complete) {
+        img.loading = 'eager';
+        el.classList.add('is-loading');
+        const done = () => el.classList.remove('is-loading');
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+      }
     });
 
     dots.forEach((d, i) => {
@@ -92,6 +102,12 @@ export function initFadeCarousel(root: HTMLElement) {
       root.dataset.offscreen = String(!entry.isIntersecting);
     }, { threshold: 0.35 }).observe(root);
   }
+
+  // Las fotos de las demás diapositivas (con carga diferida) se piden cuando la página ya ha cargado, para que estén
+  // listas antes de que les toque, también si se salta directamente a una.
+  const eager = () => root.querySelectorAll<HTMLImageElement>('[data-slide] img[loading="lazy"]').forEach((img) => (img.loading = 'eager'));
+  if (document.readyState === 'complete') eager();
+  else window.addEventListener('load', eager, { once: true });
 
   // Con movimiento reducido no avanza solo; el visitante puede cambiar de diapositiva con los botones.
   if (reduceMotion) setPaused(true);

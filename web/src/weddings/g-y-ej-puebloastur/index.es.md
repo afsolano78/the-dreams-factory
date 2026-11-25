@@ -2,13 +2,18 @@
 published: true
 couple: G & EJ
 place: Puebloastur
-order: 50
+description: ''
+order: 15
+service: ''
 photographer: JFK Imagen Social
+video: ''
+season: ''
 cover: portada.jpg
 coverAlt: Retrato en blanco y negro de G y EJ con las montañas de fondo.
 coverFocus: 45% 40%
 hero: cabecera.jpg
 heroAlt: G y EJ, abrazados en el prado con las montañas al fondo.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: La bata de la novia, con «Bride» bordado en la espalda.
@@ -73,6 +78,7 @@ credits:
     name: Pronovias
   - role: Peluquería
     name: Peluquería Suárez
+url: ''
 ---
 
 Cómo unir dos continentes, varios países, tradición asturiana y lujo. Una mezcla a priori complicada que no pudo salir más perfecta: sin duda, una boda inolvidable.

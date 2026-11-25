@@ -1,15 +1,19 @@
 ---
 published: true
-url: g-and-ej-puebloastur
 couple: G & EJ
 place: Puebloastur
-order: 50
+description: ''
+order: 15
+service: ''
 photographer: JFK Imagen Social
+video: ''
+season: ''
 cover: portada.jpg
 coverAlt: Black-and-white portrait of G and EJ with the mountains behind them.
 coverFocus: 45% 40%
 hero: cabecera.jpg
 heroAlt: G and EJ embrace on the meadow, with the mountains behind.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: The bride’s robe, with “Bride” embroidered on the back.
@@ -74,6 +78,7 @@ credits:
     name: Pronovias
   - role: Hair
     name: Peluquería Suárez
+url: g-and-ej-puebloastur
 ---
 
 How do you bring together two continents, several countries, Asturian tradition and luxury? A mix that seemed complicated at first, but couldn’t have turned out more perfect: an unforgettable wedding.

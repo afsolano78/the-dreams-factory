@@ -1,7 +1,8 @@
 ---
-published: true
+published: false
 couple: C & M
 place: Palacio de La Riega · Gijón
+description: ''
 order: 80
 service: coordinacion
 photographer: JFK Imagen Social

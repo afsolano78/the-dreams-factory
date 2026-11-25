@@ -86,7 +86,9 @@ const otherLang = langs.find((l) => l !== lang)!;
     {jsonLd.map((data) => <script type="application/ld+json" is:inline set:html={jsonLdText(data)} />)}
     <!-- Color de la barra del navegador en móviles: el oscuro de la paleta. -->
     <meta name="theme-color" content="#222222" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Favicon: «TDF» con el marco del logo (letras recortadas del propio logo). favicon.ico lleva 16, 32 y 48 px. -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- Sin indexar mientras la web no se lance (INDEXABLE en site.config.mjs) y siempre en la página de error. -->

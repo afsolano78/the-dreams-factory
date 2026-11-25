@@ -8,7 +8,7 @@ service: diseno
 photographer: Darío Martínez
 video: Hector Torra
 season: ''
-cover: AperitivoSara&Joni_DaríoMartínez-59.webp
+cover: PreparativosSara_DaríoMartínez-34.webp
 coverAlt: ''
 coverFocus: ''
 hero: ''

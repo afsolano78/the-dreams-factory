@@ -1,12 +1,16 @@
 ---
 published: true
-url: why-hire-a-wedding-planner
 title: Why hire a wedding planner?
 description: What a wedding planner really does, what she doesn’t do, and why she makes a difference, not only on the day but throughout the months before.
 date: 2016-10-18
 category: consejos
-cover: portada.jpg
+cover: image00072.webp
 coverAlt: A sheet of paper asking “What does a wedding planner do?” next to a sprig of eucalyptus.
+coverFocus: ''
+gallery: []
+photoCredit: ''
+url: why-hire-a-wedding-planner
+legacyPath: /por-qué-contratar-una-wedding-planner
 ---
 
 When we started training as wedding planners, there were barely two wedding planning companies in Asturias, and whenever we introduced ourselves to other businesses or to couples we always heard the same thing: “A wedding what?”. It was unusual; nobody had heard of it except in films. In Madrid and other parts of Spain, however, the profession had already found its place and couples knew it and needed it. We knew that, sooner or later, it would reach Asturias.

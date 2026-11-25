@@ -1,12 +1,16 @@
 ---
-published: true
-url: a-cold-civil-ceremony
+published: false
 title: A cold civil ceremony? Far from it
 description: 'Music, words from those who love you most and the place you dream of: that’s how a civil ceremony becomes yours and yours alone.'
 date: 2015-05-23
 category: consejos
 cover: portada.jpg
 coverAlt: An outdoor altar among trees, with white drapes and flowers.
+coverFocus: ''
+gallery: []
+photoCredit: ''
+url: a-cold-civil-ceremony
+legacyPath: /ceremonia-civil-¿fría-0
 ---
 
 The answer is simple: no. Choosing a place to get married in Asturias today is not what it used to be.

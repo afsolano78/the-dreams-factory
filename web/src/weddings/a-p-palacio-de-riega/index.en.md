@@ -3,7 +3,7 @@ published: true
 couple: A & P
 place: Palacio de Riega
 description: Una boda navideña elegante, con detalles decorativos inspirados en la Navidad y un espectacular árbol como original seating plan. Una celebración donde la decoración navideña se integró con elegancia y personalidad.
-order: 0
+order: 1
 service: integral
 photographer: JFK Imagen Social
 video: JFK Imagen Social

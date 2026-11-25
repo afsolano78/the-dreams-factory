@@ -1,16 +1,19 @@
 ---
 published: true
-url: o-and-d-hacienda-de-la-llorea
 couple: O & D
 place: Hacienda de la Llorea · Gijón
-order: 70
+description: ''
+order: 20
 service: diseno
 photographer: M2 Visual Studio
 video: Héctor Torra
+season: ''
 cover: portada.jpg
 coverAlt: O and D embrace in a garden dressed with wildflowers and rugs.
+coverFocus: ''
 hero: cabecera.jpg
 heroAlt: O and D kiss at the ceremony, surrounded by flowers.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: The groom buttons up his waistcoat.
@@ -75,6 +78,7 @@ credits:
     name: Lights and Wires
   - role: Photo booth
     name: Bodas y Eventos
+url: o-and-d-hacienda-de-la-llorea
 ---
 
 O and D are, without a doubt, everything The Dreams Factory stands for. They enjoyed every moment of planning their wedding from day one, choosing and looking after each and every supplier with great care.

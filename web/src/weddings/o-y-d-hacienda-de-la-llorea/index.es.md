@@ -2,14 +2,18 @@
 published: true
 couple: O & D
 place: Hacienda de la Llorea · Gijón
-order: 70
+description: ''
+order: 20
 service: diseno
 photographer: M2 Visual Studio
 video: Héctor Torra
+season: ''
 cover: portada.jpg
 coverAlt: O y D se abrazan en un jardín decorado con flores silvestres y alfombras.
+coverFocus: ''
 hero: cabecera.jpg
 heroAlt: O y D se besan en la ceremonia, entre flores.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: El novio se abrocha el chaleco.
@@ -74,6 +78,7 @@ credits:
     name: Lights and Wires
   - role: Fotomatón
     name: Bodas y Eventos
+url: ''
 ---
 
 O y D representan, sin duda, la filosofía de The Dreams Factory. Disfrutaron desde el minuto uno de todos los preparativos de su boda, eligiendo y cuidando con mucho mimo a cada uno de los proveedores.

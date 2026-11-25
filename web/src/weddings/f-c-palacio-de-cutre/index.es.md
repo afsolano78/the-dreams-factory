@@ -9,7 +9,7 @@ photographer: Jfk Imagen social
 video: Nordinario
 season: Verano
 cover: CHRISTINA Y FERNANDO0054.webp
-coverAlt: foto general
+coverAlt: ''
 coverFocus: ''
 hero: ''
 heroAlt: ''

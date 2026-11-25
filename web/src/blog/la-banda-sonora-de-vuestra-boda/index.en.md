@@ -8,7 +8,7 @@ cover: CHRISTINA Y FERNANDO0183.webp
 coverAlt: A and M embrace beneath a neon sign reading “Fly me to the moon”.
 coverFocus: ''
 gallery: []
-photoCredit: ''
+photoCredit: Jfk Imagen Social
 url: the-soundtrack-of-your-wedding
 legacyPath: /la-banda-sonora-de-vuestra-boda
 ---

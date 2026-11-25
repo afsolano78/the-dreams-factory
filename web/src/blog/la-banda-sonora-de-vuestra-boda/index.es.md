@@ -5,10 +5,10 @@ description: 'La música de la ceremonia, del cóctel, de la fiesta y del primer
 date: 2016-03-31
 category: consejos
 cover: CHRISTINA Y FERNANDO0183.webp
-coverAlt: A y M, abrazados, bajo un neón con la frase «Fly me to the moon».
+coverAlt: ''
 coverFocus: ''
 gallery: []
-photoCredit: ''
+photoCredit: Jfk Imagen Social
 url: ''
 legacyPath: /la-banda-sonora-de-vuestra-boda
 ---

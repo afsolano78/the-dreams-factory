@@ -1,12 +1,16 @@
 ---
 published: true
-url: and-where-are-you-sitting
 title: And where are you sitting?
 description: 'An original seating plan adds so much to a wedding’s décor, as long as we don’t forget its real job: helping every guest find their seat.'
 date: 2015-09-28
 category: inspiracion
-cover: portada.jpg
+cover: AITANA & STEVEN WEDDING1573©JFK.webp
 coverAlt: A seating plan dressed with flowers at the entrance to a reception.
+coverFocus: ''
+gallery: []
+photoCredit: ''
+url: and-where-are-you-sitting
+legacyPath: /y-tú-¿dónde-te-sientas
 ---
 
 We admit it: seating plans add a touch of originality to a wedding’s décor, and we’re big fans of them for several reasons.

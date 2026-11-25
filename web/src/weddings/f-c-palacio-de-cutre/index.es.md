@@ -1,7 +1,7 @@
 ---
 published: true
 couple: F&C
-place: Palacio de Cutre.
+place: Palacio de Cutre
 description: ''
 order: 1
 service: integral

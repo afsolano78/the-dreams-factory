@@ -7,10 +7,33 @@
  * - Envío a /api/contacto (web/worker/index.ts) en JSON. Si falla, el formulario se queda tal cual (no se pierde
  *   nada) y se ofrece WhatsApp o email. En desarrollo (astro dev no tiene el Worker) el envío se simula.
  * - Antispam: campo trampa «web», hora de inicio «t» (el servidor rechaza envíos demasiado rápidos) y Turnstile si
- *   está configurado (PUBLIC_TURNSTILE_SITE_KEY).
+ *   está configurado (PUBLIC_TURNSTILE_SITE_KEY). Turnstile no se carga con la página: solo cuando alguien empieza a
+ *   usar el formulario (así lo dice la política de cookies, y la página carga más ligera). Al enviar, si su
+ *   comprobación aún no ha terminado, se espera a que termine.
  */
 type Errors = { required: string; email: string; contact: string; privacy: string; send: string; spam: string };
 type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+
+type Turnstile = {
+  render: (el: HTMLElement) => string;
+  getResponse: (id?: string) => string | undefined;
+  reset: (id?: string) => void;
+};
+const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+let turnstileLoad: Promise<Turnstile | null> | null = null;
+
+/** Carga el script de Turnstile una sola vez (lo comparten todos los formularios de la página). */
+function loadTurnstile(): Promise<Turnstile | null> {
+  turnstileLoad ??= new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = TURNSTILE_SRC;
+    script.async = true;
+    script.onload = () => resolve((window as Window & { turnstile?: Turnstile }).turnstile ?? null);
+    script.onerror = () => { turnstileLoad = null; script.remove(); resolve(null); };
+    document.head.append(script);
+  });
+  return turnstileLoad;
+}
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE = /^[+()\d\s.-]{6,}$/;
@@ -31,6 +54,33 @@ function setup(form: HTMLFormElement) {
   const startField = form.elements.namedItem('t') as HTMLInputElement | null;
   const markStart = () => { if (startField) startField.value = String(Date.now()); };
   markStart();
+
+  // ---------- Turnstile (al empezar a usar el formulario) ----------
+  const widget = form.querySelector<HTMLElement>('.cf-turnstile');
+  let widgetId: string | undefined;
+  let ts: Turnstile | null = null;
+  const startTurnstile = async () => {
+    if (!widget) return null;
+    ts = await loadTurnstile();
+    if (ts && widgetId === undefined) {
+      try { widgetId = ts.render(widget); } catch { /* ya estaba pintado */ }
+    }
+    return ts;
+  };
+  if (widget) {
+    const events = ['focusin', 'pointerdown', 'input'];
+    const once = () => {
+      events.forEach((t) => form.removeEventListener(t, once));
+      startTurnstile();
+    };
+    events.forEach((t) => form.addEventListener(t, once));
+  }
+  /** Al enviar: espera (como mucho 20 s) a que Turnstile dé su código; si no llega, el servidor lo rechaza y se avisa. */
+  const waitTurnstile = async () => {
+    const t = await startTurnstile();
+    if (!t || widgetId === undefined) return;
+    for (let i = 0; i < 80 && !t.getResponse(widgetId); i++) await new Promise((r) => setTimeout(r, 250));
+  };
 
   // ---------- Pasos (formulario completo) ----------
   const steps = [...form.querySelectorAll<HTMLFieldSetElement>('fieldset[data-step]')];
@@ -161,12 +211,13 @@ function setup(form: HTMLFormElement) {
     message.hidden = true;
     if (!validate(form)) return;
 
+    const label = submit?.innerHTML;
+    if (submit) { submit.disabled = true; submit.textContent = form.dataset.sending ?? '…'; }
+    if (widget) await waitTurnstile();
+
     const data: Record<string, string> = {};
     new FormData(form).forEach((v, k) => { if (typeof v === 'string') data[k] = v; });
     data.pagina = location.pathname;
-
-    const label = submit?.innerHTML;
-    if (submit) { submit.disabled = true; submit.textContent = form.dataset.sending ?? '…'; }
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -195,7 +246,7 @@ function setup(form: HTMLFormElement) {
     message.textContent = text;
     message.hidden = false;
     // Turnstile da un token de un solo uso: hay que pedir otro para el siguiente intento.
-    (window as Window & { turnstile?: { reset: () => void } }).turnstile?.reset();
+    if (ts && widgetId !== undefined) ts.reset(widgetId);
   }
 
   function showDone() {

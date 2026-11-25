@@ -8,7 +8,7 @@ service: integral
 photographer: Darío Martínez
 video: Perspective
 season: ''
-cover: RetratosJessi&Ivan_DaríoMartínez-35.webp
+cover: RetratosJessi&Ivan_DaríoMartínez-24.webp
 coverAlt: ''
 coverFocus: ''
 hero: PreparativosJessi_DaríoMartínez-74.webp

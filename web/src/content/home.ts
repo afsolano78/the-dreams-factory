@@ -3,11 +3,11 @@ import type { Lang, RouteKey } from '../i18n/routes';
 import { yearsPlanning } from './brand';
 
 import heroVideoPoster from '../assets/photos/hero/0-video-mesa.jpg';
-import hero1 from '../assets/photos/hero/1-nyt-beso.jpg';
-import hero2 from '../assets/photos/hero/2-byd-banquete.jpg';
-import hero3 from '../assets/photos/hero/3-aym-confeti.jpg';
+import hero1 from '../assets/photos/hero/1-fyc-paseo.jpg';
+import hero2 from '../assets/photos/hero/2-ryj-mesa-patio.jpg';
+import hero3 from '../assets/photos/hero/3-ayp-salon.jpg';
 import hero4 from '../assets/photos/hero/4-coche-clasico.jpg';
-import hero5 from '../assets/photos/hero/5-aym-fiesta.jpg';
+import hero5 from '../assets/photos/hero/5-myd-retrato.jpg';
 import srvIntegral from '../assets/photos/servicio-integral-carpa.jpg';
 import srvDiseno from '../assets/photos/servicio-diseno-menu.jpg';
 import srvDiaB from '../assets/photos/servicio-dia-b-novia-mesa.jpg';
@@ -157,11 +157,11 @@ export const home: Record<Lang, HomeContent> = {
       secondary: { label: 'Ver bodas', to: 'weddings' },
       slides: [
         { couple: '', place: '', duration: 9000, video: tableVideo, photo: { src: heroVideoPoster, alt: 'Vista aérea de una mesa imperial preparada en un patio rodeado de jardín.' } },
-        { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Momentos que\n*se quedan con vosotros*', intro: 'Cuidamos cada detalle para que los momentos importantes lleguen solos, sin prisas ni sobresaltos.', photo: { src: hero1, alt: 'N y T se abrazan bajo una carpa decorada con guirnaldas de luces y ramas verdes.' } },
-        { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Cada detalle,\n*pensado para vosotros*', intro: 'Diseño, decoración y ambientación con carácter propio: flores, luz y mesas que cuentan vuestra historia.', photo: { src: hero2, alt: 'Mesa imperial del banquete con hortensias, velas y ramas de eucalipto colgando del techo.' } },
-        { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'Toda la emoción,\n*ninguna preocupación*', intro: 'Nos ocupamos de proveedores, tiempos y planes B para que vosotros solo tengáis que mirar hacia delante.', photo: { src: hero3, alt: 'A y M salen de la iglesia bajo una lluvia de pétalos lanzados por sus invitados.' } },
-        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Vuestra historia,\n*a vuestra manera*', intro: 'Sin tradiciones obligatorias ni reglas que seguir: escuchamos cómo sois y lo convertimos en vuestra boda.', photo: { src: hero4, alt: 'A y S, apoyados en un coche clásico negro; ella, con velo largo, sostiene una sombrilla blanca y al fondo se ven las montañas.' } },
-        { couple: 'A & M', place: 'La fiesta', focus: '48% 35%', title: 'Y vosotros,\n*a disfrutar*', intro: 'El día B coordinamos todo entre bastidores para que lo viváis de principio a fin con vuestra gente.', photo: { src: hero5, alt: 'A y M, sentados juntos y sonriendo, bajo un neón que dice «Fly me to the moon» rodeado de hiedra.' } },
+        { couple: '', place: '', focus: '80% 50%', title: 'Momentos que\n*se quedan con vosotros*', intro: 'Cuidamos cada detalle para que los momentos importantes lleguen solos, sin prisas ni sobresaltos.', photo: { src: hero1, alt: 'Los novios caminan por un patio, en movimiento, ante una pared blanca y una palmera en una jardinera de piedra.' } },
+        { couple: '', place: '', focus: '50% 60%', title: 'Cada detalle,\n*pensado para vosotros*', intro: 'Diseño, decoración y ambientación con carácter propio: flores, luz y mesas que cuentan vuestra historia.', photo: { src: hero2, alt: 'Mesa imperial en un patio al anochecer, con velas, flores blancas, candelabros de cristal y guirnaldas de luces.' } },
+        { couple: '', place: '', focus: '42% 40%', title: 'Toda la emoción,\n*ninguna preocupación*', intro: 'Nos ocupamos de proveedores, tiempos y planes B para que vosotros solo tengáis que mirar hacia delante.', photo: { src: hero3, alt: 'Los novios caminan de la mano por un salón con muros de piedra y suelo de madera, mirándose y sonriendo.' } },
+        { couple: '', place: '', focus: '45% 50%', title: 'Vuestra historia,\n*a vuestra manera*', intro: 'Sin tradiciones obligatorias ni reglas que seguir: escuchamos cómo sois y lo convertimos en vuestra boda.', photo: { src: hero4, alt: 'Los novios, apoyados en un coche clásico negro; ella, con velo largo, sostiene una sombrilla blanca y al fondo se ven las montañas.' } },
+        { couple: '', place: '', focus: '45% 45%', title: 'Y vosotros,\n*a disfrutar*', intro: 'El día B coordinamos todo entre bastidores para que lo viváis de principio a fin con vuestra gente.', photo: { src: hero5, alt: 'Retrato en blanco y negro de los novios, uno sentado y otro de pie, ante una cortina brillante.' } },
       ],
       controls: { region: 'Bodas destacadas', slide: 'Foto {n} de {total}', goTo: 'Ver foto {n}: {caption}', pause: 'Pausar el pase de fotos', play: 'Reanudar el pase de fotos' },
     },
@@ -262,11 +262,11 @@ export const home: Record<Lang, HomeContent> = {
       secondary: { label: 'See our weddings', to: 'weddings' },
       slides: [
         { couple: '', place: '', duration: 9000, video: tableVideo, photo: { src: heroVideoPoster, alt: 'Aerial view of a long banquet table set in a courtyard surrounded by gardens.' } },
-        { couple: 'N & T', place: 'Arenas de Cabrales', focus: '50% 40%', title: 'Moments that\n*stay with you*', intro: 'We look after every detail so the moments that matter arrive on their own, unhurried and worry-free.', photo: { src: hero1, alt: 'N and T embrace under a marquee decorated with string lights and greenery.' } },
-        { couple: 'B & D', place: 'Ermita de Deva · Gijón', focus: '50% 55%', title: 'Every detail,\n*made for you*', intro: 'Design, styling and décor with a character of their own: flowers, light and tables that tell your story.', photo: { src: hero2, alt: 'A long banquet table with hydrangeas, candles and eucalyptus hanging from the ceiling.' } },
-        { couple: 'A & M', place: 'Palacio de Moutas', focus: '50% 45%', title: 'All the emotion,\n*none of the worry*', intro: 'We handle suppliers, timings and back-up plans so all you have to do is look ahead.', photo: { src: hero3, alt: 'A and M leave the church under a shower of petals thrown by their guests.' } },
-        { couple: 'A & S', place: '', focus: '45% 50%', title: 'Your story,\n*your way*', intro: 'No compulsory traditions, no rules to follow: we listen to who you are and turn it into your wedding.', photo: { src: hero4, alt: 'A and S lean against a black vintage car; she holds a white parasol, her long veil in the breeze, with mountains behind them.' } },
-        { couple: 'A & M', place: 'The party', focus: '48% 35%', title: 'And you,\n*just enjoy it*', intro: 'On the day we coordinate everything behind the scenes so you can live it from start to finish with your people.', photo: { src: hero5, alt: 'A and M sit close together, smiling, beneath an ivy-framed neon sign reading “Fly me to the moon”.' } },
+        { couple: '', place: '', focus: '80% 50%', title: 'Moments that\n*stay with you*', intro: 'We look after every detail so the moments that matter arrive on their own, unhurried and worry-free.', photo: { src: hero1, alt: 'The couple walk across a courtyard, in motion, past a white wall and a palm in a stone planter.' } },
+        { couple: '', place: '', focus: '50% 60%', title: 'Every detail,\n*made for you*', intro: 'Design, styling and décor with a character of their own: flowers, light and tables that tell your story.', photo: { src: hero2, alt: 'A long banquet table in a courtyard at dusk, with candles, white flowers, crystal candelabra and string lights.' } },
+        { couple: '', place: '', focus: '42% 40%', title: 'All the emotion,\n*none of the worry*', intro: 'We handle suppliers, timings and back-up plans so all you have to do is look ahead.', photo: { src: hero3, alt: 'The couple walk hand in hand through a hall with stone walls and wooden floors, smiling at each other.' } },
+        { couple: '', place: '', focus: '45% 50%', title: 'Your story,\n*your way*', intro: 'No compulsory traditions, no rules to follow: we listen to who you are and turn it into your wedding.', photo: { src: hero4, alt: 'The couple lean against a black vintage car; she holds a white parasol, her long veil in the breeze, with mountains behind them.' } },
+        { couple: '', place: '', focus: '45% 45%', title: 'And you,\n*just enjoy it*', intro: 'On the day we coordinate everything behind the scenes so you can live it from start to finish with your people.', photo: { src: hero5, alt: 'Black-and-white portrait of the couple, one seated and one standing, in front of a shimmering curtain.' } },
       ],
       controls: { region: 'Featured weddings', slide: 'Photo {n} of {total}', goTo: 'Show photo {n}: {caption}', pause: 'Pause the slideshow', play: 'Play the slideshow' },
     },

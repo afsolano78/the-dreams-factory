@@ -1,14 +1,19 @@
 ---
-published: true
+published: false
 couple: Y & K
 place: Palacio Conde de Toreno
+description: ''
 order: 90
 service: integral
 photographer: Días de Vino y Rosas
+video: ''
+season: ''
 cover: portada.jpg
 coverAlt: Y, de espaldas, en la balaustrada del palacio rodeada de hortensias.
+coverFocus: ''
 hero: cabecera.jpg
 heroAlt: Y y K pasean entre los árboles junto a la muralla del palacio.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: Le abrochan a la novia el vestido de encaje. En blanco y negro.
@@ -71,6 +76,7 @@ credits:
     name: Pivibel
   - role: Fotografía
     name: Días de Vino y Rosas
+url: ''
 ---
 
 Tenían muy claro que querían casarse en la ermita de La Regalina, en Cadavedo, asomada al mar.

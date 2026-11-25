@@ -1,15 +1,19 @@
 ---
-published: true
-url: y-and-k-palacio-conde-de-toreno
+published: false
 couple: Y & K
 place: Palacio Conde de Toreno
+description: ''
 order: 90
 service: integral
 photographer: Días de Vino y Rosas
+video: ''
+season: ''
 cover: portada.jpg
 coverAlt: Y, seen from behind, at the palace balustrade surrounded by hydrangeas.
+coverFocus: ''
 hero: cabecera.jpg
 heroAlt: Y and K stroll among the trees beside the palace wall.
+heroFocus: ''
 gallery:
   - src: 01.jpg
     alt: The bride’s lace gown being fastened. In black and white.
@@ -72,6 +76,7 @@ credits:
     name: Pivibel
   - role: Photography
     name: Días de Vino y Rosas
+url: y-and-k-palacio-conde-de-toreno
 ---
 
 They knew from the start that they wanted to marry at the chapel of La Regalina, in Cadavedo, high above the sea.

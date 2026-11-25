@@ -4,7 +4,7 @@ title: Planning a wedding in Asturias
 description: More and more couples from elsewhere are choosing Asturias to get married. This is how we plan weddings from a distance without the miles ever showing.
 date: 2017-02-28
 category: consejos
-cover: Alejandra & Peter ©JFK138.webp
+cover: CHRISTINA Y FERNANDO1321©JFK.webp
 coverAlt: A reception table with flowers, candles and tableware, by night.
 coverFocus: ''
 gallery: []

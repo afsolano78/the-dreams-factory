@@ -8,7 +8,7 @@ service: integral
 photographer: Días de Vino y Rosas
 video: Nordinario
 season: ''
-cover: Adela+Miguel_boda_0537_websize.webp
+cover: Adela+Miguel_boda_0552_websize.webp
 coverAlt: ''
 coverFocus: ''
 hero: ''

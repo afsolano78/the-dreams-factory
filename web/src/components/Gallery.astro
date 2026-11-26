@@ -41,9 +41,9 @@ const large = await Promise.all(items.map((g) => getImage({ src: g.src, width: M
   <dialog class="gallery-viewer" aria-label={labels.title} data-viewer>
     <figure class="flex h-full flex-col items-center justify-center gap-4 px-14 py-16 md:px-24">
       <img class="viewer-img" alt="" data-viewer-img />
-      <figcaption class="max-w-[40rem] text-center text-[0.875rem] text-white/80">
-        <span data-viewer-caption></span>
-        <span class="ml-2 text-white/50" data-viewer-count></span>
+      <!-- Solo «N de M»: el texto de cada foto no se pinta (sigue como texto alternativo de la imagen, para lectores de pantalla). -->
+      <figcaption class="text-center text-[0.875rem] text-white/60">
+        <span data-viewer-count></span>
       </figcaption>
     </figure>
     <button type="button" class="viewer-btn right-4 top-4" aria-label={labels.close} data-viewer-close>
@@ -64,7 +64,6 @@ const large = await Promise.all(items.map((g) => getImage({ src: g.src, width: M
     const items = [...root.querySelectorAll<HTMLAnchorElement>('[data-gallery-item]')];
     if (!viewer || !items.length) return;
     const img = viewer.querySelector<HTMLImageElement>('[data-viewer-img]')!;
-    const caption = viewer.querySelector<HTMLElement>('[data-viewer-caption]')!;
     const count = viewer.querySelector<HTMLElement>('[data-viewer-count]')!;
     const of = root.dataset.of ?? '/';
     let current = 0;
@@ -75,7 +74,6 @@ const large = await Promise.all(items.map((g) => getImage({ src: g.src, width: M
       const a = items[current];
       img.src = a.href;
       img.alt = a.dataset.alt ?? '';
-      caption.textContent = a.dataset.alt ?? '';
       count.textContent = `${current + 1} ${of} ${items.length}`;
       // Precarga la siguiente para que el paso sea inmediato.
       new Image().src = items[(current + 1) % items.length].href;

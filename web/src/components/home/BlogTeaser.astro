@@ -2,6 +2,10 @@
 /*
   Blog en portada, en mosaico: fotos a sangre con el título encima.
   La primera entrada va grande (con su resumen) y las otras cuatro, pequeñas a su alrededor.
+
+  Las entradas elegidas en content/home.ts solo salen si siguen publicadas en el blog (si Bea y Vane las pasan a
+  borrador desde el panel, desaparecen de aquí). Los huecos que dejan se rellenan con las entradas publicadas más
+  recientes, con su título, resumen y foto del blog.
 */
 import { Picture } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
@@ -9,14 +13,29 @@ import Button from '../Button.astro';
 import SectionEdge from '../SectionEdge.astro';
 import { path, type Lang } from '../../i18n/routes';
 import type { HomeContent } from '../../content/home';
-import { postByKey, postHref } from '../../lib/blog';
+import { getPosts, folderOf, postHref, readingMinutes, blogUi } from '../../lib/blog';
 
 interface Props { lang: Lang; c: HomeContent['blog'] }
 const { lang, c } = Astro.props;
-const href = path('blog', lang);
 const reading = (n: number) => c.readingTime.replace('{n}', String(n));
-/** Cada entrada enlaza a su página del blog (o al listado si no la encuentra). */
-const hrefs = await Promise.all(c.posts.map((p) => postByKey(p.post, lang).then((e) => (e ? postHref(e) : href))));
+const TOTAL = 5;
+const published = await getPosts(lang);
+const byFolder = new Map(published.map((e) => [folderOf(e), e]));
+/** Elegidas que siguen publicadas y, detrás, las más recientes que no estén ya. */
+const chosen = c.posts.filter((p) => byFolder.has(p.post)).map((p) => ({ ...p, href: postHref(byFolder.get(p.post)!) }));
+const used = new Set(chosen.map((p) => p.post));
+const extra = published
+  .filter((e) => !used.has(folderOf(e)))
+  .map((e) => ({
+    post: folderOf(e),
+    category: blogUi[lang].categories[e.data.category],
+    title: e.data.title,
+    excerpt: e.data.description,
+    minutes: readingMinutes(e),
+    photo: { src: e.data.cover, alt: e.data.coverAlt },
+    href: postHref(e),
+  }));
+const posts = [...chosen, ...extra].slice(0, TOTAL);
 ---
 
 <section class="section-y relative isolate bg-white">
@@ -27,11 +46,11 @@ const hrefs = await Promise.all(c.posts.map((p) => postByKey(p.post, lang).then(
       <Button href={path(c.cta.to, lang)} variant="secondary" class="self-start md:self-auto">{c.cta.label}</Button>
     </div>
     <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
-      {c.posts.map((p, i) => {
+      {posts.map((p, i) => {
         const featured = i === 0;
         return (
           <li class:list={['mosaic-tile', { 'sm:col-span-2 lg:row-span-2': featured }]} data-reveal style={`--reveal-delay:${i * 90}ms`}>
-            <a href={hrefs[i]} class="group relative isolate flex h-full flex-col justify-end overflow-hidden p-6 text-white md:p-8">
+            <a href={p.href} class="group relative isolate flex h-full flex-col justify-end overflow-hidden p-6 text-white md:p-8">
               <Picture
                 src={p.photo.src}
                 alt={p.photo.alt}

@@ -147,11 +147,11 @@ export const home: Record<Lang, HomeContent> = {
   es: {
     meta: {
       title: 'Wedding planner en Asturias · The Dreams Factory',
-      description: 'Diseñamos, organizamos y coordinamos bodas en Asturias desde 2015. Bodas que se parecen a vosotros.',
+      description: 'Diseñamos, organizamos y coordinamos bodas en Asturias desde 2015. Bodas que hablan de vosotros.',
     },
     hero: {
       eyebrow: 'Wedding planners en Asturias desde 2015',
-      title: 'Bodas que se parecen\n*a vosotros*',
+      title: 'Bodas que hablan\n*de vosotros*',
       intro: 'Diseñamos, organizamos y coordinamos vuestra boda con calma y mimo por cada detalle, para que solo tengáis que vivirla.',
       primary: { label: 'Contadnos vuestra idea', to: 'contact' },
       secondary: { label: 'Ver bodas', to: 'weddings' },
@@ -252,11 +252,11 @@ export const home: Record<Lang, HomeContent> = {
   en: {
     meta: {
       title: 'Wedding planner in Asturias, Spain · The Dreams Factory',
-      description: 'We design, plan and coordinate weddings in Asturias, northern Spain. Weddings that feel like you.',
+      description: 'We design, plan and coordinate weddings in Asturias, northern Spain. Weddings that speak of you.',
     },
     hero: {
       eyebrow: 'Wedding planners in Asturias, Spain, since 2015',
-      title: 'Weddings that\n*feel like you*',
+      title: 'Weddings that\n*speak of you*',
       intro: 'We design, plan and coordinate your wedding with calm and care for every detail, so all you have to do is live it.',
       primary: { label: 'Tell us your idea', to: 'contact' },
       secondary: { label: 'See our weddings', to: 'weddings' },
